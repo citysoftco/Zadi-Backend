@@ -1,0 +1,27 @@
+[02-Dec-2022 19:08:11 asia/kolkata] PHP Fatal error:  During inheritance of ArrayAccess: Uncaught ErrorException: Return type of Illuminate\Support\Collection::offsetExists($key) should either be compatible with ArrayAccess::offsetExists(mixed $offset): bool, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Collections/Collection.php:1459
+Stack trace:
+#0 /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Collections/Collection.php(13): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8192, 'Return type of ...', '/home3/zaad/pub...', 1459)
+#1 /home3/zaad/public_html/source/vendor/composer/ClassLoader.php(571): include('/home3/zaad/pub...')
+#2 /home3/zaad/public_html/source/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home3/zaad/pub...')
+#3 /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Collections/helpers.php(15): Composer\Autoload\ClassLoader->loadClass('Illuminate\\Supp...')
+#4 /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(130): collect(Array)
+#5 /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(106): Illuminate\Foundation\PackageManifest->build()
+#6 /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(89): Illuminate\Foundation\PackageManifest->getManifest()
+#7 /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(78): Illuminate\Foundation\PackageManifest->config('aliases')
+#8 /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterFacades.php(26): Illuminate\Foundation\PackageManifest->aliases()
+#9 /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\RegisterFacades->bootstrap(Object(Illuminate\Foundation\Application))
+#10 /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(310): Illuminate\Foundation\Application->bootstrapWith(Array)
+#11 /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\Foundation\Console\Kernel->bootstrap()
+#12 /home3/zaad/public_html/source/artisan(37): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#13 {main} in /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Collections/Collection.php on line 13
+[02-Dec-2022 19:08:11 asia/kolkata] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Collection" not found in /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Collections/helpers.php:15
+Stack trace:
+#0 /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Support/Traits/ReflectsClosures.php(24): collect(Array)
+#1 /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Support/Traits/ReflectsClosures.php(44): Illuminate\Foundation\Exceptions\ReportableHandler->closureParameterTypes(Object(Closure))
+#2 /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/ReportableHandler.php(62): Illuminate\Foundation\Exceptions\ReportableHandler->firstClosureParameterType(Object(Closure))
+#3 /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(234): Illuminate\Foundation\Exceptions\ReportableHandler->handles(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#4 /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Illuminate\Foundation\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#5 /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(130): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#6 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#7 {main}
+  thrown in /home3/zaad/public_html/source/vendor/laravel/framework/src/Illuminate/Collections/helpers.php on line 15
