@@ -627,8 +627,9 @@ trait SendSms
 
     public function otpmsg($user_name, $user_phone)
     {
-        $numbers = '12345678910111236542301236985452315245552012369874563201423698745';
-        $otp = substr(str_shuffle(str_repeat($numbers, 5)), 0, 5);
+        // $numbers = '12345678910111236542301236985452315245552012369874563201423698745';
+        // $otp = substr(str_shuffle(str_repeat($numbers, 5)), 0, 5);
+        $otp = rand(12345, 99999);
         $msg =  $otp . ' Welcome ' . $user_name . ' to Zadi application your activation OTP';
 
         $apiResponse = Http::post('https://api.gawali.net/', [

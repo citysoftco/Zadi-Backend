@@ -42,20 +42,20 @@ return [
         ],
 
         'api' => [
-            'driver' => 'jwt',
+            'driver' => 'passport',
             'provider' => 'users',
         ],
-        
+
         'admin' => [
-            'driver'=>'session',
+            'driver' => 'session',
             'provider' => 'admin'
- 
+
         ],
-        
+
         'store' => [
-            'driver'=>'session',
+            'driver' => 'session',
             'provider' => 'stores'
- 
+
         ],
 
         'cityadmin' => [
@@ -89,12 +89,12 @@ return [
         'admin' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class
- 
+
         ],
         'stores' => [
             'driver' => 'eloquent',
             'model' => App\Models\Store::class
- 
+
         ],
         'cityadmin' => [
             'driver' => 'eloquent',

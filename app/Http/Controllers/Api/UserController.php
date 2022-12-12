@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Traits\ImageStoragePicker;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ForgetPasswordRequest;
 use App\Http\Requests\UserRegister;
 use App\Http\Requests\UserRegisterRequest;
 use Illuminate\Support\Facades\Http;
@@ -303,15 +304,20 @@ class UserController extends Controller
     {
         $request['is_verified'] = 1;
 
-        $token = null;
+        $user = User::where("user_phone", $request->user_phone)->first();
 
-        $credentials =  $request->only('user_phone', 'password', 'is_verified');
+        $token = $user->createToken(uniqid())->accessToken;
 
-        if (!$token = $this->guard()->attempt($credentials)) {
+
+        $credentials =  $request->only('user_phone', 'password'/*, 'is_verified'*/);
+
+        if (!$this->guard()->attempt($credentials)) {
 
             return $this->createErrorResponse(0, 'Unauthorized', 401);
         }
-        return $this->respondWithToken($token);
+        $user->token = $token;
+        return response()->json($user);
+        // return $this->respondWithToken($token);
     }
 
     protected function respondWithToken($token)
@@ -482,7 +488,7 @@ class UserController extends Controller
         $user_area = $request->user_area;
         $fb_id = $request->facebook_id;
         $name = $request->name;
-
+        $reg_date = now();
 
 
         $u_name1 = str_replace(' ', '', $name);
@@ -533,7 +539,20 @@ class UserController extends Controller
             $message = array('status' => '0', 'message' => 'User Already Registered with this email or phone number');
             return $message;
         } else {
-            $user = User::create(['name' => $name, 'address' => $address, 'lat' => $lat, 'lng' => $lng, /*'email' => $user_email,*/ 'user_phone' => $user_phone, 'user_city' => $user_city, 'user_area' => $user_area, 'user_image' => $filePath, 'referral_code' => $referral_c, 'password' => $password]);
+            $user = User::create([
+                'name' => $name,
+                'address' => $address,
+                'lat' => $lat,
+                'lng' => $lng,
+                /*'email' => $user_email,*/
+                'user_phone' => $user_phone,
+                'user_city' => $user_city,
+                'user_area' => $user_area,
+                'user_image' => $filePath,
+                'referral_code' => $referral_c,
+                'password' => $password,
+                'reg_date' => $reg_date,
+            ]);
             $otpcode = $this->otpmsg($name, $user_phone);
             $updateotp = DB::table('users')
                 ->where('user_phone', $user_phone)
@@ -696,6 +715,29 @@ class UserController extends Controller
     public function forgotPassword(Request $request)
     {
         $user_phone = $request->user_phone;
+        $otp = $request->otp;
+        $new_password = $request->new_password;
+        $new_password_confirm = $request->new_password_confirm;
+        $user = User::where("user_phone", $user_phone)->first();
+        if (!$user) {
+            return response()->json([
+                'status' => '0',
+                'message' => 'User not registered'
+            ], 422);
+        }
+        $user = $user->where("otp_value", $otp)->first();
+        if (!$user) {
+            return response()->json([
+                'status' => '0',
+                'message' => 'Otp Not Valid'
+            ], 422);
+        }
+
+
+        return true;
+
+        /*
+                $user_phone = $request->user_phone;
 
         $checkUser = DB::table('users')
             ->where('user_phone', $user_phone)
@@ -708,23 +750,23 @@ class UserController extends Controller
             for ($i = 0; $i < 4; $i++) {
                 $otpval .= $chars[mt_rand(0, strlen($chars) - 1)];
             }
-            $firebase_st = DB::table('firebase')
-                ->first();
-            if ($firebase_st->status == 0) {
-                $otpmsg = $this->otpmsg($otpval, $user_phone);
-            }
-
+            // $firebase_st = DB::table('firebase')
+            //     ->first();
+            // if ($firebase_st->status == 0) {
+            //     $otpmsg = $this->otpmsg($otpval, $user_phone);
+            // }
+            $otp = $this->otpmsg($checkUser->name, $user_phone);
 
             $updateOtp = DB::table('users')
                 ->where('user_phone', $user_phone)
-                ->update(['otp_value' => $otpval]);
+                ->update(['otp_value' => $otp]);
 
             if ($updateOtp) {
-                $checkUser1 = DB::table('users')
-                    ->where('user_phone', $user_phone)
-                    ->first();
+                // $checkUser1 = DB::table('users')
+                //     ->where('user_phone', $user_phone)
+                //     ->first();
 
-                $message = array('status' => '1', 'message' => 'Verify OTP', 'data' => $checkUser1);
+                $message = array('status' => '1', 'message' => 'Verify OTP', 'otp' => $otp, 'data' => $checkUser);
                 return $message;
             } else {
                 $message = array('status' => '0', 'message' => 'Something wrong');
@@ -734,6 +776,7 @@ class UserController extends Controller
             $message = array('status' => '0', 'message' => 'User not registered');
             return $message;
         }
+        */
     }
 
     public function verifyOtpPass(Request $request)
@@ -746,7 +789,10 @@ class UserController extends Controller
         $getUser = DB::table('users')
             ->where('user_phone', $phone)
             ->first();
-
+        if ($getUser->is_verified == 1) {
+            $message = array('status' => '1', 'message' => "User Is Verifed", 'data' => $getUser);
+            return response()->json($message);
+        }
         if ($getUser) {
             $getotp = $getUser->otp_value;
 
