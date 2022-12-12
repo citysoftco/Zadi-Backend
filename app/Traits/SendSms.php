@@ -85,7 +85,7 @@ trait SendSms
                 $user = '+' . $countrycode->country_code . $user_phone;
                 // Use the client to do fun stuff like send text messages!
                 $client->messages->create(
-                // the number you'd like to send the message to
+                    // the number you'd like to send the message to
                     $user,
                     array(
                         // A Twilio phone number you purchased at twilio.com/console
@@ -97,7 +97,6 @@ trait SendSms
                 );
             }
         }
-
     }
 
     public function ordersuccessfullstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $store_phone)
@@ -173,7 +172,7 @@ trait SendSms
                 $user = '+' . $countrycode->country_code . $store_phone;
                 // Use the client to do fun stuff like send text messages!
                 $client->messages->create(
-                // the number you'd like to send the message to
+                    // the number you'd like to send the message to
                     $user,
                     array(
                         // A Twilio phone number you purchased at twilio.com/console
@@ -185,7 +184,6 @@ trait SendSms
                 );
             }
         }
-
     }
 
     public function orderconfirmedsms($cart_id, $user_phone, $orr)
@@ -260,7 +258,7 @@ trait SendSms
                 $user = '+' . $countrycode->country_code . $user_phone;
                 // Use the client to do fun stuff like send text messages!
                 $client->messages->create(
-                // the number you'd like to send the message to
+                    // the number you'd like to send the message to
                     $user,
                     array(
                         // A Twilio phone number you purchased at twilio.com/console
@@ -272,7 +270,6 @@ trait SendSms
                 );
             }
         }
-
     }
 
     public function delout($cart_id, $prod_name, $price2, $currency, $ord, $user_phone)
@@ -353,7 +350,7 @@ trait SendSms
                 $user = '+' . $countrycode->country_code . $user_phone;
                 // Use the client to do fun stuff like send text messages!
                 $client->messages->create(
-                // the number you'd like to send the message to
+                    // the number you'd like to send the message to
                     $user,
                     array(
                         // A Twilio phone number you purchased at twilio.com/console
@@ -439,7 +436,7 @@ trait SendSms
                 $user = '+' . $countrycode->country_code . $store_phone;
                 // Use the client to do fun stuff like send text messages!
                 $client->messages->create(
-                // the number you'd like to send the message to
+                    // the number you'd like to send the message to
                     $user,
                     array(
                         // A Twilio phone number you purchased at twilio.com/console
@@ -526,7 +523,7 @@ trait SendSms
                 $user = '+' . $countrycode->country_code . $user_phone;
                 // Use the client to do fun stuff like send text messages!
                 $client->messages->create(
-                // the number you'd like to send the message to
+                    // the number you'd like to send the message to
                     $user,
                     array(
                         // A Twilio phone number you purchased at twilio.com/console
@@ -613,7 +610,7 @@ trait SendSms
                 $user = '+' . $countrycode->country_code . $store_phone;
                 // Use the client to do fun stuff like send text messages!
                 $client->messages->create(
-                // the number you'd like to send the message to
+                    // the number you'd like to send the message to
                     $user,
                     array(
                         // A Twilio phone number you purchased at twilio.com/console
@@ -631,9 +628,9 @@ trait SendSms
     public function otpmsg($user_name, $user_phone)
     {
         $numbers = '12345678910111236542301236985452315245552012369874563201423698745';
-        $otp =substr(str_shuffle(str_repeat($numbers , 5)), 0,5);
-        $msg =  $otp .' Welcom '.$user_name.' to Zadi application your activation OTP';
-      
+        $otp = substr(str_shuffle(str_repeat($numbers, 5)), 0, 5);
+        $msg =  $otp . ' Welcome ' . $user_name . ' to Zadi application your activation OTP';
+
         $apiResponse = Http::post('https://api.gawali.net/', [
             'username'      => 'zadi',
             'password'      => 'C2022!@##@!s',
@@ -642,13 +639,14 @@ trait SendSms
             'text'          =>  $msg,
 
         ]);
-        
-       
+
+
         return  $otp;
     }
-    
-    public function oldOtpCode($otpval , $user_phone){
-         $countrycode = DB::table('country_code')
+
+    public function oldOtpCode($otpval, $user_phone)
+    {
+        $countrycode = DB::table('country_code')
             ->first();
 
         //  dd($countrycode);
@@ -700,7 +698,6 @@ trait SendSms
                 }
                 curl_close($ch);
                 return true;
-
             } else {
 
                 $twilio = DB::table('twilio')
@@ -717,7 +714,7 @@ trait SendSms
                 $user = '+' . $countrycode->country_code . $user_phone;
                 // Use the client to do fun stuff like send text messages!
                 $client->messages->create(
-                // the number you'd like to send the message to
+                    // the number you'd like to send the message to
                     $user,
                     array(
                         // A Twilio phone number you purchased at twilio.com/console
@@ -732,7 +729,7 @@ trait SendSms
     }
 
 
-//////Store Payout////////
+    //////Store Payout////////
     public function sendpayoutmsg($amt, $store_phone)
     {
         $countrycode = DB::table('country_code')
@@ -797,7 +794,7 @@ trait SendSms
                 $user = '+' . $countrycode->country_code . $store_phone;
                 // Use the client to do fun stuff like send text messages!
                 $client->messages->create(
-                // the number you'd like to send the message to
+                    // the number you'd like to send the message to
                     $user,
                     array(
                         // A Twilio phone number you purchased at twilio.com/console
@@ -809,7 +806,6 @@ trait SendSms
                 );
             }
         }
-
     }
 
     //////Store Payout////////
@@ -877,7 +873,7 @@ trait SendSms
                 $user = '+' . $countrycode->country_code . $user->user_phone;
                 // Use the client to do fun stuff like send text messages!
                 $client->messages->create(
-                // the number you'd like to send the message to
+                    // the number you'd like to send the message to
                     $user,
                     array(
                         // A Twilio phone number you purchased at twilio.com/console
@@ -889,7 +885,6 @@ trait SendSms
                 );
             }
         }
-
     }
 
     public function rechargesms($curr, $user_name, $add_to_wallet, $user_phone)
@@ -956,7 +951,7 @@ trait SendSms
                 $user = '+' . $countrycode->country_code . $user_phone;
                 // Use the client to do fun stuff like send text messages!
                 $client->messages->create(
-                // the number you'd like to send the message to
+                    // the number you'd like to send the message to
                     $user,
                     array(
                         // A Twilio phone number you purchased at twilio.com/console
@@ -968,7 +963,6 @@ trait SendSms
                 );
             }
         }
-
     }
 
     public function sendrejectmsgbystore($cause, $user, $ord_id)
@@ -1035,7 +1029,7 @@ trait SendSms
                 $user = '+' . $countrycode->country_code . $user->user_phone;
                 // Use the client to do fun stuff like send text messages!
                 $client->messages->create(
-                // the number you'd like to send the message to
+                    // the number you'd like to send the message to
                     $user,
                     array(
                         // A Twilio phone number you purchased at twilio.com/console
@@ -1047,7 +1041,6 @@ trait SendSms
                 );
             }
         }
-
     }
 
 
@@ -1118,7 +1111,7 @@ trait SendSms
                 $user = '+' . $countrycode->country_code . $user_phone;
                 // Use the client to do fun stuff like send text messages!
                 $client->messages->create(
-                // the number you'd like to send the message to
+                    // the number you'd like to send the message to
                     $user,
                     array(
                         // A Twilio phone number you purchased at twilio.com/console
@@ -1130,7 +1123,6 @@ trait SendSms
                 );
             }
         }
-
     }
 
 
@@ -1207,7 +1199,7 @@ trait SendSms
                 $user = '+' . $countrycode->country_code . $user_phone;
                 // Use the client to do fun stuff like send text messages!
                 $client->messages->create(
-                // the number you'd like to send the message to
+                    // the number you'd like to send the message to
                     $user,
                     array(
                         // A Twilio phone number you purchased at twilio.com/console
@@ -1219,7 +1211,6 @@ trait SendSms
                 );
             }
         }
-
     }
 
     public function ordercancelledstore($cart_id, $user_phone, $store_phone, $user_name, $prod_name, $price2)
@@ -1294,7 +1285,7 @@ trait SendSms
                 $user = '+' . $countrycode->country_code . $store_phone;
                 // Use the client to do fun stuff like send text messages!
                 $client->messages->create(
-                // the number you'd like to send the message to
+                    // the number you'd like to send the message to
                     $user,
                     array(
                         // A Twilio phone number you purchased at twilio.com/console
@@ -1306,8 +1297,5 @@ trait SendSms
                 );
             }
         }
-
     }
-
-
 }

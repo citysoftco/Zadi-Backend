@@ -1,47 +1,37 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Services;
 
-use Illuminate\Http\Request;
-use App\Traits\ImageStoragePicker;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRegister;
-use App\Http\Requests\UserRegisterRequest;
-use Illuminate\Support\Facades\Http;
-use DB;
-use Carbon\Carbon;
-use App\Traits\SendSms;
-use App\Traits\SendMail;
 use App\Models\User;
-use App\Services\UserService;
-use JWTAuth;
-use Auth;
+use App\Traits\ImageStoragePicker;
+use App\Traits\SendMail;
+use App\Traits\SendSms;
 use Hash;
-use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
 
 /**
- * @group Users
+ * Class UserService.
  */
-class UserController extends Controller
+class UserService
 {
     use SendSms;
     use SendMail;
     use ImageStoragePicker;
 
-    private $user;
-    public function __construct()
-    {
-        $this->user = new UserService();
-    }
     public function guard()
     {
+
         return Auth::guard();
     }
 
 
     public function social_login(Request $request)
     {
-
         $logintype = $request->type;
         $device_id = $request->device_id;
         if ($logintype == 'google') {
@@ -466,9 +456,8 @@ class UserController extends Controller
     }
 
 
-    public function register_details(UserRegisterRequest $request)
+    public function register_details(Request $request)
     {
-
 
         $user_phone = $request->user_phone;
         // $user_email = $request->user_phone;
@@ -541,7 +530,6 @@ class UserController extends Controller
             $message = array('status' => '1', 'message' => 'User registerd successfuly', 'data' => $user);
             return $message;
         }
-
 
         if ($fb_id == NULL) {
             $check = DB::table('users')
@@ -625,8 +613,6 @@ class UserController extends Controller
             $message = array('status' => '0', 'message' => 'User Not Founds');
             return $message;
         }
-        // $data = $this->register_details($request);
-        // return response()->json($data);
     }
 
     public function myprofile(Request $request)
