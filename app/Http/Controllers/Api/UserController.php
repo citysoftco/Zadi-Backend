@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Traits\ImageStoragePicker;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRegister;
+use App\Http\Requests\UserRegisterRequest;
 use Illuminate\Support\Facades\Http;
 use DB;
 use Carbon\Carbon;
@@ -16,6 +18,9 @@ use Auth;
 use Hash;
 use Illuminate\Support\Facades\DB as FacadesDB;
 
+/**
+ * @group Users
+ */
 class UserController extends Controller
 {
     use SendSms;
@@ -453,7 +458,8 @@ class UserController extends Controller
         }
     }
 
-    public function register_details(Request $request)
+
+    public function register_details(UserRegisterRequest $request)
     {
 
         $user_phone = $request->user_phone;

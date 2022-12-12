@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Laravel
+  title: 'Zaad Project Api'
   description: ''
   version: 1.0.0
 servers:
@@ -1153,246 +1153,6 @@ paths:
       tags:
         - Endpoints
       security: []
-  /api/login:
-    post:
-      summary: ''
-      operationId: postApiLogin
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  /api/verify_via_firebase:
-    post:
-      summary: "Function: verifyotpfirebase\nParams: Request Laravel Object $request\nDescription:"
-      operationId: functionVerifyotpfirebaseParamsRequestLaravelObjectrequestDescription
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  /api/login_with_email:
-    post:
-      summary: ''
-      operationId: postApiLogin_with_email
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  /api/register_details:
-    post:
-      summary: ''
-      operationId: postApiRegister_details
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  /api/social_login:
-    post:
-      summary: ''
-      operationId: postApiSocial_login
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  /api/verify_phone:
-    post:
-      summary: ''
-      operationId: postApiVerify_phone
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  /api/forget_password:
-    post:
-      summary: ''
-      operationId: postApiForget_password
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  /api/verifyOtpPass:
-    post:
-      summary: ''
-      operationId: postApiVerifyOtpPass
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  /api/verifyOtpPassfirebase:
-    post:
-      summary: ''
-      operationId: postApiVerifyOtpPassfirebase
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  /api/verify_otp:
-    post:
-      summary: ''
-      operationId: postApiVerify_otp
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
   /api/validate:
     get:
       summary: ''
@@ -2302,30 +2062,6 @@ paths:
       tags:
         - Endpoints
       security: []
-  /api/resendotp:
-    post:
-      summary: ''
-      operationId: postApiResendotp
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
   /api/timeslot:
     post:
       summary: ''
@@ -2503,30 +2239,6 @@ paths:
                   message:
                     type: string
                     example: 'SMS/OTP are Off'
-      tags:
-        - Endpoints
-      security: []
-  /api/change_password:
-    post:
-      summary: ''
-      operationId: postApiChange_password
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
       tags:
         - Endpoints
       security: []
@@ -3118,78 +2830,6 @@ paths:
     post:
       summary: ''
       operationId: postApiCallback_req
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  /api/myprofile:
-    post:
-      summary: ''
-      operationId: postApiMyprofile
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  /api/profile_edit:
-    post:
-      summary: ''
-      operationId: postApiProfile_edit
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  /api/user_block_check:
-    post:
-      summary: ''
-      operationId: postApiUser_block_check
       description: ''
       parameters:
         -
@@ -7286,7 +6926,479 @@ paths:
       tags:
         - Endpoints
       security: []
+  /api/login:
+    post:
+      summary: ''
+      operationId: postApiLogin
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Users
+      security: []
+  /api/verify_via_firebase:
+    post:
+      summary: "Function: verifyotpfirebase\nParams: Request Laravel Object $request\nDescription:"
+      operationId: functionVerifyotpfirebaseParamsRequestLaravelObjectrequestDescription
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Users
+      security: []
+  /api/login_with_email:
+    post:
+      summary: ''
+      operationId: postApiLogin_with_email
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Users
+      security: []
+  /api/register_details:
+    post:
+      summary: 'User Register'
+      operationId: userRegister
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: multipart/form-data
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: '1'
+                  message: 'User registerd successfuly'
+                  data:
+                    name: name
+                    address: address
+                    lat: '3'
+                    lng: '5'
+                    user_phone: '01243'
+                    user_city: '33'
+                    user_area: '19'
+                    user_image: /images/user/12-12-2022/783px-Test-Logo.svg.png
+                    referral_code: NAMF2OSG
+                    updated_at: '2022-12-12T08:28:56.000000Z'
+                    created_at: '2022-12-12T08:28:56.000000Z'
+                    id: 63
+                properties:
+                  status:
+                    type: string
+                    example: '1'
+                  message:
+                    type: string
+                    example: 'User registerd successfuly'
+                  data:
+                    type: object
+                    example:
+                      name: name
+                      address: address
+                      lat: '3'
+                      lng: '5'
+                      user_phone: '01243'
+                      user_city: '33'
+                      user_area: '19'
+                      user_image: /images/user/12-12-2022/783px-Test-Logo.svg.png
+                      referral_code: NAMF2OSG
+                      updated_at: '2022-12-12T08:28:56.000000Z'
+                      created_at: '2022-12-12T08:28:56.000000Z'
+                      id: 63
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                user_phone:
+                  type: string
+                  description: ''
+                  example: ipsam
+                password:
+                  type: string
+                  description: ''
+                  example: doloremque
+                lat:
+                  type: number
+                  description: ''
+                  example: 0.0
+                lng:
+                  type: number
+                  description: ''
+                  example: 1524.389754856
+                address:
+                  type: string
+                  description: ''
+                  example: possimus
+                user_city:
+                  type: string
+                  description: ''
+                  example: nostrum
+                user_area:
+                  type: string
+                  description: ''
+                  example: blanditiis
+                facebook_id:
+                  type: string
+                  description: ''
+                  example: null
+                name:
+                  type: string
+                  description: ''
+                  example: non
+                user_image:
+                  type: string
+                  format: binary
+                  description: 'Must be an image.'
+              required:
+                - user_phone
+                - password
+                - lat
+                - lng
+                - address
+                - user_city
+                - user_area
+                - name
+      security: []
+  /api/social_login:
+    post:
+      summary: ''
+      operationId: postApiSocial_login
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Users
+      security: []
+  /api/verify_phone:
+    post:
+      summary: ''
+      operationId: postApiVerify_phone
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Users
+      security: []
+  /api/forget_password:
+    post:
+      summary: ''
+      operationId: postApiForget_password
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Users
+      security: []
+  /api/verifyOtpPass:
+    post:
+      summary: ''
+      operationId: postApiVerifyOtpPass
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Users
+      security: []
+  /api/verifyOtpPassfirebase:
+    post:
+      summary: ''
+      operationId: postApiVerifyOtpPassfirebase
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Users
+      security: []
+  /api/verify_otp:
+    post:
+      summary: ''
+      operationId: postApiVerify_otp
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Users
+      security: []
+  /api/resendotp:
+    post:
+      summary: ''
+      operationId: postApiResendotp
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Users
+      security: []
+  /api/change_password:
+    post:
+      summary: ''
+      operationId: postApiChange_password
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Users
+      security: []
+  /api/myprofile:
+    post:
+      summary: ''
+      operationId: postApiMyprofile
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Users
+      security: []
+  /api/profile_edit:
+    post:
+      summary: ''
+      operationId: postApiProfile_edit
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Users
+      security: []
+  /api/user_block_check:
+    post:
+      summary: ''
+      operationId: postApiUser_block_check
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Users
+      security: []
 tags:
   -
     name: Endpoints
     description: ''
+  -
+    name: Users
+    description: ''
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: ''
+security:
+  -
+    default: []
