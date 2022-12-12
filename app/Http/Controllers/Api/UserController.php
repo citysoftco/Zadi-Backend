@@ -14,6 +14,7 @@ use App\Models\User;
 use JWTAuth;
 use Auth;
 use Hash;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class UserController extends Controller
 {
@@ -518,7 +519,7 @@ class UserController extends Controller
             $message = array('status' => '0', 'message' => 'User Already Registered with this email or phone number');
             return $message;
         } else {
-            $user = User::create(['name' => $name, 'address' => $address, 'lat' => $lat, 'lng' => $lng, /*'email' => $user_email*/, 'user_phone' => $user_phone, 'user_city' => $user_city, 'user_area' => $user_area, 'user_image' => $filePath, 'referral_code' => $referral_c, 'password' => $password]);
+            $user = User::create(['name' => $name, 'address' => $address, 'lat' => $lat, 'lng' => $lng, /*'email' => $user_email,*/ 'user_phone' => $user_phone, 'user_city' => $user_city, 'user_area' => $user_area, 'user_image' => $filePath, 'referral_code' => $referral_c, 'password' => $password]);
             $otpcode = $this->otpmsg($name, $user_phone);
             $updateotp = DB::table('users')
                 ->where('user_phone', $user_phone)
@@ -527,17 +528,15 @@ class UserController extends Controller
             return $message;
         }
 
-
-
         if ($fb_id == NULL) {
             $check = DB::table('users')
                 ->where('user_phone', $user_phone)
-                ->orWhere('email', $user_email)
+                // ->orWhere('email', $user_email)
                 ->first();
         } else {
             $check = DB::table('users')
                 ->where('user_phone', $user_phone)
-                ->orWhere('email', $user_email)
+                // ->orWhere('email', $user_email)
                 ->orWhere('facebook_id', $fb_id)
                 ->first();
         }
@@ -552,7 +551,7 @@ class UserController extends Controller
             }
             $updateUser = DB::table('users')
                 ->where('id', $check->id)
-                ->update(['name' => $name, 'address' => $address, 'lat' => $lat, 'lng' => $lng, 'email' => $user_email, 'user_phone' => $user_phone, 'user_city' => $user_city, 'user_area' => $user_area, 'user_image' => $filePath, 'referral_code' => $referral_c, 'password' => $password]);
+                ->update(['name' => $name, 'address' => $address, 'lat' => $lat, 'lng' => $lng, /*'email' => $user_email,*/ 'user_phone' => $user_phone, 'user_city' => $user_city, 'user_area' => $user_area, 'user_image' => $filePath, 'referral_code' => $referral_c, 'password' => $password]);
 
             $chars = "0123456789";
             $otpval = "";

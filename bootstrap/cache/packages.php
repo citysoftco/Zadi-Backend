@@ -10,6 +10,13 @@
       'Debugbar' => 'Barryvdh\\Debugbar\\Facades\\Debugbar',
     ),
   ),
+  'barryvdh/laravel-ide-helper' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider',
+    ),
+  ),
   'facade/ignition' => 
   array (
     'providers' => 
@@ -129,6 +136,14 @@
     'aliases' => 
     array (
       'PayPal' => 'Srmklive\\PayPal\\Facades\\PayPal',
+    ),
+  ),
+  'timwassenburg/laravel-service-generator' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'TimWassenburg\\ServiceGenerator\\Http\\Providers\\CommandServiceProvider',
+      1 => 'TimWassenburg\\ServiceGenerator\\ServiceGeneratorServiceProvider',
     ),
   ),
   'tymon/jwt-auth' => 

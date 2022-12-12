@@ -19,12 +19,14 @@
         "razorpay/razorpay": "^2.7",
         "srmklive/paypal": "^3.0",
         "stripe/stripe-php": "^7.87",
+        "timwassenburg/laravel-service-generator": "^1.0",
         "twilio/sdk": "^6.26",
         "tymon/jwt-auth": "^1.0",
         "unicodeveloper/laravel-paystack": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",
+        "barryvdh/laravel-ide-helper": "^2.12",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "kitloong/laravel-migrations-generator": "^6.6",
