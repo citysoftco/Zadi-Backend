@@ -717,7 +717,6 @@ class UserController extends Controller
         $user_phone = $request->user_phone;
         $otp = $request->otp;
         $new_password = $request->new_password;
-        $new_password_confirm = $request->new_password_confirm;
         $user = User::where("user_phone", $user_phone)->first();
         if (!$user) {
             return response()->json([
@@ -734,7 +733,17 @@ class UserController extends Controller
         }
 
 
-        return true;
+        $user->update(
+            [
+                "password" => $new_password,
+            ]
+        );
+
+        return response()->json([
+            'status' => '1',
+            'message' => 'Password Updated Successfully'
+        ]);
+    }
 
         /*
                 $user_phone = $request->user_phone;
