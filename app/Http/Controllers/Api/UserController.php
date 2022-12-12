@@ -20,13 +20,13 @@ class UserController extends Controller
     use SendSms;
     use SendMail;
     use ImageStoragePicker;
-    
-     public function guard()
+
+    public function guard()
     {
         return Auth::guard();
     }
-    
-   
+
+
     public function social_login(Request $request)
     {
         $logintype = $request->type;
@@ -77,10 +77,12 @@ class UserController extends Controller
                     ->insertGetId(['email' => $user_email, 'name' => 'User', 'is_verified' => 0]);
 
                 DB::table('notificationby')
-                    ->insert(['user_id' => $Userreg,
+                    ->insert([
+                        'user_id' => $Userreg,
                         'sms' => '1',
                         'app' => '1',
-                        'email' => '1']);
+                        'email' => '1'
+                    ]);
                 $message = array('status' => '2', 'message' => 'go to register details page', 'data' => $user_email);
                 return $message;
             }
@@ -132,10 +134,12 @@ class UserController extends Controller
                     ->insertGetId(['email' => $email, 'facebook_id' => $fb_id, 'name' => 'User', 'is_verified' => 0]);
 
                 $appsetting = DB::table('notificationby')
-                    ->insert(['user_id' => $Userreg,
+                    ->insert([
+                        'user_id' => $Userreg,
                         'sms' => '1',
                         'app' => '1',
-                        'email' => '1']);
+                        'email' => '1'
+                    ]);
                 $message = array('status' => '4', 'message' => 'go to register details page', 'apple_id' => $fb_id);
                 return $message;
             }
@@ -198,21 +202,22 @@ class UserController extends Controller
                     ->insertGetId(['email' => $email, 'facebook_id' => $fb_id, 'name' => 'User', 'is_verified' => 0]);
 
                 $appsetting = DB::table('notificationby')
-                    ->insert(['user_id' => $Userreg,
+                    ->insert([
+                        'user_id' => $Userreg,
                         'sms' => '1',
                         'app' => '1',
-                        'email' => '1']);
+                        'email' => '1'
+                    ]);
 
                 $message = array('status' => '3', 'message' => 'go to register details page', 'fb_id' => $fb_id);
                 return $message;
             }
         }
-
     }
-    
+
     public function oldLogin(Request $request)
     {
-         $user_phone = $request->user_phone;
+        $user_phone = $request->user_phone;
         $device_id = $request->device_id;
         $reg_date = date('Y-m-d');
 
@@ -220,8 +225,8 @@ class UserController extends Controller
             ->where('user_phone', $user_phone)
             ->where('is_verified', 1)
             ->first();
-            
-        
+
+
 
         if ($checkUser) {
             $Userdetails = DB::table('users')
@@ -240,11 +245,10 @@ class UserController extends Controller
             $firebase_st = DB::table('firebase')
                 ->first();
             if ($firebase_st->status == 0) {
-                $otpcode = $this->otpmsg($Userdetails->name , $user_phone);
+                $otpcode = $this->otpmsg($Userdetails->name, $user_phone);
                 $updateotp = DB::table('users')
                     ->where('user_phone', $user_phone)
                     ->update(['otp_value' => $otpcode]);
-                
             }
             $message = array('status' => '1', 'message' => 'Verify OTP for Login', 'data' => $Userdetails);
             return $message;
@@ -269,15 +273,16 @@ class UserController extends Controller
                 ->first();
 
             $appsetting = DB::table('notificationby')
-                ->insert(['user_id' => $Userreg,
+                ->insert([
+                    'user_id' => $Userreg,
                     'sms' => '1',
                     'app' => '1',
-                    'email' => '1']);
+                    'email' => '1'
+                ]);
 
 
             $message = array('status' => '2', 'message' => 'go to register details page', 'data' => $user_phone);
             return $message;
-
         }
     }
 
@@ -288,26 +293,25 @@ class UserController extends Controller
         $token = null;
 
         $credentials =  $request->only('user_phone', 'password', 'is_verified');
-       
+
         if (!$token = $this->guard()->attempt($credentials)) {
 
-            return $this->createErrorResponse(0,'Unauthorized', 401);
+            return $this->createErrorResponse(0, 'Unauthorized', 401);
         }
         return $this->respondWithToken($token);
     }
-    
+
     protected function respondWithToken($token)
     {
-        
-         $data = [
+
+        $data = [
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60 ,
+            'expires_in' => auth('api')->factory()->getTTL() * 60,
             'user'       => auth()->user()
         ];
-        
-        return $this->createSuccessResponse(1 , 'data' , $data , 200);
-        
+
+        return $this->createSuccessResponse(1, 'data', $data, 200);
     }
 
     public function validates(Request $request)
@@ -319,7 +323,7 @@ class UserController extends Controller
      * Function: verifyotpfirebase
      * Params: Request Laravel Object $request
      * Description: 
-    */
+     */
     public function verifyotpfirebase(Request $request)
     {
         $phone = $request->user_phone;
@@ -334,7 +338,7 @@ class UserController extends Controller
         $getUser = DB::table('users')
             ->where('user_phone', $phone)
             ->first();
-        
+
         $user_name = $getUser->name;
         $user_phone = $getUser->user_phone;
         $user_email = $getUser->email;
@@ -373,7 +377,6 @@ class UserController extends Controller
                             $userupdate2 = DB::table('users')
                                 ->where('user_phone', $phone)
                                 ->update(['wallet' => $earning]);
-
                         } else {
                             $message = array('status' => '0', 'message' => 'wrong referral code');
                             return $message;
@@ -382,7 +385,7 @@ class UserController extends Controller
                         $getReferral = DB::table('tbl_referral')
                             ->where('user_id', $getUser->id)
                             ->first();
-                        
+
                         if ($getReferral) {
                             $getScratchCard = DB::table('referral_points')
                                 ->first();
@@ -393,24 +396,24 @@ class UserController extends Controller
                             $earn = "You've won ₹ " . $earning;
 
                             $getReferredUser1 = DB::table('users')
-                                                    ->select("wallet")
-                                                    ->where('id', $getUser->id)
-                                                    ->first();
+                                ->select("wallet")
+                                ->where('id', $getUser->id)
+                                ->first();
 
-                            if($getReferredUser1){
+                            if ($getReferredUser1) {
                                 $userupdate = DB::table('users')
                                     ->where('id', $getReferral->referral_by)
                                     ->update(['wallet' => $getReferredUser1->wallet + $earning]);
-
                             }
-                                
                         }
                     }
                 }
                 // verify phone
                 $getUser2 = User::where('user_phone', $phone)
-                    ->update(['is_verified' => 1,
-                        'otp_value' => NULL]);
+                    ->update([
+                        'is_verified' => 1,
+                        'otp_value' => NULL
+                    ]);
                 $updateDeviceId = DB::table('users')
                     ->where('user_phone', $phone)
                     ->update(['device_id' => $device_id]);
@@ -443,7 +446,6 @@ class UserController extends Controller
                 $message = array('status' => '0', 'message' => "Wrong OTPss");
                 return $message;
             }
-
         } else {
             $message = array('status' => '0', 'message' => "User not registered");
             return $message;
@@ -452,9 +454,10 @@ class UserController extends Controller
 
     public function register_details(Request $request)
     {
-       
+
         $user_phone = $request->user_phone;
-       
+        // $user_email = $request->user_phone;
+
         $password = Hash::make($request->password);
         $fb_id = $request->fb_id;
         $lat =  $request->lat;
@@ -464,9 +467,9 @@ class UserController extends Controller
         $user_area = $request->user_area;
         $fb_id = $request->facebook_id;
         $name = $request->name;
-        
-        
-        
+
+
+
         $u_name1 = str_replace(' ', '', $name);
         $u_name2 = str_replace('.', '', $u_name1);
         $u_name3 = str_replace('-', '', $u_name2);
@@ -481,8 +484,8 @@ class UserController extends Controller
             $referral_code .= $chars[mt_rand(0, strlen($chars) - 1)];
         }
         $referral_c = $startingg1 . $referral_code;
-        
-        
+
+
 
         $date = date('d-m-Y');
         $this->getImageStorage();
@@ -501,31 +504,30 @@ class UserController extends Controller
 
                 $image->move('images/user/' . $date . '/', $fileName);
                 $filePath = '/images/user/' . $date . '/' . $fileName;
-
             }
         } else {
             $filePath = 'N/A';
         }
-        
-         $check = DB::table('users')
-                ->where('user_phone', $user_phone)
-                ->orWhere('email', $user_email)
-                ->first();
-                
-        if($check != null){
-             $message = array('status' => '0', 'message' => 'User Already Registered with this email or phone number');
-             return $message;
-        }else{
-            $user = User::create(['name' => $name, 'address' => $address, 'lat' => $lat,'lng' => $lng, 'email' => $user_email, 'user_phone' => $user_phone, 'user_city' => $user_city, 'user_area' => $user_area, 'user_image' => $filePath, 'referral_code' => $referral_c, 'password' => $password]);
-             $otpcode = $this->otpmsg($name , $user_phone);
-             $updateotp = DB::table('users')
+
+        $check = DB::table('users')
             ->where('user_phone', $user_phone)
-            ->update(['otp_value' => $otpcode]);
+            // ->orWhere('email', $user_email)
+            ->first();
+
+        if ($check != null) {
+            $message = array('status' => '0', 'message' => 'User Already Registered with this email or phone number');
+            return $message;
+        } else {
+            $user = User::create(['name' => $name, 'address' => $address, 'lat' => $lat, 'lng' => $lng, /*'email' => $user_email*/, 'user_phone' => $user_phone, 'user_city' => $user_city, 'user_area' => $user_area, 'user_image' => $filePath, 'referral_code' => $referral_c, 'password' => $password]);
+            $otpcode = $this->otpmsg($name, $user_phone);
+            $updateotp = DB::table('users')
+                ->where('user_phone', $user_phone)
+                ->update(['otp_value' => $otpcode]);
             $message = array('status' => '1', 'message' => 'User registerd successfuly', 'data' => $user);
             return $message;
         }
-        
-        
+
+
 
         if ($fb_id == NULL) {
             $check = DB::table('users')
@@ -541,16 +543,16 @@ class UserController extends Controller
         }
 
         if ($check) {
-            
-            
-                    
+
+
+
             if ($check->is_verified != 0) {
                 $message = array('status' => '0', 'message' => 'User Already Registered with this email or phone number');
                 return $message;
             }
             $updateUser = DB::table('users')
                 ->where('id', $check->id)
-                ->update(['name' => $name, 'address' => $address, 'lat' => $lat,'lng' => $lng, 'email' => $user_email, 'user_phone' => $user_phone, 'user_city' => $user_city, 'user_area' => $user_area, 'user_image' => $filePath, 'referral_code' => $referral_c, 'password' => $password]);
+                ->update(['name' => $name, 'address' => $address, 'lat' => $lat, 'lng' => $lng, 'email' => $user_email, 'user_phone' => $user_phone, 'user_city' => $user_city, 'user_area' => $user_area, 'user_image' => $filePath, 'referral_code' => $referral_c, 'password' => $password]);
 
             $chars = "0123456789";
             $otpval = "";
@@ -594,16 +596,15 @@ class UserController extends Controller
                     $userupdate2 = DB::table('users')
                         ->where('user_phone', $user_phone)
                         ->update(['wallet' => $earning]);
-
                 } else {
                     $message = array('status' => '0', 'message' => 'wrong referral code');
                     return $message;
                 }
             }
-             $otpcode = $this->otpmsg($name , $user_phone);
-             $updateotp = DB::table('users')
-            ->where('user_phone', $user_phone)
-            ->update(['otp_value' => $otpcode]);
+            $otpcode = $this->otpmsg($name, $user_phone);
+            $updateotp = DB::table('users')
+                ->where('user_phone', $user_phone)
+                ->update(['otp_value' => $otpcode]);
             $message = array('status' => '1', 'message' => 'verify otp', 'data' => $user);
             return $message;
         } else {
@@ -717,7 +718,6 @@ class UserController extends Controller
             $message = array('status' => '0', 'message' => 'User not registered');
             return $message;
         }
-
     }
 
     public function verifyOtpPass(Request $request)
@@ -736,8 +736,10 @@ class UserController extends Controller
 
             if ($otp == $getotp) {
                 User::where('user_phone', $phone)
-                    ->update(['is_verified' => 1,
-                        'otp_value' => NULL]);
+                    ->update([
+                        'is_verified' => 1,
+                        'otp_value' => NULL
+                    ]);
                 $message = array('status' => '1', 'message' => "Otp Matched Successfully", 'data' => $getUser);
                 return $message;
             } else {
@@ -799,8 +801,10 @@ class UserController extends Controller
             if ($otp == $getotp) {
                 // verify phone
                 $getUser2 = User::where('user_phone', $phone)
-                    ->update(['is_verified' => 1,
-                        'otp_value' => NULL]);
+                    ->update([
+                        'is_verified' => 1,
+                        'otp_value' => NULL
+                    ]);
 
                 if ($ver == 0) {
                     if ($referral_code != NULL) {
@@ -832,7 +836,6 @@ class UserController extends Controller
                             $userupdate2 = DB::table('users')
                                 ->where('user_phone', $phone)
                                 ->update(['wallet' => $earning]);
-
                         } else {
                             $message = array('status' => '0', 'message' => 'wrong referral code');
                             return $message;
@@ -856,7 +859,6 @@ class UserController extends Controller
                 $message = array('status' => '0', 'message' => "Wrong OTP");
                 return $message;
             }
-
         } else {
             $message = array('status' => '0', 'message' => "User not registered");
             return $message;
@@ -935,7 +937,6 @@ class UserController extends Controller
 
                     $image->move('images/user/' . $date . '/', $fileName);
                     $filePath = '/images/user/' . $date . '/' . $fileName;
-
                 }
             } else {
                 $filePath = $uu->user_image;
@@ -1001,35 +1002,30 @@ class UserController extends Controller
             $message = array('status' => '0', 'message' => 'User not found');
             return $message;
         }
-
     }
 
     public function resendotp(Request $request)
     {
         $phone = $request->user_phone;
-        
-       
+
+
         $getUser = DB::table('users')
             ->where('user_phone', $phone)
             ->first();
-            
-            if($getUser != null){
-                $otpcode = $this->otpmsg($getUser->name , $phone);
-               
-                $updateotp = DB::table('users')
-                    ->where('user_phone', $phone)
-                    ->update(['otp_value' => $otpcode]);
-                 $message = array('status' => '1', 'message' => 'Otp sent', 'data' => $getUser);
-                 
-                 return $message;
-            }else{
-                 $message = array('status' => '0', 'message' => 'User Not Founds');
-                return $message;
-            }
-            
-        
-         
-         
+
+        if ($getUser != null) {
+            $otpcode = $this->otpmsg($getUser->name, $phone);
+
+            $updateotp = DB::table('users')
+                ->where('user_phone', $phone)
+                ->update(['otp_value' => $otpcode]);
+            $message = array('status' => '1', 'message' => 'Otp sent', 'data' => $getUser);
+
+            return $message;
+        } else {
+            $message = array('status' => '0', 'message' => 'User Not Founds');
+            return $message;
+        }
     }
 
     public function login_with_email(Request $request)
@@ -1071,12 +1067,10 @@ class UserController extends Controller
                 $token = $user->createToken('token')->accessToken;
                 $message = array('status' => '1', 'message' => 'login successfully', 'data' => $user, 'token' => $token);
                 return $message;
-
             } else {
                 $message = array('status' => '0', 'message' => 'Wrong Password');
                 return $message;
             }
-
         } else {
             $message = array('status' => '2', 'message' => 'User not Registered');
             return $message;
@@ -1137,7 +1131,6 @@ class UserController extends Controller
                             $userupdate2 = DB::table('users')
                                 ->where('user_phone', $phone)
                                 ->update(['wallet' => $earning]);
-
                         } else {
                             $message = array('status' => '0', 'message' => 'wrong referral code');
                             return $message;
@@ -1163,8 +1156,10 @@ class UserController extends Controller
                 }
                 // verify phone
                 $getUser2 = User::where('user_phone', $phone)
-                    ->update(['is_verified' => 1,
-                        'otp_value' => NULL]);
+                    ->update([
+                        'is_verified' => 1,
+                        'otp_value' => NULL
+                    ]);
                 $updateDeviceId = DB::table('users')
                     ->where('user_phone', $phone)
                     ->update(['device_id' => $device_id]);
@@ -1197,7 +1192,6 @@ class UserController extends Controller
                 $message = array('status' => '0', 'message' => "Wrong OTP");
                 return $message;
             }
-
         } else {
             $message = array('status' => '0', 'message' => "User not registered");
             return $message;
