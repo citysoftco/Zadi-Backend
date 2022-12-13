@@ -61,7 +61,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">{{ __('keywords.Type') }}</label>
                                     <select name="type" class="form-control">
@@ -72,12 +72,12 @@
 
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                        </div>
+                            {{-- </div>
 
 
-                        <div class="row">
+                        <div class="row"> --}}
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">{{ __('keywords.Product') }}
@@ -93,8 +93,8 @@
                                         value="{{ old('quantity') }}" required>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
+                            {{-- </div>
+                        <div class="row"> --}}
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">{{ __('keywords.Unit') }} (gm/Kg/Ltrs/Ml/pcs)</label>
@@ -110,14 +110,17 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="bmd-label-floating">{{ __('keywords.EAN Code') }}</label>
-                                    <input type="text" name="ean" value="{{ old('ean') }}" class="form-control"
-                                        required>
+                                    {{-- <label class="bmd-label-floating">{{ __('keywords.EAN Code') }}</label> --}}
+                                    {{-- <input type="text" name="ean" value="{{ old('ean') }}" class="form-control"
+                                        required> --}}
+                                    <label class="bmd-label-floating">{{ __('keywords.bar_code') }}</label>
+                                    <input type="text" name="bar_code" value="{{ old('bar_code') }}"
+                                        class="form-control">
                                 </div>
                             </div>
-                        </div>
+                            {{-- </div>
 
-                        <div class="row">
+                        <div class="row"> --}}
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">{{ __('keywords.MRP') }}</label>
@@ -132,10 +135,10 @@
                                         class="form-control" required>
                                 </div>
                             </div>
-                        </div>
+                            {{-- </div>
 
 
-                        <div class="row">
+                        <div class="row"> --}}
                             <div class="col-md-6">
                                 <label class="bmd-label-floating">{{ __('keywords.Main') }} {{ __('keywords.Product') }}
                                     {{ __('keywords.Image') }}
@@ -154,18 +157,18 @@
                                         value="{{ old('tags') }}">
                                 </div>
                             </div>
-                        </div>
+                            {{-- </div>
 
-                        <div class="row">
+                        <div class="row"> --}}
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">{{ __('keywords.Description') }}</label>
                                     <textarea type="text" name="description" class="form-control" required>{{ old('description') }}</textarea>
                                 </div>
                             </div>
-                        </div>
+                            {{-- </div>
 
-                        <div class="row">
+                        <div class="row"> --}}
 
                             <label class="bmd-label-floating"> {{ __('keywords.Product') }}
                                 {{ __('keywords.Images') }}<b>({{ __('keywords.Each Should Be Less Then 1000 KB') }})</b></label>
@@ -175,17 +178,18 @@
                                 <label class="custom-file-label"
                                     for="customFile">{{ __('keywords.Choose_File') }}</label>
                             </div>
-                        </div>
-                        <br>
+                            {{-- </div> --}}
+                            <br>
 
-                        <button type="submit" class="btn btn-primary pull-center">{{ __('keywords.Submit') }}</button>
-                        <a href="{{ route('storeproductlist') }}" class="btn">{{ __('keywords.Close') }}</a>
-                        <div class="clearfix"></div>
-                        </form>
+                            <button type="submit"
+                                class="btn btn-primary pull-center">{{ __('keywords.Submit') }}</button>
+                            <a href="{{ route('storeproductlist') }}" class="btn">{{ __('keywords.Close') }}</a>
+                            <div class="clearfix"></div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-@endsection
+    @endsection

@@ -62,7 +62,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">{{ __('keywords.Type') }}</label>
                                     <select name="type" class="form-control" required>
@@ -73,10 +73,9 @@
 
                                     </select>
                                 </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
+                            </div> --}}
+                            {{-- </div>
+                        <div class="row"> --}}
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">{{ __('keywords.Product') }}
@@ -92,11 +91,12 @@
                                         value="{{ old('quantity') }}" required>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
+                            {{-- </div>
+                        <div class="row"> --}}
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="bmd-label-floating">{{ __('keywords.Unit') }} (gm/Kg/Ltrs/Ml/pcs)</label>
+                                    <label class="bmd-label-floating">{{ __('keywords.Unit') }}
+                                        (gm/Kg/Ltrs/Ml/pcs)</label>
                                     {{-- <input type="text" name="unit" class="form-control" pattern="[A-Za-z]{1-10}" title="KG/G/Ltrs/Ml etc"  value="{{old('unit')}}" required> --}}
                                     <select name="unit" class="form-control">
                                         <option value="gm">gm</option>
@@ -109,13 +109,15 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="bmd-label-floating">{{ __('keywords.EAN Code') }}</label>
-                                    <input type="text" name="ean" class="form-control" value="{{ old('ean') }}"
-                                        required>
+                                    {{-- <label class="bmd-label-floating">{{ __('keywords.EAN Code') }}</label> --}}
+                                    {{-- <input type="text" name="ean" class="form-control" value="{{ old('ean') }}"
+                                        required> --}}
+                                    <label class="bmd-label-floating">{{ __('keywords.bar_code') }}</label>
+                                    <input type="text" name="bar" value="{{ old('bar') }}" class="form-control">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
+                            {{-- </div>
+                        <div class="row"> --}}
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">{{ __('keywords.MRP') }}</label>
@@ -130,10 +132,11 @@
                                         value="{{ old('price') }}" required>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
+                            {{-- </div>
+                        <div class="row"> --}}
                             <div class="col-md-6">
-                                <label class="bmd-label-floating">{{ __('keywords.Main') }} {{ __('keywords.Product') }}
+                                <label class="bmd-label-floating">{{ __('keywords.Main') }}
+                                    {{ __('keywords.Product') }}
                                     {{ __('keywords.Image') }}
                                     <b>({{ __('keywords.It Should Be Less Then 1000 KB') }})</b></label>
                                 <div class="custom-file">
@@ -150,17 +153,18 @@
                                         value="{{ old('tags') }}">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
+                            {{-- </div>
+                        <div class="row"> --}}
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">{{ __('keywords.Description') }}</label>
                                     <textarea type="text" name="description" class="form-control" required>{{ old('description') }}</textarea>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <label class="bmd-label-floating"> {{ __('keywords.Product') }} {{ __('keywords.Images') }}
+                            {{-- </div>
+                        <div class="row"> --}}
+                            <label class="bmd-label-floating"> {{ __('keywords.Product') }}
+                                {{ __('keywords.Images') }}
                                 <b>({{ __('keywords.Each Should Be Less Then 1000 KB') }})</b></label>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="customFile" name="images[]"
@@ -168,27 +172,28 @@
                                 <label class="custom-file-label"
                                     for="customFile">{{ __('keywords.Choose_File') }}</label>
                             </div>
+                            {{-- </div> --}}
+                            <br>
+                            <button type="submit"
+                                class="btn btn-primary pull-center">{{ __('keywords.Submit') }}</button>
+                            <a href="{{ route('productlist') }}" class="btn">{{ __('keywords.Close') }}</a>
+                            <div class="clearfix"></div>
+                            </form>
                         </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary pull-center">{{ __('keywords.Submit') }}</button>
-                        <a href="{{ route('productlist') }}" class="btn">{{ __('keywords.Close') }}</a>
-                        <div class="clearfix"></div>
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-@endsection
+    @endsection
 
-@section('postload-section')
-    {{-- You must include files that have no direct efect on the load of the page and can be loaded meanwhile other tasks can be performed by user --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
-    <script src="{{ url('assets/theme_assets/plugins/bs-custom-file-input/dist/bs-custom-file-input.min.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            bsCustomFileInput.init();
-        });
-    </script>
-@endsection
+    @section('postload-section')
+        {{-- You must include files that have no direct efect on the load of the page and can be loaded meanwhile other tasks can be performed by user --}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
+        <script src="{{ url('assets/theme_assets/plugins/bs-custom-file-input/dist/bs-custom-file-input.min.js') }}"></script>
+        <script>
+            $(document).ready(function() {
+                bsCustomFileInput.init();
+            });
+        </script>
+    @endsection
