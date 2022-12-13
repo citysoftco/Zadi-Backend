@@ -76,14 +76,16 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="bmd-label-floating">{{ __('keywords.Unit') }} (G/KG/Ltrs/Ml)</label>
+                                    <label class="bmd-label-floating">{{ __('keywords.Unit') }} (gm/Kg/Ltrs/Ml/pcs)</label>
                                     {{-- <input type="text" name="unit" class="form-control" pattern="[A-Za-z]{1-10}" value="{{$product->unit}}" title="KG/G/Ltrs/Ml etc" required> --}}
                                     <select name="unit" class="form-control">
-                                        <option value="G" @if ($product->unit == 'G') selected @endif>G</option>
-                                        <option value="KG" @if ($product->unit == 'KG') selected @endif>KG</option>
+                                        <option value="gm" @if ($product->unit == 'gm') selected @endif>gm</option>
+                                        <option value="Kg" @if ($product->unit == 'Kg') selected @endif>Kg</option>
                                         <option value="Ltrs" @if ($product->unit == 'Ltrs') selected @endif>Ltrs
                                         </option>
                                         <option value="Ml" @if ($product->unit == 'Ml') selected @endif>Ml</option>
+                                        <option value="pcs" @if ($product->unit == 'pcs') selected @endif>pcs
+                                        </option>
                                     </select>
                                 </div>
                             </div>
