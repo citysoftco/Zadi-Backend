@@ -109,8 +109,7 @@ class StoreProductController extends Controller
                 'price' => 'required',
                 'mrp' => 'required',
                 'tags' => 'required',
-                'barcode' => 'required',
-                'type' => 'required'
+
             ],
             [
                 'cat_id.required' => 'Select category',
@@ -121,8 +120,7 @@ class StoreProductController extends Controller
                 'price.required' => 'Enter price.',
                 'mrp.required' => 'Enter MRP.',
                 'tags.required' => 'Enter Tags',
-                'barcode.required' => 'Enter barcode Code',
-                'type.required' => 'Select Product Type'
+
             ]
         );
 
