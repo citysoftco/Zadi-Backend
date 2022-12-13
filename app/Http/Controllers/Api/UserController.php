@@ -306,7 +306,8 @@ class UserController extends Controller
 
         $user = User::where("user_phone", $request->user_phone)->first();
 
-        $token = $user->createToken(uniqid())->accessToken;
+        $token = $user->createToken("Zaad Tokens")->accessToken;
+
 
 
         $credentials =  $request->only('user_phone', 'password'/*, 'is_verified'*/);
@@ -553,6 +554,9 @@ class UserController extends Controller
                 'password' => $password,
                 'reg_date' => $reg_date,
             ]);
+            $token = $user->createToken("Zaad Tokens")->accessToken;
+            $user->token = $token;
+
             $otpcode = $this->otpmsg($name, $user_phone);
             $updateotp = DB::table('users')
                 ->where('user_phone', $user_phone)
@@ -712,18 +716,19 @@ class UserController extends Controller
         }
     }
 
-    public function forgotPassword(Request $request)
+    public function forgotPassword(ForgetPasswordRequest $request)
     {
+
         $user_phone = $request->user_phone;
         $otp = $request->otp;
-        $new_password = $request->new_password;
+        $new_password = Hash::make($request->new_password);
         $user = User::where("user_phone", $user_phone)->first();
-        if (!$user) {
-            return response()->json([
-                'status' => '0',
-                'message' => 'User not registered'
-            ], 422);
-        }
+        // if (!$user) {
+        //     return response()->json([
+        //         'status' => '0',
+        //         'message' => 'User not registered'
+        //     ], 422);
+        // }
         $user = $user->where("otp_value", $otp)->first();
         if (!$user) {
             return response()->json([
@@ -736,6 +741,7 @@ class UserController extends Controller
         $user->update(
             [
                 "password" => $new_password,
+                "otp_value" => null
             ]
         );
 
@@ -743,7 +749,7 @@ class UserController extends Controller
             'status' => '1',
             'message' => 'Password Updated Successfully'
         ]);
-    }
+
 
         /*
                 $user_phone = $request->user_phone;
