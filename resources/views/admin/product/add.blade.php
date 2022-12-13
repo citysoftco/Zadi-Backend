@@ -99,6 +99,8 @@
                                         (gm/Kg/Ltrs/Ml/pcs)</label>
                                     {{-- <input type="text" name="unit" class="form-control" pattern="[A-Za-z]{1-10}" title="KG/G/Ltrs/Ml etc"  value="{{old('unit')}}" required> --}}
                                     <select name="unit" class="form-control">
+                                        <option disabled selected>{{ __('keywords.Select') }}
+                                            {{ __('keywords.Unit') }}
                                         <option value="gm">gm</option>
                                         <option value="Kg">Kg</option>
                                         <option value="Ltrs">Ltrs</option>
@@ -112,8 +114,8 @@
                                     {{-- <label class="bmd-label-floating">{{ __('keywords.EAN Code') }}</label> --}}
                                     {{-- <input type="text" name="ean" class="form-control" value="{{ old('ean') }}"
                                         required> --}}
-                                    <label class="bmd-label-floating">{{ __('keywords.bar_code') }}</label>
-                                    <input type="text" name="bar" value="{{ old('bar') }}" class="form-control">
+                                    <label class="bmd-label-floating">{{ __('keywords.barcode') }}</label>
+                                    <input type="text" name="barcode" value="{{ old('barcode') }}" class="form-control">
                                 </div>
                             </div>
                             {{-- </div>

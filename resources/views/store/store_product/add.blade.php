@@ -113,9 +113,12 @@
                                     {{-- <label class="bmd-label-floating">{{ __('keywords.EAN Code') }}</label> --}}
                                     {{-- <input type="text" name="ean" value="{{ old('ean') }}" class="form-control"
                                         required> --}}
-                                    <label class="bmd-label-floating">{{ __('keywords.bar_code') }}</label>
+                                    {{-- <label class="bmd-label-floating">{{ __('keywords.bar_code') }}</label>
                                     <input type="text" name="bar_code" value="{{ old('bar_code') }}"
-                                        class="form-control">
+                                        class="form-control"> --}}
+                                    <label class="bmd-label-floating">{{ __('keywords.barcode') }}</label>
+                                    <input type="text" name="barcode" value="{{ old('barcode') }}" class="form-control">
+
                                 </div>
                             </div>
                             {{-- </div>

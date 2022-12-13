@@ -30,7 +30,7 @@ class ProductController extends Controller
             ->where('product.approved', 1)
             ->orderBy('product_id', 'desc')
             ->paginate(150);
-        
+
         $url_aws = $this->getImageStorage();
 
         return view('admin.product.list', compact('title', "admin", "logo", "product", "url_aws"));
@@ -82,7 +82,7 @@ class ProductController extends Controller
         $description = $request->description;
         $date = date('d-m-Y');
         $mrp = $request->mrp;
-        $ean = $request->ean;
+        $barcode = $request->barcode;
         $images = $request->images;
 
         $this->getImageStorage();
@@ -98,8 +98,6 @@ class ProductController extends Controller
                 'price' => 'required',
                 'mrp' => 'required',
                 'tags' => 'required',
-                'ean' => 'required',
-                'type' => 'required'
             ],
             [
                 'cat_id.required' => 'Select category',
@@ -110,8 +108,7 @@ class ProductController extends Controller
                 'price.required' => 'Enter price.',
                 'mrp.required' => 'Enter MRP.',
                 'tags.required' => 'Enter Tags',
-                'ean.required' => 'Enter Ean Code',
-                'type.required' => 'Select Product Type'
+
             ]
         );
 
@@ -123,7 +120,7 @@ class ProductController extends Controller
             $fileName = $product_image->getClientOriginalName();
             $fileName = str_replace(" ", "-", $fileName);
 
-            
+
 
             if ($this->storage_space != "same_server") {
                 $product_image_name = $product_image->getClientOriginalName();
@@ -134,7 +131,6 @@ class ProductController extends Controller
 
                 $product_image->move('images/product/' . $date . '/', $fileName);
                 $filePath = '/images/product/' . $date . '/' . $fileName;
-
             }
         } else {
             $filePath = 'images/';
@@ -166,7 +162,7 @@ class ProductController extends Controller
                     'quantity' => $quantity,
                     'varient_image' => 'N/A',
                     'unit' => $unit,
-                    'ean' => $ean,
+                    'barcode' => $barcode,
                     'base_price' => $price,
                     'base_mrp' => $mrp,
                     'description' => $description,
@@ -195,7 +191,6 @@ class ProductController extends Controller
 
                         $image->move('images/product/' . $date . '/', $fileName);
                         $filePath1 = '/images/product/' . $date . '/' . $fileName;
-
                     }
 
                     $images = DB::table('product_images')
@@ -209,7 +204,6 @@ class ProductController extends Controller
         } else {
             return redirect()->back()->withErrors(trans('keywords.Something Wents Wrong'));
         }
-
     }
 
     public function EditProduct(Request $request)
@@ -238,7 +232,7 @@ class ProductController extends Controller
             ->get();
 
         $url_aws = $this->getImageStorage();
-        
+
         return view('admin.product.edit', compact("admin_email", "admin", "logo", "title", "product", "tags", "images", "url_aws", "category"));
     }
 
@@ -287,7 +281,7 @@ class ProductController extends Controller
             $product_image = $request->product_image;
             $fileName = $product_image->getClientOriginalName();
             $fileName = str_replace(" ", "-", $fileName);
-            
+
 
             if ($this->storage_space != "same_server") {
                 $product_image_name = $product_image->getClientOriginalName();
@@ -298,7 +292,6 @@ class ProductController extends Controller
 
                 $product_image->move('images/product/' . $date . '/', $fileName);
                 $filePath = '/images/product/' . $date . '/' . $fileName;
-
             }
         } else {
             $filePath = $image;
@@ -365,7 +358,6 @@ class ProductController extends Controller
 
                     $image->move('images/product/' . $date . '/', $fileName);
                     $filePath1 = '/images/product/' . $date . '/' . $fileName;
-
                 }
 
                 $enternewim = DB::table('product_images')

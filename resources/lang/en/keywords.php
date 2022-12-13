@@ -207,7 +207,7 @@ return [
     'MRP' => 'MRP',
     'Unit' => 'Unit',
     'EAN Code' => 'EAN Code',
-    'bar_code' => 'Bar Code',
+    'barcode' => 'Barcode',
     'Tags' => 'Tags',
     'Description' => 'Description',
     'Name' => 'Name',

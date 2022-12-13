@@ -95,7 +95,7 @@ class StoreProductController extends Controller
         $description = $request->description;
         $date = date('d-m-Y');
         $mrp = $request->mrp;
-        $ean = $request->ean;
+        $barcode = $request->barcode;
         $images = $request->images;
         $type = $request->type;
         $this->validate(
@@ -109,7 +109,7 @@ class StoreProductController extends Controller
                 'price' => 'required',
                 'mrp' => 'required',
                 'tags' => 'required',
-                'ean' => 'required',
+                'barcode' => 'required',
                 'type' => 'required'
             ],
             [
@@ -121,7 +121,7 @@ class StoreProductController extends Controller
                 'price.required' => 'Enter price.',
                 'mrp.required' => 'Enter MRP.',
                 'tags.required' => 'Enter Tags',
-                'ean.required' => 'Enter Ean Code',
+                'barcode.required' => 'Enter barcode Code',
                 'type.required' => 'Select Product Type'
             ]
         );
@@ -141,7 +141,6 @@ class StoreProductController extends Controller
             } else {
                 $product_image->move('images/product/' . $date . '/', $fileName);
                 $filePath = '/images/product/' . $date . '/' . $fileName;
-
             }
         } else {
             $filePath = 'N/A';
@@ -172,7 +171,7 @@ class StoreProductController extends Controller
                     'quantity' => $quantity,
                     'varient_image' => 'N/A',
                     'unit' => $unit,
-                    'ean' => $ean,
+                    'barcode' => $barcode,
                     'base_price' => $price,
                     'base_mrp' => $mrp,
                     'description' => $description,
@@ -205,7 +204,6 @@ class StoreProductController extends Controller
 
                         $image->move('images/product/' . $date . '/', $fileName);
                         $filePath1 = '/images/product/' . $date . '/' . $fileName;
-
                     }
 
 
@@ -220,7 +218,6 @@ class StoreProductController extends Controller
         } else {
             return redirect()->back()->withErrors(trans('keywords.Something Wents Wrong'));
         }
-
     }
 
     public function EditProduct(Request $request)
@@ -303,7 +300,6 @@ class StoreProductController extends Controller
 
                 $product_image->move('images/product/' . $date . '/', $fileName);
                 $filePath = '/images/product/' . $date . '/' . $fileName;
-
             }
         } else {
             $filePath = $image;
@@ -368,7 +364,6 @@ class StoreProductController extends Controller
 
                     $image->move('images/product/' . $date . '/', $fileName);
                     $filePath1 = '/images/product/' . $date . '/' . $fileName;
-
                 }
 
                 $enternewim = DB::table('product_images')

@@ -91,9 +91,13 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="bmd-label-floating">{{ __('keywords.EAN Code') }}</label>
+                                    {{-- <label class="bmd-label-floating">{{ __('keywords.EAN Code') }}</label>
                                     <input type="text" name="ean" class="form-control" value="{{ old('ean') }}"
-                                        required>
+                                        required> --}}
+
+                                    <label class="bmd-label-floating">{{ __('keywords.barcode') }}</label>
+                                    <input type="text" name="barcode" value="{{ old('barcode') }}" class="form-control">
+
                                 </div>
                             </div>
 
