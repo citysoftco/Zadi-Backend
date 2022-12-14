@@ -18,13 +18,13 @@
             </button>
         </div>
 
-        <a href="#" class="brand-logo">
-            @if ($url_aws === "/")
+        {{-- <a href="#" class="brand-logo">
+            @if ($url_aws === '/')
                 <img src="{{url($logo->icon)}}" alt="" height="20" />
             @else
                 <img src="{{$url_aws.$logo->icon}}" alt="" height="20" />
             @endif
-        </a>
+        </a> --}}
     </div>
     <!-- END brand -->
 
@@ -38,30 +38,31 @@
         </div>
         <div class="menu-item dropdown">
             <a href="#" data-toggle="dropdown" data-display="static" class="menu-link">
-                <div class="menu-img online">
-                    @if ($url_aws === "/")
-                        <img src="{{url($admin->admin_image)}}" alt="" class="mw-100 mh-100 rounded-circle"/>
+                {{-- <div class="menu-img online">
+                    @if ($url_aws === '/')
+                        <img src="{{ url($admin->admin_image) }}" alt="" class="mw-100 mh-100 rounded-circle" />
                     @else
-                        <img src="{{$url_aws.$admin->admin_image}}" alt="" class="mw-100 mh-100 rounded-circle"/>
+                        <img src="{{ $url_aws . $admin->admin_image }}" alt=""
+                            class="mw-100 mh-100 rounded-circle" />
                     @endif
-                </div>
-                <div class="menu-text">{{$admin->email}}</div>
+                </div> --}}
+                <div class="menu-text">{{ $admin->email }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right mr-lg-3">
                 <a class="dropdown-item d-flex align-items-center"
-                   href="{{route('prof')}}">{{ __('keywords.Edit Profile')}} <i
+                    href="{{ route('prof') }}">{{ __('keywords.Edit Profile') }} <i
                         class="fa fa-user-circle fa-fw ml-auto text-gray-400 f-s-16"></i></a>
                 <a class="dropdown-item d-flex align-items-center"
-                   href="{{route('passchange')}}">{{ __('keywords.Change Password')}} <i
+                    href="{{ route('passchange') }}">{{ __('keywords.Change Password') }} <i
                         class="fa fa-key fa-fw ml-auto text-gray-400 f-s-16"></i></a>
-                @if($admin->settings ==1)
+                @if ($admin->settings == 1)
                     <a class="dropdown-item d-flex align-items-center"
-                       href="{{route('app_details')}}">{{ __('keywords.Admin Setting')}} <i
+                        href="{{ route('app_details') }}">{{ __('keywords.Admin Setting') }} <i
                             class="fa fa-wrench fa-fw ml-auto text-gray-400 f-s-16"></i></a>
                 @endif
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item d-flex align-items-center"
-                   href="{{route('logout')}}">{{ __('keywords.Log Out')}} <i
+                    href="{{ route('logout') }}">{{ __('keywords.Log Out') }} <i
                         class="fa fa-toggle-off fa-fw ml-auto text-gray-400 f-s-16"></i></a>
             </div>
         </div>
