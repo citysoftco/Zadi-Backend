@@ -90,6 +90,7 @@ class StoreProductController extends Controller
         $category_id = $request->cat_id;
         $product_name = $request->product_name;
         $quantity = $request->quantity;
+        $weight = $request->weight;
         $unit = $request->unit;
         $price = $request->price;
         $description = $request->description;
@@ -109,6 +110,7 @@ class StoreProductController extends Controller
                 'price' => 'required',
                 'mrp' => 'required',
                 'tags' => 'required',
+                'weight' => "required"
 
             ],
             [
@@ -116,6 +118,7 @@ class StoreProductController extends Controller
                 'product_name.required' => 'Enter product name.',
                 'product_image.required' => 'Choose product image.',
                 'quantity.required' => 'Enter quantity.',
+                'weight.required' => 'Enter weight.',
                 'unit.required' => 'Choose unit.',
                 'price.required' => 'Enter price.',
                 'mrp.required' => 'Enter MRP.',
@@ -166,7 +169,8 @@ class StoreProductController extends Controller
             $id = DB::table('product_varient')
                 ->insertGetId([
                     'product_id' => $insertproduct,
-                    'quantity' => $quantity,
+                    // 'quantity' => $quantity,
+                    'weight' => $weight,
                     'varient_image' => 'N/A',
                     'unit' => $unit,
                     'barcode' => $barcode,
@@ -254,17 +258,14 @@ class StoreProductController extends Controller
         $tags = explode(",", $request->tags);
         $images = $request->images;
 
-        $type = $request->type;
         $this->validate(
             $request,
             [
 
                 'product_name' => 'required',
-                'type' => 'required'
             ],
             [
                 'product_name.required' => 'Enter product name.',
-                'type.required' => 'Select Type'
             ]
         );
 

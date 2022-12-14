@@ -28,15 +28,16 @@ class StProductController extends Controller
             ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
             ->join('product', 'product_varient.product_id', '=', 'product.product_id')
             ->where('store_products.store_id', $store->id)
-            ->orderBy('store_products.stock', 'asc')
+            // ->orderBy('store_products.quantity', 'asc')
+            ->orderBy('store_products.quantity', 'asc')
             ->paginate(150);
 
         $check = DB::table('store_products')
             ->where('store_id', $store->id)
             ->get();
-        
+
         $url_aws = $this->getImageStorage();
-    
+
         if (count($check) > 0) {
             foreach ($check as $ch) {
                 $ch2 = $ch->varient_id;
@@ -59,9 +60,8 @@ class StProductController extends Controller
 
             return view('store.products.select', compact('title', "store", "logo", "products", "selected", "url_aws"));
         }
-
     }
-    
+
     public function st_product(Request $request)
     {
         $title = "Products";
@@ -76,12 +76,13 @@ class StProductController extends Controller
             ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
             ->join('product', 'product_varient.product_id', '=', 'product.product_id')
             ->where('store_id', $store->id)
-            ->orderBy('store_products.stock', 'asc')
+            // ->orderBy('store_products.quantity', 'asc')
+            ->orderBy('store_products.quantity', 'asc')
             ->paginate(150);
         $check = DB::table('store_products')
             ->where('store_id', $store->id)
             ->get();
-        
+
         $url_aws = $this->getImageStorage();
 
         if (count($check) > 0) {
@@ -104,7 +105,6 @@ class StProductController extends Controller
 
             return view('store.products.pr', compact('title', "store", "logo", "products", "selected", "url_aws"));
         }
-
     }
 
     public function added_product(Request $request)
@@ -131,7 +131,7 @@ class StProductController extends Controller
                     ->first();
 
                 $insert2 = DB::table('store_products')
-                    ->insert(['store_id' => $store->id, 'stock' => 0, 'varient_id' => $prod[$i], 'price' => $pr->base_price, 'mrp' => $pr->base_mrp]);
+                    ->insert(['store_id' => $store->id, 'quantity' => 0, 'varient_id' => $prod[$i], 'price' => $pr->base_price, 'mrp' => $pr->base_mrp]);
             }
 
             return redirect()->back()->withSuccess(trans('keywords.Added Successfully'));
@@ -159,23 +159,30 @@ class StProductController extends Controller
         } else {
             return redirect()->back()->withErrors(trans('keywords.Something Wents Wrong'));
         }
-
     }
 
-    public function stock_update(Request $request)
+    public function quantity_update(Request $request)
     {
         $id = $request->id;
-        $stock = $request->stock;
-        $stockupdate = DB::table('store_products')
-            ->where('p_id', $id)
-            ->update(['stock' => $stock]);
-        if ($stockupdate) {
+        $quantityupdate = DB::table('store_products')
+            ->where('p_id', $id);
+
+        $quantity = 0;
+        if ($request->input("action") == "plus")
+            $quantity = $request->quantity + $quantityupdate->first()->quantity;
+        else
+            $quantity = $quantityupdate->first()->quantity - $request->quantity;
+
+        $quantityupdate->update([
+            "quantity" => $quantity
+        ]);
+        if ($quantityupdate) {
             return redirect()->back()->withSuccess(trans('keywords.Updated Successfully'));
         } else {
             return redirect()->back()->withErrors(trans('keywords.Something Wents Wrong'));
         }
-
     }
+
 
     /////spotlight/////
     public function sp_product(Request $request)
@@ -195,7 +202,7 @@ class StProductController extends Controller
             ->join('product', 'product_varient.product_id', '=', 'product.product_id')
             ->join('categories', 'product.cat_id', '=', 'categories.cat_id')
             ->where('spotlight.store_id', $store->id)
-            ->orderBy('store_products.stock', 'asc')
+            ->orderBy('store_products.quantity', 'asc')
             ->paginate(150);
 
         $check = DB::table('spotlight')
@@ -234,7 +241,6 @@ class StProductController extends Controller
 
             return view('store.products.spotlight', compact('title', "store", "logo", "products", "selected", "url_aws"));
         }
-
     }
 
     public function added_spotlight(Request $request)

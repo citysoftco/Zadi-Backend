@@ -88,9 +88,10 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="bmd-label-floating">{{ __('keywords.Quantity') }}</label>
-                                    <input type="number" name="quantity" class="form-control"
-                                        value="{{ old('quantity') }}" required>
+                                    {{-- <label class="bmd-label-floating">{{ __('keywords.Quantity') }}</label> --}}
+                                    <label class="bmd-label-floating">{{ __('keywords.Weight') }}</label>
+                                    <input type="number" name="weight" class="form-control" value="{{ old('quantity') }}"
+                                        required>
                                 </div>
                             </div>
                             {{-- </div>
@@ -106,6 +107,14 @@
                                         <option value="Ml">Ml</option>
                                         <option value="pcs">pcs</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{-- <label class="bmd-label-floating">{{ __('keywords.Quantity') }}</label> --}}
+                                    <label class="bmd-label-floating">{{ __('keywords.Quantity') }}</label>
+                                    <input type="number" name="quantity" class="form-control"
+                                        value="{{ old('quantity') }}" required>
                                 </div>
                             </div>
                             <div class="col-md-6">

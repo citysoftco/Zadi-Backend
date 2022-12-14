@@ -246,7 +246,7 @@ Route::group(['middleware' => ['verifylicense']], function () {
             // for delivery time
             /* Route::get('timeslot', [TimeSlotController::class, 'timeslot'])->name('timeslot');
             Route::post('timeslotupdate', [TimeSlotController::class, 'timeslotupdate'])->name('timeslotupdate'); */
-            
+
             // for store
             Route::get('admin/store/list', [StoreController::class, 'storeclist'])->name('storeclist');
             Route::get('admin/store/add', [StoreController::class, 'store'])->name('store');
@@ -486,7 +486,7 @@ Route::group(['middleware' => ['verifylicense']], function () {
             Route::get('product/add', [StProductController::class, 'sel_product'])->name('sel_product');
             Route::post('product/added', [StProductController::class, 'added_product'])->name('added_product');
             Route::get('product/delete/{id}', [StProductController::class, 'delete_product'])->name('delete_product');
-            Route::post('product/stock/{id}', [StProductController::class, 'stock_update'])->name('stock_update');
+            Route::post('product/stock/{id}', [StProductController::class, 'quantity_update'])->name('quantity_update');
             Route::get('logout/', [StoreLoginController::class, 'logout'])->name('storelogout');
             Route::get('orders/next_day', [AssignorderController::class, 'orders'])->name('storeOrders');
             Route::get('orders/today', [AssignorderController::class, 'assignedorders'])->name('storeassignedorders');
@@ -657,7 +657,6 @@ Route::group(['middleware' => ['verifylicense']], function () {
             Route::get('store/invoice/a4/{cart_id}', [InvoiceController::class, 'a4invoice'])->name('a4invoice');
             Route::post('serarea/add', [AreaController::class, 'societyadd'])->name('ser_societyadddd');
         });
-
     });
 
     Route::namespace("CityAdmin")->prefix('cityadmin')->group(function () {
@@ -700,8 +699,6 @@ Route::group(['middleware' => ['verifylicense']], function () {
             Route::get('area/edit/{id}', [CityAreaController::class, 'cityAdAreaEdit'])->name('cityad-areaedit');
             Route::post('area/edit/{id}', [CityAreaController::class, 'cityAdAreaUpdate'])->name('cityad-areaupdate');
             Route::get('area/delete/{id}', [CityAreaController::class, 'cityAdAreaDelete'])->name('cityad-areadelete');
-
         });
     });
 });
-

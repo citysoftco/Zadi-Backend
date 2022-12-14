@@ -10,7 +10,7 @@
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:3oG417Oe10IHFtRAtFjvOyJ4B/rW8WL73MtnRn2Glxo=',
+    'key' => 'base64:pC0PFjKGLyEILozOTjpFRcxIsoPRWVBvme/8OJ5XRBM=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -250,9 +250,9 @@
       'dynamodb' => 
       array (
         'driver' => 'dynamodb',
-        'key' => '',
-        'secret' => '',
-        'region' => 'us-east-1',
+        'key' => 'test',
+        'secret' => 'test',
+        'region' => 'us-west-1',
         'table' => 'cache',
         'endpoint' => NULL,
       ),
@@ -508,20 +508,20 @@
         'aws' => 
         array (
           'driver' => 's3',
-          'key' => '',
-          'secret' => '',
-          'region' => 'us-east-1',
-          'bucket' => '',
+          'key' => 'test',
+          'secret' => 'test',
+          'region' => 'us-west-1',
+          'bucket' => 'test',
           'url' => NULL,
           'endpoint' => NULL,
         ),
         'digitalocean' => 
         array (
           'driver' => 's3',
-          'key' => NULL,
-          'secret' => NULL,
-          'endpoint' => NULL,
-          'region' => NULL,
+          'key' => 'test',
+          'secret' => 'test',
+          'endpoint' => 'test',
+          'region' => 'test',
           'bucket' => NULL,
         ),
       ),
@@ -547,7 +547,7 @@
   ),
   'jwt' => 
   array (
-    'secret' => NULL,
+    'secret' => 'GzOX81DNUAlmShzwXQ439Lay8UI9FmfT1PFb7YFt09TLV6o8Dy4xkpcqnzSkwQ45',
     'keys' => 
     array (
       'public' => NULL,
@@ -928,12 +928,12 @@
       'sqs' => 
       array (
         'driver' => 'sqs',
-        'key' => '',
-        'secret' => '',
+        'key' => 'test',
+        'secret' => 'test',
         'prefix' => 'https://sqs.us-east-1.amazonaws.com/your-account-id',
         'queue' => 'default',
         'suffix' => NULL,
-        'region' => 'us-east-1',
+        'region' => 'us-west-1',
         'after_commit' => false,
       ),
       'redis' => 
@@ -1163,9 +1163,9 @@ You can switch the language used with the tabs at the top right (or from the nav
     ),
     'ses' => 
     array (
-      'key' => '',
-      'secret' => '',
-      'region' => 'us-east-1',
+      'key' => 'test',
+      'secret' => 'test',
+      'region' => 'us-west-1',
     ),
   ),
   'session' => 
