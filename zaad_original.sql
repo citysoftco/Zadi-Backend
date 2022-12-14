@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 13, 2022 at 12:25 PM
+-- Generation Time: Dec 14, 2022 at 01:43 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -377,6 +377,32 @@ INSERT INTO `city` (`city_id`, `city_name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cityadmin`
+--
+
+CREATE TABLE `cityadmin` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `city_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cityadmin_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cityadmin_image` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cityadmin_phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('0','1','2') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `cityadmin_address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lat` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lng` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `device_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_photo` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `country_code`
 --
 
@@ -505,6 +531,18 @@ CREATE TABLE `delivery_rating` (
   `dboy_id` int(11) NOT NULL,
   `rating` float NOT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `deliver_boy_stores`
+--
+
+CREATE TABLE `deliver_boy_stores` (
+  `id_record` int(10) UNSIGNED NOT NULL,
+  `deliveryboy_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -768,6 +806,19 @@ INSERT INTO `mapbox` (`map_id`, `mapbox_api`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `mapbox_countries`
+--
+
+CREATE TABLE `mapbox_countries` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `mapbox_country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country_isocode` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_active` enum('0','1') COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `map_api`
 --
 
@@ -877,7 +928,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (18, '2016_06_01_000003_create_oauth_refresh_tokens_table', 3),
 (19, '2016_06_01_000004_create_oauth_clients_table', 3),
 (20, '2016_06_01_000005_create_oauth_personal_access_clients_table', 3),
-(21, '2019_08_19_000000_create_failed_jobs_table', 3);
+(21, '2019_08_19_000000_create_failed_jobs_table', 3),
+(22, '2022_05_21_030301_create_mapbox_countries_table', 4),
+(23, '2022_05_27_100830_create_cityadmin_table', 4),
+(24, '2022_06_02_092508_delivery__boy__stores__table', 4),
+(25, '2022_06_11_121542_stores_cityadmin_table', 4);
 
 -- --------------------------------------------------------
 
@@ -3214,7 +3269,7 @@ CREATE TABLE `product_rating` (
 CREATE TABLE `product_varient` (
   `varient_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
+  `weight` int(11) NOT NULL,
   `unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `base_mrp` float DEFAULT NULL,
   `base_price` float NOT NULL,
@@ -3229,68 +3284,68 @@ CREATE TABLE `product_varient` (
 -- Dumping data for table `product_varient`
 --
 
-INSERT INTO `product_varient` (`varient_id`, `product_id`, `quantity`, `unit`, `base_mrp`, `base_price`, `description`, `varient_image`, `barcode`, `approved`, `added_by`) VALUES
-(1, 1, 120, '٢٠٠', 0.03, 4000, 'نيدو حليب مجفف مدعم ٢.٢٥كغم', 'N/A', '٥٣٤٥٣', 1, 0),
-(2, 2, 200, '٧٥٠', 1.11, 2000, 'نوتيلا كريمة البندق مع الكاكاو قابلة للدهن ٧٥٠غرام', 'N/A', '٣٥٣٤', 1, 0),
-(3, 3, 200, '١٠ كيلو جرام', 0.02, 3000, 'الأسرة سكر ناعم ١٠كغم', 'N/A', '٣٥٣٤', 1, 0),
-(4, 4, 100, '٥ كيلو', 0.04, 2000, 'الوليمة أرز مزة بسمتي هندي حبة طويلة ٥كغم', 'N/A', '٣٥٣٤', 1, 0),
-(5, 5, 200, '١٠ قطع', 23, 2000, 'شوكولاته جلاكسي محشوة بالبندق الرهيبة عبوة جديدة', 'N/A', '٣٢', 1, 0),
-(6, 6, 99, '24 pcs', 56, 7000, 'كيت كات من نستلا صناعه بريطانيه', 'N/A', '11', 1, 0),
-(7, 7, 33333, '1 kg', 534, 5000, 'الشفاء عسل طبيعي ١كغم', 'N/A', '423', 1, 0),
-(8, 8, 4500, '170 kg', 34, 1200, 'المراعي شبيهة القشطة \" استبدل دسم الحليب بالزيت النباتي\" ١٧٠غرام', 'N/A', '43', 1, 3),
-(9, 9, 13423, '170 kg', 12, 122314, 'قودي زبدة فول سوداني ناعمة ٥١٠غرام', 'N/A', '43', 1, 3),
-(10, 10, 10, 'kg', 250, 200, 'عدس منقى', 'N/A', '30', 1, 3),
-(11, 11, 20, 'Ltrs', 2600, 200, 'عافية زيت دوار الشمس صافي ١.٥لتر', 'N/A', '30', 1, 0),
-(12, 12, 7, 'kg', 30000, 25000, 'سكر', 'N/A', '0', 1, 0),
-(39, 39, 1, 'kg', 800, 700, 'دقيق الاول سيقا', 'N/A', '10001', 1, 3),
-(40, 40, 2500, 'gm', 13000, 11000, 'لبن كابو', 'N/A', '10002', 1, 3),
-(41, 41, 1, 'ltr', 1800, 1700, 'زيت', 'N/A', '10003', 1, 3),
-(42, 42, 50, 'gm', 2000, 1500, 'raffaello', 'N/A', '10004', 1, 3),
-(43, 43, 10, 'kg', 5000, 4000, 'سكر 10كيلو كنانه', 'N/A', '10005', 1, 3),
-(44, 44, 1, 'kg', 4000, 3000, 'طحنية الوافي 1كيلو', 'N/A', '10007', 1, 3),
-(45, 45, 250, 'gm', 3000, 2500, 'بن البيت', 'N/A', '10008', 1, 3),
-(46, 46, 1, 'kg', 3000, 2000, 'رز كبسه', 'N/A', '10009', 1, 3),
-(47, 47, 400, 'gm', 1200, 1100, 'صلصه', 'N/A', '100010', 1, 3),
-(48, 48, 100, 'gm', 400, 300, 'ويفر', 'N/A', '100011', 1, 3),
-(49, 49, 500, 'gm', 1500, 1400, 'معكرونة الامارات', 'N/A', '100012', 1, 3),
-(50, 50, 170, 'g', 700, 500, 'صابون بالموليف', 'N/A', '100013', 1, 3),
-(51, 51, 120, 'مل', 1400, 800, 'معجون سيجنال', 'N/A', '100014', 1, 3),
-(52, 52, 500, 'gm', 800, 700, 'ملح ساسا', 'N/A', '100015', 1, 3),
-(53, 53, 200, 'gm', 1000, 800, 'تونة مغربية', 'N/A', '100016', 1, 3),
-(54, 54, 2500, 'gm', 10000, 6000, 'تانج', 'N/A', '100018', 1, 3),
-(55, 55, 500, 'g', 5000, 4500, 'جبنة بوك', 'N/A', '100020', 1, 3),
-(56, 56, 100, 'g', 700, 400, 'ليز', 'N/A', '100022', 1, 3),
-(57, 57, 200, 'gm', 4000, 3000, 'مناديل', 'N/A', '100025', 1, 3),
-(58, 58, 100, 'gm', 600, 500, 'باكنج باودر', 'N/A', '10000005', 1, 3),
-(59, 59, 18, 'gm', 600, 500, 'باكنج باودر', 'N/A', '1000005', 1, 3),
-(60, 60, 1, 'kg', 5000, 3000, 'سمن اصيل', 'N/A', '1022200', 1, 3),
-(61, 61, 500, 'gm', 2000, 1500, 'مربى العلالي', 'N/A', '2032022', 1, 3),
-(62, 62, 2, 'kg', 13000, 12500, 'لبن نيدو', 'N/A', '45466564', 1, 3),
-(63, 63, 10, 'kg', 20000, 18000, 'جبنة الدويم', 'N/A', '6544454', 1, 3),
-(64, 64, 70, 'gm', 7500, 6000, 'اندومي', 'N/A', '64545464', 1, 3),
-(65, 65, 16, 'pcs', 9000, 7000, 'فوط فام الصحيه', 'N/A', '544545558', 1, 3),
-(66, 66, 500, 'pcs', 700, 500, 'مناديل فاين', 'N/A', '257885', 1, 3),
-(67, 67, 450, 'gm', 2000, 1500, 'شاى الغزالتين', 'N/A', '5124454', 1, 3),
-(68, 68, 36, 'pcs', 9000, 8000, 'بامبرز فاين بيبى', 'N/A', '5646499', 1, 3),
-(69, 69, 1, 'kg', 700, 500, 'عدس الفراشه', 'N/A', '546464', 1, 3),
-(70, 70, 1, 'kg', 1500, 1000, 'فاصوليا الفراشة', 'N/A', '656465464', 1, 3),
-(71, 71, 1, 'كرتونه', 3000, 2900, 'بسكويت رويال', 'N/A', '314654678', 1, 3),
-(72, 72, 48, 'pcs', 4000, 3000, 'مصاصة لولي بوب', 'N/A', '45444', 1, 3),
-(73, 73, 3, 'kg', 4000, 3000, 'صابون فريش', 'N/A', '4555', 1, 3),
-(74, 74, 200, 'g', 7000, 6000, 'صابون اصيل', 'N/A', '646565', 1, 3),
-(75, 75, 5, 'ltr', 3000, 2500, 'صابون تيري 5لتر', 'N/A', '654647', 1, 3),
-(76, 76, 2, 'kg', 4000, 3000, 'صابون معجون', 'N/A', '46446455', 1, 3),
-(77, 77, 500, 'مل', 3000, 2500, 'عصير فيمتو سعودى', 'N/A', '25457', 1, 3),
-(78, 78, 250, 'مل', 5000, 4500, 'سن توب سعودى', 'N/A', '4545555', 1, 3),
-(79, 79, 1, 'kg', 4000, 3000, 'فلفل اسود حب', 'N/A', '35488', 1, 3),
-(80, 80, 500, 'gm', 1600, 1500, 'شعيرية اماراتية', 'N/A', '777777', 1, 3),
-(81, 81, 250, 'gm', 1400, 1200, 'اسباغتي', 'N/A', '3578', 1, 3),
-(82, 82, 250, 'مل', 2000, 1100, 'كاتشب رنا', 'N/A', '32145', 1, 3),
-(83, 83, 12, 'pcs', 6000, 5000, 'فرش الفليج', 'N/A', '42555', 1, 3),
-(84, 84, 20, 'pcs', 5000, 4000, 'موس التمساح', 'N/A', '54555', 1, 3),
-(85, 85, 2, 'kg', 7000, 6000, 'صابون الاوتوماتيك', 'N/A', '366666', 1, 3),
-(86, 86, 500, 'مل', 2500, 2000, 'كلوركس', 'N/A', '321555', 1, 3),
-(87, 87, 1, 'KG', 200, 197, 'best quality of berries.', '', NULL, 1, 0);
+INSERT INTO `product_varient` (`varient_id`, `product_id`, `weight`, `unit`, `base_mrp`, `base_price`, `description`, `varient_image`, `barcode`, `approved`, `added_by`) VALUES
+(1, 1, 0, '٢٠٠', 0.03, 4000, 'نيدو حليب مجفف مدعم ٢.٢٥كغم', 'N/A', '٥٣٤٥٣', 1, 0),
+(2, 2, 0, '٧٥٠', 1.11, 2000, 'نوتيلا كريمة البندق مع الكاكاو قابلة للدهن ٧٥٠غرام', 'N/A', '٣٥٣٤', 1, 0),
+(3, 3, 0, '١٠ كيلو جرام', 0.02, 3000, 'الأسرة سكر ناعم ١٠كغم', 'N/A', '٣٥٣٤', 1, 0),
+(4, 4, 0, '٥ كيلو', 0.04, 2000, 'الوليمة أرز مزة بسمتي هندي حبة طويلة ٥كغم', 'N/A', '٣٥٣٤', 1, 0),
+(5, 5, 0, '١٠ قطع', 23, 2000, 'شوكولاته جلاكسي محشوة بالبندق الرهيبة عبوة جديدة', 'N/A', '٣٢', 1, 0),
+(6, 6, 0, '24 pcs', 56, 7000, 'كيت كات من نستلا صناعه بريطانيه', 'N/A', '11', 1, 0),
+(7, 7, 0, '1 kg', 534, 5000, 'الشفاء عسل طبيعي ١كغم', 'N/A', '423', 1, 0),
+(8, 8, 0, '170 kg', 34, 1200, 'المراعي شبيهة القشطة \" استبدل دسم الحليب بالزيت النباتي\" ١٧٠غرام', 'N/A', '43', 1, 3),
+(9, 9, 0, '170 kg', 12, 122314, 'قودي زبدة فول سوداني ناعمة ٥١٠غرام', 'N/A', '43', 1, 3),
+(10, 10, 0, 'kg', 250, 200, 'عدس منقى', 'N/A', '30', 1, 3),
+(11, 11, 0, 'Ltrs', 2600, 200, 'عافية زيت دوار الشمس صافي ١.٥لتر', 'N/A', '30', 1, 0),
+(12, 12, 0, 'kg', 30000, 25000, 'سكر', 'N/A', '0', 1, 0),
+(39, 39, 0, 'kg', 800, 700, 'دقيق الاول سيقا', 'N/A', '10001', 1, 3),
+(40, 40, 0, 'gm', 13000, 11000, 'لبن كابو', 'N/A', '10002', 1, 3),
+(41, 41, 0, 'ltr', 1800, 1700, 'زيت', 'N/A', '10003', 1, 3),
+(42, 42, 0, 'gm', 2000, 1500, 'raffaello', 'N/A', '10004', 1, 3),
+(43, 43, 0, 'kg', 5000, 4000, 'سكر 10كيلو كنانه', 'N/A', '10005', 1, 3),
+(44, 44, 0, 'kg', 4000, 3000, 'طحنية الوافي 1كيلو', 'N/A', '10007', 1, 3),
+(45, 45, 0, 'gm', 3000, 2500, 'بن البيت', 'N/A', '10008', 1, 3),
+(46, 46, 0, 'kg', 3000, 2000, 'رز كبسه', 'N/A', '10009', 1, 3),
+(47, 47, 0, 'gm', 1200, 1100, 'صلصه', 'N/A', '100010', 1, 3),
+(48, 48, 0, 'gm', 400, 300, 'ويفر', 'N/A', '100011', 1, 3),
+(49, 49, 0, 'gm', 1500, 1400, 'معكرونة الامارات', 'N/A', '100012', 1, 3),
+(50, 50, 0, 'g', 700, 500, 'صابون بالموليف', 'N/A', '100013', 1, 3),
+(51, 51, 0, 'مل', 1400, 800, 'معجون سيجنال', 'N/A', '100014', 1, 3),
+(52, 52, 0, 'gm', 800, 700, 'ملح ساسا', 'N/A', '100015', 1, 3),
+(53, 53, 0, 'gm', 1000, 800, 'تونة مغربية', 'N/A', '100016', 1, 3),
+(54, 54, 0, 'gm', 10000, 6000, 'تانج', 'N/A', '100018', 1, 3),
+(55, 55, 0, 'g', 5000, 4500, 'جبنة بوك', 'N/A', '100020', 1, 3),
+(56, 56, 0, 'g', 700, 400, 'ليز', 'N/A', '100022', 1, 3),
+(57, 57, 0, 'gm', 4000, 3000, 'مناديل', 'N/A', '100025', 1, 3),
+(58, 58, 0, 'gm', 600, 500, 'باكنج باودر', 'N/A', '10000005', 1, 3),
+(59, 59, 0, 'gm', 600, 500, 'باكنج باودر', 'N/A', '1000005', 1, 3),
+(60, 60, 0, 'kg', 5000, 3000, 'سمن اصيل', 'N/A', '1022200', 1, 3),
+(61, 61, 0, 'gm', 2000, 1500, 'مربى العلالي', 'N/A', '2032022', 1, 3),
+(62, 62, 0, 'kg', 13000, 12500, 'لبن نيدو', 'N/A', '45466564', 1, 3),
+(63, 63, 0, 'kg', 20000, 18000, 'جبنة الدويم', 'N/A', '6544454', 1, 3),
+(64, 64, 0, 'gm', 7500, 6000, 'اندومي', 'N/A', '64545464', 1, 3),
+(65, 65, 0, 'pcs', 9000, 7000, 'فوط فام الصحيه', 'N/A', '544545558', 1, 3),
+(66, 66, 0, 'pcs', 700, 500, 'مناديل فاين', 'N/A', '257885', 1, 3),
+(67, 67, 0, 'gm', 2000, 1500, 'شاى الغزالتين', 'N/A', '5124454', 1, 3),
+(68, 68, 0, 'pcs', 9000, 8000, 'بامبرز فاين بيبى', 'N/A', '5646499', 1, 3),
+(69, 69, 0, 'kg', 700, 500, 'عدس الفراشه', 'N/A', '546464', 1, 3),
+(70, 70, 0, 'kg', 1500, 1000, 'فاصوليا الفراشة', 'N/A', '656465464', 1, 3),
+(71, 71, 0, 'كرتونه', 3000, 2900, 'بسكويت رويال', 'N/A', '314654678', 1, 3),
+(72, 72, 0, 'pcs', 4000, 3000, 'مصاصة لولي بوب', 'N/A', '45444', 1, 3),
+(73, 73, 0, 'kg', 4000, 3000, 'صابون فريش', 'N/A', '4555', 1, 3),
+(74, 74, 0, 'g', 7000, 6000, 'صابون اصيل', 'N/A', '646565', 1, 3),
+(75, 75, 0, 'ltr', 3000, 2500, 'صابون تيري 5لتر', 'N/A', '654647', 1, 3),
+(76, 76, 0, 'kg', 4000, 3000, 'صابون معجون', 'N/A', '46446455', 1, 3),
+(77, 77, 0, 'مل', 3000, 2500, 'عصير فيمتو سعودى', 'N/A', '25457', 1, 3),
+(78, 78, 0, 'مل', 5000, 4500, 'سن توب سعودى', 'N/A', '4545555', 1, 3),
+(79, 79, 0, 'kg', 4000, 3000, 'فلفل اسود حب', 'N/A', '35488', 1, 3),
+(80, 80, 0, 'gm', 1600, 1500, 'شعيرية اماراتية', 'N/A', '777777', 1, 3),
+(81, 81, 0, 'gm', 1400, 1200, 'اسباغتي', 'N/A', '3578', 1, 3),
+(82, 82, 0, 'مل', 2000, 1100, 'كاتشب رنا', 'N/A', '32145', 1, 3),
+(83, 83, 0, 'pcs', 6000, 5000, 'فرش الفليج', 'N/A', '42555', 1, 3),
+(84, 84, 0, 'pcs', 5000, 4000, 'موس التمساح', 'N/A', '54555', 1, 3),
+(85, 85, 0, 'kg', 7000, 6000, 'صابون الاوتوماتيك', 'N/A', '366666', 1, 3),
+(86, 86, 0, 'مل', 2500, 2000, 'كلوركس', 'N/A', '321555', 1, 3),
+(87, 87, 0, 'KG', 200, 197, 'best quality of berries.', '', NULL, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -3628,6 +3683,19 @@ INSERT INTO `store` (`id`, `store_name`, `employee_name`, `phone_number`, `store
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `stores_cityadmin`
+--
+
+CREATE TABLE `stores_cityadmin` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `cityadmin_owner` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `is_assigned` enum('0','1') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `store_assign_homecat`
 --
 
@@ -3846,7 +3914,7 @@ INSERT INTO `store_orders` (`store_order_id`, `product_name`, `varient_image`, `
 CREATE TABLE `store_products` (
   `p_id` int(11) NOT NULL,
   `varient_id` int(11) NOT NULL,
-  `stock` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
   `mrp` float NOT NULL,
   `price` float NOT NULL,
@@ -3858,7 +3926,7 @@ CREATE TABLE `store_products` (
 -- Dumping data for table `store_products`
 --
 
-INSERT INTO `store_products` (`p_id`, `varient_id`, `stock`, `store_id`, `mrp`, `price`, `min_ord_qty`, `max_ord_qty`) VALUES
+INSERT INTO `store_products` (`p_id`, `varient_id`, `quantity`, `store_id`, `mrp`, `price`, `min_ord_qty`, `max_ord_qty`) VALUES
 (1, 1, 2222, 3, 5, 5000, 30, 50),
 (3, 3, 20000, 3, 0.02, 3000, 1, 100),
 (4, 4, 3453, 3, 0.04, 2000, 0, 5),
@@ -4394,6 +4462,12 @@ ALTER TABLE `city`
   ADD PRIMARY KEY (`city_id`);
 
 --
+-- Indexes for table `cityadmin`
+--
+ALTER TABLE `cityadmin`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `country_code`
 --
 ALTER TABLE `country_code`
@@ -4428,6 +4502,12 @@ ALTER TABLE `delivery_boy`
 --
 ALTER TABLE `delivery_rating`
   ADD PRIMARY KEY (`rating_id`);
+
+--
+-- Indexes for table `deliver_boy_stores`
+--
+ALTER TABLE `deliver_boy_stores`
+  ADD PRIMARY KEY (`id_record`);
 
 --
 -- Indexes for table `driver_bank`
@@ -4519,6 +4599,13 @@ ALTER TABLE `list_cart`
 --
 ALTER TABLE `mapbox`
   ADD PRIMARY KEY (`map_id`);
+
+--
+-- Indexes for table `mapbox_countries`
+--
+ALTER TABLE `mapbox_countries`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `mapbox_countries_country_isocode_unique` (`country_isocode`);
 
 --
 -- Indexes for table `map_api`
@@ -4742,6 +4829,12 @@ ALTER TABLE `spotlight`
 -- Indexes for table `store`
 --
 ALTER TABLE `store`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `stores_cityadmin`
+--
+ALTER TABLE `stores_cityadmin`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -5004,6 +5097,12 @@ ALTER TABLE `city`
   MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `cityadmin`
+--
+ALTER TABLE `cityadmin`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `country_code`
 --
 ALTER TABLE `country_code`
@@ -5038,6 +5137,12 @@ ALTER TABLE `delivery_boy`
 --
 ALTER TABLE `delivery_rating`
   MODIFY `rating_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `deliver_boy_stores`
+--
+ALTER TABLE `deliver_boy_stores`
+  MODIFY `id_record` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `driver_bank`
@@ -5130,6 +5235,12 @@ ALTER TABLE `mapbox`
   MODIFY `map_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `mapbox_countries`
+--
+ALTER TABLE `mapbox_countries`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `map_api`
 --
 ALTER TABLE `map_api`
@@ -5157,7 +5268,7 @@ ALTER TABLE `membership_plan`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `minimum_maximum_order_value`
@@ -5320,6 +5431,12 @@ ALTER TABLE `spotlight`
 --
 ALTER TABLE `store`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `stores_cityadmin`
+--
+ALTER TABLE `stores_cityadmin`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `store_assign_homecat`
