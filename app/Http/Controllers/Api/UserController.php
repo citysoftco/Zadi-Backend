@@ -474,186 +474,186 @@ class UserController extends Controller
     public function register_details(UserRegisterRequest $request)
     {
 
-        $user = UserService::register($request);
+        // $user = UserService::register($request);
 
 
-        return response()->json($user);
+        // return response()->json($user);
 
-        // $user_phone = $request->user_phone;
-        // // $user_email = $request->user_phone;
+        $user_phone = $request->user_phone;
+        // $user_email = $request->user_phone;
 
-        // $password = Hash::make($request->password);
-        // $fb_id = $request->fb_id;
-        // $lat =  $request->lat;
-        // $lng = $request->lng;
-        // $address = $request->address;
-        // $user_city = $request->user_city;
-        // $user_area = $request->user_area;
-        // $fb_id = $request->facebook_id;
-        // $name = $request->name;
-        // $reg_date = now();
-
-
-        // $u_name1 = str_replace(' ', '', $name);
-        // $u_name2 = str_replace('.', '', $u_name1);
-        // $u_name3 = str_replace('-', '', $u_name2);
-        // $u_name = str_replace(',', '', $u_name3);
-        // $referral_code1 = $request->referral_code;
-        // $startingg = str_replace(' ', '', $u_name);
-        // $startingg1 = strtoupper(substr($u_name, 0, 3));
-
-        // $chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        // $referral_code = "";
-        // for ($i = 0; $i < 5; $i++) {
-        //     $referral_code .= $chars[mt_rand(0, strlen($chars) - 1)];
-        // }
-        // $referral_c = $startingg1 . $referral_code;
+        $password = Hash::make($request->password);
+        $fb_id = $request->fb_id;
+        $lat =  $request->lat;
+        $lng = $request->lng;
+        $address = $request->address;
+        $user_city = $request->user_city;
+        $user_area = $request->user_area;
+        $fb_id = $request->facebook_id;
+        $name = $request->name;
+        $reg_date = now();
 
 
+        $u_name1 = str_replace(' ', '', $name);
+        $u_name2 = str_replace('.', '', $u_name1);
+        $u_name3 = str_replace('-', '', $u_name2);
+        $u_name = str_replace(',', '', $u_name3);
+        $referral_code1 = $request->referral_code;
+        $startingg = str_replace(' ', '', $u_name);
+        $startingg1 = strtoupper(substr($u_name, 0, 3));
 
-        // $date = date('d-m-Y');
-        // $this->getImageStorage();
-
-        // if ($request->user_image) {
-        //     $image = $request->user_image;
-        //     $fileName = $image->getClientOriginalName();
-        //     $fileName = str_replace(" ", "-", $fileName);
-
-        //     if ($this->storage_space != "same_server") {
-        //         $image_name = $image->getClientOriginalName();
-        //         $image = $request->file('user_image');
-        //         $filePath = '/user/' . $image_name;
-        //         Storage::disk($this->storage_space)->put($filePath, fopen($request->file('user_image'), 'r+'), 'public');
-        //     } else {
-
-        //         $image->move('images/user/' . $date . '/', $fileName);
-        //         $filePath = '/images/user/' . $date . '/' . $fileName;
-        //     }
-        // } else {
-        //     $filePath = 'N/A';
-        // }
-
-        // $check = DB::table('users')
-        //     ->where('user_phone', $user_phone)
-        //     // ->orWhere('email', $user_email)
-        //     ->first();
-
-        // if ($check != null) {
-        //     $message = array('status' => '0', 'message' => 'User Already Registered with this email or phone number');
-        //     return $message;
-        // } else {
-        //     $user = User::create([
-        //         'name' => $name,
-        //         'address' => $address,
-        //         'lat' => $lat,
-        //         'lng' => $lng,
-        //         /*'email' => $user_email,*/
-        //         'user_phone' => $user_phone,
-        //         'user_city' => $user_city,
-        //         'user_area' => $user_area,
-        //         'user_image' => $filePath,
-        //         'referral_code' => $referral_c,
-        //         'password' => $password,
-        //         'reg_date' => $reg_date,
-        //     ]);
-        //     $token = $user->createToken("Zaad Tokens")->accessToken;
-        //     $user->token = $token;
-
-        //     $otpcode = $this->otpmsg($name, $user_phone);
-        //     $updateotp = DB::table('users')
-        //         ->where('user_phone', $user_phone)
-        //         ->update(['otp_value' => $otpcode]);
-        //     $message = array('status' => '1', 'message' => 'User registerd successfuly', 'data' => $user);
-        //     return $message;
-        // }
-
-
-        // if ($fb_id == NULL) {
-        //     $check = DB::table('users')
-        //         ->where('user_phone', $user_phone)
-        //         // ->orWhere('email', $user_email)
-        //         ->first();
-        // } else {
-        //     $check = DB::table('users')
-        //         ->where('user_phone', $user_phone)
-        //         // ->orWhere('email', $user_email)
-        //         ->orWhere('facebook_id', $fb_id)
-        //         ->first();
-        // }
-
-        // if ($check) {
+        $chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $referral_code = "";
+        for ($i = 0; $i < 5; $i++) {
+            $referral_code .= $chars[mt_rand(0, strlen($chars) - 1)];
+        }
+        $referral_c = $startingg1 . $referral_code;
 
 
 
-        //     if ($check->is_verified != 0) {
-        //         $message = array('status' => '0', 'message' => 'User Already Registered with this email or phone number');
-        //         return $message;
-        //     }
-        //     $updateUser = DB::table('users')
-        //         ->where('id', $check->id)
-        //         ->update(['name' => $name, 'address' => $address, 'lat' => $lat, 'lng' => $lng, /*'email' => $user_email,*/ 'user_phone' => $user_phone, 'user_city' => $user_city, 'user_area' => $user_area, 'user_image' => $filePath, 'referral_code' => $referral_c, 'password' => $password]);
+        $date = date('d-m-Y');
+        $this->getImageStorage();
 
-        //     $chars = "0123456789";
-        //     $otpval = "";
-        //     for ($i = 0; $i < 6; $i++) {
-        //         $otpval .= $chars[mt_rand(0, strlen($chars) - 1)];
-        //     }
-        //     $user = User::where('user_phone', $user_phone)->first();
-        //     $firebase_st = DB::table('firebase')
-        //         ->first();
-        //     // if ($firebase_st->status == 0) {
-        //     //     $otpcode = $this->otpmsg($name , $user_phone);
-        //     //     $updateotp = DB::table('users')
-        //     //         ->where('user_phone', $user_phone)
-        //     //         ->update(['otp_value' => $otpcode]);
-        //     // }
-        //     // dd($otpval);
-        //     $created_at = Carbon::now();
+        if ($request->user_image) {
+            $image = $request->user_image;
+            $fileName = $image->getClientOriginalName();
+            $fileName = str_replace(" ", "-", $fileName);
 
-        //     if ($referral_code1 != NULL) {
-        //         $getReferredUser1 = DB::table('users')
-        //             ->where('referral_code', $referral_code1)
-        //             ->first();
-        //         $getuser = DB::table('users')
-        //             ->where('user_phone', $user_phone)
-        //             ->first();
-        //         if ($getReferredUser1) {
-        //             $insertReferral = DB::table('tbl_referral')
-        //                 ->insert([
-        //                     'user_id' => $getuser->id,
-        //                     'referral_by' => $getReferredUser1->id,
-        //                     'created_at' => $created_at,
-        //                 ]);
-        //             $getScratchCard = DB::table('referral_points')
-        //                 ->first();
+            if ($this->storage_space != "same_server") {
+                $image_name = $image->getClientOriginalName();
+                $image = $request->file('user_image');
+                $filePath = '/user/' . $image_name;
+                Storage::disk($this->storage_space)->put($filePath, fopen($request->file('user_image'), 'r+'), 'public');
+            } else {
 
-        //             $scratch_card_offers = json_decode($getScratchCard->points);
-        //             $earning = rand($scratch_card_offers->min, $scratch_card_offers->max);
+                $image->move('images/user/' . $date . '/', $fileName);
+                $filePath = '/images/user/' . $date . '/' . $fileName;
+            }
+        } else {
+            $filePath = 'N/A';
+        }
 
-        //             $earn = "You've won ₹ " . $earning;
-        //             //////referral to user /////////
-        //             $userupdate2 = DB::table('users')
-        //                 ->where('user_phone', $user_phone)
-        //                 ->update(['wallet' => $earning]);
-        //         } else {
-        //             $message = array('status' => '0', 'message' => 'wrong referral code');
-        //             return $message;
-        //         }
-        //     }
-        //     $otpcode = $this->otpmsg($name, $user_phone);
+        $check = DB::table('users')
+            ->where('user_phone', $user_phone)
+            // ->orWhere('email', $user_email)
+            ->first();
 
-        //     $otpcode = 2323;
-        //     $updateotp = DB::table('users')
-        //         ->where('user_phone', $user_phone)
-        //         ->update([
-        //             'otp_value' => $otpcode,
-        //         ]);
-        //     $message = array('status' => '1', 'message' => 'verify otp', 'data' => $user);
-        //     return $message;
-        // } else {
-        //     $message = array('status' => '0', 'message' => 'User Not Founds');
-        //     return $message;
-        // }
+        if ($check != null) {
+            $message = array('status' => '0', 'message' => 'User Already Registered with this email or phone number');
+            return $message;
+        } else {
+            $user = User::create([
+                'name' => $name,
+                'address' => $address,
+                'lat' => $lat,
+                'lng' => $lng,
+                /*'email' => $user_email,*/
+                'user_phone' => $user_phone,
+                'user_city' => $user_city,
+                'user_area' => $user_area,
+                'user_image' => $filePath,
+                'referral_code' => $referral_c,
+                'password' => $password,
+                'reg_date' => $reg_date,
+            ]);
+            $token = $user->createToken("Zaad Tokens")->accessToken;
+            $user->token = $token;
+
+            $otpcode = $this->otpmsg($name, $user_phone);
+            $updateotp = DB::table('users')
+                ->where('user_phone', $user_phone)
+                ->update(['otp_value' => $otpcode]);
+            $message = array('status' => '1', 'message' => 'User registerd successfuly', 'data' => $user);
+            return $message;
+        }
+
+
+        if ($fb_id == NULL) {
+            $check = DB::table('users')
+                ->where('user_phone', $user_phone)
+                // ->orWhere('email', $user_email)
+                ->first();
+        } else {
+            $check = DB::table('users')
+                ->where('user_phone', $user_phone)
+                // ->orWhere('email', $user_email)
+                ->orWhere('facebook_id', $fb_id)
+                ->first();
+        }
+
+        if ($check) {
+
+
+
+            if ($check->is_verified != 0) {
+                $message = array('status' => '0', 'message' => 'User Already Registered with this email or phone number');
+                return $message;
+            }
+            $updateUser = DB::table('users')
+                ->where('id', $check->id)
+                ->update(['name' => $name, 'address' => $address, 'lat' => $lat, 'lng' => $lng, /*'email' => $user_email,*/ 'user_phone' => $user_phone, 'user_city' => $user_city, 'user_area' => $user_area, 'user_image' => $filePath, 'referral_code' => $referral_c, 'password' => $password]);
+
+            $chars = "0123456789";
+            $otpval = "";
+            for ($i = 0; $i < 6; $i++) {
+                $otpval .= $chars[mt_rand(0, strlen($chars) - 1)];
+            }
+            $user = User::where('user_phone', $user_phone)->first();
+            $firebase_st = DB::table('firebase')
+                ->first();
+            // if ($firebase_st->status == 0) {
+            //     $otpcode = $this->otpmsg($name , $user_phone);
+            //     $updateotp = DB::table('users')
+            //         ->where('user_phone', $user_phone)
+            //         ->update(['otp_value' => $otpcode]);
+            // }
+            // dd($otpval);
+            $created_at = Carbon::now();
+
+            if ($referral_code1 != NULL) {
+                $getReferredUser1 = DB::table('users')
+                    ->where('referral_code', $referral_code1)
+                    ->first();
+                $getuser = DB::table('users')
+                    ->where('user_phone', $user_phone)
+                    ->first();
+                if ($getReferredUser1) {
+                    $insertReferral = DB::table('tbl_referral')
+                        ->insert([
+                            'user_id' => $getuser->id,
+                            'referral_by' => $getReferredUser1->id,
+                            'created_at' => $created_at,
+                        ]);
+                    $getScratchCard = DB::table('referral_points')
+                        ->first();
+
+                    $scratch_card_offers = json_decode($getScratchCard->points);
+                    $earning = rand($scratch_card_offers->min, $scratch_card_offers->max);
+
+                    $earn = "You've won ₹ " . $earning;
+                    //////referral to user /////////
+                    $userupdate2 = DB::table('users')
+                        ->where('user_phone', $user_phone)
+                        ->update(['wallet' => $earning]);
+                } else {
+                    $message = array('status' => '0', 'message' => 'wrong referral code');
+                    return $message;
+                }
+            }
+            $otpcode = $this->otpmsg($name, $user_phone);
+
+            $otpcode = 2323;
+            $updateotp = DB::table('users')
+                ->where('user_phone', $user_phone)
+                ->update([
+                    'otp_value' => $otpcode,
+                ]);
+            $message = array('status' => '1', 'message' => 'verify otp', 'data' => $user);
+            return $message;
+        } else {
+            $message = array('status' => '0', 'message' => 'User Not Founds');
+            return $message;
+        }
     }
 
     public function myprofile(Request $request)
