@@ -39,18 +39,19 @@ class ProductapproveController extends Controller
     {
 
         $varient_id = $request->id;
-        $getvar = DB::table('product_varient')
-            ->where('varient_id', $varient_id)
-            ->first();
         $product = DB::table('product_varient')
-            ->where('varient_id', $varient_id)
-            ->update(['approved' => 1]);
+            ->where('varient_id', $varient_id);
+        $product->update(['approved' => 1]);
+        $product = $product->first();
+        // $product = DB::table('product_varient')
+        //     ->where('varient_id', $varient_id)
+        //     ->update(['approved' => 1]);
         if ($product) {
             $insert2 = DB::table('product')
-                ->where('product_id', $getvar->product_id)
+                ->where('product_id', $product->product_id)
                 ->update(['approved' => 1]);
             $insert2 = DB::table('store_products')
-                ->insert(['store_id' => $getvar->added_by, 'quantity' => 0, 'varient_id' => $varient_id, 'price' => $getvar->base_price, 'mrp' => $getvar->base_mrp]);
+                ->insert(['store_id' => $product->added_by, 'quantity' => $product->initial_quantity, 'varient_id' => $varient_id, 'price' => $product->base_price, 'mrp' => $product->base_mrp]);
             return redirect()->back()->withSuccess(trans('keywords.Approved Successfully'));
         } else {
             return redirect()->back()->withErrors(trans('keywords.Something Wents Wrong'));

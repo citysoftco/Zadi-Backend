@@ -90,7 +90,7 @@
                                 <div class="form-group">
                                     {{-- <label class="bmd-label-floating">{{ __('keywords.Quantity') }}</label> --}}
                                     <label class="bmd-label-floating">{{ __('keywords.Weight') }}</label>
-                                    <input type="number" name="weight" class="form-control" value="{{ old('quantity') }}"
+                                    <input type="number" name="weight" class="form-control" value="{{ old('weight') }}"
                                         required>
                                 </div>
                             </div>
@@ -113,8 +113,8 @@
                                 <div class="form-group">
                                     {{-- <label class="bmd-label-floating">{{ __('keywords.Quantity') }}</label> --}}
                                     <label class="bmd-label-floating">{{ __('keywords.Quantity') }}</label>
-                                    <input type="number" name="quantity" class="form-control"
-                                        value="{{ old('quantity') }}" required>
+                                    <input type="number" name="initial_quantity" class="form-control"
+                                        value="{{ old('initial_quantity') }}" required>
                                 </div>
                             </div>
                             <div class="col-md-6">

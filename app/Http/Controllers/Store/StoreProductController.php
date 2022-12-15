@@ -89,7 +89,7 @@ class StoreProductController extends Controller
 
         $category_id = $request->cat_id;
         $product_name = $request->product_name;
-        $quantity = $request->quantity;
+        $initial_quantity = $request->initial_quantity;
         $weight = $request->weight;
         $unit = $request->unit;
         $price = $request->price;
@@ -105,7 +105,7 @@ class StoreProductController extends Controller
                 'cat_id' => 'required',
                 'product_name' => 'required',
                 'product_image' => 'required|mimes:jpeg,png,jpg|max:1000',
-                'quantity' => 'required',
+                'initial_quantity' => 'required',
                 'unit' => 'required',
                 'price' => 'required',
                 'mrp' => 'required',
@@ -117,7 +117,7 @@ class StoreProductController extends Controller
                 'cat_id.required' => 'Select category',
                 'product_name.required' => 'Enter product name.',
                 'product_image.required' => 'Choose product image.',
-                'quantity.required' => 'Enter quantity.',
+                'initial_quantity.required' => 'Enter quantity.',
                 'weight.required' => 'Enter weight.',
                 'unit.required' => 'Choose unit.',
                 'price.required' => 'Enter price.',
@@ -169,7 +169,7 @@ class StoreProductController extends Controller
             $id = DB::table('product_varient')
                 ->insertGetId([
                     'product_id' => $insertproduct,
-                    // 'quantity' => $quantity,
+                    'initial_quantity' => $initial_quantity,
                     'weight' => $weight,
                     'varient_image' => 'N/A',
                     'unit' => $unit,

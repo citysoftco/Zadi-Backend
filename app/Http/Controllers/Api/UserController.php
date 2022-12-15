@@ -313,6 +313,10 @@ class UserController extends Controller
         if (!$this->guard()->attempt($credentials)) {
 
             return $this->createErrorResponse(0, 'Unauthorized', 401);
+            // return response()->json([
+            //     "code" => 0,
+            //     "message" => "Unauthorized"
+            // ], 401);
         }
         $user->token = $token;
         return response()->json($user);
