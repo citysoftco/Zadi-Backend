@@ -67,6 +67,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   return $request->user();
 });
 
+
 Route::namespace("Api")->prefix('')->group(function () {
   Route::post('login', [UserController::class, 'login']);
   Route::post('get_otp', [UserController::class, 'getOtp']);

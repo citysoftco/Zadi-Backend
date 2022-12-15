@@ -33,4 +33,27 @@ class UserService
         $user->token = $user->createToken(uniqid())->accessToken;
         return $user;
     }
+
+    public static function login($request)
+    {
+        $request['is_verified'] = 1;
+
+        $user = User::where("user_phone", $request->user_phone)->first();
+
+        $token = null;
+        if ($user)
+            $token = $user->createToken(uniqid())->accessToken;
+
+
+
+        $credentials =  $request->only('user_phone', 'password'/*, 'is_verified'*/);
+
+        if (Auth::guard()->attempt($credentials)) {
+
+            $user->token = $token;
+            return $user;
+        }
+
+        return false;
+    }
 }

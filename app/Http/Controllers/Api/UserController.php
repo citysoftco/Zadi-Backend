@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Traits\ImageStoragePicker;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ForgetPasswordRequest;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRegister;
 use App\Http\Requests\UserRegisterRequest;
 use Illuminate\Support\Facades\Http;
@@ -19,6 +20,8 @@ use JWTAuth;
 use Auth;
 use Hash;
 use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Support\Facades\Validator;
+use Laravel\Passport\Bridge\UserRepository;
 
 /**
  * @group Users
@@ -298,29 +301,37 @@ class UserController extends Controller
         }
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $request['is_verified'] = 1;
+        // $request['is_verified'] = 1;
 
-        $user = User::where("user_phone", $request->user_phone)->first();
+        // $user = User::where("user_phone", $request->user_phone)->first();
 
-        $token = $user->createToken(uniqid())->accessToken;
+        // $token = null;
+        // if ($user)
+        //     $token = $user->createToken(uniqid())->accessToken;
 
 
 
-        $credentials =  $request->only('user_phone', 'password'/*, 'is_verified'*/);
+        // $credentials =  $request->only('user_phone', 'password'/*, 'is_verified'*/);
 
-        if (!$this->guard()->attempt($credentials)) {
+        // if (!$this->guard()->attempt($credentials)) {
 
-            return $this->createErrorResponse(0, 'Unauthorized', 401);
-            // return response()->json([
-            //     "code" => 0,
-            //     "message" => "Unauthorized"
-            // ], 401);
-        }
-        $user->token = $token;
-        return response()->json($user);
+        //     // return $this->createErrorResponse(0, 'Unauthorized', 401);
+        //     return response()->json([
+        //         "code" => 0,
+        //         "message" => "Unauthorized"
+        //     ], 401);
+        // }
+        // $user->token = $token;
+        // return response()->json($user);
         // return $this->respondWithToken($token);
+
+        $user = UserService::login($request);
+        if ($user)
+            return response()->json($user);
+
+        return response()->json([], 401);
     }
 
     protected function respondWithToken($token)
@@ -484,8 +495,6 @@ class UserController extends Controller
         // return response()->json($user);
 
         $user_phone = $request->user_phone;
-        // $user_email = $request->user_phone;
-
         $password = Hash::make($request->password);
         $fb_id = $request->fb_id;
         $lat =  $request->lat;

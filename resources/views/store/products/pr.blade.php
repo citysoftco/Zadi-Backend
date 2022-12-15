@@ -74,7 +74,7 @@
                                                             style="float:left">
                                                             <div class="form-group" style="margin-top: 10px">
                                                                 <button
-                                                                    onclick="return confirm('are you sure you want to remove this quantity?')"
+                                                                    onclick="return confirm('Are you sure you want to remove this quantity?')"
                                                                     name="action" value="minus" type="submit"
                                                                     class="btn btn-danger"> <i
                                                                         class="fa fa-minus"></i></button>
@@ -92,7 +92,7 @@
                                                         </div><br>
                                                         <div class="form-group">
                                                             <button
-                                                                onclick="return confirm('are you sure you want to add this quantity?')"
+                                                                onclick="return confirm('Are you sure you want to add this quantity?')"
                                                                 name="action" value="plus" type="submit"
                                                                 class="btn btn-primary"> <i class="fa fa-plus"></i></button>
                                                         </div>
