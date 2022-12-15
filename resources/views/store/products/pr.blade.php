@@ -73,7 +73,9 @@
                                                         <div class="col-md-12 d-flex align-items-center gap-2"
                                                             style="float:left">
                                                             <div class="form-group" style="margin-top: 10px">
-                                                                <button name="action" value="minus" type="submit"
+                                                                <button
+                                                                    onclick="return confirm('are you sure you want to remove this quantity?')"
+                                                                    name="action" value="minus" type="submit"
                                                                     class="btn btn-danger"> <i
                                                                         class="fa fa-minus"></i></button>
                                                             </div>
@@ -89,7 +91,9 @@
                                                             </div>
                                                         </div><br>
                                                         <div class="form-group">
-                                                            <button name="action" value="plus" type="submit"
+                                                            <button
+                                                                onclick="return confirm('are you sure you want to add this quantity?')"
+                                                                name="action" value="plus" type="submit"
                                                                 class="btn btn-primary"> <i class="fa fa-plus"></i></button>
                                                         </div>
                                                     </div>
