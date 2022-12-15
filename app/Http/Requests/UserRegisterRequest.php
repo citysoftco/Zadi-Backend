@@ -26,7 +26,7 @@ class UserRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            "user_phone" => "required",
+            "user_phone" => "required|unique:users,user_phone",
             "password" => "required",
             "lat" => "required|numeric",
             "lng" => "required|numeric",
@@ -35,7 +35,8 @@ class UserRegisterRequest extends FormRequest
             "user_area" => "required",
             "facebook_id" => "nullable",
             "name" => "required",
-            "user_image" => "nullable|image"
+            "user_image" => "nullable|image",
+            "referral_code" => "required"
         ];
     }
 }
