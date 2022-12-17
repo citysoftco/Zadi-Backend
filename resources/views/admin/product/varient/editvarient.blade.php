@@ -70,8 +70,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">{{ __('keywords.Quantity') }}</label>
-                                    <input type="number" name="quantity" class="form-control"
-                                        value="{{ $product->quantity }}">
+                                    <input type="number" name="initial_quantity" class="form-control"
+                                        value="{{ $product->initial_quantity }}">
                                 </div>
                             </div>
                             <div class="col-md-6">

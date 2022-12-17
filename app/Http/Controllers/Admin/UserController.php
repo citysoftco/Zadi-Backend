@@ -28,7 +28,7 @@ class UserController extends Controller
         $users = DB::table('users')
             ->LeftJoin('city', 'users.user_city', '=', 'city.city_id')
             ->LeftJoin('society', 'users.user_area', '=', 'society.society_id')
-            ->where('users.email', '!=', NULL)
+            // ->where('users.email', '!=', NULL)
             ->where('users.user_phone', '!=', NULL)
             ->orderBy('users.reg_date', 'desc')
             ->paginate(10);

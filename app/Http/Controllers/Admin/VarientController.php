@@ -65,9 +65,9 @@ class VarientController extends Controller
         $currency = DB::table('currency')
             ->select('currency_sign')
             ->get();
-        
+
         $url_aws = $this->getImageStorage();
-        
+
         return view('admin.product.varient.addvarient', compact("admin_email", "admin", "id", 'title', 'logo', 'url_aws'));
     }
 
@@ -149,12 +149,12 @@ class VarientController extends Controller
         $mrp = $request->mrp;
         $price = $request->price;
         $unit = $request->unit;
-        $quantity = $request->quantity;
+        $initial_quantity = $request->initial_quantity;
         $description = $request->description;
         $date = date('d-m-Y');
         $created_at = date('d-m-Y h:i a');
         $varient_image = $request->varient_image;
-        $ean = $request->ean;
+        $barcode = $request->barcode;
         $getImage = DB::table('product_varient')
             ->where('varient_id', $product_id)
             ->first();
@@ -167,7 +167,7 @@ class VarientController extends Controller
 
         $varient_update = DB::table('product_varient')
             ->where('varient_id', $product_id)
-            ->update(['base_mrp' => $mrp, 'base_price' => $price, 'varient_image' => $varient_image, 'unit' => $unit, 'quantity' => $quantity, 'description' => $description, 'ean' => $ean]);
+            ->update(['base_mrp' => $mrp, 'base_price' => $price, 'varient_image' => $varient_image, 'unit' => $unit, 'initial_quantity' => $initial_quantity, 'description' => $description, 'barcode' => $barcode]);
 
         if ($varient_update) {
 
@@ -190,7 +190,6 @@ class VarientController extends Controller
                 ->delete();
 
             return redirect('product/list')->withSuccess(trans('keywords.Deleted Successfully'));
-
         } else {
             $delete = DB::table('product_varient')->where('varient_id', $request->id)->delete();
         }
@@ -199,7 +198,6 @@ class VarientController extends Controller
             $delete12 = DB::table('store_products')->where('varient_id', $request->id)->delete();
             $delete23 = DB::table('store_orders')->where('order_cart_id', 'incart')->where('varient_id', $request->id)->delete();
             return redirect()->back()->withSuccess(trans('keywords.Deleted Successfully'));
-
         } else {
             return redirect()->back()->withErrors(trans('keywords.Something Wents Wrong'));
         }

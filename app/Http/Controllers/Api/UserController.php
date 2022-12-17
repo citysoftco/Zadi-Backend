@@ -7,6 +7,7 @@ use App\Traits\ImageStoragePicker;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ForgetPasswordRequest;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\ResendOtpRequest;
 use App\Http\Requests\UserRegister;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\VerifyOtpRequest;
@@ -737,36 +738,13 @@ class UserController extends Controller
     public function forgotPassword(ForgetPasswordRequest $request)
     {
 
-        $user_phone = $request->user_phone;
-        $otp = $request->otp;
-        $new_password = Hash::make($request->new_password);
-        $user = User::where("user_phone", $user_phone)->first();
-        // if (!$user) {
-        //     return response()->json([
-        //         'status' => '0',
-        //         'message' => 'User not registered'
-        //     ], 422);
-        // }
-        $user = $user->where("otp_value", $otp)->first();
-        if (!$user) {
+        $user = UserService::forgetPassword($request);
+        if ($user)
+            return response()->json($user);
+        else
             return response()->json([
-                'status' => '0',
-                'message' => 'Otp Not Valid'
+                "Otp Not Correct Or It Expires"
             ], 422);
-        }
-
-
-        $user->update(
-            [
-                "password" => $new_password,
-                "otp_value" => null
-            ]
-        );
-
-        return response()->json([
-            'status' => '1',
-            'message' => 'Password Updated Successfully'
-        ]);
 
 
         /*
@@ -814,6 +792,16 @@ class UserController extends Controller
 
     public function verifyOtpPass(VerifyOtpRequest $request)
     {
+        $verify = UserService::verifyOtp($request);
+        if ($verify)
+            return response()->json($verify);
+        else
+            return response()->json([
+                "Otp Not Correct Or It Expires"
+            ], 422);
+
+
+
         // $phone = $request->user_phone;
         // $otp = $request->otp;
         // $checuss = DB::table('users')
@@ -1099,28 +1087,32 @@ class UserController extends Controller
         }
     }
 
-    public function resendotp(Request $request)
+    public function resendotp(ResendOtpRequest $request)
     {
-        $phone = $request->user_phone;
 
 
-        $getUser = DB::table('users')
-            ->where('user_phone', $phone)
-            ->first();
+        $user = UserService::resendOtp($request);
+        return response()->json($user);
+        // $phone = $request->user_phone;
 
-        if ($getUser != null) {
-            $otpcode = $this->otpmsg($getUser->name, $phone);
 
-            $updateotp = DB::table('users')
-                ->where('user_phone', $phone)
-                ->update(['otp_value' => $otpcode]);
-            $message = array('status' => '1', 'message' => 'Otp sent', 'data' => $getUser);
+        // $getUser = DB::table('users')
+        //     ->where('user_phone', $phone)
+        //     ->first();
 
-            return $message;
-        } else {
-            $message = array('status' => '0', 'message' => 'User Not Founds');
-            return $message;
-        }
+        // if ($getUser != null) {
+        //     $otpcode = $this->otpmsg($getUser->name, $phone);
+
+        //     $updateotp = DB::table('users')
+        //         ->where('user_phone', $phone)
+        //         ->update(['otp_value' => $otpcode]);
+        //     $message = array('status' => '1', 'message' => 'Otp sent', 'data' => $getUser);
+
+        //     return $message;
+        // } else {
+        //     $message = array('status' => '0', 'message' => 'User Not Founds');
+        //     return $message;
+        // }
     }
 
     public function login_with_email(Request $request)

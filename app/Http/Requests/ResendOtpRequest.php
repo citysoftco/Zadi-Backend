@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class VerifyOtpRequest extends FormRequest
+class ResendOtpRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class VerifyOtpRequest extends FormRequest
     public function rules()
     {
         return [
-            "user_phone" => "required|exists:users,user_phone",
-            "otp" => "required",
-
+            "user_phone" => "required|exists:users,user_phone"
         ];
     }
 }

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Traits\ImageStoragePicker;
 use App\Traits\SendMail;
 use App\Traits\SendSms;
+use Date;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -30,7 +31,7 @@ class UserService
         $data["status"] = 1;
         $data["password"] = Hash::make("password");
         $data["reg_date"] = now();
-        $data["otp_expires_date"] = now()->addMinutes(5);
+        $data["otp_expires_date"] = now()->addMinutes(2);
 
         $date = date('d-m-Y');
         FileHandleService::getImageStorage();
@@ -53,8 +54,8 @@ class UserService
         } else {
             $data["user_image"] = 'N/A';
         }
-        // $data["otp_value"] = OtpService::otpmsg($data["name"], $data["user_phone"]);
-        $data["otp_value"] = rand(12345, 99999);
+        $data["otp_value"] = OtpService::otpmsg($data["name"], $data["user_phone"]);
+        // $data["otp_value"] = rand(12345, 99999);
         $user = User::create($data);
         $user->token = $user->createToken(uniqid())->accessToken;
 
@@ -85,5 +86,52 @@ class UserService
         }
 
         return false;
+    }
+
+    public static function verifyOtp($request)
+    {
+        $data = $request->all();
+        $user = User::where("user_phone", $data["user_phone"])->first();
+        if ($user->otp_value == $data["otp"] && $user->otp_expires_date > now()) {
+            $user->update([
+                "is_verified" => 1,
+                "otp_value" => null
+            ]);
+            return $user;
+        } else
+            return false;
+    }
+
+    public static function resendOtp($request)
+    {
+        $data = $request->all();
+        $data["otp_expires_date"] = Carbon::now()->addMinutes(2);
+        $user = User::where("user_phone", $data["user_phone"])->first();
+        $data["otp_value"] = OtpService::otpmsg($user->name, $user->user_phone);
+        $user->update([
+            "otp_expires_date" => $data["otp_expires_date"],
+            "otp_value" => $data["otp_value"]
+        ]);
+        return $user;
+    }
+    public static function forgetPassword($request)
+    {
+        $data = $request->all();
+        $data["new_password"] = Hash::make($data["new_password"]);
+        $user = User::where("user_phone", $data["user_phone"])
+            ->where("otp_value", $data["otp"])
+            ->first();
+
+        if (!$user && $user->otp_expires_date > now())
+            return false;
+
+        $user->update(
+            [
+                "password" => $data["new_password"],
+                "otp_value" => null
+            ]
+        );
+
+        return $user;
     }
 }

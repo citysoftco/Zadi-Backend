@@ -25,6 +25,7 @@ class ForgetPasswordRequest extends FormRequest
     {
         return [
             "user_phone" => "required|exists:users,user_phone",
+            "otp" => "required",
             "new_password" => "required",
             "new_password_confirm" => "required|same:new_password"
         ];
