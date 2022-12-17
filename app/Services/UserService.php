@@ -117,16 +117,21 @@ class UserService
         $data = $request->all();
         $data["new_password"] = Hash::make($data["new_password"]);
         $user = User::where("user_phone", $data["user_phone"])
-            ->where("otp_value", $data["otp"])
             ->first();
 
-        if (!$user && $user->otp_expires_date > now())
+        if (!$user)
             return false;
+
+        $user =  $user->where("otp_value", $data["otp"])->first();
+        if (!$user || $user->otp_expires_date > now())
+            return false;
+
 
         $user->update(
             [
                 "password" => $data["new_password"],
-                "otp_value" => null
+                "otp_value" => null,
+
             ]
         );
 
