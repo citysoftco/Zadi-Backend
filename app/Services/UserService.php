@@ -29,7 +29,7 @@ class UserService
     {
         $data = $request->all();
         $data["status"] = 1;
-        $data["password"] = Hash::make("password");
+        $data["password"] = Hash::make($data["password"]);
         $data["reg_date"] = now();
         $data["otp_expires_date"] = now()->addMinutes(2);
 
@@ -69,17 +69,15 @@ class UserService
     {
         $request['is_verified'] = 1;
 
-        $user = User::where("user_phone", $request->user_phone)->first();
-
-        $token = null;
-        if ($user)
-            $token = $user->createToken(uniqid())->accessToken;
-
-
-
         $credentials =  $request->only('user_phone', 'password'/*, 'is_verified'*/);
 
         if (Auth::guard()->attempt($credentials)) {
+
+            $user = User::where("user_phone", $request->user_phone)->first();
+
+            $token = null;
+            if ($user)
+                $token = $user->createToken(uniqid())->accessToken;
 
             $user->token = $token;
             return $user;
