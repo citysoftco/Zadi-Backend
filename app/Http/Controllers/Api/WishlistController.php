@@ -69,7 +69,8 @@ class WishlistController extends Controller
                     'user_id' => $user_id,
                     'created_at' => $created_at,
                     'updated_at' => $created_at,
-                    'price' => $price2]);
+                    'price' => $price2
+                ]);
 
             if ($insert) {
                 $count = DB::table('wishlist')
@@ -82,7 +83,6 @@ class WishlistController extends Controller
                 $message = array('status' => '0', 'message' => 'Something Wents Wrong');
                 return $message;
             }
-
         } else {
             $del = DB::table('wishlist')
                 ->where('varient_id', $varient_id)
@@ -101,9 +101,7 @@ class WishlistController extends Controller
                 $message = array('status' => '0', 'message' => 'Something Wents Wrong', 'data' => []);
                 return $message;
             }
-
         }
-
     }
 
     public function wishlist_to_cart(Request $request)
@@ -135,14 +133,12 @@ class WishlistController extends Controller
 
             if ($deal) {
                 $h->price = round($deal->deal_price, 2);
-
             } else {
                 $sp = DB::table('store_products')
                     ->where('varient_id', $h->varient_id)
                     ->where('store_id', $store_id)
                     ->first();
                 $h->price = round($sp->price, 2);
-
             }
 
 
@@ -174,7 +170,8 @@ class WishlistController extends Controller
                             'order_cart_id' => "incart",
                             'order_date' => $current,
                             'price' => $h->price,
-                            'description' => $h->description]);
+                            'description' => $h->description
+                        ]);
 
                     $delete = DB::table('wishlist')
                         ->where('user_id', $user_id)
@@ -202,8 +199,6 @@ class WishlistController extends Controller
                         ->delete();
                 }
             }
-
-
         }
 
         $store = DB::table('store_orders')
@@ -230,8 +225,8 @@ class WishlistController extends Controller
                 ->join('store_products', 'store_orders.varient_id', '=', 'store_products.varient_id')
                 ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
                 ->join('product', 'product_varient.product_id', '=', 'product.product_id')
-                ->select('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_orders.total_mrp', 'store_products.price', 'store_orders.qty as cart_qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.stock', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type', 'store_orders.price as ord_price')
-                ->groupBy('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_products.price', 'store_orders.total_mrp', 'store_orders.qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.stock', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type', 'store_orders.price')
+                ->select('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_orders.total_mrp', 'store_products.price', 'store_orders.qty as cart_qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.quantity', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type', 'store_orders.price as ord_price')
+                ->groupBy('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_products.price', 'store_orders.total_mrp', 'store_orders.qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.quantity', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type', 'store_orders.price')
                 ->where('store_products.store_id', $store_id)
                 ->where('store_orders.store_approval', $user_id)
                 ->where('store_orders.order_cart_id', 'incart')
@@ -259,7 +254,6 @@ class WishlistController extends Controller
                             ->where('order_cart_id', "incart")
                             ->update(['price' => $new_price]);
                     }
-
                 } else {
                     $sp = DB::table('store_products')
                         ->where('varient_id', $cart_itemss->varient_id)
@@ -302,7 +296,6 @@ class WishlistController extends Controller
                     } else {
                         $cart_itemss->cart_qty = 0;
                     }
-
                 } else {
                     $cart_itemss->isFavourite = 'false';
                     $cart_itemss->cart_qty = 0;
@@ -395,7 +388,6 @@ class WishlistController extends Controller
         if ($stock == 'out') {
             $stock = "<";
             $by = 1;
-
         } elseif ($stock == 'all' || $stock == NULL) {
             $stock = "!=";
             $by = NULL;
@@ -417,15 +409,15 @@ class WishlistController extends Controller
                 ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
                 ->join('product', 'product_varient.product_id', '=', 'product.product_id')
                 ->Leftjoin('product_rating', 'store_products.varient_id', '=', 'product_rating.varient_id')
-                ->select('store_products.store_id', 'store_products.stock', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
-                ->groupBy('store_products.store_id', 'store_products.stock', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', 'product_rating.rating')
-                ->select('wishlist.*', 'store_products.stock', 'product.product_id', 'product.product_image', 'product.type')
+                ->select('store_products.store_id', 'store_products.quantity', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
+                ->groupBy('store_products.store_id', 'store_products.quantity', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', 'product_rating.rating')
+                ->select('wishlist.*', 'store_products.quantity', 'product.product_id', 'product.product_image', 'product.type')
                 ->where('wishlist.user_id', $user_id)
                 ->where('wishlist.store_id', $store_id)
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.stock', $stock, $by)
+                ->where('store_products.quantity', $stock, $by)
                 ->orderBy('product.product_name', $filter1)
                 ->paginate(10);
             $count = DB::table('wishlist')
@@ -438,14 +430,14 @@ class WishlistController extends Controller
                 ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
                 ->join('product', 'product_varient.product_id', '=', 'product.product_id')
                 ->Leftjoin('product_rating', 'store_products.varient_id', '=', 'product_rating.varient_id')
-                ->select('store_products.store_id', 'store_products.stock', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
-                ->groupBy('store_products.store_id', 'store_products.stock', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', 'product_rating.rating')
+                ->select('store_products.store_id', 'store_products.quantity', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
+                ->groupBy('store_products.store_id', 'store_products.quantity', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', 'product_rating.rating')
                 ->where('wishlist.user_id', $user_id)
                 ->where('wishlist.store_id', $store_id)
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.stock', $stock, $by)
+                ->where('store_products.quantity', $stock, $by)
                 ->paginate(10);
             $count = DB::table('wishlist')
                 ->where('user_id', $user_id)
@@ -466,14 +458,12 @@ class WishlistController extends Controller
 
             if ($deal) {
                 $store->price = round($deal->deal_price, 2);
-
             } else {
                 $sp = DB::table('store_products')
                     ->where('varient_id', $store->varient_id)
                     ->where('store_id', $store_id)
                     ->first();
                 $store->price = round($sp->price, 2);
-
             }
 
             if ($request->user_id != NULL && $store_id != NULL) {
@@ -499,7 +489,6 @@ class WishlistController extends Controller
                 } else {
                     $store->cart_qty = 0;
                 }
-
             } else {
                 $store->isFavourite = 'false';
                 $store->cart_qty = 0;
@@ -534,7 +523,6 @@ class WishlistController extends Controller
 
 
             $wishlist_items[] = $store;
-
         }
         if ($wishlist_items != NULL) {
 
@@ -546,5 +534,4 @@ class WishlistController extends Controller
             return $message;
         }
     }
-
 }

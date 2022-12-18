@@ -121,7 +121,7 @@ class ByphotoController extends Controller
             ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
             ->join('product', 'product_varient.product_id', '=', 'product.product_id')
             ->where('store_id', $store->id)
-            ->orderBy('store_products.stock', 'asc')
+            ->orderBy('store_products.quantity', 'asc')
             ->get();
 
         $check = DB::table('store_products')
@@ -271,9 +271,11 @@ class ByphotoController extends Controller
                 $result = curl_exec($ch);
                 curl_close($ch);
                 $dd = DB::table('user_notification')
-                    ->insert(['user_id' => $user_id,
+                    ->insert([
+                        'user_id' => $user_id,
                         'noti_title' => $notification_title,
-                        'noti_message' => $notification_text]);
+                        'noti_message' => $notification_text
+                    ]);
 
                 $results = json_decode($result);
             }
@@ -281,8 +283,10 @@ class ByphotoController extends Controller
 
         $ord = DB::table('order_by_photo')
             ->where('ord_id', $ord_id)
-            ->update(['reason' => "Cancelled by Store due to the following reason: " . $cause,
-                'processed' => "2"]);
+            ->update([
+                'reason' => "Cancelled by Store due to the following reason: " . $cause,
+                'processed' => "2"
+            ]);
         return redirect()->back()->withSuccess(trans('keywords.Order Rejected Successfully'));
     }
 
@@ -379,7 +383,6 @@ class ByphotoController extends Controller
                 $tax_price = ($price1 * $tax_p) / 100;
                 $price_without_tax = $price1;
                 $price2 = $price1 + $tax_price;
-
             } else {
                 $tax_price = $price1 - ($price1 / (100 + $tax_p) * 100);
                 $price_without_tax = $price1 - $tax_price;
@@ -403,7 +406,8 @@ class ByphotoController extends Controller
                     'price_without_tax' => round($price_without_tax, 0),
                     'tx_price' => round($tax_price, 0),
                     'tx_name' => $tax_name,
-                    'type' => $p->type]);
+                    'type' => $p->type
+                ]);
         }
 
         $delcharge = DB::table('freedeliverycart')
@@ -418,7 +422,8 @@ class ByphotoController extends Controller
 
         if ($insert) {
             $oo = DB::table('orders')
-                ->insertGetId(['cart_id' => $cart_id,
+                ->insertGetId([
+                    'cart_id' => $cart_id,
                     'total_price' => $price2 + $charge,
                     'price_without_delivery' => $price2,
                     'total_products_mrp' => $price5,
@@ -432,7 +437,8 @@ class ByphotoController extends Controller
                     'order_date' => $created_at,
                     'delivery_date' => $delivery_date,
                     'time_slot' => 'N/A',
-                    'address_id' => $ar->address_id]);
+                    'address_id' => $ar->address_id
+                ]);
             if ($oo) {
                 $dellist = DB::table('list_cart')
                     ->where('l_uid', $user_id)
@@ -528,9 +534,11 @@ class ByphotoController extends Controller
 
 
                         $dd = DB::table('user_notification')
-                            ->insert(['user_id' => $user_id,
+                            ->insert([
+                                'user_id' => $user_id,
                                 'noti_title' => $notification_title,
-                                'noti_message' => $notification_text]);
+                                'noti_message' => $notification_text
+                            ]);
 
                         $results = json_decode($result);
                     }
@@ -602,9 +610,11 @@ class ByphotoController extends Controller
                     ///////send notification to store//////
 
                     $dd = DB::table('store_notification')
-                        ->insert(['store_id' => $store_id,
+                        ->insert([
+                            'store_id' => $store_id,
                             'not_title' => $notification_title,
-                            'not_message' => $notification_text]);
+                            'not_message' => $notification_text
+                        ]);
 
                     $results = json_decode($result);
                 }

@@ -44,7 +44,6 @@ class CartController extends Controller
             if ($store_id != $store_id) {
                 $message = array('status' => '2', 'message' => 'your previous cart items will be cleared when you are going to order from new store.');
                 return $message;
-
             } else {
                 $cr = substr(md5(microtime()), rand(0, 26), 2);
                 $cart_id = $val . $val2 . $cr;
@@ -106,7 +105,6 @@ class CartController extends Controller
                     $tax_price = ($pricepr * $tax_p) / 100;
                     $price_without_tax = $pricepr;
                     $price2 = $pricepr + $tax_price;
-
                 } else {
                     $tax_price = $pricepr - ($pricepr / (100 + $tax_p) * 100);
                     $price_without_tax = $pricepr - $tax_price;
@@ -143,8 +141,8 @@ class CartController extends Controller
                             'price_without_tax' => round($price_without_tax, 2),
                             'tx_price' => round($tax_price, 2),
                             'tx_name' => $tax_name,
-                            'type' => $p->type]);
-
+                            'type' => $p->type
+                        ]);
                 } else {
                     $del = DB::table('store_orders')
                         ->where('store_approval', $user_id)
@@ -171,7 +169,8 @@ class CartController extends Controller
                             'price_without_tax' => round($price_without_tax, 2),
                             'tx_price' => round($tax_price, 2),
                             'tx_name' => $tax_name,
-                            'type' => $p->type]);
+                            'type' => $p->type
+                        ]);
                 }
 
                 if ($insert) {
@@ -200,8 +199,8 @@ class CartController extends Controller
                         ->join('store_products', 'store_orders.varient_id', '=', 'store_products.varient_id')
                         ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
                         ->join('product', 'product_varient.product_id', '=', 'product.product_id')
-                        ->select('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_orders.total_mrp', 'store_products.price', 'store_orders.qty as cart_qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.stock', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type', 'store_orders.price as ord_price')
-                        ->groupBy('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_orders.total_mrp', 'store_orders.qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.stock', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type')
+                        ->select('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_orders.total_mrp', 'store_products.price', 'store_orders.qty as cart_qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.quantity', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type', 'store_orders.price as ord_price')
+                        ->groupBy('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_orders.total_mrp', 'store_orders.qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.quantity', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type')
                         ->where('store_products.store_id', $store_id)
                         ->where('store_orders.store_approval', $user_id)
                         ->where('store_orders.order_cart_id', 'incart')
@@ -367,7 +366,6 @@ class CartController extends Controller
             if ($tax_type == 1) {
                 $price_without_tax = $pricepr;
                 $price2 = $pricepr + $tax_price;
-
             } else {
                 $price_without_tax = $pricepr - $tax_price;
                 $price2 = $pricepr;
@@ -401,7 +399,8 @@ class CartController extends Controller
                         'price_without_tax' => round($price_without_tax, 2),
                         'tx_price' => round($tax_price, 2),
                         'tx_name' => $tax_name,
-                        'type' => $p->type]);
+                        'type' => $p->type
+                    ]);
             } else {
                 $del = DB::table('store_orders')
                     ->where('store_approval', $user_id)
@@ -428,7 +427,8 @@ class CartController extends Controller
                         'price_without_tax' => round($price_without_tax, 2),
                         'tx_price' => round($tax_price, 2),
                         'tx_name' => $tax_name,
-                        'type' => $p->type]);
+                        'type' => $p->type
+                    ]);
             }
 
             if ($insert) {
@@ -460,8 +460,8 @@ class CartController extends Controller
                     ->join('store_products', 'store_orders.varient_id', '=', 'store_products.varient_id')
                     ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
                     ->join('product', 'product_varient.product_id', '=', 'product.product_id')
-                    ->select('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_orders.total_mrp', 'store_products.price', 'store_orders.qty as cart_qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.stock', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type', 'store_orders.price as ord_price')
-                    ->groupBy('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_products.price', 'store_orders.total_mrp', 'store_orders.qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.stock', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type', 'store_orders.price')
+                    ->select('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_orders.total_mrp', 'store_products.price', 'store_orders.qty as cart_qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.quantity', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type', 'store_orders.price as ord_price')
+                    ->groupBy('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_products.price', 'store_orders.total_mrp', 'store_orders.qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.quantity', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type', 'store_orders.price')
                     ->where('store_products.store_id', $store_id)
                     ->where('store_orders.store_approval', $user_id)
                     ->where('store_orders.order_cart_id', 'incart')
@@ -480,7 +480,6 @@ class CartController extends Controller
 
                     if ($deal) {
                         $cart_itemss->price = round($deal->deal_price, 2);
-
                     } else {
                         $sp = DB::table('store_products')
                             ->where('varient_id', $cart_itemss->varient_id)
@@ -511,7 +510,6 @@ class CartController extends Controller
                         } else {
                             $cart_itemss->cart_qty = 0;
                         }
-
                     } else {
                         $cart_itemss->isFavourite = 'false';
                         $cart_itemss->cart_qty = 0;
@@ -576,7 +574,7 @@ class CartController extends Controller
             ->where('user_id', $user_id)
             ->get();
 
-        if($ordsssss){
+        if ($ordsssss) {
             foreach ($ordsssss as $ordt) {
                 DB::table('store_orders')
                     ->where('order_cart_id', $ordt->cart_id)
@@ -587,7 +585,7 @@ class CartController extends Controller
                 ->where('user_id', $user_id)
                 ->delete();
         }
-            
+
         $store = DB::table('store_orders')
             ->where('store_approval', $user_id)
             ->where('order_cart_id', "incart")
@@ -711,7 +709,6 @@ class CartController extends Controller
                 ->where('store_approval', $user_id)
                 ->count();
             $tax_price += $p->tx_price;
-
         }
         $tax_avg = $tax_p / $count;
 
@@ -808,8 +805,8 @@ class CartController extends Controller
                     'tx_per' => $p->tx_per,
                     'price_without_tax' => $p->price_without_tax,
                     'tx_price' => $p->tx_price,
-                    'tx_name' => $p->tx_name]);
-
+                    'tx_name' => $p->tx_name
+                ]);
         }
         $ar_id = DB::table('service_area')
             ->where('society_id', $ar->society_id)
@@ -855,7 +852,8 @@ class CartController extends Controller
 
         if ($insert) {
             $oo = DB::table('orders')
-                ->insertGetId(['cart_id' => $cart_id,
+                ->insertGetId([
+                    'cart_id' => $cart_id,
                     'total_price' => round(($price2 + $charge), 2),
                     'price_without_delivery' => round($price2, 2),
                     'total_products_mrp' => round($price5, 2),
@@ -868,7 +866,8 @@ class CartController extends Controller
                     'time_slot' => $time_slot,
                     'address_id' => $ar->address_id,
                     'avg_tax_per' => round($tax_avg, 2),
-                    'total_tax_price' => round($tax_price, 2)]);
+                    'total_tax_price' => round($tax_price, 2)
+                ]);
 
             $ordersuccessed = DB::table('orders')
                 ->where('order_id', $oo)
@@ -915,8 +914,8 @@ class CartController extends Controller
                 ->join('store_products', 'store_orders.varient_id', '=', 'store_products.varient_id')
                 ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
                 ->join('product', 'product_varient.product_id', '=', 'product.product_id')
-                ->select('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_orders.total_mrp', 'store_products.price', 'store_orders.qty as cart_qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.stock', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type', 'store_orders.price as ord_price')
-                ->groupBy('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_products.price', 'store_orders.total_mrp', 'store_orders.qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.stock', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type', 'store_orders.price')
+                ->select('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_orders.total_mrp', 'store_products.price', 'store_orders.qty as cart_qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.quantity', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type', 'store_orders.price as ord_price')
+                ->groupBy('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_products.price', 'store_orders.total_mrp', 'store_orders.qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.quantity', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type', 'store_orders.price')
                 ->where('store_products.store_id', $store->store_id)
                 ->where('store_orders.store_approval', $user_id)
                 ->where('store_orders.order_cart_id', 'incart')
@@ -946,7 +945,6 @@ class CartController extends Controller
 
                 if ($deal) {
                     $price = round($deal->deal_price, 2);
-
                 } else {
                     $price = round($p->price, 2);
                 }
@@ -968,7 +966,6 @@ class CartController extends Controller
                 if ($tax_type == 1) {
                     $price_without_tax = $pricepr;
                     $price2 = $pricepr + $tax_price;
-
                 } else {
                     $price_without_tax = $pricepr - $tax_price;
                     $price2 = $pricepr;
@@ -1006,7 +1003,6 @@ class CartController extends Controller
                     } else {
                         $cart_itemss->cart_qty = 0;
                     }
-
                 } else {
                     $cart_itemss->isFavourite = 'false';
                     $cart_itemss->cart_qty = 0;
@@ -1126,7 +1122,6 @@ class CartController extends Controller
             if ($store_id != $store_id) {
                 $message = array('status' => '1', 'message' => 'your previous cart items will be cleared when you are going to order from new store.');
                 return $message;
-
             } else {
                 $message = array('status' => '0', 'message' => 'enter to store');
                 return $message;
@@ -1149,7 +1144,6 @@ class CartController extends Controller
         if ($cart_items) {
             $message = array('status' => '1', 'message' => 'your cart has been cleared.');
             return $message;
-
         } else {
             $message = array('status' => '0', 'message' => 'nothing in cart');
             return $message;
@@ -1200,7 +1194,6 @@ class CartController extends Controller
 
             if ($deal) {
                 $price = $deal->deal_price;
-
             } else {
                 $price = $p->price;
             }
@@ -1224,7 +1217,6 @@ class CartController extends Controller
                 $tax_price = ($pricepr * $tax_p) / 100;
                 $price_without_tax = $pricepr;
                 $price2 = $pricepr + $tax_price;
-
             } else {
                 $tax_price = $pricepr - ($pricepr / (100 + $tax_p) * 100);
                 $price_without_tax = $pricepr - $tax_price;
@@ -1260,8 +1252,8 @@ class CartController extends Controller
                             'price_without_tax' => round($price_without_tax, 2),
                             'tx_price' => round($tax_price, 2),
                             'tx_name' => $tax_name,
-                            'type' => $p->type]);
-
+                            'type' => $p->type
+                        ]);
                 } else {
                     $del = DB::table('store_orders')
                         ->where('store_approval', $user_id)
@@ -1288,8 +1280,8 @@ class CartController extends Controller
                             'price_without_tax' => round($price_without_tax, 2),
                             'tx_price' => round($tax_price, 2),
                             'tx_name' => $tax_name,
-                            'type' => $p->type]);
-
+                            'type' => $p->type
+                        ]);
                 }
             }
         }
@@ -1320,8 +1312,8 @@ class CartController extends Controller
                 ->join('store_products', 'store_orders.varient_id', '=', 'store_products.varient_id')
                 ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
                 ->join('product', 'product_varient.product_id', '=', 'product.product_id')
-                ->select('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_products.price', 'store_orders.qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.stock', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type')
-                ->groupBy('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_products.price', 'store_orders.qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.stock', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type')
+                ->select('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_products.price', 'store_orders.qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.quantity', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type')
+                ->groupBy('store_orders.product_name', 'store_orders.varient_image', 'store_orders.quantity', 'store_orders.unit', 'store_products.price', 'store_orders.qty', 'store_orders.total_mrp', 'store_orders.order_cart_id', 'store_orders.order_date', 'store_orders.store_approval', 'store_orders.store_id', 'store_orders.varient_id', 'product.product_id', 'store_products.quantity', 'store_orders.tx_per', 'store_orders.price_without_tax', 'store_orders.tx_price', 'store_orders.tx_name', 'product.product_image', 'product_varient.description', 'product.type')
                 ->where('store_products.store_id', $store_id)
                 ->where('store_orders.store_approval', $user_id)
                 ->where('store_orders.order_cart_id', "incart")
@@ -1337,14 +1329,12 @@ class CartController extends Controller
 
                 if ($deal) {
                     $cart_itemss->price = round($deal->deal_price, 2);
-
                 } else {
                     $sp = DB::table('store_products')
                         ->where('varient_id', $cart_itemss->varient_id)
                         ->where('store_id', $store_id)
                         ->first();
                     $cart_itemss->price = round($sp->price, 2);
-
                 }
 
                 if ($request->user_id != NULL) {
@@ -1371,7 +1361,6 @@ class CartController extends Controller
                     } else {
                         $cart_itemss->cart_qty = 0;
                     }
-
                 } else {
                     $cart_itemss->isFavourite = 'false';
                     $cart_itemss->cart_qty = 0;

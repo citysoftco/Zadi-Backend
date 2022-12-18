@@ -43,8 +43,8 @@ class DealController extends Controller
         $deal = DB::table('store_products')
             ->join('product_varient', 'product_varient.product_id', '=', 'product_varient.product_id')
             ->join('product', 'product_varient.product_id', '=', 'product.product_id')
-            ->select('product_varient.quantity', 'product_varient.unit', 'product_varient.varient_id', 'product.product_name')
-            ->groupBy('product_varient.quantity', 'product_varient.unit', 'product_varient.varient_id', 'product.product_name')
+            ->select('product_varient.initial_quantity', 'product_varient.unit', 'product_varient.varient_id', 'product.product_name')
+            ->groupBy('product_varient.initial_quantity', 'product_varient.unit', 'product_varient.varient_id', 'product.product_name')
             ->where('store_products.store_id', $store->id)
             ->where('product_varient.approved', 1)
             ->get();
@@ -109,8 +109,8 @@ class DealController extends Controller
         $deal = DB::table('store_products')
             ->join('product_varient', 'product_varient.product_id', '=', 'product_varient.product_id')
             ->join('product', 'product_varient.product_id', '=', 'product.product_id')
-            ->select('product_varient.quantity', 'product_varient.unit', 'product_varient.varient_id', 'product.product_name')
-            ->groupBy('product_varient.quantity', 'product_varient.unit', 'product_varient.varient_id', 'product.product_name')
+            ->select('product_varient.initial_quantity', 'product_varient.unit', 'product_varient.varient_id', 'product.product_name')
+            ->groupBy('product_varient.initial_quantity', 'product_varient.unit', 'product_varient.varient_id', 'product.product_name')
             ->where('store_products.store_id', $store->id)
             ->where('product_varient.approved', 1)
             ->get();

@@ -22,7 +22,6 @@ class StproductController extends Controller
         } else {
             $this->storage_space = "same_server";
         }
-
     }
 
     public function list(Request $request)
@@ -55,7 +54,7 @@ class StproductController extends Controller
                 $apps = array($app);
                 $app = DB::table('product_varient')
                     ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                    ->select('product_varient.ean', 'product_varient.added_by', 'product_varient.varient_id', 'product_varient.description', 'product_varient.base_price as price', 'product_varient.base_mrp as mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
+                    ->select('product_varient.ean', 'product_varient.added_by', 'product_varient.varient_id', 'product_varient.description', 'product_varient.base_price as price', 'product_varient.base_mrp as mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
                     ->where('product_varient.added_by', $store_id)
                     ->whereIn('product_varient.product_id', $apps)
                     ->get();
@@ -66,7 +65,6 @@ class StproductController extends Controller
                 $j++;
                 $result[$i]->varients = $app;
                 $i++;
-
             }
 
             $message = array('status' => '1', 'message' => 'Store Products', 'data' => $prod);
@@ -104,7 +102,6 @@ class StproductController extends Controller
             $message = array('status' => '0', 'message' => 'Category not found', 'data' => []);
             return $message;
         }
-
     }
 
     public function st_addproduct(Request $request)
@@ -139,7 +136,6 @@ class StproductController extends Controller
 
                 $product_image->move('images/product/' . $date . '/', $fileName);
                 $filePath = '/images/product/' . $date . '/' . $fileName;
-
             }
         } else {
             $filePath = 'N/A';
@@ -204,7 +200,6 @@ class StproductController extends Controller
 
                         $image->move('images/product/' . $date . '/', $fileName);
                         $filePath1 = '/images/product/' . $date . '/' . $fileName;
-
                     }
 
 
@@ -218,12 +213,10 @@ class StproductController extends Controller
 
             $message = array('status' => '1', 'message' => trans('keywords.Added Successfully'));
             return $message;
-
         } else {
             $message = array('status' => '0', 'message' => trans('keywords.Something Wents Wrong'));
             return $message;
         }
-
     }
 
     public function St_updateproduct(Request $request)
@@ -268,7 +261,6 @@ class StproductController extends Controller
 
                 $product_image->move('images/product/' . $date . '/', $fileName);
                 $filePath = '/images/product/' . $date . '/' . $fileName;
-
             }
         } else {
             $filePath = $image;
@@ -336,7 +328,6 @@ class StproductController extends Controller
 
                     $image->move('images/product/' . $date . '/', $fileName);
                     $filePath1 = '/images/product/' . $date . '/' . $fileName;
-
                 }
 
                 $enternewim = DB::table('product_images')
@@ -351,7 +342,6 @@ class StproductController extends Controller
         if ($insertproduct || $enternew) {
             $message = array('status' => '1', 'message' => trans('keywords.Updated Successfully'));
             return $message;
-
         } else {
             $message = array('status' => '0', 'message' => trans('keywords.Something Wents Wrong'));
             return $message;
@@ -373,7 +363,6 @@ class StproductController extends Controller
 
             $message = array('status' => '1', 'message' => trans('keywords.Deleted Successfully'));
             return $message;
-
         } else {
             $message = array('status' => '0', 'message' => trans('keywords.Something Wents Wrong'));
             return $message;

@@ -36,14 +36,12 @@ class SearchController extends Controller
 
         if ($deal) {
             $prod->price = round($deal->deal_price, 0);
-
         } else {
             $sp = DB::table('store_products')
                 ->where('varient_id', $prod->varient_id)
                 ->where('store_id', $store_id)
                 ->first();
             $prod->price = round($sp->price, 0);
-
         }
         if ($request->user_id != NULL) {
             $wishlist = DB::table('wishlist')
@@ -68,7 +66,6 @@ class SearchController extends Controller
             } else {
                 $prod->cart_qty = 0;
             }
-
         } else {
             $prod->isFavourite = 'false';
             $prod->cart_qty = 0;
@@ -118,7 +115,6 @@ class SearchController extends Controller
             foreach ($prodsd as $store) {
 
                 $prod1[] = $store;
-
             }
 
             if ($prod1 != NULL) {
@@ -141,14 +137,12 @@ class SearchController extends Controller
 
                     if ($deal) {
                         $prods->price = round($deal->deal_price, 0);
-
                     } else {
                         $sp = DB::table('store_products')
                             ->where('varient_id', $prods->varient_id)
                             ->where('store_id', $store_id)
                             ->first();
                         $prods->price = round($sp->price, 0);
-
                     }
 
                     if ($request->user_id != NULL) {
@@ -173,7 +167,6 @@ class SearchController extends Controller
                         } else {
                             $prods->cart_qty = 0;
                         }
-
                     } else {
                         $prods->isFavourite = 'false';
                         $prods->cart_qty = 0;
@@ -211,7 +204,7 @@ class SearchController extends Controller
                     $app = DB::table('store_products')
                         ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
                         ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                        ->select('store_products.store_id', 'store_products.stock', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
+                        ->select('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
                         ->where('store_products.store_id', $store_id)
                         ->whereIn('product_varient.product_id', $apps)
                         ->where('store_products.price', '!=', NULL)
@@ -232,7 +225,6 @@ class SearchController extends Controller
 
                         $result[$q]->images = $images;
                         $q++;
-
                     }
                     $tag = DB::table('tags')
                         ->whereIn('product_id', $apps)
@@ -250,14 +242,12 @@ class SearchController extends Controller
 
                         if ($deal) {
                             $app[$a]->price = round($deal->deal_price, 0);
-
                         } else {
                             $sp = DB::table('store_products')
                                 ->where('varient_id', $aa->varient_id)
                                 ->where('store_id', $store_id)
                                 ->first();
                             $app[$a]->price = round($sp->price, 0);
-
                         }
                         if ($request->user_id != NULL) {
                             $wishlist = DB::table('wishlist')
@@ -282,7 +272,6 @@ class SearchController extends Controller
                             } else {
                                 $app[$a]->cart_qty = 0;
                             }
-
                         } else {
                             $app[$a]->isFavourite = 'false';
                             $app[$a]->cart_qty = 0;
@@ -319,10 +308,7 @@ class SearchController extends Controller
 
                     $result[$z]->varients = $app;
                     $z++;
-
                 }
-
-
             }
             $result = array();
             $i = 0;
@@ -336,7 +322,7 @@ class SearchController extends Controller
             $app = DB::table('store_products')
                 ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
                 ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                ->select('store_products.store_id', 'store_products.stock', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
+                ->select('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
                 ->where('store_products.store_id', $store_id)
                 ->where('product_varient.product_id', $p_id)
                 ->where('store_products.price', '!=', NULL)
@@ -357,7 +343,6 @@ class SearchController extends Controller
 
                 $result[$m]->images = $images;
                 $m++;
-
             }
             $tag = DB::table('tags')
                 ->where('product_id', $p_id)
@@ -375,14 +360,12 @@ class SearchController extends Controller
 
             if ($deal) {
                 $app[$i]->price = round($deal->deal_price, 0);
-
             } else {
                 $sp = DB::table('store_products')
                     ->where('varient_id', $app[$i]->varient_id)
                     ->where('store_id', $store_id)
                     ->first();
                 $app[$i]->price = round($sp->price, 0);
-
             }
             if ($request->user_id != NULL) {
                 $wishlist = DB::table('wishlist')
@@ -407,7 +390,6 @@ class SearchController extends Controller
                 } else {
                     $app[$i]->cart_qty = 0;
                 }
-
             } else {
                 $app[$i]->isFavourite = 'false';
                 $app[$i]->cart_qty = 0;
@@ -498,7 +480,6 @@ class SearchController extends Controller
         if ($stock == 'out') {
             $stock = "<";
             $by = 1;
-
         } elseif ($stock == 'all' || $stock == NULL) {
             $stock = "!=";
             $by = NULL;
@@ -522,17 +503,16 @@ class SearchController extends Controller
                 ->Leftjoin('product_rating', 'store_products.varient_id', '=', 'product_rating.varient_id')
                 ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
                 ->join('store', 'store_products.store_id', '=', 'store.id')
-                ->select('store_products.store_id', 'store_products.stock', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
-                ->groupBy('store_products.store_id', 'store_products.stock', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', 'product_rating.rating')
+                ->select('store_products.store_id', 'store_products.quantity', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
+                ->groupBy('store_products.store_id', 'store_products.quantity', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', 'product_rating.rating')
                 ->where('store_products.store_id', $store_id)
                 ->where('product.product_name', 'like', '%' . $keyword . '%')
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.stock', $stock, $by)
+                ->where('store_products.quantity', $stock, $by)
                 ->orderBy('product.product_name', $filter1)
                 ->paginate(10);
-
         } else {
             $prodsssss = DB::table('store_products')
                 ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
@@ -540,14 +520,14 @@ class SearchController extends Controller
                 ->Leftjoin('product_rating', 'store_products.varient_id', '=', 'product_rating.varient_id')
                 ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
                 ->join('store', 'store_products.store_id', '=', 'store.id')
-                ->select('store_products.store_id', 'store_products.stock', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
-                ->groupBy('store_products.store_id', 'store_products.stock', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', 'product_rating.rating')
+                ->select('store_products.store_id', 'store_products.quantity', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
+                ->groupBy('store_products.store_id', 'store_products.quantity', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', 'product_rating.rating')
                 ->where('store_products.store_id', $store_id)
                 ->where('product.product_name', 'like', '%' . $keyword . '%')
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.stock', $stock, $by)
+                ->where('store_products.quantity', $stock, $by)
                 ->paginate(10);
         }
         $deal_p = $prodsssss->unique('product_id');
@@ -556,7 +536,6 @@ class SearchController extends Controller
         foreach ($deal_p as $store) {
 
             $prod[] = $store;
-
         }
         if (count($prod) > 0) {
             $result = array();
@@ -575,14 +554,12 @@ class SearchController extends Controller
 
                 if ($deal) {
                     $prods->price = round($deal->deal_price, 0);
-
                 } else {
                     $sp = DB::table('store_products')
                         ->where('varient_id', $prods->varient_id)
                         ->where('store_id', $store_id)
                         ->first();
                     $prods->price = round($sp->price, 0);
-
                 }
                 $a = 0;
                 if ($request->user_id != NULL) {
@@ -608,7 +585,6 @@ class SearchController extends Controller
                     } else {
                         $prods->cart_qty = 0;
                     }
-
                 } else {
                     $prods->isFavourite = 'false';
                     $prods->cart_qty = 0;
@@ -645,7 +621,7 @@ class SearchController extends Controller
                 $app1 = DB::table('store_products')
                     ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
                     ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                    ->select('store_products.store_id', 'store_products.stock', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
+                    ->select('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
                     ->where('store_products.store_id', $store_id)
                     ->whereIn('product_varient.product_id', $c)
                     ->where('store_products.price', '!=', NULL)
@@ -664,14 +640,12 @@ class SearchController extends Controller
 
                     if ($deal) {
                         $app1[$a]->price = round($deal->deal_price, 0);
-
                     } else {
                         $sp = DB::table('store_products')
                             ->where('varient_id', $aa->varient_id)
                             ->where('store_id', $store_id)
                             ->first();
                         $app1[$a]->price = round($sp->price, 0);
-
                     }
                     if ($request->user_id != NULL) {
                         $wishlist = DB::table('wishlist')
@@ -696,11 +670,9 @@ class SearchController extends Controller
                         } else {
                             $app1[$a]->cart_qty = 0;
                         }
-
                     } else {
                         $app1[$a]->isFavourite = 'false';
                         $app1[$a]->cart_qty = 0;
-
                     }
                     $getrating = DB::table('product_rating')
                         ->where('varient_id', $aa->varient_id)
@@ -750,15 +722,12 @@ class SearchController extends Controller
 
                     $result[$m]->images = $images;
                     $m++;
-
                 }
                 $tag = DB::table('tags')
                     ->whereIn('product_id', $apps)
                     ->get();
                 $result[$j]->tags = $tag;
                 $j++;
-
-
             }
             if ($user_id != NULL) {
                 $check = DB::table('recent_search')
@@ -786,7 +755,6 @@ class SearchController extends Controller
             $message = array('status' => '0', 'message' => 'Products not found');
             return $message;
         }
-
     }
 
     public function trensearchproducts(Request $request)
@@ -798,8 +766,8 @@ class SearchController extends Controller
             ->join('product', 'product_varient.product_id', '=', 'product.product_id')
             ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
             ->join('store', 'store_products.store_id', '=', 'store.id')
-            ->select('store_products.stock', 'store_products.store_id', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type')
-            ->groupBy('store_products.stock', 'store_products.store_id', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type')
+            ->select('store_products.quantity', 'store_products.store_id', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type')
+            ->groupBy('store_products.quantity', 'store_products.store_id', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type')
             ->where('store_products.store_id', $store_id)
             ->get();
 
@@ -831,6 +799,5 @@ class SearchController extends Controller
             $message = array('status' => '0', 'message' => 'Products not found');
             return $message;
         }
-
     }
 }

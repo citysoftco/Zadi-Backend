@@ -66,6 +66,7 @@
     <link
         href="{{ url('assets/theme_assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"
         rel="stylesheet" />
+
     <link href="{{ url('assets/theme_assets/plugins/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}"
         rel="stylesheet" />
     <link href="{{ url('assets/theme_assets/plugins/bootstrap-table/dist/bootstrap-table.min.css') }}"
@@ -76,7 +77,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-
     @yield('preload-section')
     @livewireStyles
     @powerGridStyles

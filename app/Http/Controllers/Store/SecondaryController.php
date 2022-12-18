@@ -23,7 +23,6 @@ class SecondaryController extends Controller
         } else {
             $this->storage_space = "same_server";
         }
-
     }
 
     public function bannerlist(Request $request)
@@ -71,7 +70,7 @@ class SecondaryController extends Controller
         $category = DB::table('store_products')
             ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
             ->join('product', 'product_varient.product_id', '=', 'product.product_id')
-            ->select('store_products.*', 'product.product_name', 'product_varient.quantity', 'product_varient.unit')
+            ->select('store_products.*', 'product.product_name', 'product_varient.initial_quantity', 'product_varient.unit')
             ->where('store_products.store_id', $store->id)
             ->where('store_products.price', '!=', NULL)
             ->where('product.hide', 0)
@@ -170,7 +169,7 @@ class SecondaryController extends Controller
         $category = DB::table('store_products')
             ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
             ->join('product', 'product_varient.product_id', '=', 'product.product_id')
-            ->select('store_products.*', 'product.product_name', 'product_varient.quantity', 'product_varient.unit')
+            ->select('store_products.*', 'product.product_name', 'product_varient.initial_quantity', 'product_varient.unit')
             ->where('store_products.store_id', $store->id)
             ->where('store_products.price', '!=', NULL)
             ->where('product.hide', 0)
@@ -253,10 +252,7 @@ class SecondaryController extends Controller
 
                 $image->move('images/banner/' . $date . '/', $fileName);
                 $filePath = '/images/banner/' . $date . '/' . $fileName;
-
             }
-
-
         } else {
             $filePath = $getBanner->banner_image;
         }

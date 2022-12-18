@@ -1,3 +1,11 @@
 * {
   font-family: "Cairo", sans-serif;
+  /* direction: rtl !important; */
+}
+/* body {
+  direction: rtl !important;
+} */
+
+body {
+  background-color: #f9f9fa;
 }

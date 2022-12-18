@@ -301,6 +301,11 @@
     <!-- END row -->
     <!-- BEGIN row -->
     <div class="row">
+        <canvas id="myChart"></canvas>
+
+    </div>
+
+    <div class="row">
         <!-- BEGIN col-6 -->
         <div class="col-xl-6">
             <!-- BEGIN card -->

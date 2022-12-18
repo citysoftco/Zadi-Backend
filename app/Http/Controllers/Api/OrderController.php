@@ -33,7 +33,8 @@ class OrderController extends Controller
         $key_id = Setting::where('name', 'razorpay_key_id')->select('value')->first();
         $api = new Api($key_id->value, $secret->value);
         $order = $api->order->create(array('amount' => $db->rem_price * 100, 'currency' => 'INR', 'notes' => array('userId' => $db->id, 'userName' => $db->name, 'userEmail' => $db->email, 'userContact' => $db->user_phone, 'cartId' => $db->cart_id, 'orderDate' => $db->order_date)));
-        $data = array("id" => $order->id,
+        $data = array(
+            "id" => $order->id,
             "entity" => "order",
             "amount" => $order->amount,
             "amount_paid" => 0,
@@ -185,7 +186,6 @@ class OrderController extends Controller
 
             if ($email_status == 1) {
                 $codorderplaced = $this->codorderplacedMail($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name);
-
             }
 
             ///////send notification to User//////
@@ -224,8 +224,10 @@ class OrderController extends Controller
                 ->delete();
 
             $cart_status = DB::table('cart_status')
-                ->insert(['pending' => Carbon::now(),
-                    'cart_id' => $cart_id]);
+                ->insert([
+                    'pending' => Carbon::now(),
+                    'cart_id' => $cart_id
+                ]);
             $orderr1->order_id = $cart_id;
 
             $v = DB::table('store_orders')
@@ -252,7 +254,6 @@ class OrderController extends Controller
                         ->where('store_id', $store_id)
                         ->update(['stock' => $newstock]);
                 }
-
             }
 
             $message = array('status' => '1', 'message' => 'Order Placed successfully', 'data' => $orderr1);
@@ -272,7 +273,6 @@ class OrderController extends Controller
                     $payment_method = "wallet";
                     $payment_id = $cart_id;
                     $payment_gateway = "wallet";
-
                 } else {
 
                     $rem_amount = $prii - $ph->wallet;
@@ -334,7 +334,6 @@ class OrderController extends Controller
 
                     ///sending mails//
                     $orderplaced = $this->orderplacedMail($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name);
-
                 }
 
                 if ($email->app == 1) {
@@ -374,8 +373,10 @@ class OrderController extends Controller
                 $codorderplacedadmin = $this->codorderplacedMailadmin($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $store_n, $admin_email, $admin_name);
 
                 $cart_status = DB::table('cart_status')
-                    ->insert(['pending' => Carbon::now(),
-                        'cart_id' => $cart_id]);
+                    ->insert([
+                        'pending' => Carbon::now(),
+                        'cart_id' => $cart_id
+                    ]);
                 $orderr1->order_id = $cart_id;
 
                 $v = DB::table('store_orders')
@@ -460,7 +461,6 @@ class OrderController extends Controller
                         $orderssss->rating = NULL;
                         $orderssss->rating_description = NULL;
                     }
-
                 }
 
                 $data[] = array('user_name' => $ongoings->name, 'delivery_address' => $ongoings->house_no . ',' . $ongoings->society . ',' . $ongoings->city . ',' . $ongoings->landmark . ',' . $ongoings->state . ',' . $ongoings->pincode, 'store_name' => $ongoings->store_name, 'store_owner' => $ongoings->employee_name, 'store_phone' => $ongoings->phone_number, 'store_email' => $ongoings->email, 'store_address' => $ongoings->address, 'order_status' => $ongoings->order_status, 'delivery_date' => $ongoings->delivery_date, 'time_slot' => $ongoings->time_slot, 'payment_method' => $ongoings->payment_method, 'payment_status' => $ongoings->payment_status, 'paid_by_wallet' => $ongoings->paid_by_wallet, 'cart_id' => $ongoings->cart_id, 'total_price' => $ongoings->total_price, 'delivery_charge' => $ongoings->delivery_charge, 'rem_price' => $ongoings->rem_price, 'coupon_discount' => $ongoings->coupon_discount, 'dboy_name' => $ongoings->boy_name, 'dboy_phone' => $ongoings->boy_phone, 'price_without_delivery' => $ongoings->price_without_delivery, 'avg_tax_per' => $ongoings->avg_tax_per, 'total_tax_price' => $ongoings->total_tax_price, 'user_id' => $ongoings->user_id, 'total_products_mrp' => $ongoings->total_products_mrp, 'discountonmrp' => $ongoings->discountonmrp, 'cancelling_reason' => $ongoings->cancelling_reason, 'order_date' => $ongoings->order_date, 'dboy_id' => $ongoings->dboy_id, 'user_signature' => $ongoings->user_signature, 'coupon_id' => $ongoings->coupon_id, 'dboy_incentive' => $ongoings->dboy_incentive, 'total_items' => $ongoings->total_items, 'data' => $order);
@@ -557,7 +557,6 @@ class OrderController extends Controller
 
             $message = array('status' => '0', 'message' => 'You can not cancel this order as this order has been completed');
             return $message;
-
         } else {
             $date_of_recharge = carbon::now();
             $var = DB::table('store_orders')
@@ -607,7 +606,8 @@ class OrderController extends Controller
                 ->update([
                     'cancelling_reason' => $reason,
                     'order_status' => $order_status,
-                    'updated_at' => $updated_at]);
+                    'updated_at' => $updated_at
+                ]);
 
             if ($order) {
                 $cart_status = DB::table('cart_status')
@@ -626,11 +626,13 @@ class OrderController extends Controller
 
                     if ($user->paid_by_wallet > 0) {
                         $his = DB::table('wallet_recharge_history')
-                            ->insert(['user_id' => $user_id,
+                            ->insert([
+                                'user_id' => $user_id,
                                 'amount' => $user->paid_by_wallet,
                                 'date_of_recharge' => $date_of_recharge,
                                 'recharge_status' => 'refunded',
-                                'payment_gateway' => "Order ID (" . $cart_id . " )"]);
+                                'payment_gateway' => "Order ID (" . $cart_id . " )"
+                            ]);
                     }
                 } elseif ($user->payment_method == 'Wallet' || $user->payment_method == 'wallet' || $user->payment_method == 'WALLET') {
                     $newbal1 = $userwa1->wallet + $user->paid_by_wallet;
@@ -639,11 +641,13 @@ class OrderController extends Controller
                         ->update(['wallet' => $newbal1]);
                     if ($user->paid_by_wallet > 0) {
                         $his = DB::table('wallet_recharge_history')
-                            ->insert(['user_id' => $user_id,
+                            ->insert([
+                                'user_id' => $user_id,
                                 'amount' => $user->paid_by_wallet,
                                 'date_of_recharge' => $date_of_recharge,
                                 'recharge_status' => 'refunded',
-                                'payment_gateway' => "Order ID (" . $cart_id . " )"]);
+                                'payment_gateway' => "Order ID (" . $cart_id . " )"
+                            ]);
                     }
                 } else {
 
@@ -656,13 +660,14 @@ class OrderController extends Controller
                                 ->update(['wallet' => $newbal1]);
                             if ($user->paid_by_wallet > 0) {
                                 $his = DB::table('wallet_recharge_history')
-                                    ->insert(['user_id' => $user_id,
+                                    ->insert([
+                                        'user_id' => $user_id,
                                         'amount' => $user->paid_by_wallet,
                                         'date_of_recharge' => $date_of_recharge,
                                         'recharge_status' => 'refunded',
-                                        'payment_gateway' => "Order ID (" . $cart_id . " )"]);
+                                        'payment_gateway' => "Order ID (" . $cart_id . " )"
+                                    ]);
                             }
-
                         } elseif ($c_pmnt->payment_gateway == "stripe" || $c_pmnt->payment_gateway == "Stripe" || $c_pmnt->payment_gateway == "STRIPE") {
                             $stripe_secret = Setting::where('name', 'stripe_secret_key')->select('value')->first();
                             $stripe_publishable_key = Setting::where('name', 'stripe_publishable_key')->select('value')->first();
@@ -678,13 +683,14 @@ class OrderController extends Controller
                                 ->update(['wallet' => $newbal1]);
                             if ($user->paid_by_wallet > 0) {
                                 $his = DB::table('wallet_recharge_history')
-                                    ->insert(['user_id' => $user_id,
+                                    ->insert([
+                                        'user_id' => $user_id,
                                         'amount' => $user->paid_by_wallet,
                                         'date_of_recharge' => $date_of_recharge,
                                         'recharge_status' => 'refunded',
-                                        'payment_gateway' => "Order ID (" . $cart_id . " )"]);
+                                        'payment_gateway' => "Order ID (" . $cart_id . " )"
+                                    ]);
                             }
-
                         } elseif ($c_pmnt->payment_gateway == "paystack" || $c_pmnt->payment_gateway == "Paystack" || $c_pmnt->payment_gateway == "PAYSTACK") {
                             $paystack_public_key = Setting::where('name', 'paystack_public_key')->select('value')->first();
                             $paystack_secret_key = Setting::where('name', 'paystack_secret_key')->select('value')->first();
@@ -711,13 +717,14 @@ class OrderController extends Controller
                                 ->update(['wallet' => $newbal1]);
                             if ($user->paid_by_wallet > 0) {
                                 $his = DB::table('wallet_recharge_history')
-                                    ->insert(['user_id' => $user_id,
+                                    ->insert([
+                                        'user_id' => $user_id,
                                         'amount' => $user->paid_by_wallet,
                                         'date_of_recharge' => $date_of_recharge,
                                         'recharge_status' => 'refunded',
-                                        'payment_gateway' => "Order ID (" . $cart_id . " )"]);
+                                        'payment_gateway' => "Order ID (" . $cart_id . " )"
+                                    ]);
                             }
-
                         } else {
 
                             $newbal1 = $userwa1->wallet + $user->paid_by_wallet + $user->rem_price;
@@ -727,12 +734,13 @@ class OrderController extends Controller
 
 
                             $his = DB::table('wallet_recharge_history')
-                                ->insert(['user_id' => $user_id,
+                                ->insert([
+                                    'user_id' => $user_id,
                                     'amount' => $user->paid_by_wallet + $user->rem_price,
                                     'date_of_recharge' => $date_of_recharge,
                                     'recharge_status' => 'refunded',
-                                    'payment_gateway' => "Order ID (" . $cart_id . " )"]);
-
+                                    'payment_gateway' => "Order ID (" . $cart_id . " )"
+                                ]);
                         }
                     } else {
                         $newbal1 = $userwa1->wallet + $user->paid_by_wallet;
@@ -742,11 +750,13 @@ class OrderController extends Controller
 
                         if ($user->paid_by_wallet > 0) {
                             $his = DB::table('wallet_recharge_history')
-                                ->insert(['user_id' => $user_id,
+                                ->insert([
+                                    'user_id' => $user_id,
                                     'amount' => $user->paid_by_wallet,
                                     'date_of_recharge' => $date_of_recharge,
                                     'recharge_status' => 'refunded',
-                                    'payment_gateway' => "Order ID (" . $cart_id . " )"]);
+                                    'payment_gateway' => "Order ID (" . $cart_id . " )"
+                                ]);
                         }
                     }
                 }
@@ -766,7 +776,6 @@ class OrderController extends Controller
                     ->first();
                 if ($sms_status == 1) {
                     $ordercancelled = $this->ordercancelled($cart_id, $user_phone, $user_name, $prod_name, $price2);
-
                 }
 
                 /////send mail
@@ -825,7 +834,6 @@ class OrderController extends Controller
                             ->where('store_id', $user->store_id)
                             ->update(['stock' => $newstock]);
                     }
-
                 }
                 $message = array('status' => '1', 'message' => 'order cancelled', 'data' => $order);
                 return $message;
@@ -848,8 +856,8 @@ class OrderController extends Controller
             ->Leftjoin('product_rating', 'store_products.varient_id', '=', 'product_rating.varient_id')
             ->Leftjoin('orders', 'store_orders.order_cart_id', '=', 'orders.cart_id')
             ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-            ->select('store_products.price', 'store_products.stock')
-            ->groupBy('store_products.price', 'store_products.stock')
+            ->select('store_products.price', 'store_products.quantity')
+            ->groupBy('store_products.price', 'store_products.quantity')
             ->where('store_products.store_id', $store_id)
             ->where('deal_product.deal_price', NULL)
             ->where('store_products.price', '!=', NULL)
@@ -888,7 +896,6 @@ class OrderController extends Controller
         if ($stock == 'out') {
             $stock = "<";
             $by = 1;
-
         } elseif ($stock == 'all' || $stock == NULL) {
             $stock = "!=";
             $by = NULL;
@@ -915,8 +922,8 @@ class OrderController extends Controller
                 ->Leftjoin('product_rating', 'store_products.varient_id', '=', 'product_rating.varient_id')
                 ->Leftjoin('orders', 'store_orders.order_cart_id', '=', 'orders.cart_id')
                 ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                ->select('store_products.store_id', 'store_products.stock', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', DB::raw('count(store_orders.varient_id) as count'), DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
-                ->groupBy('store_products.store_id', 'store_products.stock', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', 'product_rating.rating')
+                ->select('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', DB::raw('count(store_orders.varient_id) as count'), DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
+                ->groupBy('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', 'product_rating.rating')
                 ->where('store_products.store_id', $store_id)
                 ->where('deal_product.deal_price', NULL)
                 ->where('store_products.price', '!=', NULL)
@@ -924,7 +931,7 @@ class OrderController extends Controller
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.stock', $stock, $by)
+                ->where('store_products.quantity', $stock, $by)
                 ->orderBy('product.product_name', $filter1)
                 ->orderBy('count', 'desc')
                 ->paginate(10);
@@ -936,8 +943,8 @@ class OrderController extends Controller
                 ->Leftjoin('product_rating', 'store_products.varient_id', '=', 'product_rating.varient_id')
                 ->Leftjoin('orders', 'store_orders.order_cart_id', '=', 'orders.cart_id')
                 ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                ->select('store_products.store_id', 'store_products.stock', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', DB::raw('count(store_orders.varient_id) as count'), DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
-                ->groupBy('store_products.store_id', 'store_products.stock', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', 'product_rating.rating')
+                ->select('store_products.store_id', 'store_products.quantity', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', DB::raw('count(store_orders.varient_id) as count'), DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
+                ->groupBy('store_products.store_id', 'store_products.quantity', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', 'product_rating.rating')
                 ->where('store_products.store_id', $store_id)
                 ->where('deal_product.deal_price', NULL)
                 ->where('store_products.price', '!=', NULL)
@@ -945,7 +952,7 @@ class OrderController extends Controller
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.stock', $stock, $by)
+                ->where('store_products.quantity', $stock, $by)
                 ->orderBy('store_products.p_id', 'desc')
                 ->paginate(10);
         }
@@ -976,14 +983,12 @@ class OrderController extends Controller
 
                 if ($deal) {
                     $prods->price = round($deal->deal_price, 2);
-
                 } else {
                     $sp = DB::table('store_products')
                         ->where('varient_id', $prods->varient_id)
                         ->where('store_id', $store_id)
                         ->first();
                     $prods->price = round($sp->price, 2);
-
                 }
 
                 if ($request->user_id != NULL) {
@@ -1009,7 +1014,6 @@ class OrderController extends Controller
                     } else {
                         $prods->cart_qty = 0;
                     }
-
                 } else {
                     $prods->isFavourite = 'false';
                     $prods->cart_qty = 0;
@@ -1046,7 +1050,7 @@ class OrderController extends Controller
                 $app1 = DB::table('store_products')
                     ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
                     ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                    ->select('store_products.store_id', 'store_products.stock', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
+                    ->select('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
                     ->where('store_products.store_id', $store_id)
                     ->whereIn('product_varient.product_id', $c)
                     ->where('store_products.price', '!=', NULL)
@@ -1065,14 +1069,12 @@ class OrderController extends Controller
 
                     if ($deal) {
                         $app1[$a]->price = round($deal->deal_price, 2);
-
                     } else {
                         $sp = DB::table('store_products')
                             ->where('varient_id', $aa->varient_id)
                             ->where('store_id', $store_id)
                             ->first();
                         $app1[$a]->price = round($sp->price, 2);
-
                     }
                     if ($request->user_id != NULL) {
                         $wishlist = DB::table('wishlist')
@@ -1153,7 +1155,6 @@ class OrderController extends Controller
 
                     $result[$m]->images = $images;
                     $m++;
-
                 }
 
                 $tag = DB::table('tags')
@@ -1247,7 +1248,6 @@ class OrderController extends Controller
                     ->get();
 
                 $data[] = array('user_name' => $ongoings->name, 'delivery_address' => $ongoings->house_no . ',' . $ongoings->society . ',' . $ongoings->city . ',' . $ongoings->landmark . ',' . $ongoings->state . ',' . $ongoings->pincode, 'store_name' => $ongoings->store_name, 'store_owner' => $ongoings->employee_name, 'store_phone' => $ongoings->phone_number, 'store_email' => $ongoings->email, 'store_address' => $ongoings->address, 'order_status' => $ongoings->order_status, 'delivery_date' => $ongoings->delivery_date, 'time_slot' => $ongoings->time_slot, 'payment_method' => $ongoings->payment_method, 'payment_status' => $ongoings->payment_status, 'paid_by_wallet' => $ongoings->paid_by_wallet, 'cart_id' => $ongoings->cart_id, 'price' => $ongoings->total_price, 'delivery_charge' => $ongoings->delivery_charge, 'rem_price' => $ongoings->rem_price, 'coupon_discount' => $ongoings->coupon_discount, 'dboy_name' => $ongoings->boy_name, 'dboy_phone' => $ongoings->boy_phone, 'sub_total' => $ongoings->price_without_delivery, 'avg_tax_per' => $ongoings->avg_tax_per, 'total_tax_price' => $ongoings->total_tax_price, 'data' => $order);
-
             }
             $message = array('status' => '1', 'message' => 'Cancelled orders', 'data' => $data);
             return $message;
@@ -1268,8 +1268,8 @@ class OrderController extends Controller
             ->Leftjoin('product_rating', 'store_products.varient_id', '=', 'product_rating.varient_id')
             ->Leftjoin('orders', 'store_orders.order_cart_id', '=', 'orders.cart_id')
             ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-            ->select('store_products.price', 'store_products.stock')
-            ->groupBy('store_products.price', 'store_products.stock')
+            ->select('store_products.price', 'store_products.quantity')
+            ->groupBy('store_products.price', 'store_products.quantity')
             ->where('store_products.store_id', $store_id)
             ->where('deal_product.deal_price', NULL)
             ->where('store_products.price', '!=', NULL)
@@ -1308,7 +1308,6 @@ class OrderController extends Controller
         if ($stock == 'out') {
             $stock = "<";
             $by = 1;
-
         } elseif ($stock == 'all' || $stock == NULL) {
             $stock = "!=";
             $by = NULL;
@@ -1336,8 +1335,8 @@ class OrderController extends Controller
                 ->Leftjoin('product_rating', 'store_products.varient_id', '=', 'product_rating.varient_id')
                 ->Leftjoin('orders', 'store_orders.order_cart_id', '=', 'orders.cart_id')
                 ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                ->select('store_products.store_id', 'store_products.stock', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', DB::raw('count(store_orders.varient_id) as count'), DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
-                ->groupBy('store_products.store_id', 'store_products.stock', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', 'product_rating.rating')
+                ->select('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', DB::raw('count(store_orders.varient_id) as count'), DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
+                ->groupBy('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', 'product_rating.rating')
                 ->where('store_products.store_id', $store_id)
                 ->where('deal_product.deal_price', NULL)
                 ->where('store_products.price', '!=', NULL)
@@ -1345,7 +1344,7 @@ class OrderController extends Controller
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.stock', $stock, $by)
+                ->where('store_products.quantity', $stock, $by)
                 ->orderBy('product.product_name', $filter1)
                 ->orderBy('count', 'desc')
                 ->paginate(10);
@@ -1357,8 +1356,8 @@ class OrderController extends Controller
                 ->Leftjoin('product_rating', 'store_products.varient_id', '=', 'product_rating.varient_id')
                 ->Leftjoin('orders', 'store_orders.order_cart_id', '=', 'orders.cart_id')
                 ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                ->select('store_products.store_id', 'store_products.stock', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', DB::raw('count(store_orders.varient_id) as count'), DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
-                ->groupBy('store_products.store_id', 'store_products.stock', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', 'product_rating.rating')
+                ->select('store_products.store_id', 'store_products.quantity', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', DB::raw('count(store_orders.varient_id) as count'), DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
+                ->groupBy('store_products.store_id', 'store_products.quantity', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', 'product_rating.rating')
                 ->where('store_products.store_id', $store_id)
                 ->where('deal_product.deal_price', NULL)
                 ->where('store_products.price', '!=', NULL)
@@ -1366,7 +1365,7 @@ class OrderController extends Controller
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.stock', $stock, $by)
+                ->where('store_products.quantity', $stock, $by)
                 ->orderBy('count', 'desc')
                 ->paginate(10);
         }
@@ -1398,14 +1397,12 @@ class OrderController extends Controller
 
                 if ($deal) {
                     $prods->price = round($deal->deal_price, 2);
-
                 } else {
                     $sp = DB::table('store_products')
                         ->where('varient_id', $prods->varient_id)
                         ->where('store_id', $store_id)
                         ->first();
                     $prods->price = round($sp->price, 2);
-
                 }
 
                 if ($request->user_id != NULL) {
@@ -1466,7 +1463,7 @@ class OrderController extends Controller
                 $app1 = DB::table('store_products')
                     ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
                     ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                    ->select('store_products.store_id', 'store_products.stock', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
+                    ->select('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
                     ->where('store_products.store_id', $store_id)
                     ->whereIn('product_varient.product_id', $c)
                     ->where('store_products.price', '!=', NULL)
@@ -1484,14 +1481,12 @@ class OrderController extends Controller
 
                     if ($deal) {
                         $app1[$a]->price = round($deal->deal_price, 2);
-
                     } else {
                         $sp = DB::table('store_products')
                             ->where('varient_id', $aa->varient_id)
                             ->where('store_id', $store_id)
                             ->first();
                         $app1[$a]->price = round($sp->price, 2);
-
                     }
                     if ($request->user_id != NULL) {
                         $wishlist = DB::table('wishlist')
@@ -1516,7 +1511,6 @@ class OrderController extends Controller
                         } else {
                             $app1[$a]->cart_qty = 0;
                         }
-
                     } else {
                         $app1[$a]->isFavourite = 'false';
                         $app1[$a]->cart_qty = 0;
@@ -1571,15 +1565,12 @@ class OrderController extends Controller
 
                     $result[$m]->images = $images;
                     $m++;
-
                 }
                 $tag = DB::table('tags')
                     ->whereIn('product_id', $apps)
                     ->get();
                 $result[$j]->tags = $tag;
                 $j++;
-
-
             }
             $message = array('status' => '1', 'message' => 'top selling products', 'data' => $topselling);
             return $message;
@@ -1587,7 +1578,6 @@ class OrderController extends Controller
             $message = array('status' => '0', 'message' => 'nothing in top');
             return $message;
         }
-
     }
 
     public function spotlight(Request $request)
@@ -1603,8 +1593,8 @@ class OrderController extends Controller
             ->Leftjoin('product_rating', 'store_products.varient_id', '=', 'product_rating.varient_id')
             ->Leftjoin('orders', 'store_orders.order_cart_id', '=', 'orders.cart_id')
             ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-            ->select('store_products.price', 'store_products.stock')
-            ->groupBy('store_products.price', 'store_products.stock')
+            ->select('store_products.price', 'store_products.quantity')
+            ->groupBy('store_products.price', 'store_products.quantity')
             ->where('spotlight.store_id', $store_id)
             ->where('store_products.price', '!=', NULL)
             ->where('product.hide', 0)
@@ -1638,7 +1628,6 @@ class OrderController extends Controller
         if ($stock == 'out') {
             $stock = "<";
             $by = 1;
-
         } elseif ($stock == 'all' || $stock == NULL) {
             $stock = "!=";
             $by = NULL;
@@ -1663,15 +1652,15 @@ class OrderController extends Controller
                 ->Leftjoin('product_rating', 'store_products.varient_id', '=', 'product_rating.varient_id')
                 ->Leftjoin('orders', 'store_orders.order_cart_id', '=', 'orders.cart_id')
                 ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                ->select('store_products.store_id', 'store_products.stock', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', DB::raw('count(store_orders.varient_id) as count'), DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
-                ->groupBy('store_products.store_id', 'store_products.stock', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', 'product_rating.rating')
+                ->select('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', DB::raw('count(store_orders.varient_id) as count'), DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
+                ->groupBy('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', 'product_rating.rating')
                 ->where('spotlight.store_id', $store_id)
                 ->where('store_products.price', '!=', NULL)
                 ->where('product.hide', 0)
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.stock', $stock, $by)
+                ->where('store_products.quantity', $stock, $by)
                 ->orderBy('product.product_name', $filter1)
                 ->paginate(10);
         } else {
@@ -1683,15 +1672,15 @@ class OrderController extends Controller
                 ->Leftjoin('product_rating', 'store_products.varient_id', '=', 'product_rating.varient_id')
                 ->Leftjoin('orders', 'store_orders.order_cart_id', '=', 'orders.cart_id')
                 ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                ->select('store_products.store_id', 'store_products.stock', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', DB::raw('count(store_orders.varient_id) as count'), DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
-                ->groupBy('store_products.store_id', 'store_products.stock', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', 'product_rating.rating')
+                ->select('store_products.store_id', 'store_products.quantity', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', DB::raw('count(store_orders.varient_id) as count'), DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
+                ->groupBy('store_products.store_id', 'store_products.quantity', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', 'product_rating.rating')
                 ->where('spotlight.store_id', $store_id)
                 ->where('store_products.price', '!=', NULL)
                 ->where('product.hide', 0)
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.stock', $stock, $by)
+                ->where('store_products.quantity', $stock, $by)
                 ->orderByRaw('RAND()')
                 ->paginate(10);
         }
@@ -1791,7 +1780,7 @@ class OrderController extends Controller
                 $app1 = DB::table('store_products')
                     ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
                     ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                    ->select('store_products.store_id', 'store_products.stock', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
+                    ->select('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
                     ->where('store_products.store_id', $store_id)
                     ->whereIn('product_varient.product_id', $c)
                     ->where('store_products.price', '!=', NULL)
@@ -1809,14 +1798,12 @@ class OrderController extends Controller
 
                     if ($deal) {
                         $app1[$a]->price = round($deal->deal_price, 2);
-
                     } else {
                         $sp = DB::table('store_products')
                             ->where('varient_id', $aa->varient_id)
                             ->where('store_id', $store_id)
                             ->first();
                         $app1[$a]->price = round($sp->price, 2);
-
                     }
                     if ($request->user_id != NULL) {
                         $wishlist = DB::table('wishlist')
@@ -1841,7 +1828,6 @@ class OrderController extends Controller
                         } else {
                             $app1[$a]->cart_qty = 0;
                         }
-
                     } else {
                         $app1[$a]->isFavourite = 'false';
                         $app1[$a]->cart_qty = 0;
@@ -1895,7 +1881,6 @@ class OrderController extends Controller
 
                     $result[$m]->images = $images;
                     $m++;
-
                 }
                 $tag = DB::table('tags')
                     ->whereIn('product_id', $apps)
@@ -1923,8 +1908,8 @@ class OrderController extends Controller
             ->Leftjoin('product_rating', 'store_products.varient_id', '=', 'product_rating.varient_id')
             ->Leftjoin('orders', 'store_orders.order_cart_id', '=', 'orders.cart_id')
             ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-            ->select('store_products.price', 'store_products.stock')
-            ->groupBy('store_products.price', 'store_products.stock')
+            ->select('store_products.price', 'store_products.quantity')
+            ->groupBy('store_products.price', 'store_products.quantity')
             ->where('store_products.store_id', $store_id)
             ->where('deal_product.deal_price', NULL)
             ->where('store_products.price', '!=', NULL)
@@ -1959,7 +1944,6 @@ class OrderController extends Controller
         if ($stock == 'out') {
             $stock = "<";
             $by = 1;
-
         } elseif ($stock == 'all' || $stock == NULL) {
             $stock = "!=";
             $by = NULL;
@@ -1984,8 +1968,8 @@ class OrderController extends Controller
                 ->Leftjoin('product_rating', 'store_products.varient_id', '=', 'product_rating.varient_id')
                 ->Leftjoin('orders', 'store_orders.order_cart_id', '=', 'orders.cart_id')
                 ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                ->select('store_products.store_id', 'store_products.stock', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', DB::raw('count(store_orders.varient_id) as count'), DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
-                ->groupBy('store_products.store_id', 'store_products.stock', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', 'product_rating.rating')
+                ->select('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', DB::raw('count(store_orders.varient_id) as count'), DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
+                ->groupBy('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', 'product_rating.rating')
                 ->where('store_products.store_id', $store_id)
                 ->where('deal_product.deal_price', NULL)
                 ->where('store_products.price', '!=', NULL)
@@ -1993,7 +1977,7 @@ class OrderController extends Controller
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.stock', $stock, $by)
+                ->where('store_products.quantity', $stock, $by)
                 ->orderBy('product.product_name', $filter1)
                 ->paginate(10);
         } else {
@@ -2004,8 +1988,8 @@ class OrderController extends Controller
                 ->Leftjoin('product_rating', 'store_products.varient_id', '=', 'product_rating.varient_id')
                 ->Leftjoin('orders', 'store_orders.order_cart_id', '=', 'orders.cart_id')
                 ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                ->select('store_products.store_id', 'store_products.stock', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', DB::raw('count(store_orders.varient_id) as count'), DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
-                ->groupBy('store_products.store_id', 'store_products.stock', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'product.type', 'product_rating.rating')
+                ->select('store_products.store_id', 'store_products.quantity', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', DB::raw('count(store_orders.varient_id) as count'), DB::raw('100-((store_products.price*100)/store_products.mrp) as discountper'), DB::raw('sum(IFNULL(product_rating.rating,0))/count(IFNULL(product_rating.rating,0)) as avgrating'))
+                ->groupBy('store_products.store_id', 'store_products.quantity', 'store_products.varient_id', 'product.product_id', 'product.product_name', 'product.product_image', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product.type', 'product_rating.rating')
                 ->where('store_products.store_id', $store_id)
                 ->where('deal_product.deal_price', NULL)
                 ->where('store_products.price', '!=', NULL)
@@ -2013,7 +1997,7 @@ class OrderController extends Controller
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.stock', $stock, $by)
+                ->where('store_products.quantity', $stock, $by)
                 ->orderByRaw('RAND()')
                 ->paginate(10);
         }
@@ -2044,14 +2028,12 @@ class OrderController extends Controller
 
                 if ($deal) {
                     $prods->price = round($deal->deal_price, 2);
-
                 } else {
                     $sp = DB::table('store_products')
                         ->where('varient_id', $prods->varient_id)
                         ->where('store_id', $store_id)
                         ->first();
                     $prods->price = round($sp->price, 2);
-
                 }
                 if ($request->user_id != NULL) {
                     $wishlist = DB::table('wishlist')
@@ -2075,7 +2057,6 @@ class OrderController extends Controller
                     } else {
                         $prods->cart_qty = 0;
                     }
-
                 } else {
                     $prods->isFavourite = 'false';
                     $prods->cart_qty = 0;
@@ -2112,7 +2093,7 @@ class OrderController extends Controller
                 $app1 = DB::table('store_products')
                     ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
                     ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                    ->select('store_products.store_id', 'store_products.stock', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
+                    ->select('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
                     ->where('store_products.store_id', $store_id)
                     ->whereIn('product_varient.product_id', $c)
                     ->where('store_products.price', '!=', NULL)
@@ -2130,14 +2111,12 @@ class OrderController extends Controller
 
                     if ($deal) {
                         $app1[$a]->price = round($deal->deal_price, 2);
-
                     } else {
                         $sp = DB::table('store_products')
                             ->where('varient_id', $aa->varient_id)
                             ->where('store_id', $store_id)
                             ->first();
                         $app1[$a]->price = round($sp->price, 2);
-
                     }
 
                     if ($request->user_id != NULL) {
@@ -2215,15 +2194,12 @@ class OrderController extends Controller
 
                     $result[$m]->images = $images;
                     $m++;
-
                 }
                 $tag = DB::table('tags')
                     ->whereIn('product_id', $apps)
                     ->get();
                 $result[$j]->tags = $tag;
                 $j++;
-
-
             }
             $message = array('status' => '1', 'message' => 'recent selling products', 'data' => $recentselling);
             return $message;
