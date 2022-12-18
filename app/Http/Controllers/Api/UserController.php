@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use App\Traits\SendSms;
 use App\Traits\SendMail;
 use App\Models\User;
+use App\Services\HelperService;
 use App\Services\UserService;
 use JWTAuth;
 use Auth;
@@ -24,6 +25,7 @@ use Hash;
 use Illuminate\Support\Facades\DB as FacadesDB;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Passport\Bridge\UserRepository;
+use Str;
 
 /**
  * @group Users

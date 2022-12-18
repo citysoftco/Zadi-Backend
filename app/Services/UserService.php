@@ -13,6 +13,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
 
 /**
@@ -67,13 +68,14 @@ class UserService
 
     public static function login($request)
     {
-        $request['is_verified'] = 1;
+        // $data['is_verified'] = 1;
+        $data = $request->all();
+        // $data["user_phone"] = HelperService::removeFirstChars('0', $data["user_phone"]);
 
-        $credentials =  $request->only('user_phone', 'password'/*, 'is_verified'*/);
 
-        if (Auth::guard()->attempt($credentials)) {
+        if (Auth::guard()->attempt($data)) {
 
-            $user = User::where("user_phone", $request->user_phone)->first();
+            $user = User::where("user_phone", $data["user_phone"])->first();
 
             $token = null;
             if ($user)

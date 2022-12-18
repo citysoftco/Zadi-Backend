@@ -77,6 +77,9 @@
 
     @livewireStyles
     @powerGridStyles
+    @if (app()->getLocale() == 'ar')
+        <link href="{{ asset('assets/css/rtl.css') }}" rel="stylesheet" />
+    @endif
 
 </head>
 
