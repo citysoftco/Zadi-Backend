@@ -80,6 +80,10 @@
     @yield('preload-section')
     @livewireStyles
     @powerGridStyles
+
+    @if (app()->getLocale() == 'ar')
+        <link href="{{ asset('assets/css/rtl.css') }}" rel="stylesheet" />
+    @endif
 </head>
 
 <body data-spy='scroll' data-target='#sidebar-bootstrap' data-offset='200'>
@@ -146,6 +150,7 @@
     </script>
     <script src="{{ url('assets/theme_assets/plugins/bootstrap-table/dist/bootstrap-table.min.js') }}"></script>
     @yield('postload-section')
+
 </body>
 
 </html>
