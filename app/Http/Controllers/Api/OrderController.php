@@ -164,6 +164,7 @@ class OrderController extends Controller
                 ->select('sms')
                 ->where('user_id', $user_id)
                 ->first();
+            return $sms;
             $sms_status = $sms->sms;
 
             if ($sms_status == 1) {
