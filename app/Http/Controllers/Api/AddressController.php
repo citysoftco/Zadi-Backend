@@ -28,13 +28,15 @@ class AddressController extends Controller
         $citydet = DB::table('city')
             ->where('city_name', $city)
             ->first();
-        $city_id = $citydet->city_id;
+        // $city_id = $citydet->city_id;
 
         $society = $request->society_name;
-        $socitydet = DB::table('society')
-            ->where('society_name', $society)
-            ->first();
-        $society_id = $socitydet->society_id;
+        // $socitydet = DB::table('society')
+        //     ->where('society_name', $society)
+        //     ->first();
+        // $society_id = $socitydet->society_id;
+        $society_id = 1;
+
         $house_no = $request->house_no;
         $landmark = $request->landmark;
         $state = $request->state;
@@ -52,7 +54,7 @@ class AddressController extends Controller
                     'receiver_phone' => $receiver_phone,
                     'city' => $city,
                     'society' => $society,
-                    'city_id' => $city_id,
+                    // 'city_id' => $city_id,
                     'society_id' => $society_id,
                     'house_no' => $house_no,
                     'landmark' => $landmark,
@@ -78,7 +80,7 @@ class AddressController extends Controller
                         'receiver_phone' => $receiver_phone,
                         'city' => $city,
                         'society' => $society,
-                        'city_id' => $city_id,
+                        // 'city_id' => $city_id,
                         'society_id' => $society_id,
                         'house_no' => $house_no,
                         'landmark' => $landmark,
@@ -98,7 +100,7 @@ class AddressController extends Controller
                         'receiver_phone' => $receiver_phone,
                         'city' => $city,
                         'society' => $society,
-                        'city_id' => $city_id,
+                        // 'city_id' => $city_id,
                         'society_id' => $society_id,
                         'house_no' => $house_no,
                         'landmark' => $landmark,
@@ -176,8 +178,27 @@ class AddressController extends Controller
                     * cos(radians(lng) - radians(" . $store->lng . "))
                     + sin(radians(" . $store->lat . "))
                     * sin(radians(address.lat))) AS distancee"))
-            ->groupBy('type', 'address_id', 'lat', 'lng', 'receiver_name', 'receiver_phone', 'user_id',
-                'city', 'society', 'house_no', 'landmark', 'state', 'pincode', 'select_status', 'added_at', 'address_id', 'updated_at', 'city_id', 'society_id')
+            ->groupBy(
+                'type',
+                'address_id',
+                'lat',
+                'lng',
+                'receiver_name',
+                'receiver_phone',
+                'user_id',
+                'city',
+                'society',
+                'house_no',
+                'landmark',
+                'state',
+                'pincode',
+                'select_status',
+                'added_at',
+                'address_id',
+                'updated_at',
+                'city_id',
+                'society_id'
+            )
             ->Having('distancee', '<=', $store->del_range)
             ->orderBy('distancee')
             ->get();
@@ -186,7 +207,6 @@ class AddressController extends Controller
         foreach ($addresss as $store) {
 
             $address[] = $store;
-
         }
 
         if ($address != NULL) {
@@ -231,7 +251,6 @@ class AddressController extends Controller
             $deladdress = DB::table('address')
                 ->where('address_id', $address_id)
                 ->delete();
-
         } else {
             $deladdress = DB::table('address')
                 ->where('address_id', $address_id)
@@ -363,14 +382,12 @@ class AddressController extends Controller
                 foreach ($addresss as $store) {
 
                     $address[] = $store;
-
                 }
                 if ($address != NULL) {
                     $home[] = array('type' => $types->type, 'data' => $address);
                 } else {
                     $home[] = array('data' => 'No Address Found');
                 }
-
             }
         } else {
             $home[] = array('data' => 'No Address Found');
@@ -396,5 +413,4 @@ class AddressController extends Controller
             return $message;
         }
     }
-
 }

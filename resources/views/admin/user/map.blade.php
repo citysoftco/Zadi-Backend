@@ -36,8 +36,8 @@
         //     position: uluru,
         //     map: map,
         // });
-        let users = "{{ json_encode($users->items()) }}";
-        users = JSON.parse(users);
+        let users = "{{ json_encode($users) }}";
+        // users = JSON.parse(users);
         console.log(users);
         for (let i = 0; i < users; i++) {
             const latLng = new google.maps.LatLng(coords[1], coords[0]);

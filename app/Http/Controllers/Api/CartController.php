@@ -600,23 +600,23 @@ class CartController extends Controller
             return array('status' => '0', 'message' => 'No Items in cart');
         }
         $dell = $store->del_range;
-        $typessss = DB::table('address')
-            ->where('user_id', $user_id)
-            ->where('select_status', '!=', 2)
-            ->select('type', 'address_id', DB::raw("6371 * acos(cos(radians(" . $store->lat . "))
-                    * cos(radians(address.lat))
-                    * cos(radians(address.lng) - radians(" . $store->lng . "))
-                    + sin(radians(" . $store->lat . "))
-                    * sin(radians(address.lat))) AS distancee"))
-            ->groupBy('type', 'address_id', 'lat', 'lng')
-            ->Having('distancee', '<=', $dell)
-            ->orderBy('distancee')
-            ->where('select_status', 1)
-            ->first();
+        // $typessss = DB::table('address')
+        //     ->where('user_id', $user_id)
+        //     ->where('select_status', '!=', 2)
+        //     ->select('type', 'address_id', DB::raw("6371 * acos(cos(radians(" . $store->lat . "))
+        //             * cos(radians(address.lat))
+        //             * cos(radians(address.lng) - radians(" . $store->lng . "))
+        //             + sin(radians(" . $store->lat . "))
+        //             * sin(radians(address.lat))) AS distancee"))
+        //     ->groupBy('type', 'address_id', 'lat', 'lng')
+        //     ->Having('distancee', '<=', $dell)
+        //     ->orderBy('distancee')
+        //     ->where('select_status', 1)
+        //     ->first();
 
-        if (!$typessss) {
-            return array('status' => '0', 'message' => 'you do not have selected an address in delivery range of store please add/select an address in store delivery range');
-        }
+        // if (!$typessss) {
+        //     return array('status' => '0', 'message' => 'you do not have selected an address in delivery range of store please add/select an address in store delivery range');
+        // }
 
         $data_array = DB::table('store_orders')
             ->join('store_products', 'store_orders.varient_id', '=', 'store_products.varient_id')
