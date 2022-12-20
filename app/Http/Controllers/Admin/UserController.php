@@ -34,7 +34,7 @@ class UserController extends Controller
             ->paginate(10);
 
         $url_aws = $this->getImageStorage();
-
+        // dd($users->items());
         return view('admin.user.list', compact('title', "admin", "logo", "users", "url_aws"));
     }
 

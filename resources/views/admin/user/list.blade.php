@@ -153,8 +153,8 @@
             </div>
         </div>
     </div>
-    <div>
-    </div>
+    @include('admin.user.map')
+
 
     @foreach ($users as $user)
         <div class="modal fade" id="exampleModal1{{ $user->id }}" tabindex="-1" role="dialog"
@@ -193,7 +193,6 @@
             </div>
         </div>
     @endforeach
-    @include('admin.user.map')
 
 @endsection
 

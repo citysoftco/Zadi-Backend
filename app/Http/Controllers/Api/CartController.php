@@ -71,8 +71,8 @@ class CartController extends Controller
                     $message = array('status' => '0', 'message' => 'you have to order ' . $p_name . ' quantity between ' . $p->min_ord_qty . ' to ' . $p->max_ord_qty);
                     return $message;
                 }
-                if ($p->stock < $qty) {
-                    $message = array('status' => '0', 'message' => 'only ' . $p->stock . ' available in stock');
+                if ($p->quantity < $qty) {
+                    $message = array('status' => '0', 'message' => 'only ' . $p->quantity . ' available in quantity');
                     return $message;
                 }
                 $d = Carbon::Now();
@@ -1224,7 +1224,7 @@ class CartController extends Controller
             }
             $var_image = $p->product_image;
             $n = $p->product_name;
-            if ($h->qty <= $p->stock) {
+            if ($h->qty <= $p->quantity) {
                 $check = DB::table('store_orders')
                     ->where('store_approval', $user_id)
                     ->where('varient_id', $varient_id)
@@ -1405,7 +1405,7 @@ class CartController extends Controller
             $adata = array('discountonmrp' => $discountonmrp, 'total_price' => $sum1, 'total_mrp' => $mrppp, 'total_items' => $sum->count, 'store_details' => $nearbystore, 'total_tax' => $taxtotal, 'avg_tax' => $round_pr, 'data' => $cart_items1);
 
 
-            $message = array('status' => '1', 'message' => 'Added order Products to cart which are available in stock', 'data' => $adata);
+            $message = array('status' => '1', 'message' => 'Added order Products to cart which are available in quantity', 'data' => $adata);
             return $message;
         } else {
             $message = array('status' => '0', 'message' => 'insertion failed');
