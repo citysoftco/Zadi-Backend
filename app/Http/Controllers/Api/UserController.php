@@ -337,7 +337,7 @@ class UserController extends Controller
             return response()->json($user);
 
         return response()->json([
-            "code" => 0,
+            "status" => 0,
             "message" => "Unauthorized"
         ], 401);
     }
@@ -749,7 +749,7 @@ class UserController extends Controller
             return response()->json($user);
         else
             return response()->json([
-                "code" => 0,
+                "status" => 0,
                 "message" => "Otp Not Correct Or It Expires"
             ], 422);
 
@@ -804,7 +804,7 @@ class UserController extends Controller
             return response()->json($verify);
         else
             return response()->json([
-                "code" => 0,
+                "status" => 0,
                 "message" => "Otp Not Correct Or It Expires"
             ], 422);
 

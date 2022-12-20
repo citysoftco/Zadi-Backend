@@ -64,7 +64,7 @@ class UserService
             $data["user_phone"] = str_replace_first("0", "", $data["user_phone"]);
 
         return   [
-            "code" => 1,
+            "status" => 1,
             "message" => "Registered Successfully",
             "data" => $user
         ];
@@ -87,7 +87,7 @@ class UserService
 
             $user->token = $token;
             return  [
-                "code" => 1,
+                "status" => 1,
                 "message" => "Login Successfully",
                 "data" => $user
             ];
@@ -106,7 +106,7 @@ class UserService
                 "otp_value" => null
             ]);
             return  [
-                "code" => 1,
+                "status" => 1,
                 "message" => "Verified Successfully",
                 "data" => $user
             ];
@@ -126,7 +126,7 @@ class UserService
             "otp_value" => $data["otp_value"]
         ]);
         return  [
-            "code" => 1,
+            "status" => 1,
             "message" => "Otp Sent Successfully",
             "data" => $user
         ];
@@ -155,7 +155,7 @@ class UserService
         );
 
         return [
-            "code" => 1,
+            "status" => 1,
             "message" => "Password Updated Successfully",
             "data" => $data
         ];
