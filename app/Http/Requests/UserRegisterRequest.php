@@ -32,11 +32,11 @@ class UserRegisterRequest extends FormRequest
             "lng" => "required|numeric",
             "address" => "required",
             "user_city" => "required",
-            "user_area" => "required",
+            // "user_area" => "required",
             "facebook_id" => "nullable",
             "name" => "required",
             "user_image" => "nullable|image",
-            "referral_code" => "required"
+            // "referral_code" => "required"
         ];
     }
 }

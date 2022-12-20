@@ -55,8 +55,8 @@ class UserService
         } else {
             $data["user_image"] = 'N/A';
         }
-        $data["otp_value"] = OtpService::otpmsg($data["name"], $data["user_phone"]);
-        // $data["otp_value"] = rand(12345, 99999);
+        // $data["otp_value"] = OtpService::otpmsg($data["name"], $data["user_phone"]);
+        $data["otp_value"] = rand(12345, 99999);
         $user = User::create($data);
         $user->token = $user->createToken(uniqid())->accessToken;
 
@@ -105,6 +105,8 @@ class UserService
                 "is_verified" => 1,
                 "otp_value" => null
             ]);
+            $user->token = $user->createToken(uniqid())->accessToken;
+
             return  [
                 "status" => 1,
                 "message" => "Verified Successfully",
