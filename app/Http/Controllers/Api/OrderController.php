@@ -164,7 +164,6 @@ class OrderController extends Controller
                 ->select('sms')
                 ->where('user_id', $user_id)
                 ->first();
-            return $sms;
             $sms_status = $sms->sms;
 
             if ($sms_status == 1) {
@@ -172,27 +171,27 @@ class OrderController extends Controller
             }
 
             /////send mail
-            $email = DB::table('notificationby')
-                ->select('email', 'app')
-                ->where('user_id', $user_id)
-                ->first();
-            $q = DB::table('users')
-                ->select('email', 'name', 'device_id')
-                ->where('id', $user_id)
-                ->first();
-            $user_email = $q->email;
-            $device_id = $q->device_id;
-            $user_name = $q->name;
-            $email_status = $email->email;
+            // $email = DB::table('notificationby')
+            //     ->select('email', 'app')
+            //     ->where('user_id', $user_id)
+            //     ->first();
+            // $q = DB::table('users')
+            //     ->select('email', 'name', 'device_id')
+            //     ->where('id', $user_id)
+            //     ->first();
+            // $user_email = $q->email;
+            // $device_id = $q->device_id;
+            // $user_name = $q->name;
+            // $email_status = $email->email;
 
-            if ($email_status == 1) {
-                $codorderplaced = $this->codorderplacedMail($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name);
-            }
+            // if ($email_status == 1) {
+            //     $codorderplaced = $this->codorderplacedMail($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name);
+            // }
 
-            ///////send notification to User//////
-            if ($email->app == 1) {
-                $codorderplaced = $this->codorderplacedinapp($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $user_id, $device_id);
-            }
+            // ///////send notification to User//////
+            // if ($email->app == 1) {
+            //     $codorderplaced = $this->codorderplacedinapp($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $user_id, $device_id);
+            // }
 
             $orderr1 = DB::table('orders')
                 ->where('cart_id', $cart_id)
@@ -209,15 +208,15 @@ class OrderController extends Controller
                 $store_phone = $getD->phone_number;
                 $store_email = $getD->email;
                 $orderplacedmsgstore = $this->ordersuccessfullstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $store_phone);
-                $codorderplacedstore = $this->codorderplacedMailstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $store_n, $store_email);
+                // $codorderplacedstore = $this->codorderplacedMailstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $store_n, $store_email);
 
-                $codorderplacedstore = $this->codorderplacedinappstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $store_n, $store_id);
+                // $codorderplacedstore = $this->codorderplacedinappstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $store_n, $store_id);
             }
             $admin = DB::table('admin')
                 ->first();
             $admin_email = $admin->email;
             $admin_name = $admin->name;
-            $codorderplacedadmin = $this->codorderplacedMailadmin($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $store_n, $admin_email, $admin_name);
+            // $codorderplacedadmin = $this->codorderplacedMailadmin($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $store_n, $admin_email, $admin_name);
 
             $delete = DB::table('store_orders')
                 ->where('store_approval', $user_id)
@@ -249,11 +248,11 @@ class OrderController extends Controller
                     ->where('store_id', $store_id)
                     ->first();
                 if ($stoc) {
-                    $newstock = $stoc->stock - $qt;
+                    $newquantity = $stoc->quantity - $qt;
                     $st = DB::table('store_products')
                         ->where('varient_id', $vs->varient_id)
                         ->where('store_id', $store_id)
-                        ->update(['stock' => $newstock]);
+                        ->update(['quantity' => $newquantity]);
                 }
             }
 
@@ -397,11 +396,11 @@ class OrderController extends Controller
                         ->where('store_id', $store_id)
                         ->first();
                     if ($stoc) {
-                        $newstock = $stoc->stock - $qt;
+                        $newquantity = $stoc->quantity - $qt;
                         $st = DB::table('store_products')
                             ->where('varient_id', $vs->varient_id)
                             ->where('store_id', $store_id)
-                            ->update(['stock' => $newstock]);
+                            ->update(['quantity' => $newquantity]);
                     }
                 }
 
@@ -829,11 +828,11 @@ class OrderController extends Controller
                         ->where('store_id', $store_id)
                         ->first();
                     if ($stoc) {
-                        $newstock = $stoc->stock + $qt;
+                        $newquantity = $stoc->quantity + $qt;
                         $st = DB::table('store_products')
                             ->where('varient_id', $vs->varient_id)
                             ->where('store_id', $user->store_id)
-                            ->update(['stock' => $newstock]);
+                            ->update(['quantity' => $newquantity]);
                     }
                 }
                 $message = array('status' => '1', 'message' => 'order cancelled', 'data' => $order);
@@ -893,15 +892,15 @@ class OrderController extends Controller
             $max_price = $price;
         }
 
-        $stock = $request->stock;
-        if ($stock == 'out') {
-            $stock = "<";
+        $quantity = $request->quantity;
+        if ($quantity == 'out') {
+            $quantity = "<";
             $by = 1;
-        } elseif ($stock == 'all' || $stock == NULL) {
-            $stock = "!=";
+        } elseif ($quantity == 'all' || $quantity == NULL) {
+            $quantity = "!=";
             $by = NULL;
         } else {
-            $stock = ">";
+            $quantity = ">";
             $by = 0;
         }
 
@@ -932,7 +931,7 @@ class OrderController extends Controller
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.quantity', $stock, $by)
+                ->where('store_products.quantity', $quantity, $by)
                 ->orderBy('product.product_name', $filter1)
                 ->orderBy('count', 'desc')
                 ->paginate(10);
@@ -953,7 +952,7 @@ class OrderController extends Controller
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.quantity', $stock, $by)
+                ->where('store_products.quantity', $quantity, $by)
                 ->orderBy('store_products.p_id', 'desc')
                 ->paginate(10);
         }
@@ -1305,15 +1304,15 @@ class OrderController extends Controller
             $max_price = $price;
         }
 
-        $stock = $request->stock;
-        if ($stock == 'out') {
-            $stock = "<";
+        $quantity = $request->quantity;
+        if ($quantity == 'out') {
+            $quantity = "<";
             $by = 1;
-        } elseif ($stock == 'all' || $stock == NULL) {
-            $stock = "!=";
+        } elseif ($quantity == 'all' || $quantity == NULL) {
+            $quantity = "!=";
             $by = NULL;
         } else {
-            $stock = ">";
+            $quantity = ">";
             $by = 0;
         }
 
@@ -1345,7 +1344,7 @@ class OrderController extends Controller
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.quantity', $stock, $by)
+                ->where('store_products.quantity', $quantity, $by)
                 ->orderBy('product.product_name', $filter1)
                 ->orderBy('count', 'desc')
                 ->paginate(10);
@@ -1366,7 +1365,7 @@ class OrderController extends Controller
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.quantity', $stock, $by)
+                ->where('store_products.quantity', $quantity, $by)
                 ->orderBy('count', 'desc')
                 ->paginate(10);
         }
@@ -1625,15 +1624,15 @@ class OrderController extends Controller
         if ($max_price == NULL) {
             $max_price = $price;
         }
-        $stock = $request->stock;
-        if ($stock == 'out') {
-            $stock = "<";
+        $quantity = $request->quantity;
+        if ($quantity == 'out') {
+            $quantity = "<";
             $by = 1;
-        } elseif ($stock == 'all' || $stock == NULL) {
-            $stock = "!=";
+        } elseif ($quantity == 'all' || $quantity == NULL) {
+            $quantity = "!=";
             $by = NULL;
         } else {
-            $stock = ">";
+            $quantity = ">";
             $by = 0;
         }
         $min_discount = $request->min_discount;
@@ -1661,7 +1660,7 @@ class OrderController extends Controller
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.quantity', $stock, $by)
+                ->where('store_products.quantity', $quantity, $by)
                 ->orderBy('product.product_name', $filter1)
                 ->paginate(10);
         } else {
@@ -1681,7 +1680,7 @@ class OrderController extends Controller
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.quantity', $stock, $by)
+                ->where('store_products.quantity', $quantity, $by)
                 ->orderByRaw('RAND()')
                 ->paginate(10);
         }
@@ -1941,15 +1940,15 @@ class OrderController extends Controller
         if ($max_price == NULL) {
             $max_price = $price;
         }
-        $stock = $request->stock;
-        if ($stock == 'out') {
-            $stock = "<";
+        $quantity = $request->quantity;
+        if ($quantity == 'out') {
+            $quantity = "<";
             $by = 1;
-        } elseif ($stock == 'all' || $stock == NULL) {
-            $stock = "!=";
+        } elseif ($quantity == 'all' || $quantity == NULL) {
+            $quantity = "!=";
             $by = NULL;
         } else {
-            $stock = ">";
+            $quantity = ">";
             $by = 0;
         }
 
@@ -1978,7 +1977,7 @@ class OrderController extends Controller
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.quantity', $stock, $by)
+                ->where('store_products.quantity', $quantity, $by)
                 ->orderBy('product.product_name', $filter1)
                 ->paginate(10);
         } else {
@@ -1998,7 +1997,7 @@ class OrderController extends Controller
                 ->whereBetween('store_products.price', [$min_price, $max_price])
                 ->havingBetween('avgrating', [$min_rating, $max_rating])
                 ->havingBetween('discountper', [$min_discount, $max_discount])
-                ->where('store_products.quantity', $stock, $by)
+                ->where('store_products.quantity', $quantity, $by)
                 ->orderByRaw('RAND()')
                 ->paginate(10);
         }
