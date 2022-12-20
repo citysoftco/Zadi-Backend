@@ -641,11 +641,11 @@ class CartController extends Controller
         $cart_id = $val . $val2 . $cr;
         $ar = DB::table('address')
             ->select('society', 'city', 'city_id', 'society_id', 'lat', 'lng', 'address_id')
-            ->where('user_id', $user_id)
+            // ->where('user_id', $user_id)
             ->where('select_status', 1)
             ->first();
         $ar_id = DB::table('service_area')
-            ->where('society_id', $ar->society_id)
+            // ->where('society_id', $ar->society_id)
             ->where('store_id', $store_id)
             ->first();
         if (!$ar) {
@@ -809,7 +809,7 @@ class CartController extends Controller
                 ]);
         }
         $ar_id = DB::table('service_area')
-            ->where('society_id', $ar->society_id)
+            // ->where('society_id', $ar->society_id)
             ->where('store_id', $store_id)
             ->first();
         $delcharge = DB::table('freedeliverycart')
