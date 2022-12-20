@@ -17,9 +17,10 @@ class RemoveZeroFromPhone
      */
     public function handle(Request $request, Closure $next)
     {
-        $request->merge([
-            "user_phone" => HelperService::removeFirstChars('0', $request->user_phone)
-        ]);
+        if ($request->has("user_phone"))
+            $request->merge([
+                "user_phone" => ltrim($request->user_phone, '0')
+            ]);
         return $next($request);
     }
 }

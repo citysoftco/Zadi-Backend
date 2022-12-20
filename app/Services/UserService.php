@@ -63,7 +63,11 @@ class UserService
         if ($data["user_phone"][0] == "0")
             $data["user_phone"] = str_replace_first("0", "", $data["user_phone"]);
 
-        return $user;
+        return   [
+            "code" => 1,
+            "message" => "Registered Successfully",
+            "data" => $user
+        ];
     }
 
     public static function login($request)
@@ -82,7 +86,11 @@ class UserService
                 $token = $user->createToken(uniqid())->accessToken;
 
             $user->token = $token;
-            return $user;
+            return  [
+                "code" => 1,
+                "message" => "Login Successfully",
+                "data" => $user
+            ];
         }
 
         return false;
@@ -97,7 +105,11 @@ class UserService
                 "is_verified" => 1,
                 "otp_value" => null
             ]);
-            return $user;
+            return  [
+                "code" => 1,
+                "message" => "Verified Successfully",
+                "data" => $user
+            ];
         } else
             return false;
     }
@@ -107,12 +119,17 @@ class UserService
         $data = $request->all();
         $data["otp_expires_date"] = Carbon::now()->addMinutes(2);
         $user = User::where("user_phone", $data["user_phone"])->first();
-        $data["otp_value"] = OtpService::otpmsg($user->name, $user->user_phone);
+        $data["otp_value"] = rand(12345, 99999);
+        // $data["otp_value"] = OtpService::otpmsg($user->name, $user->user_phone);
         $user->update([
             "otp_expires_date" => $data["otp_expires_date"],
             "otp_value" => $data["otp_value"]
         ]);
-        return $user;
+        return  [
+            "code" => 1,
+            "message" => "Otp Sent Successfully",
+            "data" => $user
+        ];
     }
     public static function forgetPassword($request)
     {
@@ -137,6 +154,10 @@ class UserService
             ]
         );
 
-        return $user;
+        return [
+            "code" => 1,
+            "message" => "Password Updated Successfully",
+            "data" => $data
+        ];
     }
 }
