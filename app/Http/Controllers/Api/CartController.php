@@ -712,19 +712,19 @@ class CartController extends Controller
         }
         $tax_avg = $tax_p / $count;
 
-        $min = DB::table('minimum_maximum_order_value')
-            ->where('store_id', $store_id)
-            ->first();
-        if ($min) {
-            if ($pricecheck < $min->min_value) {
-                $message = array('status' => '0', 'message' => 'you have to order between ' . $min->min_value . ' to ' . $min->max_value);
-                return $message;
-            }
-            if ($pricecheck > $min->max_value) {
-                $message = array('status' => '0', 'message' => 'you have to order between ' . $min->min_value . ' to ' . $min->max_value);
-                return $message;
-            }
-        }
+        // $min = DB::table('minimum_maximum_order_value')
+        //     ->where('store_id', $store_id)
+        //     ->first();
+        // if ($min) {
+        //     if ($pricecheck < $min->min_value) {
+        //         $message = array('status' => '0', 'message' => 'you have to order between ' . $min->min_value . ' to ' . $min->max_value);
+        //         return $message;
+        //     }
+        //     if ($pricecheck > $min->max_value) {
+        //         $message = array('status' => '0', 'message' => 'you have to order between ' . $min->min_value . ' to ' . $min->max_value);
+        //         return $message;
+        //     }
+        // }
         $tax_price = 0;
         foreach ($data_array as $h) {
             $varient_id = $h->varient_id;
