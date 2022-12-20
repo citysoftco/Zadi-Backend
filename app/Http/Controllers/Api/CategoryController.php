@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Store;
 use DB;
 use Carbon\Carbon;
+use Hash;
 use Illuminate\Support\Facades\App;
 
 class CategoryController extends Controller
@@ -105,7 +107,8 @@ class CategoryController extends Controller
     public function oneapi(Request $request)
     {
         $d = Carbon::Now();
-        $store_id = $request->store_id;
+        // $store_id = $request->store_id;
+        $store_id = Store::first()->id;
 
         $topcat = DB::table('categories')
             ->join('categories as cat', 'categories.cat_id', '=', 'cat.parent')
