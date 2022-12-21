@@ -77,7 +77,7 @@
                                     <th>#</th>
                                     <th>{{ __('keywords.User') }} {{ __('keywords.Name') }}</th>
                                     <th>{{ __('keywords.User Phone') }}</th>
-                                    <th>{{ __('keywords.User Email') }}</th>
+                                    {{-- <th>{{ __('keywords.User Email') }}</th> --}}
                                     <th>{{ __('keywords.Registration Date') }}</th>
                                     <th>{{ __('keywords.Is Verified') }}</th>
                                     <th>{{ __('keywords.Active/Block') }}</th>
@@ -93,7 +93,7 @@
                                             <td class="text-center">{{ $i }}</td>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->user_phone }}</td>
-                                            <td>{{ $user->email }}</td>
+                                            {{-- <td>{{ $user->email }}</td> --}}
                                             <td>{{ $user->reg_date }}</td>
                                             @if ($user->is_verified == 0)
                                                 <td class="td-actions text-center" style="color:red"><i

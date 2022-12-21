@@ -160,15 +160,15 @@ class OrderController extends Controller
                     'payment_method' => $payment_method
                 ]);
 
-            $sms = DB::table('notificationby')
-                ->select('sms')
-                ->where('user_id', $user_id)
-                ->first();
-            $sms_status = $sms->sms;
+            // $sms = DB::table('notificationby')
+            //     ->select('sms')
+            //     ->where('user_id', $user_id)
+            //     ->first();
+            // $sms_status = $sms->sms;
 
-            if ($sms_status == 1) {
-                $orderplacedmsg = $this->ordersuccessfull($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_phone);
-            }
+            // if ($sms_status == 1) {
+            //     $orderplacedmsg = $this->ordersuccessfull($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_phone);
+            // }
 
             /////send mail
             // $email = DB::table('notificationby')
@@ -307,39 +307,39 @@ class OrderController extends Controller
                         'updated_at' => Carbon::now()
                     ]);
 
-                $sms = DB::table('notificationby')
-                    ->select('sms')
-                    ->where('user_id', $user_id)
-                    ->first();
-                $sms_status = $sms->sms;
-                if ($sms_status == 1) {
+                // $sms = DB::table('notificationby')
+                //     ->select('sms')
+                //     ->where('user_id', $user_id)
+                //     ->first();
+                // $sms_status = $sms->sms;
+                // if ($sms_status == 1) {
 
-                    /////send sms/////
-                    $codorderplaced = $this->ordersuccessfull($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_phone);
-                }
+                //     /////send sms/////
+                //     $codorderplaced = $this->ordersuccessfull($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_phone);
+                // }
                 /////send mail
-                $email = DB::table('notificationby')
-                    ->select('email', 'app')
-                    ->where('user_id', $user_id)
-                    ->first();
-                $email_status = $email->email;
-                $q = DB::table('users')
-                    ->select('email', 'name')
-                    ->where('id', $user_id)
-                    ->first();
-                $user_email = $q->email;
-                $user_name = $q->name;
+                // $email = DB::table('notificationby')
+                //     ->select('email', 'app')
+                //     ->where('user_id', $user_id)
+                //     ->first();
+                // $email_status = $email->email;
+                // $q = DB::table('users')
+                //     ->select('email', 'name')
+                //     ->where('id', $user_id)
+                //     ->first();
+                // $user_email = $q->email;
+                // $user_name = $q->name;
 
-                if ($email_status == 1) {
+                // if ($email_status == 1) {
 
-                    ///sending mails//
-                    $orderplaced = $this->orderplacedMail($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name);
-                }
+                //     ///sending mails//
+                //     $orderplaced = $this->orderplacedMail($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name);
+                // }
 
-                if ($email->app == 1) {
-                    ///////send notification to User//////
-                    $codorderplaced = $this->codorderplacedinapp($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $user_id);
-                }
+                // if ($email->app == 1) {
+                //     ///////send notification to User//////
+                //     $codorderplaced = $this->codorderplacedinapp($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $user_id);
+                // }
 
                 $orderr1 = DB::table('orders')
                     ->where('cart_id', $cart_id)
@@ -358,19 +358,19 @@ class OrderController extends Controller
                     ->delete();
 
                 if ($getD) {
-                    $store_phone = $getD->phone_number;
-                    $store_email = $getD->email;
-                    $orderplacedmsgstore = $this->ordersuccessfullstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $store_phone);
-                    $codorderplacedstore = $this->codorderplacedMailstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $store_n, $store_email);
+                    // $store_phone = $getD->phone_number;
+                    // $store_email = $getD->email;
+                    // $orderplacedmsgstore = $this->ordersuccessfullstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $store_phone);
+                    // $codorderplacedstore = $this->codorderplacedMailstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $store_n, $store_email);
 
-                    $codorderplacedstore = $this->codorderplacedinappstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $store_n, $store_id);
+                    // $codorderplacedstore = $this->codorderplacedinappstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $store_n, $store_id);
                 }
 
                 $admin = DB::table('admin')
                     ->first();
                 $admin_email = $admin->email;
                 $admin_name = $admin->name;
-                $codorderplacedadmin = $this->codorderplacedMailadmin($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $store_n, $admin_email, $admin_name);
+                // $codorderplacedadmin = $this->codorderplacedMailadmin($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $store_n, $admin_email, $admin_name);
 
                 $cart_status = DB::table('cart_status')
                     ->insert([

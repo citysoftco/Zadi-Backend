@@ -7,6 +7,10 @@
         width: 100%;
         /* The width is the width of the web page */
     }
+
+    button[title="Close"] {
+        display: none !important
+    }
 </style>
 
 <!--
@@ -39,6 +43,10 @@
         let users = '{!! json_encode($users->items()) !!}';
         users = JSON.parse(users);
         // console.log(users);
+        const infoWindow = new google.maps.InfoWindow();
+        infoWindow.focus();
+
+
         for (const user of users) {
             // console.log(user["lat"]);
             const latLng = new google.maps.LatLng(user["lat"], user["lng"]);
@@ -49,8 +57,21 @@
             });
 
             marker.addListener("mouseover", () => {
-                // map.setZoom(8);
+                map.setZoom(8);
                 // map.setCenter(marker.getPosition());
+                infoWindow.close();
+
+                infoWindow.setContent(
+                    "<div style='direction:rtl;font-size:15px;font-weight:bold' class='text-right'>الإسم: " +
+                    user["name"] +
+                    "<br>رقم الهاتف:" +
+                    user["user_phone"] +
+                    "</div>");
+                infoWindow.open({
+                    "anchor": marker,
+                    map
+                });
+
 
             });
         }

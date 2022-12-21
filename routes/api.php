@@ -229,13 +229,15 @@ Route::namespace("Api")->prefix('')->group(function () {
 
   Route::post('user_feedback', [SupportController::class, 'feedback']);
 
-  Route::post('add_to_cart', [CartController::class, 'add_to_cart']);
-  Route::post('make_order', [CartController::class, 'make_an_order']);
-  Route::post('show_cart', [CartController::class, 'show_cart']);
-  Route::post('del_frm_cart', [CartController::class, 'del_frm_cart']);
-  Route::post('check_cart', [CartController::class, 'check_cart']);
-  Route::post('clear_cart', [CartController::class, 'clear_cart']);
-  Route::post('societyforaddress', [AddressController::class, 'societyforadd']);
+  Route::group([/*"middleware" => "auth:api"*/], function () {
+    Route::post('add_to_cart', [CartController::class, 'add_to_cart']);
+    Route::post('make_order', [CartController::class, 'make_an_order']);
+    Route::post('show_cart', [CartController::class, 'show_cart']);
+    Route::post('del_frm_cart', [CartController::class, 'del_frm_cart']);
+    Route::post('check_cart', [CartController::class, 'check_cart']);
+    Route::post('clear_cart', [CartController::class, 'clear_cart']);
+    Route::post('societyforaddress', [AddressController::class, 'societyforadd']);
+  });
 
   //notification by///
   Route::post('appsetting', [AppsetController::class, 'appsetting']);

@@ -63,40 +63,42 @@ class WalletController extends Controller
                 ->update(['wallet' => $added]);
 
             $insert = DB::table('wallet_recharge_history')
-                ->insert(['user_id' => $user_id,
+                ->insert([
+                    'user_id' => $user_id,
                     'amount' => $add_to_wallet,
                     'date_of_recharge' => $date_of_recharge,
                     'recharge_status' => $recharge_status,
-                    'payment_gateway' => $payment_gateway]);
+                    'payment_gateway' => $payment_gateway
+                ]);
 
             if ($insert) {
                 // start sms
-                $sms = DB::table('notificationby')
-                    ->select('sms')
-                    ->where('user_id', $user_id)
-                    ->first();
-                $sms_status = $sms->sms;
-                $sms_api_key = DB::table('msg91')
-                    ->select('api_key', 'sender_id')
-                    ->first();
-                $api_key = $sms_api_key->api_key;
-                $sender_id = $sms_api_key->sender_id;
-                if ($sms_status == 1) {
-                    $rechargeSms = $this->rechargesms($curr, $user_name, $add_to_wallet, $user_phone);
-                }
+                // $sms = DB::table('notificationby')
+                //     ->select('sms')
+                //     ->where('user_id', $user_id)
+                //     ->first();
+                // $sms_status = $sms->sms;
+                // $sms_api_key = DB::table('msg91')
+                //     ->select('api_key', 'sender_id')
+                //     ->first();
+                // $api_key = $sms_api_key->api_key;
+                // $sender_id = $sms_api_key->sender_id;
+                // if ($sms_status == 1) {
+                //     $rechargeSms = $this->rechargesms($curr, $user_name, $add_to_wallet, $user_phone);
+                // }
                 // end sms
 
 
                 /////send mail
-                $email = DB::table('notificationby')
-                    ->select('email')
-                    ->where('user_id', $user_id)
-                    ->first();
-                $email_status = $email->email;
-                if ($email_status == 1) {
+                // $email = DB::table('notificationby')
+                //     ->select('email')
+                //     ->where('user_id', $user_id)
+                //     ->first();
+                // $email_status = $email->email;
+                // if ($email_status == 1) {
 
-                    $rechargeMail = $this->rechargeMail($user_id, $user_name, $user_email, $user_phone, $add_to_wallet);
-                }
+                //     $rechargeMail = $this->rechargeMail($user_id, $user_name, $user_email, $user_phone, $add_to_wallet);
+                // }
                 ////end send mail
 
                 $message = array('status' => '1', 'message' => 'wallet recharged successfully');
@@ -104,15 +106,16 @@ class WalletController extends Controller
             }
         } else {
             $insert = DB::table('wallet_recharge_history')
-                ->insert(['user_id' => $user_id,
+                ->insert([
+                    'user_id' => $user_id,
                     'amount' => $add_to_wallet,
                     'date_of_recharge' => $date_of_recharge,
                     'recharge_status' => 'failed',
-                    'payment_gateway' => $payment_gateway]);
+                    'payment_gateway' => $payment_gateway
+                ]);
             $message = array('status' => '0', 'message' => 'Failed! try again', 'data' => []);
             return $message;
         }
-
     }
 
     public function totalbill(Request $request)
