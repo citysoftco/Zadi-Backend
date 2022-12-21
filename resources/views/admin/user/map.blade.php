@@ -44,7 +44,7 @@
         users = JSON.parse(users);
         // console.log(users);
         const infoWindow = new google.maps.InfoWindow();
-        infoWindow.focus();
+
 
 
         for (const user of users) {
@@ -57,7 +57,7 @@
             });
 
             marker.addListener("mouseover", () => {
-                map.setZoom(8);
+                // map.setZoom(8);
                 // map.setCenter(marker.getPosition());
                 infoWindow.close();
 
@@ -74,15 +74,13 @@
 
 
             });
-        }
-        // for (let i = 0; i < users.length; i++) {
-        //     const latLng = new google.maps.LatLng(users[i][], coords[0]);
 
-        //     new google.maps.Marker({
-        //         position: latLng,
-        //         map: map,
-        //     });
-        // }
+        }
+        map.addListener("click", function() {
+            infoWindow.close();
+
+        });
+
     }
 
     window.initMap = initMap;
