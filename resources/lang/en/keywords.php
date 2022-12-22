@@ -922,6 +922,8 @@ return [
     'See_ID_Photo' => 'See ID photo',
     'All_Stores' => 'All Stores',
     'Assign_Store' => 'All Stores',
+    'Choose Delivery Man' => "Choose Delivery Man"
+
 
 
 ];

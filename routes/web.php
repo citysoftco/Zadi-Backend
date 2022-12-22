@@ -307,6 +307,12 @@ Route::group(['middleware' => ['verifylicense']], function () {
             ////Pending orders/////
             Route::get('admin/pending_orders', [AdminorderController::class, 'admin_pen_orders'])->name('admin_pen_orders');
 
+            Route::post("order/assign/delivery-man", [OrderController::class, 'assignOrderToDeliveryBoy'])->name("order.assign.delivery-man");
+            // Route::get("admin/test", function () {
+            //     return view("admin.d_boy.orders");
+            // });
+
+
             Route::post('admin/reject/order/{id}', [AdminorderController::class, 'rejectorder'])->name('admin_reject_order');
             Route::get('admin/cancelled_orders', [AdminorderController::class, 'admin_can_orders'])->name('admin_can_orders');
             Route::get('payment_gateway', [PayController::class, 'payment_gateway'])->name('gateway');
@@ -584,6 +590,9 @@ Route::group(['middleware' => ['verifylicense']], function () {
             Route::get('d_boy/edit/{id}', [DeliveryboyController::class, 'EditD_boy'])->name('store_EditD_boy');
             Route::post('d_boy/update/{id}', [DeliveryboyController::class, 'UpdateD_boy'])->name('store_UpdateD_boy');
             Route::get('d_boy/delete/{id}', [DeliveryboyController::class, 'DeleteD_boy'])->name('store_DeleteD_boy');
+            // Route::get('admin/d_boy/o', function () {
+            //     return view("admin.d_boy.orders");
+            // });
 
             Route::get('st_driver_callback_requests', [CallbackController::class, 'drivercallbacklist'])->name('st_driver_callback_requests');
             Route::get('st_driver_callbackproc/{id}', [CallbackController::class, 'driver_call_proc'])->name('st_driver_callbackproc');

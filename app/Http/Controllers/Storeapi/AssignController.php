@@ -112,31 +112,31 @@ class AssignController extends Controller
                     ->where('store_id', $store_id)
                     ->first();
                 if ($stoc) {
-                    $newstock = $stoc->stock - $qt;
-
+                    $newquantity = $stoc->quantity - $qt;
                 }
             }
             $orderconfirm = DB::table('orders')
                 ->where('cart_id', $cart_id)
-                ->update(['order_status' => 'Confirmed',
-                    'dboy_id' => $nearbydboy->dboy_id]);
+                ->update([
+                    'order_status' => 'Confirmed',
+                    'dboy_id' => $nearbydboy->dboy_id
+                ]);
 
 
             if ($orderconfirm) {
-                $sms = DB::table('notificationby')
-                    ->select('sms', 'app')
-                    ->where('user_id', $orr->user_id)
-                    ->first();
-                $sms_status = $sms->sms;
-                if ($sms_status == 1) {
-                    $codorderplaced = $this->orderconfirmedsms($cart_id, $user_phone, $orr);
-                }
+                // $sms = DB::table('notificationby')
+                //     ->select('sms', 'app')
+                //     ->where('user_id', $orr->user_id)
+                //     ->first();
+                // $sms_status = $sms->sms;
+                // if ($sms_status == 1) {
+                //     $codorderplaced = $this->orderconfirmedsms($cart_id, $user_phone, $orr);
+                // }
 
-                if ($sms->app == 1) {
+                // if ($sms->app == 1) {
 
-                    $confirmedinappuser = $this->orderconfirmedinapp($cart_id, $user_phone, $orr);
-
-                }
+                //     $confirmedinappuser = $this->orderconfirmedinapp($cart_id, $user_phone, $orr);
+                // }
 
 
                 $confirmedinappdriver = $this->orderconfirmedinappdriver($getDDevice, $cart_id, $user_phone, $orr, $curr);
@@ -151,6 +151,5 @@ class AssignController extends Controller
             $message = array('status' => '1', 'message' => 'no delivery boy is online/available');
             return $message;
         }
-
     }
 }

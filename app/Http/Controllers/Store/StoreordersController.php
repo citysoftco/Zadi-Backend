@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Store;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\DeliveryBoy;
 use App\Traits\ImageStoragePicker;
 use DB;
 use Session;
@@ -226,7 +227,8 @@ class StoreordersController extends Controller
             ->update([
                 'cancelling_reason' => $reason,
                 'order_status' => $order_status,
-                'updated_at' => $updated_at]);
+                'updated_at' => $updated_at
+            ]);
 
         if ($order) {
             if ($user->payment_method == 'COD' || $user->payment_method == 'Cod' || $user->payment_method == 'cod') {
@@ -351,9 +353,10 @@ class StoreordersController extends Controller
             ->join('store_orders', 'orders.cart_id', '=', 'store_orders.order_cart_id')
             ->where('store_orders.store_approval', 1)
             ->get();
+        $deliveryMans = DeliveryBoy::get();
         $url_aws = $this->getImageStorage();
 
-        return view('store.all_orders.all_orders', compact('title', 'logo', 'ord', 'details', 'store', 'url_aws'));
+        return view('store.all_orders.all_orders', compact('title', 'logo', 'ord', 'details', 'store', 'url_aws', 'deliveryMans'));
     }
 
     public function store_out_orders(Request $request)
