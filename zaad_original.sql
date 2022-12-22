@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Dec 22, 2022 at 08:18 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.0.13
+-- Host: localhost:3306
+-- Generation Time: Dec 22, 2022 at 11:06 AM
+-- Server version: 5.7.23-23
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,8 +19,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `zaad_original`
+-- Database: `zaad_db`
 --
+CREATE DATABASE IF NOT EXISTS `zaad_db` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE `zaad_db`;
 
 -- --------------------------------------------------------
 
@@ -38,7 +41,7 @@ CREATE TABLE `aboutuspage` (
 --
 
 INSERT INTO `aboutuspage` (`about_id`, `title`, `description`) VALUES
-(1, 'About Us', '<h1><strong>About Us</strong><br />\r\n<span style=\"color:#3498db\">Ø²Ø§Ø¯Ù‰ Ù„Ø®Ø¯Ù…Ø§Øª Ø§Ù„ØªÙˆØµÙŠÙ„&nbsp;<img alt=\"wink\" src=\"https://zaad.sd/assets/ckeditor/plugins/smiley/images/wink_smile.png\" style=\"height:23px; width:23px\" title=\"wink\" /></span></h1>');
+(1, 'About Us', '<h1><strong>About Us</strong><br />\r\n<span style=\"color:#3498db\">زادى لخدمات التوصيل&nbsp;<img alt=\"wink\" src=\"https://zaad.sd/assets/ckeditor/plugins/smiley/images/wink_smile.png\" style=\"height:23px; width:23px\" title=\"wink\" /></span></h1>');
 
 -- --------------------------------------------------------
 
@@ -54,8 +57,8 @@ CREATE TABLE `address` (
   `receiver_phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `society` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city_id` int(11) DEFAULT NULL,
-  `society_id` int(11) NOT NULL DEFAULT 1,
+  `city_id` int(11) NOT NULL,
+  `society_id` int(11) NOT NULL DEFAULT '1',
   `house_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `landmark` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `state` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -64,7 +67,7 @@ CREATE TABLE `address` (
   `lng` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `select_status` int(11) NOT NULL,
   `added_at` datetime NOT NULL,
-  `updated_at` datetime DEFAULT current_timestamp()
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -72,7 +75,7 @@ CREATE TABLE `address` (
 --
 
 INSERT INTO `address` (`address_id`, `type`, `user_id`, `receiver_name`, `receiver_phone`, `city`, `society`, `city_id`, `society_id`, `house_no`, `landmark`, `state`, `pincode`, `lat`, `lng`, `select_status`, `added_at`, `updated_at`) VALUES
-(1, 'Home', 61, 'Ø¹Ø¨Ø¯Ø§Ù„Ø±Ø­ÙŠÙ…', '0966302389', 'Khartoum bahri', 'khartoum', 2, 1, 'Ø¨Ø­Ø±ÙŠ', 'Ø´Ø§Ø±Ø¹ Ø§Ù„Ù…Ø¹ÙˆÙ†Ø©', 'Ø§Ù„Ø®Ø±Ø·ÙˆÙ…', '5688888', '15.6507653', '32.5312179', 1, '2022-12-11 11:01:08', '2022-12-09 15:25:30');
+(1, 'Home', 61, 'عبدالرحيم', '0966302389', 'Khartoum bahri', 'khartoum', 2, 1, 'بحري', 'شارع المعونة', 'الخرطوم', '5688888', '15.6507653', '32.5312179', 1, '2022-12-11 11:01:08', '2022-12-09 15:25:30');
 
 -- --------------------------------------------------------
 
@@ -87,7 +90,7 @@ CREATE TABLE `admin` (
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `admin_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `role_id` int(11) NOT NULL DEFAULT 0,
+  `role_id` int(11) NOT NULL DEFAULT '0',
   `role_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -133,8 +136,8 @@ CREATE TABLE `admin_payouts` (
 
 CREATE TABLE `app_link` (
   `id` int(11) NOT NULL,
-  `android_app_link` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ios_app_link` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `android_app_link` longtext COLLATE utf8mb4_unicode_ci,
+  `ios_app_link` longtext COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -161,7 +164,7 @@ CREATE TABLE `app_notice` (
 --
 
 INSERT INTO `app_notice` (`app_notice_id`, `status`, `notice`) VALUES
-(1, 1, 'Ù…Ø±Ø­Ø¨Ø§Ù‹ Ø¨ÙƒÙ… ÙÙŠ ØªØ·Ø¨ÙŠÙ‚ Ø²Ø§Ø¯ Ù„Ù„Ù…ÙˆØ§Ø¯ Ø§Ù„ØºØ°Ø§Ø¦ÙŠØ© Ø¨Ø§Ø³Ø¹Ø§Ø± Ø¬Ù…Ù„Ø© Ø§Ù„Ø¬Ù…Ù„Ø© ÙˆÙ…Ù†Ø§ÙØ³Ø© Ø¬Ø¯Ø§Ù‹ Ù„Ù„Ø³ÙˆØ¨Ø± Ù…Ø§Ø±ÙƒØª ÙˆØ§Ù„Ø¨Ù‚Ø§Ù„Ø§Øª ÙˆÙ‚Ø±ÙŠØ¨Ø§Ù‹ Ø¬Ø¯Ø§Ù‹ Ø·Ù„Ø¨Ø§Øª Ø®Ø§ØµØ© Ù„Ù„Ø§Ø³Ø±');
+(1, 1, 'مرحباً بكم في تطبيق زاد للمواد الغذائية باسعار جملة الجملة ومنافسة جداً للسوبر ماركت والبقالات وقريباً جداً طلبات خاصة للاسر');
 
 -- --------------------------------------------------------
 
@@ -174,10 +177,17 @@ CREATE TABLE `callback_req` (
   `user_id` int(11) NOT NULL,
   `user_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `user_phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `processed` int(11) NOT NULL DEFAULT 0,
+  `processed` int(11) NOT NULL DEFAULT '0',
   `date` date NOT NULL,
   `store_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `callback_req`
+--
+
+INSERT INTO `callback_req` (`callback_req_id`, `user_id`, `user_name`, `user_phone`, `processed`, `date`, `store_id`) VALUES
+(1, 62, 'test', '124736128', 0, '2022-12-21', 0);
 
 -- --------------------------------------------------------
 
@@ -260,6 +270,17 @@ CREATE TABLE `cart_status` (
   `cart_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `cart_status`
+--
+
+INSERT INTO `cart_status` (`status_id`, `pending`, `confirm`, `out_for_delivery`, `completed`, `cancelled`, `cart_id`) VALUES
+(1, '2022-12-21 20:39:37', NULL, NULL, NULL, NULL, 'UFGM82f5'),
+(2, '2022-12-21 20:41:51', NULL, NULL, NULL, NULL, 'CGIY31e9'),
+(3, '2022-12-21 20:43:31', NULL, NULL, NULL, NULL, 'CHUP5671'),
+(4, '2022-12-22 13:49:11', NULL, NULL, NULL, NULL, 'NBSG801b'),
+(5, '2022-12-22 14:19:37', NULL, NULL, NULL, NULL, 'JQDR965a');
+
 -- --------------------------------------------------------
 
 --
@@ -272,14 +293,14 @@ CREATE TABLE `categories` (
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `parent` int(11) NOT NULL DEFAULT 0,
+  `parent` int(11) NOT NULL DEFAULT '0',
   `level` int(11) NOT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
-  `added_by` int(11) NOT NULL DEFAULT 0,
-  `tax_type` int(11) NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT '1',
+  `added_by` int(11) NOT NULL DEFAULT '0',
+  `tax_type` int(11) NOT NULL DEFAULT '0',
   `tax_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tax_per` float NOT NULL DEFAULT 0,
+  `tax_per` float NOT NULL DEFAULT '0',
   `tx_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -288,72 +309,72 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`cat_id`, `title`, `slug`, `url`, `image`, `parent`, `level`, `description`, `status`, `added_by`, `tax_type`, `tax_name`, `tax_per`, `tx_id`) VALUES
-(1, 'Ø§Ù„Ø¯Ù‚ÙŠÙ‚ ÙˆÙ…Ø³ØªÙ„Ø²Ù…Ø§Øª Ø§Ù„Ø®Ø¨Ø§Ø¦Ø²', 'Ø§Ù„Ø¯Ù‚ÙŠÙ‚-ÙˆÙ…Ø³ØªÙ„Ø²Ù…Ø§Øª-Ø§Ù„Ø®Ø¨Ø§Ø¦Ø²', NULL, '/images/category/05-12-2022/flour.png', 0, 0, 'ÙƒÙ„ Ø§Ù†ÙˆØ§Ø¹ Ø§Ù„Ø¯Ù‚ÙŠÙ‚ ÙˆÙ…Ø§ÙŠØ®ØªØµ Ø¨Ø¹Ù…Ù„ Ø§Ù„Ø®Ø¨Ø§Ø¦Ø² ÙˆØ§Ù„Ù…Ø¹Ø¬Ù†Ø§Øª', 1, 0, 1, 'GST', 0, 3),
-(3, 'Ø§Ù„Ø£Ù„Ø¨Ø§Ù† Ø§Ù„Ù…Ø¬ÙÙÙ‡', 'Ø§Ù„Ø£Ù„Ø¨Ø§Ù†-Ø§Ù„Ù…Ø¬ÙÙÙ‡', NULL, '/images/category/05-12-2022/milk.png', 0, 0, 'Ø¬Ù…ÙŠØ¹ Ø£Ù†ÙˆØ§Ø¹ Ø§Ù„Ø§Ù„Ø¨Ø§Ù†', 1, 0, 1, 'GST', 17, 3),
-(6, 'Ø§Ù„Ø²ÙŠÙˆØª ÙˆØ§Ù„Ø³Ù…Ù†', 'Ø§Ù„Ø²ÙŠÙˆØª-ÙˆØ§Ù„Ø³Ù…Ù†', NULL, '/images/category/05-12-2022/oils.png', 0, 0, 'Ø¬Ù…ÙŠØ¹ Ù…Ø§ ÙŠØ®ØªØµ Ø¨Ù…Ù†ØªØ¬Ø§Øª Ø²ÙŠÙˆØª Ø§Ù„Ø·Ø¹Ø§Ù… ÙˆØ§Ù„Ø³Ù…Ù† ÙˆØ®Ù„Ø§ÙÙ‡', 1, 0, 0, 'VAT', 17, 5),
-(8, 'Ø§Ù„Ø­Ù„ÙˆÙŠØ§Øª ÙˆØ§Ù„Ø´ÙˆÙƒÙˆÙ„Ø§ØªÙ‡', 'Ø§Ù„Ø­Ù„ÙˆÙŠØ§Øª-ÙˆØ§Ù„Ø´ÙˆÙƒÙˆÙ„Ø§ØªÙ‡', NULL, '/images/category/05-12-2022/sweets.png', 0, 0, 'Ø§Ù„Ø­Ù„ÙˆÙŠØ§Øª ÙˆØ§Ù„Ø´ÙˆÙƒÙˆÙ„Ø§ØªÙ‡', 1, 0, 0, 'VAT', 17, 5),
-(10, 'Ø§Ù„Ø³ÙƒØ±', 'Ø§Ù„Ø³ÙƒØ±', NULL, '/images/category/05-12-2022/suger.png', 0, 0, 'Ø³ÙƒØ± Ù…Ø­Ù„ÙŠ Ø§Ù†ØªØ§Ø¬ Ù…ØµÙ†Ø¹ ÙƒÙ†Ø§Ù†Ù‡', 1, 0, 1, 'VAT', 17, 5),
-(12, 'Ø§Ù„Ù…Ø±Ø¨Ø§Øª ÙˆØ§Ù„Ø·Ø­Ù†ÙŠØ©', 'Ø§Ù„Ù…Ø±Ø¨Ø§Øª-ÙˆØ§Ù„Ø·Ø­Ù†ÙŠØ©', NULL, '/images/category/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(9).jpeg', 0, 0, 'Ø¬Ù…ÙŠØ¹ Ø§Ù†ÙˆØ§Ø¹ Ø§Ù„Ù…Ø±Ø¨Ù‰ ÙˆØ§Ù„Ø·Ø­Ù†ÙŠØ©', 1, 0, 1, 'VAT', 0, 5),
-(13, 'Ø§Ù„Ø´Ø§ÙŠ ÙˆØ§Ù„Ø¨Ù†', 'Ø§Ù„Ø´Ø§ÙŠ-ÙˆØ§Ù„Ø¨Ù†', NULL, '/images/category/05-12-2022/tea1.png', 0, 0, 'ÙƒÙ„ Ø§Ù†ÙˆØ§Ø¹ Ø§Ù„Ø´Ø§Ù‰ ÙˆØ§Ù„Ø¨Ù†', 1, 0, 1, 'VAT', 0, 5),
-(14, 'Ø§Ù„Ø§Ø±Ø² ÙˆØ§Ù„Ø¹Ø¯Ø³ ÙˆØ§Ù„Ø¨Ù‚ÙˆÙ„', 'Ø§Ù„Ø§Ø±Ø²-ÙˆØ§Ù„Ø¹Ø¯Ø³-ÙˆØ§Ù„Ø¨Ù‚ÙˆÙ„', NULL, '/images/category/05-12-2022/rice.png', 0, 0, 'Ø¬Ù…ÙŠØ¹ Ø§Ù†ÙˆØ§Ø¹ Ø§Ù„Ø¨Ù‚ÙˆÙ„ÙŠØ§Øª', 1, 0, 0, 'VAT', 0, 5),
-(15, 'ØµÙ„ØµØ© ÙˆØµÙˆØµÙˆØ§Øª', 'ØµÙ„ØµØ©-ÙˆØµÙˆØµÙˆØ§Øª', NULL, '/images/category/30-11-2022/images-(16).jpeg', 0, 0, 'ØµÙ„ØµØ© ÙˆØµÙˆØµÙˆØ§Øª', 1, 0, 0, NULL, 0, NULL),
-(16, 'Ø§Ù„Ø¨Ø³ÙƒÙˆÙŠØª', 'Ø§Ù„Ø¨Ø³ÙƒÙˆÙŠØª', NULL, '/images/category/05-12-2022/Biscuit.png', 0, 0, 'ÙƒÙ„ Ø§Ù†ÙˆØ§Ø¹ Ø§Ù„Ø¨Ø³ÙƒÙˆÙŠØªØ§Øª ####Ø¨Ø³ÙƒÙˆÙŠØª Ø§Ù„Ø´Ø§Ù‰# Ø§Ù„ÙˆÙŠÙØ±#Ø§Ù„Ù…Ø­Ø´Ù‰', 1, 0, 1, 'VAT', 0, 5),
-(17, 'Ø§Ù„Ù…Ø¹ÙƒØ±ÙˆÙ†Ù‡ ÙˆØ§Ù„Ø´Ø¹ÙŠØ±ÙŠÙ‡', 'Ø§Ù„Ù…Ø¹ÙƒØ±ÙˆÙ†Ù‡-ÙˆØ§Ù„Ø´Ø¹ÙŠØ±ÙŠÙ‡', NULL, '/images/category/05-12-2022/vermicelli.png', 0, 0, 'Ø§Ù„Ù…Ø¹ÙƒØ±ÙˆÙ†Ù‡ ÙˆØ§Ù„Ø´Ø¹ÙŠØ±ÙŠÙ‡ Ø§Ù„Ù…Ø­Ù„ÙŠÙ‡ ÙˆØ§Ù„Ù…Ø³ØªÙˆØ±Ø¯Ù‡', 1, 0, 1, 'VAT', 0, 5),
-(18, 'Ø§Ù„ØµØ§Ø¨ÙˆÙ† ÙˆØ§Ù„Ù…Ù†Ø¸ÙØ§Øª', 'Ø§Ù„ØµØ§Ø¨ÙˆÙ†-ÙˆØ§Ù„Ù…Ù†Ø¸ÙØ§Øª', NULL, '/images/category/05-12-2022/soap.png', 0, 0, 'Ø§Ù„ØµØ§Ø¨ÙˆÙ† ÙˆØ§Ù„Ù…Ù†Ø¸ÙØ§Øª', 1, 0, 1, 'VAT', 0, 5),
-(19, 'Ù…Ø¹Ø¬ÙˆÙ† ÙˆÙØ±Ø´ Ø§Ù„Ø§Ø³Ù†Ø§Ù†  ÙˆØ§Ù…ÙˆØ§Ø³ Ø­Ù„Ø§Ù‚Ù‡', 'Ù…Ø¹Ø¬ÙˆÙ†-ÙˆÙØ±Ø´-Ø§Ù„Ø§Ø³Ù†Ø§Ù†--ÙˆØ§Ù…ÙˆØ§Ø³-Ø­Ù„Ø§Ù‚Ù‡', NULL, '/images/category/30-11-2022/th-(1).jfif', 0, 0, 'Ù…Ø¹Ø¬ÙˆÙ† ÙˆÙØ±Ø´ Ø§Ù„Ø§Ø³Ù†Ø§Ù†  ÙˆØ§Ù…ÙˆØ§Ø³ Ø­Ù„Ø§Ù‚Ù‡', 1, 0, 1, 'VAT', 0, 5),
-(20, 'Ø§Ù„Ù…Ù„Ø­ ÙˆØ§Ù„ØªÙˆØ§Ø¨Ù„', 'Ø§Ù„Ù…Ù„Ø­-ÙˆØ§Ù„ØªÙˆØ§Ø¨Ù„', NULL, '/images/category/30-11-2022/dce4fe1d-1339-40ea-90c8-8248f0b0ff5b.jpg', 0, 0, 'Ø§Ù„Ù…Ù„Ø­ ÙˆØ§Ù„ØªÙˆØ§Ø¨Ù„', 1, 0, 1, 'VAT', 0, 5),
-(22, 'Ø§Ù„Ø§ØºØ°ÙŠØ© Ø§Ù„Ù…Ø¹Ù„Ø¨Ø©', 'Ø§Ù„Ø§ØºØ°ÙŠØ©-Ø§Ù„Ù…Ø¹Ù„Ø¨Ø©', NULL, '/images/category/05-12-2022/cannedÙ€food.png', 0, 0, 'Ø§Ù„Ø§ØºØ°ÙŠØ© Ø§Ù„Ù…Ø¹Ù„Ø¨Ø©', 1, 0, 1, 'VAT', 0, 5),
-(23, 'Ø§Ù„Ø¹ØµØ§Ø¦Ø±', 'Ø§Ù„Ø¹ØµØ§Ø¦Ø±', NULL, '/images/category/05-12-2022/drink.png', 0, 0, 'Ø§Ù„Ø¹ØµØ§Ø¦Ø± Ø§Ù„Ù…Ø¬ÙÙÙ‡ ÙˆØ§Ù„Ø³Ø§Ø¦Ù„Ù‡', 1, 0, 1, 'VAT', 0, 5),
-(24, 'Ø§Ù„Ø§Ø¬Ø¨Ø§Ù†', 'Ø§Ù„Ø§Ø¬Ø¨Ø§Ù†', NULL, '/images/category/05-12-2022/Cheese.png', 0, 0, 'Ø§Ø¬Ø¨Ø§Ù† Ù…Ø­Ù„ÙŠÙ‡ ÙˆÙ…ØµÙ†Ø¹Ù‡ Ø¹Ø§Ù„Ù…ÙŠÙ‡', 1, 0, 0, 'GST', 0, 3),
-(25, 'Ø§Ù„Ø´Ø¨Ø³ ÙˆØ§Ù„Ù…Ù‚Ø±Ù…Ø´Ø§Øª', 'Ø§Ù„Ø´Ø¨Ø³-ÙˆØ§Ù„Ù…Ù‚Ø±Ù…Ø´Ø§Øª', NULL, '/images/category/05-12-2022/chips.png', 0, 0, 'Ù„Ø´Ø¨Ø³ ÙˆØ§Ù„Ù…Ù‚Ø±Ù…Ø´Ø§Øª', 1, 0, 0, 'VAT', 0, 5),
-(26, 'Ø§Ù„Ø¨Ø§Ù…Ø¨Ø±Ø² ÙˆØ§Ù„ÙÙˆØ· Ø§Ù„ØµØ­ÙŠÙ‡ ÙˆØ§Ù„Ù…Ù†Ø§Ø¯ÙŠÙ„', 'Ø§Ù„Ø¨Ø§Ù…Ø¨Ø±Ø²-ÙˆØ§Ù„ÙÙˆØ·-Ø§Ù„ØµØ­ÙŠÙ‡-ÙˆØ§Ù„Ù…Ù†Ø§Ø¯ÙŠÙ„', NULL, '/images/category/30-11-2022/th-(7).jfif', 0, 0, 'Ø§Ù„Ø¨Ø§Ù…Ø¨Ø±Ø² ÙˆØ§Ù„ÙÙˆØ· Ø§Ù„ØµØ­ÙŠÙ‡ ÙˆØ§Ù„Ù…Ù†Ø§Ø¯ÙŠÙ„', 1, 0, 1, 'VAT', 0, 5),
-(27, 'Ø§Ù„Ø¯Ù‚ÙŠÙ‚', 'Ø§Ù„Ø¯Ù‚ÙŠÙ‚', NULL, '/images/category/30-11-2022/download.jfif', 1, 1, 'Ø§Ù„Ø¯Ù‚ÙŠÙ‚ Ø¨Ù…Ø®ØªÙ„Ù Ø§Ù„Ø§Ù†ÙˆØ§Ø¹ ÙˆØ§Ù„Ø§Ø­Ø¬Ø§Ù…', 2, 0, 0, NULL, 0, NULL),
-(28, 'Ø§Ù„Ø§Ù„Ø¨Ø§Ù† Ø§Ù„Ù…Ø¬ÙÙØ© Ø§Ù„Ù…Ø­Ù„ÙŠØ©', 'Ø§Ù„Ø§Ù„Ø¨Ø§Ù†-Ø§Ù„Ù…Ø¬ÙÙØ©-Ø§Ù„Ù…Ø­Ù„ÙŠØ©', NULL, '/images/category/30-11-2022/images-(8).jpeg', 3, 1, 'Ø§Ù„Ø§Ù„Ø¨Ø§Ù† Ø§Ù„Ù…Ø¬ÙÙÙ‡ Ø§Ù„Ù…Ø­Ù„ÙŠØ© Ø¨Ù…Ø®ØªÙ„Ù Ø§Ù„Ø§ÙˆØ²Ø§Ù† ÙˆØ§Ù„Ø§Ù†ÙˆØ§Ø¹', 1, 0, 0, NULL, 0, NULL),
-(29, 'Ø§Ù„Ø²ÙŠÙˆØª', 'Ø§Ù„Ø²ÙŠÙˆØª', NULL, '/images/category/30-11-2022/images-(3).jpeg', 6, 1, 'Ø§Ù„Ø²ÙŠÙˆØª Ø§Ù„Ø·Ø¨ÙŠØ¹ÙŠÙ‡ Ø¨ÙƒÙ„ Ø§Ù†ÙˆØ§Ø¹Ù‡Ø§ ÙˆØ§Ø­Ø¬Ø§Ù…Ù‡Ø§', 2, 0, 0, NULL, 0, NULL),
-(30, 'Ø§Ù„Ø´ÙˆÙƒÙ„Ø§ØªÙ‡', 'Ø§Ù„Ø´ÙˆÙƒÙ„Ø§ØªÙ‡', NULL, '/images/category/30-11-2022/images.jfif', 8, 1, 'Ø§Ù„Ø´ÙˆÙƒÙ„Ø§ØªÙ‡ Ø§Ù„ÙØ§Ø®Ø±Ù‡ Ø¨Ø¬Ù…ÙŠØ¹ Ø§Ù†ÙˆØ§Ø¹Ù‡Ø§', 2, 0, 0, NULL, 0, NULL),
-(31, 'Ø§Ù„Ø³ÙƒØ±', 'Ø§Ù„Ø³ÙƒØ±', NULL, '/images/category/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(23).jpeg', 10, 1, 'Ø¹Ø¨ÙˆØ§Øª ÙƒØ¨ÙŠØ±Ù‡ ÙˆØ§Ù‚ØªØµØ§Ø¯ÙŠÙ‡', 2, 0, 0, NULL, 0, NULL),
-(32, 'Ø§Ù„Ø·Ø­Ù†ÙŠÙ‡', 'Ø§Ù„Ø·Ø­Ù†ÙŠÙ‡', NULL, '/images/category/30-11-2022/images-(12).jpeg', 12, 1, 'Ø§Ù†ÙˆØ§Ø¹ Ù…ØªØ¹Ø¯Ø¯Ù‡ Ù…Ù† Ø§Ù„Ø·Ø­Ù†ÙŠÙ‡ ÙÙŠ Ø¹Ø¨ÙˆØ§Øª Ù…Ø®ØªÙ„Ù', 2, 0, 0, NULL, 0, NULL),
-(33, 'Ø§Ù„Ø¨Ù†', 'Ø§Ù„Ø¨Ù†', NULL, '/images/category/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(25).jpeg', 13, 1, 'Ø§Ø¬ÙˆØ¯ Ø§Ù†ÙˆØ§Ø¹ Ø§Ù„Ø¨Ù† Ø§Ù„Ù…Ø­Ù…Øµ Ø§Ù„Ù…Ø·Ø­ÙˆÙ†  ÙˆØ§Ù„Ø¹Ø§Ø¯ÙŠ', 1, 0, 0, NULL, 0, NULL),
-(34, 'Ø§Ù„Ø§Ø±Ø²', 'Ø§Ù„Ø§Ø±Ø²', NULL, '/images/category/30-11-2022/th-(8).jfif', 14, 1, 'Ø§Ø±Ø² ÙƒØ¨Ø³Ù‡ ÙˆØ¹Ø§Ø¯ÙŠ Ù…Ø®ØªÙ„Ù Ø§Ù„Ø§Ù†ÙˆØ§Ø¹ ÙˆØ§Ù„Ø§Ø­Ø¬Ø§Ù…', 1, 0, 0, NULL, 0, NULL),
-(35, 'Ø§Ù„ØµÙ„ØµØ©', 'Ø§Ù„ØµÙ„ØµØ©', NULL, '/images/category/30-11-2022/images-(16).jpeg', 15, 1, 'Ø¬Ù…ÙŠØ¹ Ø§Ù†ÙˆØ§Ø¹ Ø§Ù„ØµÙ„ØµÙ‡ Ù…Ø®ØªÙ„Ù Ø§Ù„Ø§Ø­Ø¬Ø§Ù… ÙˆØ§Ù„Ø¹Ø¨ÙˆØ§Øª', 1, 0, 0, NULL, 0, NULL),
-(36, 'Ø¨Ø³ÙƒÙˆÙŠØª Ø§Ù„ÙˆÙŠÙØ±', 'Ø¨Ø³ÙƒÙˆÙŠØª-Ø§Ù„ÙˆÙŠÙØ±', NULL, '/images/category/30-11-2022/th-(9).jfif', 16, 1, 'Ø§Ø±Ù‚ÙŠ ÙˆØ§Ø¬ÙˆØ¯ Ø§Ù†ÙˆØ§Ø¹ Ø§Ù„Ø¨Ø³ÙƒÙˆÙŠØªØ§Øª', 1, 0, 0, NULL, 0, NULL),
-(37, 'Ø§Ù„Ù…Ø¹ÙƒØ±ÙˆÙ†Ù‡', 'Ø§Ù„Ù…Ø¹ÙƒØ±ÙˆÙ†Ù‡', NULL, '/images/category/30-11-2022/th-(10).jfif', 17, 1, 'Ù…Ø¹ÙƒØ±ÙˆÙ†ØªÙ†Ø§ Ø§Ù„Ø³ÙˆØ¯Ø§Ù†ÙŠÙ‡ ÙˆØ§Ø®Ø±ÙŠ Ø§Ù…Ø§Ø±Ø§ØªÙŠÙ‡ ÙˆØ¨Ø¹Ø¶ Ø§Ù„Ø§ÙŠØ·Ø§Ù„ÙŠÙ‡', 1, 0, 0, NULL, 0, NULL),
-(38, 'ØµØ§Ø¨ÙˆÙ† Ø§Ù„Ø§Ø³ØªØ­Ù…Ø§Ù…', 'ØµØ§Ø¨ÙˆÙ†-Ø§Ù„Ø§Ø³ØªØ­Ù…Ø§Ù…', NULL, '/images/category/30-11-2022/th-(11).jfif', 18, 1, 'ØµØ§Ø¨ÙˆÙ† Ø§Ø³ØªØ­Ù…Ø§Ù…', 1, 0, 0, NULL, 0, NULL),
-(39, 'Ù…Ø¹Ø¬ÙˆÙ† Ø§Ù„Ø§Ø³Ù†Ø§Ù†', 'Ù…Ø¹Ø¬ÙˆÙ†-Ø§Ù„Ø§Ø³Ù†Ø§Ù†', NULL, '/images/category/30-11-2022/th-(12).jfif', 19, 1, 'Ù…Ø¹Ø¬ÙˆÙ† Ø§Ø³Ù†Ø§Ù†', 1, 0, 0, NULL, 0, NULL),
-(40, 'Ø§Ù„Ù…Ù„Ø­', 'Ø§Ù„Ù…Ù„Ø­', NULL, '/images/category/30-11-2022/th-(13).jfif', 20, 1, 'Ù…Ù„Ø­ Ù…ÙŠÙˆØ¯Ù† ÙˆØ¹Ø§Ø¯Ù‰', 1, 0, 0, NULL, 0, NULL),
-(41, 'Ø§Ù„ØªÙˆÙ†Ù‡ ÙˆØ§Ù„Ø³Ø§Ø±Ø¯ÙŠÙ†', 'Ø§Ù„ØªÙˆÙ†Ù‡-ÙˆØ§Ù„Ø³Ø§Ø±Ø¯ÙŠÙ†', NULL, '/images/category/30-11-2022/th-(14).jfif', 22, 1, 'ØªÙˆÙ†Ù‡ ÙˆØ³Ø§Ø±Ø¯ÙŠÙ†', 1, 0, 0, NULL, 0, NULL),
-(42, 'Ø§Ù„Ø¹ØµØ§Ø¦Ø± Ø§Ù„Ù…Ø¬ÙÙÙ‡', 'Ø§Ù„Ø¹ØµØ§Ø¦Ø±-Ø§Ù„Ù…Ø¬ÙÙÙ‡', NULL, '/images/category/30-11-2022/th-(16).jfif', 23, 1, 'Ø¹ØµØ§Ø¦Ø± Ù…Ø¬ÙÙÙ‡', 1, 0, 0, NULL, 0, NULL),
-(43, 'Ø§Ù„Ø§Ø¬Ø¨Ø§Ù† Ø§Ù„Ù…Ø³ØªÙˆØ±Ø¯Ù‡', 'Ø§Ù„Ø§Ø¬Ø¨Ø§Ù†-Ø§Ù„Ù…Ø³ØªÙˆØ±Ø¯Ù‡', NULL, '/images/category/30-11-2022/th-(17).jfif', 24, 1, 'Ø§Ø¬Ø¨Ø§Ù† Ù…Ø³ØªÙˆØ±Ø¯Ù‡', 1, 0, 0, NULL, 0, NULL),
-(44, 'Ø§Ù„Ø´Ø¨Ø³', 'Ø§Ù„Ø´Ø¨Ø³', NULL, '/images/category/30-11-2022/th-(5).jfif', 25, 1, 'Ø´Ø¨Ø³ Ù…Ù†ÙˆØ¹', 1, 0, 0, NULL, 0, NULL),
-(45, 'Ø§Ù„Ø¨Ø§Ù…Ø¨Ø±Ø²', 'Ø§Ù„Ø¨Ø§Ù…Ø¨Ø±Ø²', NULL, '/images/category/02-12-2022/th-(7).jfif', 26, 1, 'Ø¨Ø§Ù…Ø¨Ø±Ø² Ø§Ø·ÙØ§Ù„', 1, 0, 0, NULL, 0, NULL),
-(46, 'Ù…Ø³ØªÙ„Ø²Ù…Ø§Øª Ø§Ù„Ø®Ø¨Ø§Ø¦Ø²', 'Ù…Ø³ØªÙ„Ø²Ù…Ø§Øª-Ø§Ù„Ø®Ø¨Ø§Ø¦Ø²', NULL, '/images/category/02-12-2022/images-(1).jfif', 1, 1, 'ÙƒÙ„ Ù…Ø§ÙŠØ®Øµ Ø§Ù„Ø®Ø¨Ø§Ø¦Ø² ÙˆØ§Ø¶Ø§ÙØ§ØªÙ‡Ø§ ÙˆØ§Ù„Ù…Ø­Ø³Ù†Ø§Øª', 1, 0, 0, NULL, 0, NULL),
-(47, 'Ø§Ù„Ø³Ù…Ù†', 'Ø§Ù„Ø³Ù…Ù†', NULL, '/images/category/02-12-2022/download-(3).jfif', 6, 1, 'Ø§Ù„Ø³Ù…Ù† Ø§Ù„Ù†Ø¨Ø§ØªÙŠ ÙˆØ§Ù„Ø­ÙŠÙˆØ§Ù†ÙŠ', 1, 0, 0, NULL, 0, NULL),
-(48, 'Ø§Ù„Ø­Ù„ÙˆÙŠØ§Øª', 'Ø§Ù„Ø­Ù„ÙˆÙŠØ§Øª', NULL, '/images/category/02-12-2022/download-(4).jfif', 8, 1, 'Ø­Ù„ÙˆÙŠØ§Øª', 1, 0, 0, NULL, 0, NULL),
-(49, 'Ù…Ø±Ø¨ÙŠ', 'Ù…Ø±Ø¨ÙŠ', NULL, '/images/category/02-12-2022/download-(7).jfif', 12, 1, 'Ø¬Ù…ÙŠØ¹ Ø§Ù†ÙˆØ§Ø¹ Ø§Ù„Ù…Ø±Ø¨Ø§Øª', 1, 0, 0, NULL, 0, NULL),
-(50, 'Ø§Ù„Ø§Ù„Ø¨Ø§Ù† Ø§Ù„Ù…Ø¬ÙÙØ© Ø§Ù„Ù…Ø³ØªÙˆØ±Ø¯Ù‡', 'Ø§Ù„Ø§Ù„Ø¨Ø§Ù†-Ø§Ù„Ù…Ø¬ÙÙØ©-Ø§Ù„Ù…Ø³ØªÙˆØ±Ø¯Ù‡', NULL, '/images/category/02-12-2022/ØªÙ†Ø²ÙŠÙ„-(26).jpeg', 3, 1, 'Ø§Ù„Ø§Ù„Ø¨Ø§Ù† Ø§Ù„Ù…Ø¬ÙÙØ© Ø§Ù„Ù…Ø³ØªÙˆØ±Ø¯Ù‡', 1, 0, 0, NULL, 0, NULL),
-(51, 'Ø§Ù„Ø§Ø¬Ø¨Ø§Ù† Ø§Ù„Ù…Ø­Ù„ÙŠØ©', 'Ø§Ù„Ø§Ø¬Ø¨Ø§Ù†-Ø§Ù„Ù…Ø­Ù„ÙŠØ©', NULL, '/images/category/02-12-2022/download-(8).jfif', 24, 1, 'Ø§Ù„Ø§Ø¬Ø¨Ø§Ù† Ø§Ù„Ù…Ø­Ù„ÙŠØ©', 1, 0, 0, NULL, 0, NULL),
-(52, 'Ø§Ù†Ø¯ÙˆÙ…ÙŠ', 'Ø§Ù†Ø¯ÙˆÙ…ÙŠ', NULL, '/images/category/02-12-2022/download-(9).jfif', 0, 0, 'Ø§Ù†Ø¯ÙˆÙ…ÙŠ', 1, 0, 1, 'VAT', 0.13, 5),
-(53, 'Ø§Ù†Ø¯ÙˆÙ…ÙŠ Ø³ÙˆØ¯Ø§Ù†ÙŠØ©', 'Ø§Ù†Ø¯ÙˆÙ…ÙŠ-Ø³ÙˆØ¯Ø§Ù†ÙŠØ©', NULL, '/images/category/02-12-2022/images-(24).jpeg', 52, 1, 'Ø§Ù†Ø¯ÙˆÙ…ÙŠ Ø³ÙˆØ¯Ø§Ù†ÙŠØ© Ù†ÙƒÙ‡Ø§Øª Ù…Ø®ØªÙ„ÙÙ‡', 1, 0, 0, NULL, 0, NULL),
-(54, 'Ø§Ù„ÙÙˆØ· Ø§Ù„ØµØ­ÙŠØ©', 'Ø§Ù„ÙÙˆØ·-Ø§Ù„ØµØ­ÙŠØ©', NULL, '/images/category/02-12-2022/download-(11).jfif', 26, 1, 'ÙÙˆØ· ØµØ­ÙŠØ©', 1, 0, 0, NULL, 0, NULL),
-(55, 'Ø§Ù„Ù…Ù†Ø§Ø¯ÙŠÙ„', 'Ø§Ù„Ù…Ù†Ø§Ø¯ÙŠÙ„', NULL, '/images/category/02-12-2022/images-(4).jfif', 26, 1, 'Ù…Ù†Ø§Ø¯ÙŠÙ„ Ø§Ù„ÙˆØ¬Ù‡ ÙˆØ§Ù„Ù…Ø·Ø¨Ø®', 1, 0, 0, NULL, 0, NULL),
-(56, 'Ø§Ù„Ø´Ø§ÙŠ', 'Ø§Ù„Ø´Ø§ÙŠ', NULL, '/images/category/02-12-2022/images-(13).jpeg', 13, 1, 'Ø¬Ù…ÙŠØ¹ Ø§Ù†ÙˆØ§Ø¹ Ø§Ù„Ø´Ø§ÙŠ Ø§Ù„ÙƒÙŠÙ†ÙŠ Ø§Ù„Ù…Ø¹Ø¨Ø§Ù‡', 1, 0, 0, NULL, 0, NULL),
-(57, 'Ø§Ù„Ø¹Ø¯Ø³', 'Ø§Ù„Ø¹Ø¯Ø³', NULL, '/images/category/02-12-2022/download-(13).jfif', 14, 1, 'Ø§Ù„Ø¹Ø¯Ø³', 1, 0, 0, NULL, 0, NULL),
-(58, 'Ø§Ù„Ø¨Ù‚ÙˆÙ„ÙŠØ§Øª', 'Ø§Ù„Ø¨Ù‚ÙˆÙ„ÙŠØ§Øª', NULL, '/images/category/02-12-2022/download-(17).jfif', 14, 1, 'Ø§Ù„Ø¨Ù‚ÙˆÙ„ÙŠØ§Øª', 1, 0, 0, NULL, 0, NULL),
-(59, 'Ø¨Ø³ÙƒÙˆÙŠØª Ø§Ù„Ø´Ø§Ù‰', 'Ø¨Ø³ÙƒÙˆÙŠØª-Ø§Ù„Ø´Ø§Ù‰', NULL, '/images/category/02-12-2022/download-(18).jfif', 16, 1, 'Ø¨Ø³ÙƒÙˆÙŠØª Ø§Ù„Ø´Ø§Ù‰', 1, 0, 0, NULL, 0, NULL),
-(60, 'ØµØ§Ø¨ÙˆÙ† Ø§Ù„Ø¨Ø¯Ø±Ù‡', 'ØµØ§Ø¨ÙˆÙ†-Ø§Ù„Ø¨Ø¯Ø±Ù‡', NULL, '/images/category/02-12-2022/images-(5).jfif', 18, 1, 'ØµØ§Ø¨ÙˆÙ† Ø§Ù„Ø¨Ø¯Ø±Ù‡', 1, 0, 0, NULL, 0, NULL),
-(61, 'Ø§Ù„ØµØ§Ø¨ÙˆÙ† Ø§Ù„Ø³Ø§Ø¦Ù„', 'Ø§Ù„ØµØ§Ø¨ÙˆÙ†-Ø§Ù„Ø³Ø§Ø¦Ù„', NULL, '/images/category/02-12-2022/download-(19).jfif', 18, 1, 'ØµØ§Ø¨ÙˆÙ† Ø§Ù„Ø³Ø§Ø¦Ù„', 1, 0, 0, NULL, 0, NULL),
-(62, 'ØµØ§Ø¨ÙˆÙ† ØºØ³ÙŠÙ„ Ø§Ù„ÙˆØ§Ø­', 'ØµØ§Ø¨ÙˆÙ†-ØºØ³ÙŠÙ„-Ø§Ù„ÙˆØ§Ø­', NULL, '/images/category/02-12-2022/download-(20).jfif', 18, 1, 'ØµØ§Ø¨ÙˆÙ† ØºØ³ÙŠÙ„ Ø§Ù„ÙˆØ§Ø­', 1, 0, 0, NULL, 0, NULL),
-(63, 'Ø¹ØµØ§Ø¦Ø± Ø³Ø§Ø¦Ù„Ø© Ù…Ø±ÙƒØ²Ø©', 'Ø¹ØµØ§Ø¦Ø±-Ø³Ø§Ø¦Ù„Ø©-Ù…Ø±ÙƒØ²Ø©', NULL, '/images/category/02-12-2022/images-(6).jfif', 23, 1, 'Ø¹ØµØ§Ø¦Ø± Ø³Ø§Ø¦Ù„Ø© Ù…Ø±ÙƒØ²Ø©', 1, 0, 0, NULL, 0, NULL),
-(64, 'Ø¹ØµØ§Ø¦Ø± ÙˆÙ…Ø´Ø±ÙˆØ¨Ø§Øª Ø§Ø·ÙØ§Ù„', 'Ø¹ØµØ§Ø¦Ø±-ÙˆÙ…Ø´Ø±ÙˆØ¨Ø§Øª-Ø§Ø·ÙØ§Ù„', NULL, '/images/category/02-12-2022/images-(7).jfif', 23, 1, 'Ø¹ØµØ§Ø¦Ø± ÙˆÙ…Ø´Ø±ÙˆØ¨Ø§Øª Ø§Ø·ÙØ§Ù„', 1, 0, 0, NULL, 0, NULL),
-(65, 'Ø§Ù„Ø´Ø¹ÙŠØ±ÙŠØ©', 'Ø§Ù„Ø´Ø¹ÙŠØ±ÙŠØ©', NULL, '/images/category/02-12-2022/download-(22).jfif', 17, 1, 'Ø§Ù„Ø´Ø¹ÙŠØ±ÙŠØ©', 1, 0, 0, NULL, 0, NULL),
-(66, 'Ø§Ø³Ø¨Ø§ØºÙŠØªÙ‰', 'Ø§Ø³Ø¨Ø§ØºÙŠØªÙ‰', NULL, '/images/category/02-12-2022/download-(23).jfif', 17, 1, 'Ø§Ø³Ø¨Ø§ØºÙŠØªÙ‰', 1, 0, 0, NULL, 0, NULL),
-(67, 'Ø§Ù„ØªÙˆØ§Ø¨Ù„ ÙˆØ§Ù„Ø¨Ù‡Ø§Ø±Ø§Øª', 'Ø§Ù„ØªÙˆØ§Ø¨Ù„-ÙˆØ§Ù„Ø¨Ù‡Ø§Ø±Ø§Øª', NULL, '/images/category/02-12-2022/download-(24).jfif', 20, 1, 'Ø§Ù„ØªÙˆØ§Ø¨Ù„ ÙˆØ§Ù„Ø¨Ù‡Ø§Ø±Ø§Øª', 1, 0, 0, NULL, 0, NULL),
-(68, 'ØµÙˆØµØ§Øª', 'ØµÙˆØµØ§Øª', NULL, '/images/category/02-12-2022/images-(8).jfif', 15, 1, 'ØµÙˆØµØ§Øª', 1, 0, 0, NULL, 0, NULL),
-(69, 'ÙØ±Ø´ Ø§Ù„Ø§Ø³Ù†Ø§Ù†', 'ÙØ±Ø´-Ø§Ù„Ø§Ø³Ù†Ø§Ù†', NULL, '/images/category/02-12-2022/download-(27).jfif', 19, 1, 'ÙØ±Ø´ Ø§Ø³Ù†Ø§Ù†', 1, 0, 0, NULL, 0, NULL),
-(70, 'Ø§Ù…ÙˆØ§Ø³ ÙˆØ´ÙØ±Ø§Øª Ø­Ù„Ø§Ù‚Ø©', 'Ø§Ù…ÙˆØ§Ø³-ÙˆØ´ÙØ±Ø§Øª-Ø­Ù„Ø§Ù‚Ø©', NULL, '/images/category/02-12-2022/images-(9).jfif', 19, 1, 'Ø§Ù…ÙˆØ§Ø³ ÙˆØ´ÙØ±Ø§Øª Ø­Ù„Ø§Ù‚Ø©', 1, 0, 0, NULL, 0, NULL),
-(71, 'ØµØ§Ø¨ÙˆÙ† Ù…Ø¹Ø¬ÙˆÙ†', 'ØµØ§Ø¨ÙˆÙ†-Ù…Ø¹Ø¬ÙˆÙ†', NULL, '/images/category/02-12-2022/download-(35).jfif', 18, 1, 'ØµØ§Ø¨ÙˆÙ† Ù…Ø¹Ø¬ÙˆÙ†', 1, 0, 0, NULL, 0, NULL),
-(72, 'ØµØ§Ø¨ÙˆÙ† Ø§Ù„Ø§ÙˆØªÙˆÙ…Ø§ØªÙŠÙƒ', 'ØµØ§Ø¨ÙˆÙ†-Ø§Ù„Ø§ÙˆØªÙˆÙ…Ø§ØªÙŠÙƒ', NULL, '/images/category/03-12-2022/images-(12).jfif', 18, 1, 'ØµØ§Ø¨ÙˆÙ† Ø§Ù„ØºØ³Ø§Ù„Ø§Øª Ø§Ù„Ø§ÙˆØªÙˆÙ…Ø§ØªÙŠÙƒ', 1, 0, 0, NULL, 0, NULL),
-(73, 'Ø§Ù„Ù…Ù†Ø¸ÙØ§Øª', 'Ø§Ù„Ù…Ù†Ø¸ÙØ§Øª', NULL, '/images/category/03-12-2022/download-(40).jfif', 18, 1, 'Ø§Ù„Ù…Ù†Ø¸ÙØ§Øª', 1, 0, 0, NULL, 0, NULL);
+(1, 'الدقيق ومستلزمات الخبائز', 'الدقيق-ومستلزمات-الخبائز', NULL, '/images/category/05-12-2022/flour.png', 0, 0, 'كل انواع الدقيق ومايختص بعمل الخبائز والمعجنات', 1, 0, 1, 'GST', 0, 3),
+(3, 'الألبان المجففه', 'الألبان-المجففه', NULL, '/images/category/05-12-2022/milk.png', 0, 0, 'جميع أنواع الالبان', 1, 0, 1, 'GST', 17, 3),
+(6, 'الزيوت والسمن', 'الزيوت-والسمن', NULL, '/images/category/05-12-2022/oils.png', 0, 0, 'جميع ما يختص بمنتجات زيوت الطعام والسمن وخلافه', 1, 0, 0, 'VAT', 17, 5),
+(8, 'الحلويات والشوكولاته', 'الحلويات-والشوكولاته', NULL, '/images/category/05-12-2022/sweets.png', 0, 0, 'الحلويات والشوكولاته', 1, 0, 0, 'VAT', 17, 5),
+(10, 'السكر', 'السكر', NULL, '/images/category/05-12-2022/suger.png', 0, 0, 'سكر محلي انتاج مصنع كنانه', 1, 0, 1, 'VAT', 17, 5),
+(12, 'المربات والطحنية', 'المربات-والطحنية', NULL, '/images/category/30-11-2022/تنزيل-(9).jpeg', 0, 0, 'جميع انواع المربى والطحنية', 1, 0, 1, 'VAT', 0, 5),
+(13, 'الشاي والبن', 'الشاي-والبن', NULL, '/images/category/05-12-2022/tea1.png', 0, 0, 'كل انواع الشاى والبن', 1, 0, 1, 'VAT', 0, 5),
+(14, 'الارز والعدس والبقول', 'الارز-والعدس-والبقول', NULL, '/images/category/05-12-2022/rice.png', 0, 0, 'جميع انواع البقوليات', 1, 0, 0, 'VAT', 0, 5),
+(15, 'صلصة وصوصوات', 'صلصة-وصوصوات', NULL, '/images/category/30-11-2022/images-(16).jpeg', 0, 0, 'صلصة وصوصوات', 1, 0, 0, NULL, 0, NULL),
+(16, 'البسكويت', 'البسكويت', NULL, '/images/category/05-12-2022/Biscuit.png', 0, 0, 'كل انواع البسكويتات ####بسكويت الشاى# الويفر#المحشى', 1, 0, 1, 'VAT', 0, 5),
+(17, 'المعكرونه والشعيريه', 'المعكرونه-والشعيريه', NULL, '/images/category/05-12-2022/vermicelli.png', 0, 0, 'المعكرونه والشعيريه المحليه والمستورده', 1, 0, 1, 'VAT', 0, 5),
+(18, 'الصابون والمنظفات', 'الصابون-والمنظفات', NULL, '/images/category/05-12-2022/soap.png', 0, 0, 'الصابون والمنظفات', 1, 0, 1, 'VAT', 0, 5),
+(19, 'معجون وفرش الاسنان  وامواس حلاقه', 'معجون-وفرش-الاسنان--وامواس-حلاقه', NULL, '/images/category/30-11-2022/th-(1).jfif', 0, 0, 'معجون وفرش الاسنان  وامواس حلاقه', 1, 0, 1, 'VAT', 0, 5),
+(20, 'الملح والتوابل', 'الملح-والتوابل', NULL, '/images/category/30-11-2022/dce4fe1d-1339-40ea-90c8-8248f0b0ff5b.jpg', 0, 0, 'الملح والتوابل', 1, 0, 1, 'VAT', 0, 5),
+(22, 'الاغذية المعلبة', 'الاغذية-المعلبة', NULL, '/images/category/05-12-2022/cannedـfood.png', 0, 0, 'الاغذية المعلبة', 1, 0, 1, 'VAT', 0, 5),
+(23, 'العصائر', 'العصائر', NULL, '/images/category/05-12-2022/drink.png', 0, 0, 'العصائر المجففه والسائله', 1, 0, 1, 'VAT', 0, 5),
+(24, 'الاجبان', 'الاجبان', NULL, '/images/category/05-12-2022/Cheese.png', 0, 0, 'اجبان محليه ومصنعه عالميه', 1, 0, 0, 'GST', 0, 3),
+(25, 'الشبس والمقرمشات', 'الشبس-والمقرمشات', NULL, '/images/category/05-12-2022/chips.png', 0, 0, 'لشبس والمقرمشات', 1, 0, 0, 'VAT', 0, 5),
+(26, 'البامبرز والفوط الصحيه والمناديل', 'البامبرز-والفوط-الصحيه-والمناديل', NULL, '/images/category/30-11-2022/th-(7).jfif', 0, 0, 'البامبرز والفوط الصحيه والمناديل', 1, 0, 1, 'VAT', 0, 5),
+(27, 'الدقيق', 'الدقيق', NULL, '/images/category/30-11-2022/download.jfif', 1, 1, 'الدقيق بمختلف الانواع والاحجام', 2, 0, 0, NULL, 0, NULL),
+(28, 'الالبان المجففة المحلية', 'الالبان-المجففة-المحلية', NULL, '/images/category/30-11-2022/images-(8).jpeg', 3, 1, 'الالبان المجففه المحلية بمختلف الاوزان والانواع', 1, 0, 0, NULL, 0, NULL),
+(29, 'الزيوت', 'الزيوت', NULL, '/images/category/30-11-2022/images-(3).jpeg', 6, 1, 'الزيوت الطبيعيه بكل انواعها واحجامها', 2, 0, 0, NULL, 0, NULL),
+(30, 'الشوكلاته', 'الشوكلاته', NULL, '/images/category/30-11-2022/images.jfif', 8, 1, 'الشوكلاته الفاخره بجميع انواعها', 2, 0, 0, NULL, 0, NULL),
+(31, 'السكر', 'السكر', NULL, '/images/category/30-11-2022/تنزيل-(23).jpeg', 10, 1, 'عبوات كبيره واقتصاديه', 2, 0, 0, NULL, 0, NULL),
+(32, 'الطحنيه', 'الطحنيه', NULL, '/images/category/30-11-2022/images-(12).jpeg', 12, 1, 'انواع متعدده من الطحنيه في عبوات مختلف', 2, 0, 0, NULL, 0, NULL),
+(33, 'البن', 'البن', NULL, '/images/category/30-11-2022/تنزيل-(25).jpeg', 13, 1, 'اجود انواع البن المحمص المطحون  والعادي', 1, 0, 0, NULL, 0, NULL),
+(34, 'الارز', 'الارز', NULL, '/images/category/30-11-2022/th-(8).jfif', 14, 1, 'ارز كبسه وعادي مختلف الانواع والاحجام', 1, 0, 0, NULL, 0, NULL),
+(35, 'الصلصة', 'الصلصة', NULL, '/images/category/30-11-2022/images-(16).jpeg', 15, 1, 'جميع انواع الصلصه مختلف الاحجام والعبوات', 1, 0, 0, NULL, 0, NULL),
+(36, 'بسكويت الويفر', 'بسكويت-الويفر', NULL, '/images/category/30-11-2022/th-(9).jfif', 16, 1, 'ارقي واجود انواع البسكويتات', 1, 0, 0, NULL, 0, NULL),
+(37, 'المعكرونه', 'المعكرونه', NULL, '/images/category/30-11-2022/th-(10).jfif', 17, 1, 'معكرونتنا السودانيه واخري اماراتيه وبعض الايطاليه', 1, 0, 0, NULL, 0, NULL),
+(38, 'صابون الاستحمام', 'صابون-الاستحمام', NULL, '/images/category/30-11-2022/th-(11).jfif', 18, 1, 'صابون استحمام', 1, 0, 0, NULL, 0, NULL),
+(39, 'معجون الاسنان', 'معجون-الاسنان', NULL, '/images/category/30-11-2022/th-(12).jfif', 19, 1, 'معجون اسنان', 1, 0, 0, NULL, 0, NULL),
+(40, 'الملح', 'الملح', NULL, '/images/category/30-11-2022/th-(13).jfif', 20, 1, 'ملح ميودن وعادى', 1, 0, 0, NULL, 0, NULL),
+(41, 'التونه والساردين', 'التونه-والساردين', NULL, '/images/category/30-11-2022/th-(14).jfif', 22, 1, 'تونه وساردين', 1, 0, 0, NULL, 0, NULL),
+(42, 'العصائر المجففه', 'العصائر-المجففه', NULL, '/images/category/30-11-2022/th-(16).jfif', 23, 1, 'عصائر مجففه', 1, 0, 0, NULL, 0, NULL),
+(43, 'الاجبان المستورده', 'الاجبان-المستورده', NULL, '/images/category/30-11-2022/th-(17).jfif', 24, 1, 'اجبان مستورده', 1, 0, 0, NULL, 0, NULL),
+(44, 'الشبس', 'الشبس', NULL, '/images/category/30-11-2022/th-(5).jfif', 25, 1, 'شبس منوع', 1, 0, 0, NULL, 0, NULL),
+(45, 'البامبرز', 'البامبرز', NULL, '/images/category/02-12-2022/th-(7).jfif', 26, 1, 'بامبرز اطفال', 1, 0, 0, NULL, 0, NULL),
+(46, 'مستلزمات الخبائز', 'مستلزمات-الخبائز', NULL, '/images/category/02-12-2022/images-(1).jfif', 1, 1, 'كل مايخص الخبائز واضافاتها والمحسنات', 1, 0, 0, NULL, 0, NULL),
+(47, 'السمن', 'السمن', NULL, '/images/category/02-12-2022/download-(3).jfif', 6, 1, 'السمن النباتي والحيواني', 1, 0, 0, NULL, 0, NULL),
+(48, 'الحلويات', 'الحلويات', NULL, '/images/category/02-12-2022/download-(4).jfif', 8, 1, 'حلويات', 1, 0, 0, NULL, 0, NULL),
+(49, 'مربي', 'مربي', NULL, '/images/category/02-12-2022/download-(7).jfif', 12, 1, 'جميع انواع المربات', 1, 0, 0, NULL, 0, NULL),
+(50, 'الالبان المجففة المستورده', 'الالبان-المجففة-المستورده', NULL, '/images/category/02-12-2022/تنزيل-(26).jpeg', 3, 1, 'الالبان المجففة المستورده', 1, 0, 0, NULL, 0, NULL),
+(51, 'الاجبان المحلية', 'الاجبان-المحلية', NULL, '/images/category/02-12-2022/download-(8).jfif', 24, 1, 'الاجبان المحلية', 1, 0, 0, NULL, 0, NULL),
+(52, 'اندومي', 'اندومي', NULL, '/images/category/02-12-2022/download-(9).jfif', 0, 0, 'اندومي', 1, 0, 1, 'VAT', 0.13, 5),
+(53, 'اندومي سودانية', 'اندومي-سودانية', NULL, '/images/category/02-12-2022/images-(24).jpeg', 52, 1, 'اندومي سودانية نكهات مختلفه', 1, 0, 0, NULL, 0, NULL),
+(54, 'الفوط الصحية', 'الفوط-الصحية', NULL, '/images/category/02-12-2022/download-(11).jfif', 26, 1, 'فوط صحية', 1, 0, 0, NULL, 0, NULL),
+(55, 'المناديل', 'المناديل', NULL, '/images/category/02-12-2022/images-(4).jfif', 26, 1, 'مناديل الوجه والمطبخ', 1, 0, 0, NULL, 0, NULL),
+(56, 'الشاي', 'الشاي', NULL, '/images/category/02-12-2022/images-(13).jpeg', 13, 1, 'جميع انواع الشاي الكيني المعباه', 1, 0, 0, NULL, 0, NULL),
+(57, 'العدس', 'العدس', NULL, '/images/category/02-12-2022/download-(13).jfif', 14, 1, 'العدس', 1, 0, 0, NULL, 0, NULL),
+(58, 'البقوليات', 'البقوليات', NULL, '/images/category/02-12-2022/download-(17).jfif', 14, 1, 'البقوليات', 1, 0, 0, NULL, 0, NULL),
+(59, 'بسكويت الشاى', 'بسكويت-الشاى', NULL, '/images/category/02-12-2022/download-(18).jfif', 16, 1, 'بسكويت الشاى', 1, 0, 0, NULL, 0, NULL),
+(60, 'صابون البدره', 'صابون-البدره', NULL, '/images/category/02-12-2022/images-(5).jfif', 18, 1, 'صابون البدره', 1, 0, 0, NULL, 0, NULL),
+(61, 'الصابون السائل', 'الصابون-السائل', NULL, '/images/category/02-12-2022/download-(19).jfif', 18, 1, 'صابون السائل', 1, 0, 0, NULL, 0, NULL),
+(62, 'صابون غسيل الواح', 'صابون-غسيل-الواح', NULL, '/images/category/02-12-2022/download-(20).jfif', 18, 1, 'صابون غسيل الواح', 1, 0, 0, NULL, 0, NULL),
+(63, 'عصائر سائلة مركزة', 'عصائر-سائلة-مركزة', NULL, '/images/category/02-12-2022/images-(6).jfif', 23, 1, 'عصائر سائلة مركزة', 1, 0, 0, NULL, 0, NULL),
+(64, 'عصائر ومشروبات اطفال', 'عصائر-ومشروبات-اطفال', NULL, '/images/category/02-12-2022/images-(7).jfif', 23, 1, 'عصائر ومشروبات اطفال', 1, 0, 0, NULL, 0, NULL),
+(65, 'الشعيرية', 'الشعيرية', NULL, '/images/category/02-12-2022/download-(22).jfif', 17, 1, 'الشعيرية', 1, 0, 0, NULL, 0, NULL),
+(66, 'اسباغيتى', 'اسباغيتى', NULL, '/images/category/02-12-2022/download-(23).jfif', 17, 1, 'اسباغيتى', 1, 0, 0, NULL, 0, NULL),
+(67, 'التوابل والبهارات', 'التوابل-والبهارات', NULL, '/images/category/02-12-2022/download-(24).jfif', 20, 1, 'التوابل والبهارات', 1, 0, 0, NULL, 0, NULL),
+(68, 'صوصات', 'صوصات', NULL, '/images/category/02-12-2022/images-(8).jfif', 15, 1, 'صوصات', 1, 0, 0, NULL, 0, NULL),
+(69, 'فرش الاسنان', 'فرش-الاسنان', NULL, '/images/category/02-12-2022/download-(27).jfif', 19, 1, 'فرش اسنان', 1, 0, 0, NULL, 0, NULL),
+(70, 'امواس وشفرات حلاقة', 'امواس-وشفرات-حلاقة', NULL, '/images/category/02-12-2022/images-(9).jfif', 19, 1, 'امواس وشفرات حلاقة', 1, 0, 0, NULL, 0, NULL),
+(71, 'صابون معجون', 'صابون-معجون', NULL, '/images/category/02-12-2022/download-(35).jfif', 18, 1, 'صابون معجون', 1, 0, 0, NULL, 0, NULL),
+(72, 'صابون الاوتوماتيك', 'صابون-الاوتوماتيك', NULL, '/images/category/03-12-2022/images-(12).jfif', 18, 1, 'صابون الغسالات الاوتوماتيك', 1, 0, 0, NULL, 0, NULL),
+(73, 'المنظفات', 'المنظفات', NULL, '/images/category/03-12-2022/download-(40).jfif', 18, 1, 'المنظفات', 1, 0, 0, NULL, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -435,7 +456,7 @@ CREATE TABLE `coupon` (
   `cart_value` int(100) NOT NULL,
   `amount` int(100) NOT NULL,
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `uses_restriction` int(11) NOT NULL DEFAULT 1,
+  `uses_restriction` int(11) NOT NULL DEFAULT '1',
   `store_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -444,7 +465,7 @@ CREATE TABLE `coupon` (
 --
 
 INSERT INTO `coupon` (`coupon_id`, `coupon_name`, `coupon_image`, `coupon_code`, `coupon_description`, `start_date`, `end_date`, `cart_value`, `amount`, `type`, `uses_restriction`, `store_id`) VALUES
-(1, 'Ø´Ù‡Ø± Ø±Ù…Ø¶Ø§Ù† Ø§Ù„Ù…Ø¹Ø¸Ù…', '/images/coupon/18-11-2022/banner2.jpg', 'Ramadan2022', 'ØªØ®ÙÙŠØ¶Ø§Øª Ø´Ù‡Ø± Ø±Ù…Ø¶Ø§Ù† Ø§Ù„Ù…Ø¹Ø¸Ù…', '2022-05-12 11:11:00', '2022-06-12 14:22:00', 2000, 10, 'percentage', 20000, 3);
+(1, 'شهر رمضان المعظم', '/images/coupon/18-11-2022/banner2.jpg', 'Ramadan2022', 'تخفيضات شهر رمضان المعظم', '2022-05-12 11:11:00', '2022-06-12 14:22:00', 2000, 10, 'percentage', 20000, 3);
 
 -- --------------------------------------------------------
 
@@ -507,9 +528,9 @@ CREATE TABLE `delivery_boy` (
   `boy_loc` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lng` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
-  `store_id` int(11) NOT NULL DEFAULT 0,
-  `store_dboy_id` int(11) NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT '1',
+  `store_id` int(11) NOT NULL DEFAULT '0',
+  `store_dboy_id` int(11) NOT NULL DEFAULT '0',
   `added_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'admin',
   `id_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -518,6 +539,14 @@ CREATE TABLE `delivery_boy` (
   `current_lat` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `current_lng` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `delivery_boy`
+--
+
+INSERT INTO `delivery_boy` (`dboy_id`, `boy_name`, `boy_phone`, `boy_city`, `password`, `device_id`, `boy_loc`, `lat`, `lng`, `status`, `store_id`, `store_dboy_id`, `added_by`, `id_no`, `id_photo`, `image`, `id_name`, `current_lat`, `current_lng`) VALUES
+(1, 'zaid', '0124736128', 'Khartoum bahri', '7789', 'dj_w070yRGuwk9vUjorE-X:APA91bGag75N2-iGVLABaZ4OOHsqtWWsxkHxL7BVoR1TA15dg3HYHxR2SDLXHc6x62bcdtit7Pai_tXDBESFbFySrIkswsmLPAtml7r6iaSDRf_usYUqKJ47vRDGM0WrnVyPasbM1R8I', 'Khartoum, السودان', '15.5006544', '32.5598994', 1, 3, 0, 'store', '1', '/images/dboy/22-12-2022/DJJ19jlXoAEqHYW-1024x731.jpg', NULL, 'ZAAD Card', '15.6007451', '32.5290972'),
+(2, 'admin', '0123771002', 'Khartoum bahri', '77897789', NULL, 'Khartoum, السودان', '15.5006544', '32.5598994', 1, 3, 0, 'store', '2', '/images/dboy/22-12-2022/download-(1).jfif', NULL, 'ZAAD Card', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -571,7 +600,7 @@ CREATE TABLE `driver_callback_req` (
   `callback_req_id` int(11) NOT NULL,
   `driver_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `driver_phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `processed` int(11) NOT NULL DEFAULT 0,
+  `processed` int(11) NOT NULL DEFAULT '0',
   `date` date NOT NULL,
   `driver_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -602,8 +631,8 @@ CREATE TABLE `driver_notification` (
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `not_message` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `dboy_id` int(11) NOT NULL,
-  `read_by_driver` int(11) NOT NULL DEFAULT 0,
-  `created_at` datetime DEFAULT current_timestamp()
+  `read_by_driver` int(11) NOT NULL DEFAULT '0',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -619,7 +648,7 @@ CREATE TABLE `failed_jobs` (
   `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -687,8 +716,8 @@ INSERT INTO `firebase_iso` (`iso_id`, `iso_code`) VALUES
 
 CREATE TABLE `freedeliverycart` (
   `id` int(11) NOT NULL,
-  `min_cart_value` float NOT NULL DEFAULT 0,
-  `del_charge` float NOT NULL DEFAULT 0,
+  `min_cart_value` float NOT NULL DEFAULT '0',
+  `del_charge` float NOT NULL DEFAULT '0',
   `store_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -765,8 +794,8 @@ CREATE TABLE `licensebox` (
   `id` int(11) NOT NULL,
   `license` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `client` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `installed_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp(),
+  `installed_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `status` enum('active','inactive') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'inactive',
   `message` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -832,7 +861,7 @@ CREATE TABLE `map_api` (
 --
 
 INSERT INTO `map_api` (`id`, `map_api_key`) VALUES
-(1, 'AIzaSyCg2IaYHAhKS3JEaOzwtjO8Y7iaA');
+(1, 'AIzaSyCsE5KDJqjPpbTHsQFqSjnJHclQuCBw8c4');
 
 -- --------------------------------------------------------
 
@@ -881,15 +910,15 @@ CREATE TABLE `membership_bought` (
 
 CREATE TABLE `membership_plan` (
   `plan_id` int(11) NOT NULL,
-  `image` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` longtext COLLATE utf8mb4_unicode_ci,
   `plan_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `free_delivery` int(11) NOT NULL DEFAULT 0,
-  `reward` int(11) NOT NULL DEFAULT 0,
-  `instant_delivery` int(11) NOT NULL DEFAULT 0,
+  `free_delivery` int(11) NOT NULL DEFAULT '0',
+  `reward` int(11) NOT NULL DEFAULT '0',
+  `instant_delivery` int(11) NOT NULL DEFAULT '0',
   `plan_description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `days` int(11) NOT NULL DEFAULT 0,
+  `days` int(11) NOT NULL DEFAULT '0',
   `price` int(11) NOT NULL,
-  `hide` int(11) NOT NULL DEFAULT 0
+  `hide` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1048,7 +1077,7 @@ CREATE TABLE `oauth_access_tokens` (
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `client_id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci,
   `revoked` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1147,6 +1176,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('0ddd7bdaf78cb1dfb6ebff25eeb62ca0c83746d36daa8745fbd19700b371b41b65ce78d5c94a1f2b', 48, 1, 'token', '[]', 0, '2021-11-19 12:46:25', '2021-11-19 12:46:25', '2022-11-19 12:46:25'),
 ('0de82cbf1b0c60a1391aa5e6534e2e6f799dd907c39364092581753f1c61580ee7a4b3b587d8d413', 2, 1, 'token', '[]', 0, '2021-06-09 09:55:37', '2021-06-09 09:55:37', '2022-06-09 09:55:37'),
 ('0def818140c000dcad0731f59bcd3b378d128e3246f3be9b13015aafda4b4512b4ff11aef46c86a5', 37, 1, 'token', '[]', 0, '2021-11-18 11:15:03', '2021-11-18 11:15:03', '2022-11-18 11:15:03'),
+('0e095949d382271abe35b79761413d33fa1d86ce19bc9f4cdfea3596864f72080a8d9b0e163c1371', 62, 1, '63a2a5ee2383c', '[]', 0, '2022-12-21 11:51:34', '2022-12-21 11:51:34', '2023-12-21 11:51:34'),
 ('0e17ae0a70ce746ad57413a630199dfdec0685d6ffcca8e84ccf2e38f16e1368d333c047579940f3', 50, 1, 'token', '[]', 0, '2021-11-30 15:34:16', '2021-11-30 15:34:16', '2022-11-30 15:34:16'),
 ('0e307061eac582f355435522893c39747beacb8ee06f496b57ec59a6e4b96bbfe465ffc907f3ef2a', 37, 1, 'token', '[]', 0, '2021-11-17 18:10:28', '2021-11-17 18:10:28', '2022-11-17 18:10:28'),
 ('0e4670792aa7d6d68bbb3a25f7dc057d341fbb8f925053d82193fff746052c8360e1b43951f04843', 2, 1, 'token', '[]', 0, '2021-11-30 16:45:03', '2021-11-30 16:45:03', '2022-11-30 16:45:03'),
@@ -1191,8 +1221,10 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('1318a080e0fe7066707abb67b94f0415c351d37dc670306e701ed942affa80d9ddaa502882885aed', 50, 1, 'token', '[]', 0, '2021-11-20 14:47:17', '2021-11-20 14:47:17', '2022-11-20 14:47:17'),
 ('131c7e53db67d63be791e8a3a1b77f1bcc196e78a7f29e12f9ff1c9f61c358aa5e1746aa5323381a', 2, 1, 'token', '[]', 0, '2021-11-20 10:08:45', '2021-11-20 10:08:45', '2022-11-20 10:08:45'),
 ('13370e983e10fed8dcc2641134f45af02e48ae9bc81405b875be0135f26e3c8c316e282a60ac6d7d', 2, 1, 'token', '[]', 0, '2021-11-26 17:56:12', '2021-11-26 17:56:12', '2022-11-26 17:56:12'),
+('1355e7609819083c253329088b2ef957d209b5f8269e5edf9ce418ef981d94e60d9f802ab53b891f', 62, 1, 'token', '[]', 0, '2022-12-21 11:29:37', '2022-12-21 11:29:37', '2023-12-21 11:29:37'),
 ('135b21342cc56607c23d4092c16aeecfc0782840d064fa2f38ecb22ff3684bf5776bd0b92ec48401', 2, 1, 'token', '[]', 0, '2021-12-06 14:16:32', '2021-12-06 14:16:32', '2022-12-06 14:16:32'),
 ('137523838db66bd68702414d0bfdefe76d3d006db8c450bcabbe213a8d2cedfe5a4e49670c108690', 2, 1, 'token', '[]', 0, '2021-12-16 16:59:10', '2021-12-16 16:59:10', '2022-12-16 16:59:10'),
+('137f37a8157fa9562547194a237d3ec11313e711def5c117897d5d5b9d010f420c30813d621e93f0', 62, 1, '63a2b10b74c16', '[]', 0, '2022-12-21 12:38:59', '2022-12-21 12:38:59', '2023-12-21 12:38:59'),
 ('138c6b1c8a757c8ca9c091876d869209e6746316474a0f5fe26c04e963ce2bc0513a28ed9f01f6de', 37, 1, 'token', '[]', 0, '2021-11-18 10:17:03', '2021-11-18 10:17:03', '2022-11-18 10:17:03'),
 ('13a1a05c67ea5ae212fe3bba63e9dab7cef125f6e79d135c7c85286ec6e8a65d18e8d996cbfbbc58', 50, 1, 'token', '[]', 0, '2021-11-30 18:54:41', '2021-11-30 18:54:41', '2022-11-30 18:54:41'),
 ('13b3e8ae0f4df1f352e28eb6ae78b4ef34d11e0ad967c358816151f96d1259fe85dcafe3a69ab884', 2, 1, 'token', '[]', 0, '2021-11-23 17:21:03', '2021-11-23 17:21:03', '2022-11-23 17:21:03'),
@@ -1210,6 +1242,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('14d525b2356ab7332e9f3a799134185be36b7d7b530694c7fb82a67df80175e2267ff0ba59c4f347', 2, 1, 'token', '[]', 0, '2021-06-15 12:55:48', '2021-06-15 12:55:48', '2022-06-15 12:55:48'),
 ('14ff080a52f82eb10603d62f3e4e0561281b5a6b817167b9bb9575374e65a6a59edbcdbe410c665b', 2, 1, 'token', '[]', 0, '2021-12-13 10:37:55', '2021-12-13 10:37:55', '2022-12-13 10:37:55'),
 ('157903833f9e4d83c3da3f42c0ae731c7e739c4f96d59af0cba5b004a38b689a04f63797cf0990e8', 50, 1, 'token', '[]', 0, '2021-11-20 16:42:26', '2021-11-20 16:42:26', '2022-11-20 16:42:26'),
+('15984e9637b1fa56020fdd28c83346a35f7cd730138e636e06ab198b22ab7ff8bec5ea9073894fb0', 62, 1, 'token', '[]', 0, '2022-12-20 15:22:40', '2022-12-20 15:22:40', '2023-12-20 15:22:40'),
 ('15a17441bc16c6b5d536f3ba17cbf159bbe926be0f9a51ecbec88c894d83e853a1d8ddd63cbf5346', 2, 1, 'token', '[]', 0, '2021-12-10 15:54:31', '2021-12-10 15:54:31', '2022-12-10 15:54:31'),
 ('15faeebc6d510fd432ff6664f5f35e438d22c70d208cfcb2023ec7142738d5e23f66d3af72e75fcb', 68, 1, 'token', '[]', 0, '2021-12-13 10:39:50', '2021-12-13 10:39:50', '2022-12-13 10:39:50'),
 ('1619da94bac67e4046dc2d9211b559af5ca3ae2694446ca81368bc2e275bc06d76a0c1c9af9568cf', 2, 1, 'token', '[]', 0, '2021-11-02 18:09:22', '2021-11-02 18:09:22', '2022-11-02 18:09:22'),
@@ -1335,12 +1368,12 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('2599ee4cc274acc0c7c439ce928cbfeb3821fb81d5d842c251e700f14089d46b3c7b7e73de9b7976', 2, 1, 'token', '[]', 0, '2021-11-30 15:52:26', '2021-11-30 15:52:26', '2022-11-30 15:52:26'),
 ('25ab227dc6016d8b2b4f222a13b85dfa52158c27d7f3047ef8deb9786cac1660fab5d33c2d9a9871', 2, 1, 'token', '[]', 0, '2021-12-08 11:01:11', '2021-12-08 11:01:11', '2022-12-08 11:01:11'),
 ('25c05d4f918b648aa537b0e24f4beb77d2c2493ac9015a057839fcc837e810de5171a913fbe39eea', 2, 1, 'token', '[]', 0, '2021-06-09 08:06:11', '2021-06-09 08:06:11', '2022-06-09 08:06:11'),
-('25d096f67c2c3c123cc8b75aef1065d92814387f7e0785ff4bebaec89dc785c4817002f2a622f9b5', 50, 1, 'token', '[]', 0, '2021-11-24 16:13:02', '2021-11-24 16:13:02', '2022-11-24 16:13:02'),
+('25d096f67c2c3c123cc8b75aef1065d92814387f7e0785ff4bebaec89dc785c4817002f2a622f9b5', 50, 1, 'token', '[]', 0, '2021-11-24 16:13:02', '2021-11-24 16:13:02', '2022-11-24 16:13:02');
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
 ('26015759419729e7e625b84aed48cd845650e3a295133d65052cc2f8711ef6a1de29e7add0395fd0', 2, 1, 'token', '[]', 0, '2021-11-29 14:41:04', '2021-11-29 14:41:04', '2022-11-29 14:41:04'),
 ('2619c214a279d18093d2fe3f6dd3ed0652cb202daef0838b86cd1ddcc8b9356038f8056e905c9774', 68, 1, 'token', '[]', 0, '2021-12-03 13:19:05', '2021-12-03 13:19:05', '2022-12-03 13:19:05'),
 ('2673b4114837e30cf544d878802d7a5187446da8cb30ebb46153fc1d5fd763daa8c8ab2079feed20', 2, 1, 'token', '[]', 0, '2021-12-02 16:25:15', '2021-12-02 16:25:15', '2022-12-02 16:25:15'),
-('26814b2393b47ae09f7c98ee3c5e9c8d8bd341b598498bce300410310c375743cf0f4797142123bb', 2, 1, 'token', '[]', 0, '2021-12-13 15:22:04', '2021-12-13 15:22:04', '2022-12-13 15:22:04');
-INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('26814b2393b47ae09f7c98ee3c5e9c8d8bd341b598498bce300410310c375743cf0f4797142123bb', 2, 1, 'token', '[]', 0, '2021-12-13 15:22:04', '2021-12-13 15:22:04', '2022-12-13 15:22:04'),
 ('26921315fde16034c8743433c61154b71bf3e5564ba9bb149d37fa0e4ac5f57310fe22d4b811ba84', 2, 1, 'token', '[]', 0, '2021-12-03 18:27:22', '2021-12-03 18:27:22', '2022-12-03 18:27:22'),
 ('26ae52396467105b9731820e831ccaf7c9fe34dec26cd4ba3a391ab986c905b9878ec0afbe04d804', 2, 1, 'token', '[]', 0, '2021-12-13 15:23:18', '2021-12-13 15:23:18', '2022-12-13 15:23:18'),
 ('26c615c2bcc817903df9d6c5117c2974afccd736cd8125109b6cc9ef759955eb56a7c4ee752a4bfc', 2, 1, 'token', '[]', 0, '2021-06-15 21:36:30', '2021-06-15 21:36:30', '2022-06-15 21:36:30'),
@@ -1403,6 +1436,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('2ef319b7202dbcd20626c71aca4feb0708f05ecd6c0f1dfaf9279738300dafbd98d89b9b15ae3baa', 50, 1, 'token', '[]', 0, '2021-12-02 10:53:51', '2021-12-02 10:53:51', '2022-12-02 10:53:51'),
 ('2f080049343f87e35b5911e8d37c32f62f86a62138f7833f45219fd9c0f56641ecbef0d839da2fab', 37, 1, 'token', '[]', 0, '2021-11-18 10:55:13', '2021-11-18 10:55:13', '2022-11-18 10:55:13'),
 ('2f15f2729beec6bc6a94b8e35c74e04cd4a2c6a969a9508cd0e03e7debc42df0f3fc904dc82a4c5b', 2, 1, 'token', '[]', 0, '2021-12-06 14:37:00', '2021-12-06 14:37:00', '2022-12-06 14:37:00'),
+('2f304b82a05ad0125ed0a9b7eb5f169bf792ad971f6252453ddc460104deb39803fc2c3a31c730ce', 62, 1, '63a2a604676e8', '[]', 0, '2022-12-21 11:51:56', '2022-12-21 11:51:56', '2023-12-21 11:51:56'),
 ('2f485da465c2f4c8876241d20d6b7157595b269c151e72d425352004dd2114903775d36af03aa5c7', 48, 1, 'token', '[]', 0, '2021-11-20 10:44:59', '2021-11-20 10:44:59', '2022-11-20 10:44:59'),
 ('2f50b617f008331b307572bd492d0989cb8b91d3a5a9233b4808f51cb79f00a86bbabf0f3759f2bc', 37, 1, 'token', '[]', 0, '2021-11-18 10:53:27', '2021-11-18 10:53:27', '2022-11-18 10:53:27'),
 ('2f558cb743364a62d982aef3984b508e1caa491af725d15f2990ec416b6a4434e1ae484738c071a3', 50, 1, 'token', '[]', 0, '2021-11-24 17:14:03', '2021-11-24 17:14:03', '2022-11-24 17:14:03'),
@@ -1420,6 +1454,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('31895bbe2d6d71d21bbf806e6799060ec9da70d35d60fb5917717c1d26f69ca804df23c34b67d63f', 50, 1, 'token', '[]', 0, '2021-11-24 16:52:25', '2021-11-24 16:52:25', '2022-11-24 16:52:25'),
 ('318ec4a4b34995d5c9a6c302349e22f11e7599cbb26ac54120f79a182e7e9399e0122ad0da73d6fb', 80, 1, 'token', '[]', 0, '2021-12-07 10:36:47', '2021-12-07 10:36:47', '2022-12-07 10:36:47'),
 ('31a759f3bae7b3f83cded09a54c5372521190ef1b9ea7e254da01a034a487c3bb469772032df91e4', 50, 1, 'token', '[]', 0, '2021-12-02 17:56:29', '2021-12-02 17:56:29', '2022-12-02 17:56:29'),
+('31dcbc15af40d2914e49041d4bcaa9f9e1eb0924622034cc51f748db9fde2a66861fb6f6e4adce55', 62, 1, 'token', '[]', 0, '2022-12-21 11:40:00', '2022-12-21 11:40:00', '2023-12-21 11:40:00'),
 ('320f945fe1949eb90c2116c409bc83201ef3c877f506b2282f153dc59ece1b5aab30684a5c62e563', 37, 1, 'token', '[]', 0, '2021-11-13 11:44:17', '2021-11-13 11:44:17', '2022-11-13 11:44:17'),
 ('321fdce5884dc11e73d08093e4d900e97695948ec83e7773495686d2398a4d2ae101e24696f8c552', 2, 1, 'token', '[]', 0, '2021-12-09 11:20:18', '2021-12-09 11:20:18', '2022-12-09 11:20:18'),
 ('3225111693dc73b4aea516ee29ff33911099639b61f7ed2bfa4c92696b2976b92f9ed5b74ad570c7', 2, 1, 'token', '[]', 0, '2021-12-04 16:24:24', '2021-12-04 16:24:24', '2022-12-04 16:24:24'),
@@ -1430,6 +1465,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('33385a118880e232b8bb6939a83b1865d72a1d7aa5c00b8e6720dbc3e67962498b3a1da9a690e95b', 2, 1, 'token', '[]', 0, '2021-12-10 10:01:02', '2021-12-10 10:01:02', '2022-12-10 10:01:02'),
 ('33826697f1e504aa944ca800ffc843056d5a709c759c632636a2715c70462c96ee93becab32c0b03', 61, 1, 'token', '[]', 0, '2021-12-03 12:16:54', '2021-12-03 12:16:54', '2022-12-03 12:16:54'),
 ('33827799fda30980967a55b9e0102030df63b6017ea0d2157d0bd2437a63e5ac3a0e37f661066bcb', 2, 1, 'token', '[]', 0, '2021-11-29 14:53:03', '2021-11-29 14:53:03', '2022-11-29 14:53:03'),
+('3392a04ddacbcd49d10687442192cfe74c74304e8c5f00715277e85bd8d9cb40ea20eb49df3122d8', 62, 1, 'token', '[]', 0, '2022-12-21 13:04:12', '2022-12-21 13:04:12', '2023-12-21 13:04:12'),
 ('339ef87a80772018db9c176eb9a8102535b2fabc3f4052177f567cdca985a5f2cc4f87a2c1a71897', 37, 1, 'token', '[]', 0, '2021-11-18 11:25:06', '2021-11-18 11:25:06', '2022-11-18 11:25:06'),
 ('33ad83aa236b7a9cf0406beb31bc42001763a95a5f6ac33823cf2c1ffafea83954bfcbb861c01d1c', 67, 1, 'token', '[]', 0, '2021-12-01 12:33:56', '2021-12-01 12:33:56', '2022-12-01 12:33:56'),
 ('33b2e5074d73cbe643b04864ad08c13d6a0113ab7e5c67b61792f3512545108ed0edc5dd1276808a', 61, 1, 'token', '[]', 0, '2021-12-02 11:42:34', '2021-12-02 11:42:34', '2022-12-02 11:42:34'),
@@ -1460,7 +1496,9 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('3955f01377ca761412320e919d791a79d67d8c8cefd14d068785654167ca0902fc5e5f0d97fcf250', 2, 1, 'token', '[]', 0, '2021-11-29 18:09:17', '2021-11-29 18:09:17', '2022-11-29 18:09:17'),
 ('39916976d8315a408a95eb8a7239fef23330971b0b94fbc55973be8e2fdb933718b423c6916d96cc', 61, 1, 'token', '[]', 0, '2021-12-03 11:38:15', '2021-12-03 11:38:15', '2022-12-03 11:38:15'),
 ('39963b27ac29c14428e9efe2b06364809467ffe601c3133227d8d63a478996a16d0d057f7bd56345', 80, 1, 'token', '[]', 0, '2021-12-06 18:43:59', '2021-12-06 18:43:59', '2022-12-06 18:43:59'),
+('39cd13467d4501b2dae0495565dbf6fef96250e32a8aa48320b79f9d0023fb6963fed0f1ce1bc440', 64, 1, '63a2a47d5ec35', '[]', 0, '2022-12-21 11:45:25', '2022-12-21 11:45:25', '2023-12-21 11:45:25'),
 ('39d53afd3adc7a56222fc25f5f3af1c66a60066f54c2d25e7f88feeb1f245f2e0223fc22c78752e5', 2, 1, 'token', '[]', 0, '2021-12-10 15:01:49', '2021-12-10 15:01:49', '2022-12-10 15:01:49'),
+('3a1f9db92f2758b33b530486287333a9feec17b2748984f2e66992219113c7563a56a0d10d005e06', 62, 1, 'token', '[]', 0, '2022-12-20 15:56:33', '2022-12-20 15:56:33', '2023-12-20 15:56:33'),
 ('3a2bc335bfd54855945fb78c748a796acc4a409a8f94d49ecc6098a2a3237b021608480c79848231', 2, 1, 'token', '[]', 0, '2021-11-27 11:29:50', '2021-11-27 11:29:50', '2022-11-27 11:29:50'),
 ('3a2f4a8b62f733b7ae38548b1f4203015da6f5e38444916e601fe945717acd6337364eb29232422c', 50, 1, 'token', '[]', 0, '2021-11-30 11:22:11', '2021-11-30 11:22:11', '2022-11-30 11:22:11'),
 ('3a5a2b5d9af57b4ca6250f60462fe6b7ed1a2b3d3403c7cfb66789e70a3dfb5cd01afc58f569c4cd', 37, 1, 'token', '[]', 0, '2021-11-16 13:58:11', '2021-11-16 13:58:11', '2022-11-16 13:58:11'),
@@ -1475,6 +1513,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('3b87b7a8110a986c3031517eb3ce757e53ad307d02a8634555cf37705df401c55bb2b1ed660bea9d', 50, 1, 'token', '[]', 0, '2021-11-30 11:51:36', '2021-11-30 11:51:36', '2022-11-30 11:51:36'),
 ('3ba99eee902291107672a88750814ef891881294dec33046924fcfe8dad8cbbc3d8ce393e4e8c46d', 2, 1, 'token', '[]', 0, '2021-12-06 18:23:43', '2021-12-06 18:23:43', '2022-12-06 18:23:43'),
 ('3bc08a4a3f6829b4b3dc7fcff56b8d94f2425f6a4fc7df7e72fcc6dd264e07f2e2cb087f19d99bba', 80, 1, 'token', '[]', 0, '2021-12-21 17:34:07', '2021-12-21 17:34:07', '2022-12-21 17:34:07'),
+('3bd1e6e2d2b7d8dee694147fcecb756b09451d0220e32f6087b4bf6ed5a4792a4b4d126be9945282', 62, 1, 'token', '[]', 0, '2022-12-20 14:32:15', '2022-12-20 14:32:15', '2023-12-20 14:32:15'),
 ('3c09256bbce5452c9af74f23c92939f40433454ccb16ec1053c1610165df0280c73979818bcd42ee', 50, 1, 'token', '[]', 0, '2021-11-29 16:57:31', '2021-11-29 16:57:31', '2022-11-29 16:57:31'),
 ('3c2786832790e3374f06905a0d5e22351563618c3dceea941d501d351d658b718f91e592f2d3145f', 2, 1, 'token', '[]', 0, '2021-12-08 12:20:41', '2021-12-08 12:20:41', '2022-12-08 12:20:41'),
 ('3c306c3f64c57cfb29299ba664a1aa11011afbe58da40155186d5b7273a000cd9d4f771520a55041', 50, 1, 'token', '[]', 0, '2021-12-13 11:25:55', '2021-12-13 11:25:55', '2022-12-13 11:25:55'),
@@ -1572,6 +1611,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('4bc5f6b9d8a08eb03566837572ad6098eb52ddae7a2d7af5c3dd1240f0a4e801e65b081bb45be078', 37, 1, 'token', '[]', 0, '2021-11-17 16:29:38', '2021-11-17 16:29:38', '2022-11-17 16:29:38'),
 ('4bfdaacfe919ebace6929919bd48f81efd35108e9b6c467dc888f84369aa35ceef69f347db08b8b4', 50, 1, 'token', '[]', 0, '2021-12-01 16:25:30', '2021-12-01 16:25:30', '2022-12-01 16:25:30'),
 ('4c316100f8940f0920b9084240554769fa05934c0689214762cac3ad2283aaec3755e1b7e62d0f4d', 2, 1, 'token', '[]', 0, '2021-11-26 19:29:07', '2021-11-26 19:29:07', '2022-11-26 19:29:07'),
+('4c6898567de2b46c0b61ecc5f462e6a5584882021deab12f88533fdccdae45de19a8ee4fd55b7179', 62, 1, '63a412b0a547c', '[]', 0, '2022-12-22 13:47:52', '2022-12-22 13:47:52', '2023-12-22 13:47:52'),
 ('4c728667e62f83955f4fbe45e4f96ca6506b0061cb3bbc3d070212f16907ab78ec9bcb2270ac6909', 50, 1, 'token', '[]', 0, '2021-12-02 14:48:10', '2021-12-02 14:48:10', '2022-12-02 14:48:10'),
 ('4c8a8d318aea47fa3496b09cdc57d6af263d667a09cd7297e3d0d1b5e85b91dad8418e786f9da002', 1, 1, 'token', '[]', 0, '2021-11-30 15:31:15', '2021-11-30 15:31:15', '2022-11-30 15:31:15'),
 ('4cd5db4e97e3de6921b4dd4dd736f026589fa23f813755ca947d972b1147bf3aefc9c88939be46af', 48, 1, 'token', '[]', 0, '2021-11-19 18:19:27', '2021-11-19 18:19:27', '2022-11-19 18:19:27'),
@@ -1609,7 +1649,8 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('5090bc761baa98d925385422cd264579b3da9cf127e740f8394675130f79e8e77bfc3a1f9aa429b1', 2, 1, 'token', '[]', 0, '2021-06-22 09:01:38', '2021-06-22 09:01:38', '2022-06-22 09:01:38'),
 ('5090fb139702b9d552e5f0fbe58853ecff92247e13549a200623dc178f6ae15b13ec40f2410d0711', 2, 1, 'token', '[]', 0, '2021-10-27 11:57:43', '2021-10-27 11:57:43', '2022-10-27 11:57:43'),
 ('50b2f413d81b9be0840258c2b051109582469a120791735c41a92cf7980d1debaa788b811405ef98', 2, 1, 'token', '[]', 0, '2021-11-13 12:34:55', '2021-11-13 12:34:55', '2022-11-13 12:34:55'),
-('50b446a7e5806041322768d9ae926803f9f402675278e25a59ebdc1b3bd2e0ca8195d39e77318c48', 50, 1, 'token', '[]', 0, '2021-11-29 17:17:56', '2021-11-29 17:17:56', '2022-11-29 17:17:56'),
+('50b446a7e5806041322768d9ae926803f9f402675278e25a59ebdc1b3bd2e0ca8195d39e77318c48', 50, 1, 'token', '[]', 0, '2021-11-29 17:17:56', '2021-11-29 17:17:56', '2022-11-29 17:17:56');
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
 ('50b830d6b3fa00b9e26cb05e7d17176eab4bc1099c13158ad3c5212fe901bbc6ba5a052e1910d649', 37, 1, 'token', '[]', 0, '2021-11-18 15:20:04', '2021-11-18 15:20:04', '2022-11-18 15:20:04'),
 ('50e25fe24fe1bea47b191a77f55958cc684ec1375d1fe73614633f3287b6624332691b756832392a', 2, 1, 'token', '[]', 0, '2021-06-16 19:46:52', '2021-06-16 19:46:52', '2022-06-16 19:46:52'),
 ('5116a1b50df606f243334f4d03bfd531b8e1b1d3bf0d1bf9a7e08dbf364aecd2276f64f8b08813b8', 50, 1, 'token', '[]', 0, '2021-11-24 17:14:38', '2021-11-24 17:14:38', '2022-11-24 17:14:38'),
@@ -1620,8 +1661,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('51f45cc64a4c0085cdf6b280091cc7faabf8c7e7511655ee08c56b9ee5f11a459dd2236e2f6bec58', 50, 1, 'token', '[]', 0, '2021-11-30 19:19:27', '2021-11-30 19:19:27', '2022-11-30 19:19:27'),
 ('52198eb67d3bb90e6098a565aaab94653c75ef921744322469b4a4598eee6f902f094917156597d6', 2, 1, 'token', '[]', 0, '2021-11-16 10:03:56', '2021-11-16 10:03:56', '2022-11-16 10:03:56'),
 ('522c21c1fc3e77a5a26f9d038b593afe582208ebc436d0b1fea678c09b7ef9702b1099f089cb07fd', 50, 1, 'token', '[]', 0, '2021-11-20 11:39:49', '2021-11-20 11:39:49', '2022-11-20 11:39:49'),
-('523132b25b333a84967929ddee379acb173bc1c8f9d6d4d04f5d49aa6f4cad342cb3d816693dbb76', 58, 1, 'token', '[]', 0, '2021-11-30 22:34:28', '2021-11-30 22:34:28', '2022-11-30 22:34:28');
-INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('523132b25b333a84967929ddee379acb173bc1c8f9d6d4d04f5d49aa6f4cad342cb3d816693dbb76', 58, 1, 'token', '[]', 0, '2021-11-30 22:34:28', '2021-11-30 22:34:28', '2022-11-30 22:34:28'),
 ('52425d14a913ec236a76c498589acc040697d6be65a0f4031ce5f47c4e91c8a57d83f00be7c078fd', 2, 1, 'token', '[]', 0, '2021-12-08 15:55:42', '2021-12-08 15:55:42', '2022-12-08 15:55:42'),
 ('525fe4aa51e7526048d0d9f46d9f7dbed64d5f982a35f5d92efa9f3533586c260b10b8be1b846a10', 2, 1, 'token', '[]', 0, '2021-11-30 15:14:06', '2021-11-30 15:14:06', '2022-11-30 15:14:06'),
 ('52a4df9358bd9b5b71a358c9938a4df3eec470cfeb4fa0d4495a5db4a2f264905a92dc5131bc33ae', 2, 1, 'token', '[]', 0, '2021-12-03 18:01:08', '2021-12-03 18:01:08', '2022-12-03 18:01:08'),
@@ -1633,9 +1673,11 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('53727d264b42694e5a33ef5acc7728192b89c5f3b5242084ac4ecbdf0b9184fcd3c039c848bbd134', 2, 1, 'token', '[]', 0, '2021-11-23 16:54:06', '2021-11-23 16:54:06', '2022-11-23 16:54:06'),
 ('537ef70ca2b58455b75025a5efb88857f18fd1b41aebffa14d88073706674feb0f9fac4e5cbe2dc3', 50, 1, 'token', '[]', 0, '2021-11-30 19:12:56', '2021-11-30 19:12:56', '2022-11-30 19:12:56'),
 ('5381f74be93e7211e0f12f36bdab1a5f9b3580fe08f3837ea1400a5ff2211ca7b011158ed812b170', 2, 1, 'token', '[]', 0, '2021-12-06 18:07:08', '2021-12-06 18:07:08', '2022-12-06 18:07:08'),
+('538a2252ebeb8a5f93c30177c25cb87057a5b058e6b03a0f8c20355e1fc32307cdc044bb69fca117', 62, 1, 'token', '[]', 0, '2022-12-20 14:07:08', '2022-12-20 14:07:08', '2023-12-20 14:07:08'),
 ('538c34d937332add506bf1e01301c0304c9b2ef0fd3a57416e3ab01ffccb04415c34822deea74106', 2, 1, 'token', '[]', 0, '2021-12-09 09:52:02', '2021-12-09 09:52:02', '2022-12-09 09:52:02'),
 ('53aca3c79389a7d68398b3b069f9e851595d0f8a4a44a3809175a4939e23411ff0427789b668e612', 37, 1, 'token', '[]', 0, '2021-11-18 10:19:58', '2021-11-18 10:19:58', '2022-11-18 10:19:58'),
 ('53ef98db311156ec5ac71677d3f0464ed1245be75baa08394beb1ea621ffee44aec1fd0c1c45522e', 37, 1, 'token', '[]', 0, '2021-11-18 10:23:02', '2021-11-18 10:23:02', '2022-11-18 10:23:02'),
+('53f0c33701b69ef91d060d695a9a327e7e0c641b3342b9847defc94cb55fdb5a7aeaaeba01ce3b8f', 62, 1, 'token', '[]', 0, '2022-12-20 14:34:22', '2022-12-20 14:34:22', '2023-12-20 14:34:22'),
 ('540fb3c88519f7e0c698ad7279af945e1c689f4a3ecb758ba4a59a98e423108ca9e773a3690b3bdb', 2, 1, 'token', '[]', 0, '2021-12-04 17:38:14', '2021-12-04 17:38:14', '2022-12-04 17:38:14'),
 ('545f1ea6809ec1681adba27806eceaf3d377c09b261f7617ec235b4f84fe0e6aca802ef6417912b7', 2, 1, 'token', '[]', 0, '2021-12-07 11:33:44', '2021-12-07 11:33:44', '2022-12-07 11:33:44'),
 ('5466cce88d89758bdcfd155780bd68f70a29f3efa95d01cfb48cc40ac8157ee71d9cc9359207aefa', 1, 1, 'token', '[]', 0, '2021-10-21 15:14:24', '2021-10-21 15:14:24', '2022-10-21 15:14:24'),
@@ -1658,7 +1700,9 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('56df2f8b4bf75fe060d636a54fb3959723fd2119bc0ca0e8b3e1490b73eae48b683135dad940b124', 2, 1, 'token', '[]', 0, '2021-11-15 09:54:38', '2021-11-15 09:54:38', '2022-11-15 09:54:38'),
 ('56e9425e051c014b769afd868033a8adc43003bc10e15ad96cc12fb379cb475f5b0abd5fa715d139', 80, 1, 'token', '[]', 0, '2021-12-06 11:15:27', '2021-12-06 11:15:27', '2022-12-06 11:15:27'),
 ('571a70d00369de34fd5f6d24e11e57223e9be59519947fb19372fdfb217fad6d4b1faeef161cf3b2', 48, 1, 'token', '[]', 0, '2021-11-19 18:03:49', '2021-11-19 18:03:49', '2022-11-19 18:03:49'),
+('5746d26bc048ce6fb37b7e9265089f3ecece26113aea3ae7a783cf86862f4c279619ef373e290af9', 62, 1, 'token', '[]', 0, '2022-12-21 11:40:24', '2022-12-21 11:40:24', '2023-12-21 11:40:24'),
 ('57ff7e3ecc3fb84c9791acaad31e1985dc15a5d75ecaf9a33e6e200c0caf0c4162b471696b3b3d72', 2, 1, 'token', '[]', 0, '2021-11-26 17:11:06', '2021-11-26 17:11:06', '2022-11-26 17:11:06'),
+('5805deec5f241bd623e0c4375747597b38e0cc3241430be0e3f40af55fed025235220bc387376997', 62, 1, '63a16ba90d523', '[]', 0, '2022-12-20 13:30:41', '2022-12-20 13:30:41', '2023-12-20 13:30:41'),
 ('581256cbc21ae9677390c94597c47829a49b9593a88b228a32281c610e2c14eed90b6e809441f5ba', 80, 1, 'token', '[]', 0, '2021-12-16 18:39:42', '2021-12-16 18:39:42', '2022-12-16 18:39:42'),
 ('58168d32483325bb2e84f1f269f4a9fd66c0069522c555dda8df774a1fc418386cf406e1b965776f', 2, 1, 'token', '[]', 0, '2021-12-13 14:39:56', '2021-12-13 14:39:56', '2022-12-13 14:39:56'),
 ('5908d4fe71c5ccb86881dfb87f4acc5b7934cf7cca4b47df62818651b5e7c1bc6fec94dda3d0eb1d', 37, 1, 'token', '[]', 0, '2021-11-16 16:18:33', '2021-11-16 16:18:33', '2022-11-16 16:18:33'),
@@ -1688,6 +1732,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('5c44d765dbf29351af53922758983b2743ba38268a05985d82f3cfa82c0e963735a33c52dce0f93f', 80, 1, 'token', '[]', 0, '2021-12-16 11:04:03', '2021-12-16 11:04:03', '2022-12-16 11:04:03'),
 ('5c503ba80ca8d6ea543f274d07f4cdae143fa44f170f2a1dc369d46e76bed32c1995ddadc2ce55e7', 37, 1, 'token', '[]', 0, '2021-11-18 10:45:02', '2021-11-18 10:45:02', '2022-11-18 10:45:02'),
 ('5c8d5fa04b0ee2270559264ea0bc9019b590c64cc0e37a77fa3cdc4b3a5cc8b5050823eeb0a82f97', 65, 1, 'token', '[]', 0, '2021-12-01 11:51:45', '2021-12-01 11:51:45', '2022-12-01 11:51:45'),
+('5cf184ee5fb5ec55600d88a46089fac65104adc9fb92ee1a18711e22a3996f52f30a1e5b54fa8aae', 62, 1, '63a16e74ce857', '[]', 0, '2022-12-20 13:42:36', '2022-12-20 13:42:36', '2023-12-20 13:42:36'),
 ('5d25b5e5026c5e3496facafad1130c1d7ce170c732b5adf3a2186bf2327e5f33dc13d25289b3c71e', 37, 1, 'token', '[]', 0, '2021-11-17 17:00:18', '2021-11-17 17:00:18', '2022-11-17 17:00:18'),
 ('5d2d8420fa61ada902a655ee24e7d84d5d72eeea79b15f027329d3370f7021e6904c764ca3746636', 50, 1, 'token', '[]', 0, '2021-11-30 19:06:41', '2021-11-30 19:06:41', '2022-11-30 19:06:41'),
 ('5d5c1a4ee65fd8f063ac1605cb34e9a660c660397a438ff896a30a99aacd2fc1e32a8fbb04a18d5f', 2, 1, 'token', '[]', 0, '2021-12-08 15:23:10', '2021-12-08 15:23:10', '2022-12-08 15:23:10'),
@@ -1745,6 +1790,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('640428806202a94b3def5697c4680e5ebd26cf3bf7bb14b40826ba9512ec1c87eec35e61eb766de4', 51, 1, 'token', '[]', 0, '2021-11-19 14:14:08', '2021-11-19 14:14:08', '2022-11-19 14:14:08'),
 ('641ea21c4d864e7d0a2cf8267291ee51d94292e2618056e1ebc61b230d6c8f43efb7fcc48350e05e', 2, 1, 'token', '[]', 0, '2021-12-13 18:35:47', '2021-12-13 18:35:47', '2022-12-13 18:35:47'),
 ('64347a0e414b0799b747baa77cbdf40469ab13ab7f0c263708cbf572402d18c2e64e684974f67330', 80, 1, 'token', '[]', 0, '2021-12-06 11:24:27', '2021-12-06 11:24:27', '2022-12-06 11:24:27'),
+('643bea73da2306a96f912bb1337d6259a4144b0bd400f32643070fd3dadc4cee54c378ca2238f6b2', 62, 1, 'token', '[]', 0, '2022-12-21 20:37:35', '2022-12-21 20:37:35', '2023-12-21 20:37:35'),
 ('644394c02722563a82d01e899f3b4ecb6ea696c3c1347ab72a0f6c18a1bfee85263c35659074d892', 68, 1, 'token', '[]', 0, '2021-12-14 10:56:44', '2021-12-14 10:56:44', '2022-12-14 10:56:44'),
 ('644ba7f05a751bdba890ff9c06ed04ee34c768ea75617db8a563c4f179dacfdb896d49200b56e4e9', 50, 1, 'token', '[]', 0, '2021-11-30 11:42:45', '2021-11-30 11:42:45', '2022-11-30 11:42:45'),
 ('645117ae89f8b16791f4913991dcd560b2a3d10f9a8acca9bc7a4ca0e449e675dc634569a0876af9', 2, 1, 'token', '[]', 0, '2021-12-04 11:03:30', '2021-12-04 11:03:30', '2022-12-04 11:03:30'),
@@ -1763,6 +1809,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('64f7688126d514be0a41369d09142108ef977b5b8dbf1e53e3577531d6b36cc94e9facbdff126a50', 2, 1, 'token', '[]', 0, '2021-12-07 09:22:04', '2021-12-07 09:22:04', '2022-12-07 09:22:04'),
 ('652cc3d19215bfee07ca1de19f2dfd836bfa399fae9da57f67acd84959dadb6740e31dd2fb14e644', 50, 1, 'token', '[]', 0, '2021-11-24 16:53:01', '2021-11-24 16:53:01', '2022-11-24 16:53:01'),
 ('652f3cca24103f41370255e3770b51242d10c53890c2db68cd702b6832a889d2b7128d7bbebd7905', 50, 1, 'token', '[]', 0, '2021-11-30 19:07:05', '2021-11-30 19:07:05', '2022-11-30 19:07:05'),
+('6570d7a0919c74ef3efe0d33357154ceb9e8c2907c979602080ff339dd0f1bb1cc0871df42ea4027', 62, 1, 'token', '[]', 0, '2022-12-20 15:19:24', '2022-12-20 15:19:24', '2023-12-20 15:19:24'),
 ('65f787af95a82d00cf8b39a3fd6833e7ddc0a7036f53eba3778682c84a7e9a89d297f0038adfcfb7', 50, 1, 'token', '[]', 0, '2021-12-13 13:03:05', '2021-12-13 13:03:05', '2022-12-13 13:03:05'),
 ('6606c207ceb10b94249dc0f0e132e4216b1f95730536466cc778ab013d38c7b428724f33030c62a6', 1, 1, 'token', '[]', 0, '2021-10-29 10:09:51', '2021-10-29 10:09:51', '2022-10-29 10:09:51'),
 ('663ff0d3e9912c253417659e2e31996335072e4e686293f71f7191e4b1991a088b2c342434a7e7e4', 37, 1, 'token', '[]', 0, '2021-11-17 18:45:14', '2021-11-17 18:45:14', '2022-11-17 18:45:14'),
@@ -1786,6 +1833,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('68c2816700aec654d07a4745f81ed4488a181624bef2ab7f886b7119ece848b0ef3bb828774ff475', 2, 1, 'token', '[]', 0, '2021-12-04 17:58:04', '2021-12-04 17:58:04', '2022-12-04 17:58:04'),
 ('692f24e30f14edf27930305c8e7b450f7cec38f95a433b873862c65daf82ad14c60259b916170c52', 68, 1, 'token', '[]', 0, '2021-12-21 15:23:26', '2021-12-21 15:23:26', '2022-12-21 15:23:26'),
 ('6986962c5146b244d1902119ae9a7c8d2abacef4d9be342e0d32a7ddb499a47a5520453c4d36f8fa', 37, 1, 'token', '[]', 0, '2021-11-18 10:20:27', '2021-11-18 10:20:27', '2022-11-18 10:20:27'),
+('69de24e0d7bb87abc3806b77d2e454f36ce54242f87e50ef952e2af9a627d86167398b380a884caf', 62, 1, 'token', '[]', 0, '2022-12-20 14:00:55', '2022-12-20 14:00:55', '2023-12-20 14:00:55'),
 ('69e97f42a918736d549ee71113dd56a0ac80bc9ac477597badeee814606b2e64b2499888c170c9df', 2, 1, 'token', '[]', 0, '2021-12-02 15:34:28', '2021-12-02 15:34:28', '2022-12-02 15:34:28'),
 ('6a239da6dda5bd33592d3f2480212e1ca87a9c41d73c04ea450ada63a83b8e8e54269574d5282212', 80, 1, 'token', '[]', 0, '2021-12-03 14:07:35', '2021-12-03 14:07:35', '2022-12-03 14:07:35'),
 ('6a31083532ac80c155ffafc18c6f85f1fbca507a893e06c8b17173d9b69f1474576594aa7b90e3d6', 2, 1, 'token', '[]', 0, '2021-11-27 10:21:59', '2021-11-27 10:21:59', '2022-11-27 10:21:59'),
@@ -1881,11 +1929,14 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('7943f7a5dac470c19d48f8273bcee2d586f43e1c440cd66afa74bcfddd1a9a7a02cb69142f947ea9', 2, 1, 'token', '[]', 0, '2021-12-16 17:06:22', '2021-12-16 17:06:22', '2022-12-16 17:06:22'),
 ('797eb3fa72db4e6808533cc27211ea97c29720d2f4f55a1e78bed51b0c4525d9d7875f92471f2786', 37, 1, 'token', '[]', 0, '2021-11-17 09:44:19', '2021-11-17 09:44:19', '2022-11-17 09:44:19'),
 ('7a8a106399030e6e4c1c0cde2f2ffc8cbfeb939929d7d3f2928e526f828722b29cffffb2cd29332f', 2, 1, 'token', '[]', 0, '2021-06-23 03:38:54', '2021-06-23 03:38:54', '2022-06-23 03:38:54'),
-('7a96d629e65fdcd85f5781863b393447886f033754d976267d6ee8f5ece00a4152597e48c9b60ab8', 2, 1, 'token', '[]', 0, '2021-06-22 18:10:45', '2021-06-22 18:10:45', '2022-06-22 18:10:45'),
+('7a8f32a2cbae30d897a81866451e1feafa9d217076bb408b4ae2cd5deeca1c7913b42bb317710e26', 65, 1, '63a2abdb95bc4', '[]', 0, '2022-12-21 12:16:51', '2022-12-21 12:16:51', '2023-12-21 12:16:51'),
+('7a96d629e65fdcd85f5781863b393447886f033754d976267d6ee8f5ece00a4152597e48c9b60ab8', 2, 1, 'token', '[]', 0, '2021-06-22 18:10:45', '2021-06-22 18:10:45', '2022-06-22 18:10:45');
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
 ('7ace3f5b373c745985dbfc209346e18d741b05b1128400d0debdea863b1d2cc66bead1a4c3226632', 2, 1, 'token', '[]', 0, '2021-12-03 18:07:13', '2021-12-03 18:07:13', '2022-12-03 18:07:13'),
 ('7b02335d21dfd038540080f0cac80d57318c568c38cf9e1298ef715ee32cffcd2ab5871f4d26e811', 2, 1, 'token', '[]', 0, '2021-12-04 11:12:59', '2021-12-04 11:12:59', '2022-12-04 11:12:59'),
 ('7b54679ba0601f90cdd6c14ebc6de868abfa344a456463d2b27a59ee408117aa56cb08557c6cdbf5', 50, 1, 'token', '[]', 0, '2021-12-01 14:43:02', '2021-12-01 14:43:02', '2022-12-01 14:43:02'),
 ('7b7814f98a7021d3d00dc6281d54dcd37c7f9d6242f6e0c500fd7d793eb3fc8cbf099bea70c0d150', 37, 1, 'token', '[]', 0, '2021-11-13 10:02:52', '2021-11-13 10:02:52', '2022-11-13 10:02:52'),
+('7be4547ca35493f2fbb2d887507894ca2cbcef8c31e54c8fd32dceb895df3c310887eee1b490a358', 62, 1, '63a2a02a66166', '[]', 0, '2022-12-21 11:26:58', '2022-12-21 11:26:58', '2023-12-21 11:26:58'),
 ('7bf5f043b0e720f653b07914dd4b92fb85416ff542463b5328d46095641674ea1931a8c5cbfc18e2', 50, 1, 'token', '[]', 0, '2021-12-13 14:24:36', '2021-12-13 14:24:36', '2022-12-13 14:24:36'),
 ('7c179910afef56cf2ee18d2f128d8b2900099a847fce6b617f35f86465f3998d26b9f398533b7709', 50, 1, 'token', '[]', 0, '2021-11-29 18:08:05', '2021-11-29 18:08:05', '2022-11-29 18:08:05'),
 ('7c1878c970d10da81ab78798bc32188888ddf0e6c21dddf51a3cc010f712ea65f2a757e7fd31d2ff', 37, 1, 'token', '[]', 0, '2021-11-18 10:44:40', '2021-11-18 10:44:40', '2022-11-18 10:44:40'),
@@ -1894,6 +1945,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('7ca521921912f1e7c21a4068cbe40212fa3286390f6ab90adf9e6df97a4ac249de4a219678c0b465', 2, 1, 'token', '[]', 0, '2021-11-30 18:12:37', '2021-11-30 18:12:37', '2022-11-30 18:12:37'),
 ('7cb16876a60f682ae84e5bcc55b3aa761febf7ef3611b9148e381a75330109150f58a6682fab513b', 50, 1, 'token', '[]', 0, '2021-11-24 16:54:03', '2021-11-24 16:54:03', '2022-11-24 16:54:03'),
 ('7cd6669c566926f362558b570e3946467cdd83921fa51dbfa100fbead8188c32565a648ec89aaf00', 37, 1, 'token', '[]', 0, '2021-11-18 14:50:33', '2021-11-18 14:50:33', '2022-11-18 14:50:33'),
+('7cf36f12218b83d25a005a590842639c2c658f1fd1b5e180fdbdffd7034d6a9713876cc1505456ad', 62, 1, '63a17314a43b5', '[]', 0, '2022-12-20 14:02:20', '2022-12-20 14:02:20', '2023-12-20 14:02:20'),
 ('7cf5c439db61a3abcc044cab767cf0428b76695c8c09852ff108f87a3d4be22246ebc42cd9ec56b5', 2, 1, 'token', '[]', 0, '2021-11-19 17:48:42', '2021-11-19 17:48:42', '2022-11-19 17:48:42'),
 ('7cfe4f8fd9fc718d865c8a18877ab7f2d074c8f4fd98652b1d6ef3e595ed52d557ef6a21acbe2bb2', 2, 1, 'token', '[]', 0, '2021-11-19 10:14:36', '2021-11-19 10:14:36', '2022-11-19 10:14:36'),
 ('7d015b83bc0692e00eed32f0662edf3df2436d6f3061dd6f3d234d26a831a28ca468eff2d54a11d4', 2, 1, 'token', '[]', 0, '2021-06-22 13:43:16', '2021-06-22 13:43:16', '2022-06-22 13:43:16'),
@@ -1901,8 +1953,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('7d9792b03fbdff047d54a7c0ae76c3ca3b06fed106e25f21da8c4dc3d7c6f9d52cf1af96f76060c6', 2, 1, 'token', '[]', 0, '2021-11-13 10:25:47', '2021-11-13 10:25:47', '2022-11-13 10:25:47'),
 ('7db9dd9c8e82e977f127d2596bcfb0b760dfbe4f2c9d2ae1696ca6c247a72ad321d574b31bd5310e', 50, 1, 'token', '[]', 0, '2021-11-29 15:12:42', '2021-11-29 15:12:42', '2022-11-29 15:12:42'),
 ('7dc658c2bac07b5a760863d133263f44a14c2b5b747cfaee6598bae7d9fb9d69ea5e4817c5aa474f', 80, 1, 'token', '[]', 0, '2021-12-06 10:08:13', '2021-12-06 10:08:13', '2022-12-06 10:08:13'),
-('7e020229696a1f8588aa33a9b1da3309d78870318497bfb3758142d5c2a1b5d8c52376ff1fdcbad8', 61, 1, 'token', '[]', 0, '2021-12-01 11:58:34', '2021-12-01 11:58:34', '2022-12-01 11:58:34');
-INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('7e020229696a1f8588aa33a9b1da3309d78870318497bfb3758142d5c2a1b5d8c52376ff1fdcbad8', 61, 1, 'token', '[]', 0, '2021-12-01 11:58:34', '2021-12-01 11:58:34', '2022-12-01 11:58:34'),
 ('7e16390c2cc2e40348ef8277240e8c45708593b3f486767af355f57f7ad363b6ab32eb4ea9e54f99', 2, 1, 'token', '[]', 0, '2021-12-16 10:44:00', '2021-12-16 10:44:00', '2022-12-16 10:44:00'),
 ('7e295ddba260c144e4a1a7a2e737011d2e12ff4527e6a5f644c3547237ace8d1e474033526a5b858', 2, 1, 'token', '[]', 0, '2021-12-13 14:16:17', '2021-12-13 14:16:17', '2022-12-13 14:16:17'),
 ('7e3a19e83efe5e81c73f62a8a2731e5e8ff71d8a0717d17665f726232c085413fcc80bbda83bdcb1', 50, 1, 'token', '[]', 0, '2021-12-13 14:18:14', '2021-12-13 14:18:14', '2022-12-13 14:18:14'),
@@ -1994,6 +2045,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('875f9fbbd9e65f0043580d92c08ad75d2673843b063c49d5ca763241b7399324357462317561ebb4', 37, 1, 'token', '[]', 0, '2021-11-18 10:48:29', '2021-11-18 10:48:29', '2022-11-18 10:48:29'),
 ('8794ae6f6e94101adfe3bd6ddd1ca6c1fae5416db2945d5317e1f0a90fc8b8f4e46ac2f7265205d9', 2, 1, 'token', '[]', 0, '2021-11-26 16:14:08', '2021-11-26 16:14:08', '2022-11-26 16:14:08'),
 ('8795638404feb6bac883ab049bb9df9e8bc96779df42aeb9ef84522e87d53184c7502322314293b7', 2, 1, 'token', '[]', 0, '2021-12-04 11:25:53', '2021-12-04 11:25:53', '2022-12-04 11:25:53'),
+('87deb2dcb1ac6a279962950fb3017d549e1d179fb8ca0d9ed94186841aa8769b82babf0ce7b5e14b', 62, 1, 'token', '[]', 0, '2022-12-22 12:58:06', '2022-12-22 12:58:06', '2023-12-22 12:58:06'),
 ('87e9fa1a5f72ca4468ffb29f9fd9dca2ac537d11e9ca1732b0df1cef11acfac9ea8e62447a3dfa43', 50, 1, 'token', '[]', 0, '2021-11-23 18:48:04', '2021-11-23 18:48:04', '2022-11-23 18:48:04'),
 ('87ef4d1bdccb94125deb90a5a8630c318e7b08469f6662fa8901898da312dce2fdef658983ea7d96', 1, 1, 'token', '[]', 0, '2021-12-01 11:48:05', '2021-12-01 11:48:05', '2022-12-01 11:48:05'),
 ('87f268d1b3c03f84e47adf5dca8a7e30810e4dc4e53f23fe376114ef87d892145bf60c719c680f73', 37, 1, 'token', '[]', 0, '2021-11-18 09:41:36', '2021-11-18 09:41:36', '2022-11-18 09:41:36'),
@@ -2008,6 +2060,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('89f00664ef2b09ccbdeda0cee7506e30896d5b27d42b1bdd58c9a6937c0a1d0ca6a42a9ee3863338', 2, 1, 'token', '[]', 0, '2021-12-04 10:31:43', '2021-12-04 10:31:43', '2022-12-04 10:31:43'),
 ('8a3d97ff2545a5b6265801afb3f78d2eb745749f9ab4a2391d9951a0161feab2424ff64e7e598bc0', 68, 1, 'token', '[]', 0, '2021-12-14 15:02:04', '2021-12-14 15:02:04', '2022-12-14 15:02:04'),
 ('8a453741f32393c0febaf932085abbff24c9c221777c92e56de15a8c012340c2760a9b527099df9a', 2, 1, 'token', '[]', 0, '2021-12-10 13:52:16', '2021-12-10 13:52:16', '2022-12-10 13:52:16'),
+('8a512027b2a8245f11fe6999fe44227122e87def2e2a023a54613ab1f94cc34b0452f4cfdb7c4e65', 62, 1, '63a171be70e10', '[]', 0, '2022-12-20 13:56:38', '2022-12-20 13:56:38', '2023-12-20 13:56:38'),
 ('8a5711232f963b0fcb01d1d84a429627f3d4e2afdb1d7653af566da28a625e736f94a705d7647f65', 37, 1, 'token', '[]', 0, '2021-11-19 11:59:54', '2021-11-19 11:59:54', '2022-11-19 11:59:54'),
 ('8a7fec803f971b3f6da5833c653d64655a485afba26e17ecc5db4598da79b62330feee853cc5e2b4', 2, 1, 'token', '[]', 0, '2021-12-14 11:19:59', '2021-12-14 11:19:59', '2022-12-14 11:19:59'),
 ('8acd4cc2fc855bbd296795b20d7b916a8704c80b8693ce03789c5f50de4d5b3a12d8982d4b778ee6', 2, 1, 'token', '[]', 0, '2021-06-22 19:08:26', '2021-06-22 19:08:26', '2022-06-22 19:08:26'),
@@ -2046,6 +2099,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('8f6473a1651567cd37ffdb01585a80dd0429fbf81638413524d0cde47c1bcc737b59dc5cad096d8e', 48, 1, 'token', '[]', 0, '2021-11-29 12:44:02', '2021-11-29 12:44:02', '2022-11-29 12:44:02'),
 ('8f9c75373634a169eaec85c5e697f568e7412c1f007b3bc5eed4b67b12782957fd68bd3c0c10b0fa', 80, 1, 'token', '[]', 0, '2021-12-10 19:23:51', '2021-12-10 19:23:51', '2022-12-10 19:23:51'),
 ('8fbe7d88675ed4d9aed4635cfb644c48a80e5b0a84b001d85c7857a40d99675c1ccb42e1abbc9d6e', 50, 1, 'token', '[]', 0, '2021-12-03 12:59:09', '2021-12-03 12:59:09', '2022-12-03 12:59:09'),
+('8fc6edb4710c2279b3f485b46f23cb0b33d53221acb44f82052eb78298e27a9999c556eca1b87b0c', 62, 1, 'token', '[]', 0, '2022-12-20 16:57:01', '2022-12-20 16:57:01', '2023-12-20 16:57:01'),
 ('8fcc707ffb80afa6c2044197a5dfbecbf52af6873759edf55a31450e8b18edb51cf61556904a220e', 37, 1, 'token', '[]', 0, '2021-11-13 15:19:36', '2021-11-13 15:19:36', '2022-11-13 15:19:36'),
 ('8feef1511a5848960a70deb618fc44b8cdae63dfee641de8217e8f16cbf38fd4ef76f94dc2685873', 50, 1, 'token', '[]', 0, '2021-11-20 14:45:54', '2021-11-20 14:45:54', '2022-11-20 14:45:54'),
 ('8ff4a137fbf958ef76071d6bc84618fbfbdc0e632f4262113824506c65e9ee86dadc2a9f15d8c7cf', 50, 1, 'token', '[]', 0, '2021-12-03 13:23:27', '2021-12-03 13:23:27', '2022-12-03 13:23:27'),
@@ -2082,6 +2136,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('9577bbc15e0bf61b352fff81f4e11112ee02632dd82eaae9388d1b5a2df1e3984a58acc88197b9f6', 80, 1, 'token', '[]', 0, '2021-12-04 10:09:47', '2021-12-04 10:09:47', '2022-12-04 10:09:47'),
 ('9599cd712c349ad93bddce027398d8ad43fd2f5f7ce4bb7bf8a4ebe5d6899166379e6eab964352ce', 80, 1, 'token', '[]', 0, '2021-12-03 13:16:31', '2021-12-03 13:16:31', '2022-12-03 13:16:31'),
 ('95b5321cc2b3a0c2de06ebe1e27fe247dc2ef98e62568a926a0df0fff8146461bcbda34dd420fda5', 50, 1, 'token', '[]', 0, '2021-11-30 11:51:33', '2021-11-30 11:51:33', '2022-11-30 11:51:33'),
+('95e6bbb69a234098d0dc96e8f2001809b11ef00bb6caa370df430e2b065559ec1bf0686d2ce4fadf', 62, 1, 'token', '[]', 0, '2022-12-20 14:23:06', '2022-12-20 14:23:06', '2023-12-20 14:23:06'),
 ('95ef47b0cbfb7da972c385d9538c902951feac4f999a70078fca8b4012681c69fe8168ccb910e202', 37, 1, 'token', '[]', 0, '2021-11-18 10:59:13', '2021-11-18 10:59:13', '2022-11-18 10:59:13'),
 ('95f09c93988ec5ac3e9e00ab667809f4a8f92393557a066f7c8fa8bc616a1d838271f20330b5dfdc', 2, 1, 'token', '[]', 0, '2021-12-16 17:04:10', '2021-12-16 17:04:10', '2022-12-16 17:04:10'),
 ('960f426ce45054ee4dc7fdd5eb33a72265df4ddf600611de3e7e611c6ac624a97ec51ca95ad177f2', 50, 1, 'token', '[]', 0, '2021-11-29 09:40:08', '2021-11-29 09:40:08', '2022-11-29 09:40:08'),
@@ -2093,6 +2148,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('96df0f1744fb544f09c576fa011e85455a58b4e22aa82b8140be4519d11a4122ac16c31c87664405', 50, 1, 'token', '[]', 0, '2021-12-14 15:28:48', '2021-12-14 15:28:48', '2022-12-14 15:28:48'),
 ('96e8efd88c1a71fb2da1aaac08906f0833968bd6ce33808f33161ba70aa6b7e325dda2db9037c678', 50, 1, 'token', '[]', 0, '2021-11-24 16:46:40', '2021-11-24 16:46:40', '2022-11-24 16:46:40'),
 ('9701fe36d8343df676108a2648f18b0f859f5c68ff04cb5c8e9c6e240a4fa4c34d0f05c4415f3b22', 2, 1, 'token', '[]', 0, '2021-12-08 14:42:43', '2021-12-08 14:42:43', '2022-12-08 14:42:43'),
+('97188eb805b487b42d1c8b790ddb4419e17693ee0c27882f5dd848abcdf1273dcb3b1210e7245271', 62, 1, '63a168e5ecb22', '[]', 0, '2022-12-20 13:18:54', '2022-12-20 13:18:54', '2023-12-20 13:18:54'),
 ('9749214163bfb998e12632029cc0c000a2df6a89dc2f33b9cdf517e6c67b496cc9d8b969af0c589c', 50, 1, 'token', '[]', 0, '2021-12-13 18:11:06', '2021-12-13 18:11:06', '2022-12-13 18:11:06'),
 ('974fd5d7bf7203087b0bb120f8cfe4f426020059a1b69caa08c9fc5a653581ba193b1d866eba2b7a', 37, 1, 'token', '[]', 0, '2021-11-17 18:21:50', '2021-11-17 18:21:50', '2022-11-17 18:21:50'),
 ('977f6aa1f966b74087dfe931041617469844cbd19792403217350216fde65f334cb4f401e881f55e', 2, 1, 'token', '[]', 0, '2021-11-26 17:55:38', '2021-11-26 17:55:38', '2022-11-26 17:55:38'),
@@ -2155,13 +2211,15 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('9ec751d877c0d57945d3093abbddd26a5c90d07f5e125f7585b15d394673ffc2d7db6102b7451d01', 37, 1, 'token', '[]', 0, '2021-11-18 10:30:16', '2021-11-18 10:30:16', '2022-11-18 10:30:16'),
 ('9ef7cb66801f7ccf93f6d11007a434a636da09bb9dc2402d23846956149783f6bcaf631a8b02d980', 2, 1, 'token', '[]', 0, '2021-11-26 18:22:05', '2021-11-26 18:22:05', '2022-11-26 18:22:05'),
 ('9f13a9d21fae96d2f36601bcc270c06a6508be2b7c4a4c31750d2c2e6c8806ea8f72b90d2a37228c', 2, 1, 'token', '[]', 0, '2021-12-08 10:38:14', '2021-12-08 10:38:14', '2022-12-08 10:38:14'),
-('9f421c9b33b93e9627f4e024d57a66cc00bc2d3c670d0425539d4ad2acc76d9ec8c798c1426a3e9c', 2, 1, 'token', '[]', 0, '2021-11-30 18:17:56', '2021-11-30 18:17:56', '2022-11-30 18:17:56'),
+('9f421c9b33b93e9627f4e024d57a66cc00bc2d3c670d0425539d4ad2acc76d9ec8c798c1426a3e9c', 2, 1, 'token', '[]', 0, '2021-11-30 18:17:56', '2021-11-30 18:17:56', '2022-11-30 18:17:56');
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
 ('9fb1468e8383518ab0c1cd3e0ee1e4b9d6aab3c24cfbcd19158ebae3043bd78467ffc9bc5c0eb1a7', 2, 1, 'token', '[]', 0, '2021-12-07 17:55:30', '2021-12-07 17:55:30', '2022-12-07 17:55:30'),
 ('9fb8077dc291d7f591778167ecd053fba188519e1c30d2f72457ec30b36862db10691dbe500212a3', 2, 1, 'token', '[]', 0, '2021-12-14 10:38:13', '2021-12-14 10:38:13', '2022-12-14 10:38:13'),
 ('9fbc555ac9da9eebd81c9fd2e41a6991d0e68b4ceba05fb798049050c937ed54907eee63ca493a7a', 48, 1, 'token', '[]', 0, '2021-11-19 12:48:59', '2021-11-19 12:48:59', '2022-11-19 12:48:59'),
 ('9ffbe039346272a4b2b94c57f23a090187a611d6c7f470d7a659393734349363914e89ef17ce6d12', 37, 1, 'token', '[]', 0, '2021-11-17 18:36:20', '2021-11-17 18:36:20', '2022-11-17 18:36:20'),
 ('a0125686c0de83ba68efd55d240031cbcc4a0215a8996b765d6a45cb271bd3c04ca6bbd623303d27', 50, 1, 'token', '[]', 0, '2021-11-26 15:28:08', '2021-11-26 15:28:08', '2022-11-26 15:28:08'),
 ('a03c5377104e019828e67789dd9917ddc075d6a768bb6af9377f76dccfa7c8b123953982ca0eb489', 37, 1, 'token', '[]', 0, '2021-11-18 18:27:02', '2021-11-18 18:27:02', '2022-11-18 18:27:02'),
+('a05f9157bb6f76ddd158360f563414e9941dcc33744db91bb352fa36f6b8620ed28f8ab07419f524', 62, 1, '63a16aab181ac', '[]', 0, '2022-12-20 13:26:27', '2022-12-20 13:26:27', '2023-12-20 13:26:27'),
 ('a078921e3d4bb2b12960090be0810ebf6b65f6485018f2f7d3a8188e717031730e641d918fcb05b7', 2, 1, 'token', '[]', 0, '2021-12-16 12:06:27', '2021-12-16 12:06:27', '2022-12-16 12:06:27'),
 ('a07a6782a93020a7a8b22539730a3528e723d2ae7e83ae098fbc4b921d3555202fde96c3537953b4', 50, 1, 'token', '[]', 0, '2021-11-26 15:28:56', '2021-11-26 15:28:56', '2022-11-26 15:28:56'),
 ('a0be64805654fc44f951c56708f9d0b9d861dc88f7d2f0cd27bbe564e49bebfddb08f100ddffc522', 37, 1, 'token', '[]', 0, '2021-11-17 18:09:24', '2021-11-17 18:09:24', '2022-11-17 18:09:24'),
@@ -2182,8 +2240,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('a29ecac5718b461e83f778b7c988f2081722101538290569fb0a53c758eee4165213701ed4b9406d', 2, 1, 'token', '[]', 0, '2021-11-30 16:35:11', '2021-11-30 16:35:11', '2022-11-30 16:35:11'),
 ('a3123f0b523eb78da45b5fa1608293321364e4ce7e7c84d1344f43ac65172fc8ad6855807a43829d', 2, 1, 'token', '[]', 0, '2021-12-10 15:45:39', '2021-12-10 15:45:39', '2022-12-10 15:45:39'),
 ('a334100e5dcdb26e5631af317e8950cb4dd44192d1cfeea12926469a2a693109e033ecd77a5920f9', 2, 1, 'token', '[]', 0, '2021-11-26 18:02:15', '2021-11-26 18:02:15', '2022-11-26 18:02:15'),
-('a33618166f822a30fea8257eeaefa4a8e3df6202d298819c0a8f6c294a245bcd8427aee5e6cf6cd9', 50, 1, 'token', '[]', 0, '2021-12-02 13:57:41', '2021-12-02 13:57:41', '2022-12-02 13:57:41');
-INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('a33618166f822a30fea8257eeaefa4a8e3df6202d298819c0a8f6c294a245bcd8427aee5e6cf6cd9', 50, 1, 'token', '[]', 0, '2021-12-02 13:57:41', '2021-12-02 13:57:41', '2022-12-02 13:57:41'),
 ('a34466dcdd852d33896208d2af73c37bdc4341239ef30bba5de8e4218cad2c2b8a4e74f79c37daae', 37, 1, 'token', '[]', 0, '2021-11-17 18:16:50', '2021-11-17 18:16:50', '2022-11-17 18:16:50'),
 ('a3e1dbb6cfca71d2ce7c301e7175cd2787e35bb2bfc029e6f33934f54cd5aecc1098682a309d0819', 37, 1, 'token', '[]', 0, '2021-11-17 18:21:28', '2021-11-17 18:21:28', '2022-11-17 18:21:28'),
 ('a3eb98d11b01b3de2bfbd59c76ed96aee915b96f318e7312c82db037f8aac0cfc3b90ca20e5cbd02', 50, 1, 'token', '[]', 0, '2021-12-02 16:45:47', '2021-12-02 16:45:47', '2022-12-02 16:45:47'),
@@ -2214,6 +2271,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('a74f44864fcb05cdc21b10c874f1baeeb5c0ba75be1f1adeed1e6255a108bdd0d8b6f5b47e0260c3', 50, 1, 'token', '[]', 0, '2021-12-03 12:54:15', '2021-12-03 12:54:15', '2022-12-03 12:54:15'),
 ('a7741025f22cb9a397d77807eb0390f1366012f3ae1ad725f306634b66d4511dd85cdf2f350d0a10', 2, 1, 'token', '[]', 0, '2021-12-08 14:28:14', '2021-12-08 14:28:14', '2022-12-08 14:28:14'),
 ('a7ae545b292ca6d41dc25649c8d39c8c10aae5b1514d133a814efebaa5b92e16c516c84a328f51ea', 2, 1, 'token', '[]', 0, '2021-11-20 14:39:29', '2021-11-20 14:39:29', '2022-11-20 14:39:29'),
+('a7e9036ea8eb24056a6a6710ec81d362ab4666665368956d895d693a04877b1b08df3178800be203', 62, 1, 'token', '[]', 0, '2022-12-20 15:38:09', '2022-12-20 15:38:09', '2023-12-20 15:38:09'),
 ('a903f9cfd3f994a5884aad7876b332813c375cf68a340487de38ffbe84f7894715a895d830311960', 2, 1, 'token', '[]', 0, '2021-11-22 15:43:51', '2021-11-22 15:43:51', '2022-11-22 15:43:51'),
 ('a90a0861fe91dded9f0d33aba8c13ab9e74dfd5197703f809e462ef4ebdd885620c23a426d4a9efb', 50, 1, 'token', '[]', 0, '2021-11-30 12:45:18', '2021-11-30 12:45:18', '2022-11-30 12:45:18'),
 ('a92823c696fc0a5ee1900405a106e836f413ff02d0bdb534f789085475fd9f84a8c5ff61d219bee8', 48, 1, 'token', '[]', 0, '2021-11-29 11:17:13', '2021-11-29 11:17:13', '2022-11-29 11:17:13'),
@@ -2265,10 +2323,12 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('b00864b2a87b2aba74eba7442aee4d3705f5ea9218206db587f69cddf10cb7267758a49f0b955401', 50, 1, 'token', '[]', 0, '2021-12-21 16:39:44', '2021-12-21 16:39:44', '2022-12-21 16:39:44'),
 ('b01dd753a5d10047a2c5f9c67de7f1b6448c7e21a2f1909b87ceb54906b7a6fa09a67407aaf9dc62', 50, 1, 'token', '[]', 0, '2021-11-30 12:50:03', '2021-11-30 12:50:03', '2022-11-30 12:50:03'),
 ('b03c6ba5ab3ddf693ec3ba6ba3cec0803844210a6db5f8c4800bb87089bce06fb1a215ba6f943457', 2, 1, 'token', '[]', 0, '2021-12-02 14:48:25', '2021-12-02 14:48:25', '2022-12-02 14:48:25'),
+('b040e1d14ecad013461c98058bc59d773ae71231b7ad6604c5e741519accea00c174a3819b74050a', 62, 1, 'token', '[]', 0, '2022-12-21 20:43:40', '2022-12-21 20:43:40', '2023-12-21 20:43:40'),
 ('b07fc5df1b193745034aa3e2adc9597c66525ae0ec7b2fcca2e574cc90ec9a6d617dd5fde246ad02', 61, 1, 'token', '[]', 0, '2021-12-01 10:43:30', '2021-12-01 10:43:30', '2022-12-01 10:43:30'),
 ('b0d1f74a1e6db7797c916416b014e01bb50f0537217ca2d61922db01a9d4803a07c9be74d7f0aa03', 80, 1, 'token', '[]', 0, '2021-12-08 11:50:58', '2021-12-08 11:50:58', '2022-12-08 11:50:58'),
 ('b0e080ed8557755047fc5c835ae8401d8f5b9d87cb26a4877dda86bdf8d584bbe0c0af9843202322', 89, 1, 'token', '[]', 0, '2021-12-08 12:20:47', '2021-12-08 12:20:47', '2022-12-08 12:20:47'),
 ('b0e2e462bbb4cd6ee43462ed905bad7b18769c84cb313acc80b64433dffdb43e62db0424e101e113', 37, 1, 'token', '[]', 0, '2021-11-18 09:56:43', '2021-11-18 09:56:43', '2022-11-18 09:56:43'),
+('b0f4300480d83baf0d7c89d640e1cf2a0da106f09a67b5e13ee8a4afb6cd504b28fe956a776dfca6', 62, 1, 'token', '[]', 0, '2022-12-21 20:42:11', '2022-12-21 20:42:11', '2023-12-21 20:42:11'),
 ('b10b9ebd326d64674fd2bcde852202bf81bb54a1f93860eb15a3452f85004d85aa3c288338893521', 2, 1, 'token', '[]', 0, '2021-11-26 17:55:06', '2021-11-26 17:55:06', '2022-11-26 17:55:06'),
 ('b12abc833e9e82a009f8adab63c3bdb61b2618c450d2f462710b2c9c9da8c90dba4fdbd30df6357c', 37, 1, 'token', '[]', 0, '2021-11-18 11:15:01', '2021-11-18 11:15:01', '2022-11-18 11:15:01'),
 ('b144475a177620da7642e3d3a3676c3b4570630ac15dd156eedaaf0dcf86305ad25aec1fa6c68266', 2, 1, 'token', '[]', 0, '2021-12-14 10:36:03', '2021-12-14 10:36:03', '2022-12-14 10:36:03'),
@@ -2280,8 +2340,10 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('b24f546b22473eb4232a7731d63f9b31e5a003c3d1770e1b4cab8d127278406aab76da7d64b31a75', 2, 1, 'token', '[]', 0, '2021-06-09 09:05:12', '2021-06-09 09:05:12', '2022-06-09 09:05:12'),
 ('b2d054e8fe5c6c9aeed827d1a60644e83e926abe25adb1ea280c24b1c20719bb5a1abca2d395427c', 37, 1, 'token', '[]', 0, '2021-11-16 10:30:28', '2021-11-16 10:30:28', '2022-11-16 10:30:28'),
 ('b2f62eef6a1e87a4d33fab8698164bb2e09c7f8fb78943285b586d137e76ea5fc3fb95036f89a94a', 2, 1, 'token', '[]', 0, '2021-12-17 16:08:04', '2021-12-17 16:08:04', '2022-12-17 16:08:04'),
+('b304c1730747adf61dec3c1490f7ba11f88e32ad4316600e19457dd3f5d47a50d77462427093e7ca', 62, 1, '63a1715cc4a15', '[]', 0, '2022-12-20 13:55:00', '2022-12-20 13:55:00', '2023-12-20 13:55:00'),
 ('b319888466ef95dabeaf7ef10dfd169c9a82e87219be48673181ab9d239a35c3854aced278784c18', 2, 1, 'token', '[]', 0, '2021-06-22 07:36:01', '2021-06-22 07:36:01', '2022-06-22 07:36:01'),
 ('b31fd3666f5235f0af1db7416616d0468712a8f3beee8941ab9ec77b3bc05d12633b113f70541cc3', 68, 1, 'token', '[]', 0, '2021-12-13 10:32:52', '2021-12-13 10:32:52', '2022-12-13 10:32:52'),
+('b32d1af7af6ad9397ebfc5d6cd779628be64784d866f69be1a87a8a92e8700d62e7389bb16655931', 62, 1, 'token', '[]', 0, '2022-12-20 17:08:50', '2022-12-20 17:08:50', '2023-12-20 17:08:50'),
 ('b33f58b2d4244a9579e68eea8972992b9651abda9acb80e7ce05f4930469dc61ebc4e10e8df65d9d', 37, 1, 'token', '[]', 0, '2021-11-18 10:11:34', '2021-11-18 10:11:34', '2022-11-18 10:11:34'),
 ('b3407064c6a774ed7a95a8c590b4be794512409e142c7ced45dcf636faba886f93e3083de0deb585', 51, 1, 'token', '[]', 0, '2021-11-30 18:27:59', '2021-11-30 18:27:59', '2022-11-30 18:27:59'),
 ('b36c4219d80d07c3a005b288ef570bc906c549a2681b8edbbc5226f071a4f7bd107594de2926d35a', 2, 1, 'token', '[]', 0, '2021-12-20 12:41:25', '2021-12-20 12:41:25', '2022-12-20 12:41:25'),
@@ -2368,6 +2430,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('c0fa0fcc038635f138ca6a3a8e152350b2b7a77957b20c090271e17fbd381db311613a70a7b6b49b', 80, 1, 'token', '[]', 0, '2021-12-09 18:36:25', '2021-12-09 18:36:25', '2022-12-09 18:36:25'),
 ('c137a0950f86c3f27772dd71c7b24cd2f74af94e1c95645576ea4d625502eb18c739a0fd909a02da', 2, 1, 'token', '[]', 0, '2021-11-02 14:48:26', '2021-11-02 14:48:26', '2022-11-02 14:48:26'),
 ('c137acab6f8f157953347d2613551306bc30ad0d9abf6d1a4b5e182916e909276dfe6fdfd48f9f2a', 50, 1, 'token', '[]', 0, '2021-11-20 11:39:20', '2021-11-20 11:39:20', '2022-11-20 11:39:20'),
+('c143aaf582f08d0888cd30bb6184aab9aba0c9e2b435140a8a871b9e265dff9cdaee7788c3e169eb', 65, 1, '63a2abc7b79dd', '[]', 0, '2022-12-21 12:16:31', '2022-12-21 12:16:31', '2023-12-21 12:16:31'),
 ('c166acc261aff78162f2cfdd995bed4b17c6ad00c8d3f72e3541cdbb5940179e2d093cd1ea8e7f50', 61, 1, 'token', '[]', 0, '2021-12-01 10:21:43', '2021-12-01 10:21:43', '2022-12-01 10:21:43'),
 ('c17f1af357bbc3bd46af8ea80fa31d8a0e8968654b736cac36a57aff811e4b911a5e34300b85b286', 2, 1, 'token', '[]', 0, '2021-12-08 15:23:15', '2021-12-08 15:23:15', '2022-12-08 15:23:15'),
 ('c1a0b53c31045bfa5e17514abd2c90150bdfc4f19fe7a20e0dc4ce66f59490fcf634194933f3d441', 2, 1, 'token', '[]', 0, '2021-11-13 10:20:13', '2021-11-13 10:20:13', '2022-11-13 10:20:13'),
@@ -2393,6 +2456,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('c478cc4f2f9b6f0245df03c294cdc6436c8f9e62ed57869e43f7284909e0e54404e4011430639b15', 66, 1, 'token', '[]', 0, '2021-12-01 17:23:34', '2021-12-01 17:23:34', '2022-12-01 17:23:34'),
 ('c48883730562fc42446061fc9b79a6470b42a4cbab444d978ec5a6f55873a4e4467f658d9102542f', 2, 1, 'token', '[]', 0, '2021-12-04 16:12:30', '2021-12-04 16:12:30', '2022-12-04 16:12:30'),
 ('c4c59dd96a46e6a30a6f7cf05372e47a998bd93f5d034329f5de3e9e19c996deb23bb2c67409a31a', 51, 1, 'token', '[]', 0, '2021-11-30 18:00:17', '2021-11-30 18:00:17', '2022-11-30 18:00:17'),
+('c5214fba1fad6a32b0050d6b9c35f752509ea9009bfeea2de5b1fbd318e0d1d89bc5452736c9cf45', 62, 1, 'token', '[]', 0, '2022-12-21 11:51:21', '2022-12-21 11:51:21', '2023-12-21 11:51:21'),
 ('c5332846b0c4396e786c2de9412f07dd83a691fe8f427eb3b194192e0de7fbb0b7bc22553d71d676', 2, 1, 'token', '[]', 0, '2021-12-08 15:42:31', '2021-12-08 15:42:31', '2022-12-08 15:42:31'),
 ('c55ff08718f3c15864a9a561f961d175b1eae3573ce292cad7569b27dd9143e4789131dcf1048c9f', 50, 1, 'token', '[]', 0, '2021-12-03 10:33:29', '2021-12-03 10:33:29', '2022-12-03 10:33:29'),
 ('c5859644fa15613ca4285ad8e3567e5d127fb6c3222ec485e7a408aa63af3ea82b2de06c0f449bda', 50, 1, 'token', '[]', 0, '2021-11-24 16:53:59', '2021-11-24 16:53:59', '2022-11-24 16:53:59'),
@@ -2412,11 +2476,13 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('c84d83a52ffe191f3fbfbf3d9275c8852c4d5275dfcba4125cb29811fba64c4909ef6506cf1146e0', 2, 1, 'token', '[]', 0, '2021-11-27 12:03:51', '2021-11-27 12:03:51', '2022-11-27 12:03:51'),
 ('c8646b9e47794378a6c12aea9c8b6377914be36c8550cbb13c90ae11f7dbb8772917999b7d65d642', 2, 1, 'token', '[]', 0, '2021-12-09 19:09:04', '2021-12-09 19:09:04', '2022-12-09 19:09:04'),
 ('c88496c8b3bfd70df39179f33776f55abff88df60d80bffd68c685090925604d751f091c8b86704c', 2, 1, 'token', '[]', 0, '2021-12-02 16:06:29', '2021-12-02 16:06:29', '2022-12-02 16:06:29'),
+('c8ab0e4254b10ee4804b74fab451b2faf24b0bac5a8e4717cc99115143bd4b61036faa5ec2e217b3', 62, 1, '63a17067cce41', '[]', 0, '2022-12-20 13:50:55', '2022-12-20 13:50:55', '2023-12-20 13:50:55'),
 ('c8d8491a290a98ee4ffbdb025682f2516dc393e70b92a80784bf45b17edf495a813add79b768f0dc', 2, 1, 'token', '[]', 0, '2021-06-09 08:12:03', '2021-06-09 08:12:03', '2022-06-09 08:12:03'),
 ('c8edde40352ffc2eb579b02467624eef6b500996ca66bf4602156958bb2cf7fa53b95a5ff6a2153a', 2, 1, 'token', '[]', 0, '2021-12-06 14:36:56', '2021-12-06 14:36:56', '2022-12-06 14:36:56'),
 ('c8f82481627438dd11024d67e02d2ec34f666f9741fdb6f7ab85d211023470729e7e0786d2b6e1b3', 2, 1, 'token', '[]', 0, '2021-12-06 18:01:01', '2021-12-06 18:01:01', '2022-12-06 18:01:01'),
 ('c9136ad6f4384f013429ccb91b5641e34998b950e72d78bc5f0b7fbb3e95ed89faa0d7e9fa9ea036', 37, 1, 'token', '[]', 0, '2021-11-18 11:42:35', '2021-11-18 11:42:35', '2022-11-18 11:42:35'),
 ('c9140d7955c2eeeea2b1e867f2e46d8525459108d92e3b1510f50a804b5ffbf68a9c1424196637ad', 81, 1, 'token', '[]', 0, '2021-12-10 14:06:52', '2021-12-10 14:06:52', '2022-12-10 14:06:52'),
+('c9243e41fee84da18f2e672b82cf80015222ff88667b3bf2ba42f3943981e295486541efa2a9e6bb', 62, 1, '63a16ff46e41f', '[]', 0, '2022-12-20 13:49:00', '2022-12-20 13:49:00', '2023-12-20 13:49:00'),
 ('c92d97b6a996e34265e4fdb7bb94b1cdaf26a2713484d4d8181eeea00701129ba7736073562f550b', 37, 1, 'token', '[]', 0, '2021-11-15 15:07:36', '2021-11-15 15:07:36', '2022-11-15 15:07:36'),
 ('c93b821b2d3892c570890605bad3d789a90d809e5c78f73b5ad01870078145b2ce870bb1b37e6a62', 81, 1, 'token', '[]', 0, '2021-12-08 10:33:31', '2021-12-08 10:33:31', '2022-12-08 10:33:31'),
 ('c94f73da06fd2cbc6ec90251d0cf0249aae64dc781b77584d75f26d0b2cec6e788fa79837e05c33b', 2, 1, 'token', '[]', 0, '2021-12-04 17:23:13', '2021-12-04 17:23:13', '2022-12-04 17:23:13'),
@@ -2426,6 +2492,8 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('ca16f51ae5fd646e4de8f3d7e2e997df336568651b0e38845b463b5a1d0d391e7b3e41dd72635e13', 2, 1, 'token', '[]', 0, '2021-06-19 22:54:46', '2021-06-19 22:54:46', '2022-06-19 22:54:46'),
 ('ca290049567f0095b1bf5cbab938613ce3c24b0348691787e5d14c674137ae7c2052005a3b3fbfe8', 2, 1, 'token', '[]', 0, '2021-12-08 09:23:19', '2021-12-08 09:23:19', '2022-12-08 09:23:19'),
 ('ca4d4dbb861d9a4652940c7f6f70c5ee07486a44e9e470f8e6a512f8df9b81a5f0ef347691bab5fb', 50, 1, 'token', '[]', 0, '2021-11-30 12:40:49', '2021-11-30 12:40:49', '2022-11-30 12:40:49'),
+('ca7320119c871e541f069bb1f5d33339cc1f08271ca11e47eea1d178c84891cf3e5dbdb2787e9d8b', 62, 1, 'token', '[]', 0, '2022-12-21 11:27:07', '2022-12-21 11:27:07', '2023-12-21 11:27:07');
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
 ('ca846d0ffbb6514f7e7087ea2fb15ffee0914c4313cf337edec193f8912ac8e7b4e173ae408e3b74', 2, 1, 'token', '[]', 0, '2021-11-18 16:10:37', '2021-11-18 16:10:37', '2022-11-18 16:10:37'),
 ('caaa66d886cf7f5f7c9ba3f9e63fddba562a785f1e0153cab335d1ab26115266e8048d7dfc468e3e', 50, 1, 'token', '[]', 0, '2021-11-30 11:53:46', '2021-11-30 11:53:46', '2022-11-30 11:53:46'),
 ('cab1d9df7d3cd8a87ecf79da6d0760fc675b1eed5e66ed9101b38ff882a365fe27e3a715e959769b', 50, 1, 'token', '[]', 0, '2021-11-18 16:39:27', '2021-11-18 16:39:27', '2022-11-18 16:39:27'),
@@ -2442,10 +2510,13 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('cc5ae58adeff7a537516c400ef26c56c5e4704f373b31049eb15ae6e6b4f22aff42c83a40c9f08cb', 2, 1, 'token', '[]', 0, '2021-11-29 14:49:57', '2021-11-29 14:49:57', '2022-11-29 14:49:57'),
 ('cc9f61661c1e8207c5490bd69c1bf75b52aed9bc5ef301327aed1d4d6c610279b36867abc6e001c0', 37, 1, 'token', '[]', 0, '2021-11-18 10:53:25', '2021-11-18 10:53:25', '2022-11-18 10:53:25'),
 ('cca2d52c123e487ff7c3bdd7acbdcdf816a329da480dff29e562fef54999c913a694065ad478cab1', 37, 1, 'token', '[]', 0, '2021-11-13 16:45:44', '2021-11-13 16:45:44', '2022-11-13 16:45:44'),
+('cd051dbb19f83e6f77a5bd6e570f2351b9ef78e02980bd79615fb8687e5bbece8559a8fff92ea170', 62, 1, '63a16c16261d4', '[]', 0, '2022-12-20 13:32:30', '2022-12-20 13:32:30', '2023-12-20 13:32:30'),
 ('cd57076e0f8d975533b21fe5329cef885b48b8fbc1550f9465e9ce504daf471df08e07d7d11e4ba7', 50, 1, 'token', '[]', 0, '2021-11-30 12:18:30', '2021-11-30 12:18:30', '2022-11-30 12:18:30'),
 ('cd669815d711f5f2c1e270a0977e7a846a5a2de77d6613ebe1799ffb8fa6c180be6e2a0d3aced007', 2, 1, 'token', '[]', 0, '2021-11-27 17:47:43', '2021-11-27 17:47:43', '2022-11-27 17:47:43'),
 ('cd7ebdaa3e769eef5cb7098aa8712c9bbfa4818499e2fd7117ef2e654dcf511af7269e1c7d1343ff', 48, 1, 'token', '[]', 0, '2021-11-30 16:55:51', '2021-11-30 16:55:51', '2022-11-30 16:55:51'),
 ('cd820c26fe311611005e287b4bc339775405014f31a27765d03c0a5e1b1472c19a50942b36cfb132', 50, 1, 'token', '[]', 0, '2021-12-02 17:58:08', '2021-12-02 17:58:08', '2022-12-02 17:58:08'),
+('cd983a1b9597aa7575ff75db3f10868d6cc0413ca541051840be28a4881c07368e9b63a74101b571', 62, 1, '63a185187c97c', '[]', 0, '2022-12-20 15:19:12', '2022-12-20 15:19:12', '2023-12-20 15:19:12'),
+('cde1879cb996734c7ba55c2d5860fc658eb5dc7c383071c5eb0bdc72134ddba78a6ac384b0ec6313', 62, 1, '63a16bd22737e', '[]', 0, '2022-12-20 13:31:22', '2022-12-20 13:31:22', '2023-12-20 13:31:22'),
 ('ce39d2dc61552175cce781c3147b130779b15c021fb889fd86a7fb1b60658beb88f067457aae2943', 80, 1, 'token', '[]', 0, '2021-12-16 15:11:18', '2021-12-16 15:11:18', '2022-12-16 15:11:18'),
 ('ce3ab205be0cbf9266c0a5eb2750fa5ab2b42eda581e1aae44224593df3f67b79a4676e6f5147f6c', 72, 1, 'token', '[]', 0, '2021-12-03 10:06:32', '2021-12-03 10:06:32', '2022-12-03 10:06:32'),
 ('ce3b27b0d2c92d89a41df9ddea060380069e1b62310e24e7cf0d6d06ff354781a4e59bba36d4c7dc', 68, 1, 'token', '[]', 0, '2021-12-14 10:22:48', '2021-12-14 10:22:48', '2022-12-14 10:22:48'),
@@ -2459,12 +2530,12 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('ceda97be6b2181c1778865fd4da0bd10e0381531816a4840cc59f1f204b6ac86c38b888508aa71bd', 50, 1, 'token', '[]', 0, '2021-12-13 17:08:04', '2021-12-13 17:08:04', '2022-12-13 17:08:04'),
 ('cf151a4e32c6e872b7f82aff1e53cfecabcaea6bd6367df689f9d7a5a9a63b45e81ecac895897741', 37, 1, 'token', '[]', 0, '2021-11-13 10:02:12', '2021-11-13 10:02:12', '2022-11-13 10:02:12'),
 ('cf1a9d04fd2eeebe861c9d1ef53301eb255f56d3a0d5e0c7446d83ce11852aed27f224c0777ce5b2', 80, 1, 'token', '[]', 0, '2021-12-21 14:42:16', '2021-12-21 14:42:16', '2022-12-21 14:42:16'),
+('cf6b40bf217b3e12f27d9bfd4b1f2523f4a415f485a4dbcf8d84eb2c256f6f3bca31b96a6982f3b6', 63, 1, '63a2a121e4d46', '[]', 0, '2022-12-21 11:31:05', '2022-12-21 11:31:05', '2023-12-21 11:31:05'),
 ('cfa116d8d4744cde4a82d8647863a48cecdcece54ac3bf7f0f8dc618b1b6aea3e99c0f1e7fed1f7d', 2, 1, 'token', '[]', 0, '2021-06-10 13:22:01', '2021-06-10 13:22:01', '2022-06-10 13:22:01'),
 ('cfb6a7ce4b51a25e17a956e281fa68e86b8a818ae8a30c14abf7ce6bd2d05bb912ee5955ac9319d3', 2, 1, 'token', '[]', 0, '2021-12-06 15:26:22', '2021-12-06 15:26:22', '2022-12-06 15:26:22'),
 ('cfd28d0f90573a533dbd57339683bed928c9307dfd2646bdf2e5a398901e124a4a28c2143f18144b', 37, 1, 'token', '[]', 0, '2021-11-18 13:00:50', '2021-11-18 13:00:50', '2022-11-18 13:00:50'),
 ('cff66c016f35a62277197fb02a8a35984074d14268f6b42fd175d602277ca2d7f3ad0b92ed3d02ae', 2, 1, 'token', '[]', 0, '2021-12-06 11:04:16', '2021-12-06 11:04:16', '2022-12-06 11:04:16'),
-('cfff6230b84de30dfc3dbbd3cf388670f0dcec743af72c35e2984e1ab6410259c9abb536eb4344bc', 2, 1, 'token', '[]', 0, '2021-12-13 11:13:49', '2021-12-13 11:13:49', '2022-12-13 11:13:49');
-INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('cfff6230b84de30dfc3dbbd3cf388670f0dcec743af72c35e2984e1ab6410259c9abb536eb4344bc', 2, 1, 'token', '[]', 0, '2021-12-13 11:13:49', '2021-12-13 11:13:49', '2022-12-13 11:13:49'),
 ('d011ec749372a056d60009cbb9b3f947d23747617d5e1cb72a8d4ffdd9c6deb629f9c2f0862246c7', 2, 1, 'token', '[]', 0, '2021-12-13 11:54:32', '2021-12-13 11:54:32', '2022-12-13 11:54:32'),
 ('d0239ccd16a697be10c4d7c46d8c29d2d4b5e44559c5e30813ab3933a1cb0b0fa25c93d493492e6e', 50, 1, 'token', '[]', 0, '2021-11-19 09:54:59', '2021-11-19 09:54:59', '2022-11-19 09:54:59'),
 ('d0ce8421c6651333dc519abaec375acebef49601813318d811477f4b1b0f543378a8e2386d688989', 2, 1, 'token', '[]', 0, '2021-11-26 14:44:40', '2021-11-26 14:44:40', '2022-11-26 14:44:40'),
@@ -2480,6 +2551,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('d24b9df7b0a182cf4f438484f1fb8f3beef7f58f818f8beb2a7babbc0c313c5da09fb82428dcb759', 50, 1, 'token', '[]', 0, '2021-11-30 15:34:14', '2021-11-30 15:34:14', '2022-11-30 15:34:14'),
 ('d26115e7600c7e076b151cfc616e432563b6e45e18cb6b8facce92f936fbaaf02946335254e87e6c', 2, 1, 'token', '[]', 0, '2021-12-06 14:37:08', '2021-12-06 14:37:08', '2022-12-06 14:37:08'),
 ('d28eba19105f0fd4bcda8622264bfb5219ce36b61b6c0d6ec5cdab0023da5a78ab27427fc0c0f911', 68, 1, 'token', '[]', 0, '2021-12-03 13:48:07', '2021-12-03 13:48:07', '2022-12-03 13:48:07'),
+('d2ade9338252110d53981d4ae971e0f95095ab5197e8d2fb705669b532bddccadaca5d1ae4018ee9', 62, 1, '63a16bc9689f0', '[]', 0, '2022-12-20 13:31:13', '2022-12-20 13:31:13', '2023-12-20 13:31:13'),
 ('d2ccbe95ec9f5e57ae462e64217cdf08651b9843e23a27cdc6be0acc7e3b3c4188ee1bd3fe2733ce', 2, 1, 'token', '[]', 0, '2021-12-14 10:59:01', '2021-12-14 10:59:01', '2022-12-14 10:59:01'),
 ('d2f5f04d1fc0073b9108912ad8299745e4fa59a25995eb4ef9f794d5e231ee116c0342e9ce91899e', 2, 1, 'token', '[]', 0, '2021-12-10 14:53:44', '2021-12-10 14:53:44', '2022-12-10 14:53:44'),
 ('d302654a5be85c51e168f2ed8b2a64baadd6a53f152381cf5cd2c98c8688ae5496e572c4aa6ca150', 50, 1, 'token', '[]', 0, '2021-12-14 15:26:10', '2021-12-14 15:26:10', '2022-12-14 15:26:10'),
@@ -2487,6 +2559,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('d340af5a06f5f436699a28c745fd79efdfa7bb2e700d299c7734685b44aa6dc177a5513c484eff42', 50, 1, 'token', '[]', 0, '2021-11-18 16:51:04', '2021-11-18 16:51:04', '2022-11-18 16:51:04'),
 ('d35dceffc6412354fa4db71eec995ca2af716c7ddcababe9c07a170d8d68b2eb062e3aa246eb3451', 50, 1, 'token', '[]', 0, '2021-11-30 18:57:29', '2021-11-30 18:57:29', '2022-11-30 18:57:29'),
 ('d37cd307009c468712b8983a148976397aa90fe5d3fca08a2b2484f603d7302bdd0a114d794bfa52', 61, 1, 'token', '[]', 0, '2021-12-02 19:30:28', '2021-12-02 19:30:28', '2022-12-02 19:30:28'),
+('d38bab437dfdcd52d78739bbb1c989cf93bac385d3fc06f71bbfe9d02985bc7a107eb03f2b463127', 62, 1, '63a16badd3c94', '[]', 0, '2022-12-20 13:30:45', '2022-12-20 13:30:45', '2023-12-20 13:30:45'),
 ('d39482978661f34a61cb3564915fee68e88a37a0eaea8d7c7b7b07c78724b6fd312a889059efefd8', 50, 1, 'token', '[]', 0, '2021-12-03 12:55:25', '2021-12-03 12:55:25', '2022-12-03 12:55:25'),
 ('d3a5655cb82e9208a0f25ceb869fa38b3da909cc19dffa3fb223c96a1c4733e5a7d25b8a3d4ad732', 50, 1, 'token', '[]', 0, '2021-11-30 10:35:07', '2021-11-30 10:35:07', '2022-11-30 10:35:07'),
 ('d3b27f8a581d996d5974dc1213e8cfbad86d5a9486d586eef87ddf7653ad9b36fe6a39504a934fff', 80, 1, 'token', '[]', 0, '2021-12-21 15:01:35', '2021-12-21 15:01:35', '2022-12-21 15:01:35'),
@@ -2523,6 +2596,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('d806ccf34176a77273ff6c486e59b747de1ebebc190cb01f7ee54762ad794c5204756c5828cbcac5', 2, 1, 'token', '[]', 0, '2021-12-10 10:00:56', '2021-12-10 10:00:56', '2022-12-10 10:00:56'),
 ('d8119a92651f9471430e12bc8062b50f481f0972346ea491f809621a6f23d89ae87aa2de39600282', 37, 1, 'token', '[]', 0, '2021-11-17 18:15:23', '2021-11-17 18:15:23', '2022-11-17 18:15:23'),
 ('d81935c325f971c61654ebb272b529fd332bf4838614cc1033c493fd1dac7f5de2b330f71e217dba', 2, 1, 'token', '[]', 0, '2021-06-22 11:21:15', '2021-06-22 11:21:15', '2022-06-22 11:21:15'),
+('d835b8e25dac90d2a2849ed39eea608dcfbc7b68b83844a77ad9c3efe2945a1f474432345253e38a', 62, 1, '63a16ba7c0c39', '[]', 0, '2022-12-20 13:30:39', '2022-12-20 13:30:39', '2023-12-20 13:30:39'),
 ('d84baa95c7eb3b171329942c4b48d830e049f5f0a0ec7a3e6152a96ff27deaabe54a8feb38e268dc', 2, 1, 'token', '[]', 0, '2021-12-06 11:06:03', '2021-12-06 11:06:03', '2022-12-06 11:06:03'),
 ('d868bcc08d1dd492d4edcdba86adbdcb769162d5f40aaf7cae5d71ebc12efb286bd63d2522506987', 2, 1, 'token', '[]', 0, '2021-12-13 15:26:08', '2021-12-13 15:26:08', '2022-12-13 15:26:08'),
 ('d87a1ff3818169a639480ceb84e7e8373c8818ccd87c87c723d3b4c217bdeb40cff059b70d9ad139', 50, 1, 'token', '[]', 0, '2021-11-27 18:53:22', '2021-11-27 18:53:22', '2022-11-27 18:53:22'),
@@ -2604,6 +2678,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('e3822cc56d16eb7e0c57a8447805b3ed390a197e00e9299a60b613eb91c95b17b4d6426540182801', 2, 1, 'token', '[]', 0, '2021-12-10 15:45:35', '2021-12-10 15:45:35', '2022-12-10 15:45:35'),
 ('e38c9aec9c1d088090098b389036942a05bea5eafed7a29efef271b8d05233cb75eab1fc1e356b05', 37, 1, 'token', '[]', 0, '2021-11-18 10:14:28', '2021-11-18 10:14:28', '2022-11-18 10:14:28'),
 ('e3c547435992398b6770051146c0ae09629cf523904cc937324aa8f0a74f4cc59fd418b7125a4074', 2, 1, 'token', '[]', 0, '2021-12-10 14:07:59', '2021-12-10 14:07:59', '2022-12-10 14:07:59'),
+('e3c80ed1f1214b735c5de888ac78ef4d65fc6effd2013f86596a53a504063bb0a5047a638adf98c9', 62, 1, 'token', '[]', 0, '2022-12-20 15:28:46', '2022-12-20 15:28:46', '2023-12-20 15:28:46'),
 ('e3d62d114956c6b1454c48abc3cb184b7a0ed8bbe00559a0f4d5bdb8fb2235c5bc53a9a8370ab7b2', 80, 1, 'token', '[]', 0, '2021-12-10 18:05:17', '2021-12-10 18:05:17', '2022-12-10 18:05:17'),
 ('e3da0865296c8838cad31d7366c883272786c4b15162b792ee5e10304b24d5dc41cd03fbe40231fa', 67, 1, 'token', '[]', 0, '2021-12-01 13:52:54', '2021-12-01 13:52:54', '2022-12-01 13:52:54'),
 ('e42053f3c86f641c81eed9238b81d09cbb2ec6412dc81a8b56bb44e1aef3707262a3fd9be548fff5', 51, 1, 'token', '[]', 0, '2021-11-30 17:35:58', '2021-11-30 17:35:58', '2022-11-30 17:35:58'),
@@ -2633,6 +2708,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('e6b6a1650b3724e661b6faa0efc19fc22215304d1ef6c2208798226b6ce6ece8b93274d3cfe20f52', 2, 1, 'token', '[]', 0, '2021-11-11 16:46:40', '2021-11-11 16:46:40', '2022-11-11 16:46:40'),
 ('e6d205879c6ba537c271300145bba1391276a8a93251b76c72ad75d7b37df5dda32e831f266f55ba', 2, 1, 'token', '[]', 0, '2021-12-04 13:00:50', '2021-12-04 13:00:50', '2022-12-04 13:00:50'),
 ('e6d49c2df54ca25722efb0bc48e6a5344c1def423cb11171482f500ea0b0a0c7ce4040fd1820383d', 50, 1, 'token', '[]', 0, '2021-12-13 14:41:56', '2021-12-13 14:41:56', '2022-12-13 14:41:56'),
+('e6f1a38f941ec1eb312e52da23843f9eca6a1dacba092f6887ad67f54b5abbfd35c29dc662bb7298', 62, 1, 'token', '[]', 0, '2022-12-20 13:56:41', '2022-12-20 13:56:41', '2023-12-20 13:56:41'),
 ('e703a386378d8c5b4484b5d27a4e6cc9885383871995c835884fc8101743f4b4a2c7474ba62b81e4', 48, 1, 'token', '[]', 0, '2021-11-19 12:48:14', '2021-11-19 12:48:14', '2022-11-19 12:48:14'),
 ('e736d4be653f6fef42052dc6caeddb3a3d1a6f8d5cdae85c69e3eaf2c319e467464f1bd110cf0877', 2, 1, 'token', '[]', 0, '2021-12-06 16:11:16', '2021-12-06 16:11:16', '2022-12-06 16:11:16'),
 ('e754f2c1decd2994553d8bc32a13eea0ca3cabc579c75ed64e22801296ce4b7da554bdb2b06e814a', 2, 1, 'token', '[]', 0, '2021-12-07 09:34:07', '2021-12-07 09:34:07', '2022-12-07 09:34:07'),
@@ -2641,6 +2717,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('e7dc456610da91e339b549cd5b0b4360b73ffd64664bf3150bf38f9b7e2a810af125725583e04bbe', 48, 1, 'token', '[]', 0, '2021-11-30 17:04:24', '2021-11-30 17:04:24', '2022-11-30 17:04:24'),
 ('e7fbd0ba6980867376c4263c5f5c931aa0edf329fa3ba55498e919ce0aa7bfaddf3776e99ed3861f', 80, 1, 'token', '[]', 0, '2021-12-21 14:42:45', '2021-12-21 14:42:45', '2022-12-21 14:42:45'),
 ('e8448c96508a39ffe2a61f30eac220ddb58e131b4058adeab1c22290bd537b9f641ded3bdf9260af', 2, 1, 'token', '[]', 0, '2021-11-30 14:14:43', '2021-11-30 14:14:43', '2022-11-30 14:14:43'),
+('e853294f1f13c154bdb43fc7902bddb129801c365fa58e889d5277cbfd6059492aabb03b69ef5fa8', 62, 1, '63a2ea986f08c', '[]', 0, '2022-12-21 16:44:32', '2022-12-21 16:44:32', '2023-12-21 16:44:32'),
 ('e8561fd53a4664ffa861aa0a7beafbbc07fc840148de77d9a9ce30cb95726e53d405b19d1e2e3328', 48, 1, 'token', '[]', 0, '2021-11-20 10:19:11', '2021-11-20 10:19:11', '2022-11-20 10:19:11'),
 ('e87f5265548b53d631ccebf0b998acfe216672c8ed864fe000d934bedf4edfca031ef3982c828be0', 31, 1, 'token', '[]', 0, '2021-11-03 10:07:14', '2021-11-03 10:07:14', '2022-11-03 10:07:14'),
 ('e88d7e8a0b4c4a7804fc67cb83ee2f0f8523ebf9bd34dbe46962fb75498513757a981a36b9a946e9', 80, 1, 'token', '[]', 0, '2021-12-09 18:38:50', '2021-12-09 18:38:50', '2022-12-09 18:38:50'),
@@ -2651,6 +2728,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('e9493e71d8bf2b41145e6ace4d681b4c2fecd7f335f41f670f0ba0c3678a765f6a4b3ceac2649029', 2, 1, 'token', '[]', 0, '2021-12-04 10:21:30', '2021-12-04 10:21:30', '2022-12-04 10:21:30'),
 ('e953881925ae1edd459fc4324c6e83588c302ccad24c764f3deeee4abebb7b1b76c36022a71ceb1b', 51, 1, 'token', '[]', 0, '2021-11-30 18:29:42', '2021-11-30 18:29:42', '2022-11-30 18:29:42'),
 ('e9f61f7fe426796a3f7ca89b3a9a52edb9003084b1270d2e886fba498bd036b3216c1d56afb40241', 50, 1, 'token', '[]', 0, '2021-11-30 12:00:51', '2021-11-30 12:00:51', '2022-11-30 12:00:51'),
+('ea0fb4ced92ffb1247adf33bef4f47dad0db582c0507100a895e2432fe03cf73bd275b2c9e1aaf20', 62, 1, '63a16c56e36cf', '[]', 0, '2022-12-20 13:33:34', '2022-12-20 13:33:34', '2023-12-20 13:33:34'),
 ('ea3595c2f7df63fef573a5b211e0e69321aa145a75a0e63a67b189cd31091fa3235a0899f16af4ff', 2, 1, 'token', '[]', 0, '2021-12-08 11:34:34', '2021-12-08 11:34:34', '2022-12-08 11:34:34'),
 ('ea493b9038acb400eaef07c2693e32955845074e155cffebf0e7c9de4177e06e750d91b91818e9f5', 68, 1, 'token', '[]', 0, '2021-12-21 15:53:27', '2021-12-21 15:53:27', '2022-12-21 15:53:27'),
 ('eafa78cf218510cbc894064cb07fa47ae0bfc4e11432eb123b1e1b23cfd1323f6d22bf4640a3299e', 37, 1, 'token', '[]', 0, '2021-11-17 18:19:04', '2021-11-17 18:19:04', '2022-11-17 18:19:04'),
@@ -2669,6 +2747,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('edaf0e16d0adcc08a25b6a592018052cfa146833b0b14cb66515c433fc9b15eeedceaaa0f2cdd7b8', 2, 1, 'token', '[]', 0, '2021-11-26 16:14:47', '2021-11-26 16:14:47', '2022-11-26 16:14:47'),
 ('edb61a704edbf1f0afb2f82cfaa16ca9a8ce39b6f6805b847ef0bf13d37da63748ea7c888227a0ce', 50, 1, 'token', '[]', 0, '2021-12-13 11:37:27', '2021-12-13 11:37:27', '2022-12-13 11:37:27'),
 ('ee1207ce215dfdf7ed1e4b71625612f1ce4835df10092efc5f3954ea8a1c49e0eb6b8b0200be63a3', 2, 1, 'token', '[]', 0, '2021-11-23 11:51:37', '2021-11-23 11:51:37', '2022-11-23 11:51:37'),
+('ee4325e22bda487f615289f10f8b481921e3bd73b4f24041adae18f6d47b42e9230ae2ee31c433f7', 62, 1, 'token', '[]', 0, '2022-12-20 14:37:07', '2022-12-20 14:37:07', '2023-12-20 14:37:07'),
 ('ee4d6e9ac100e60d5658f014d0c6fecfb41750ed9cbb17aecc2728b81f784b050b93751391b136ba', 2, 1, 'token', '[]', 0, '2021-12-08 10:14:39', '2021-12-08 10:14:39', '2022-12-08 10:14:39'),
 ('ee62f1d1d098204725dd74039a2b94093db21903864737ceb8421483360234bd5ddfe3a5bd1e9df0', 37, 1, 'token', '[]', 0, '2021-11-17 18:18:10', '2021-11-17 18:18:10', '2022-11-17 18:18:10'),
 ('ee6ed0b6dfd3e23af014204d429c464102fb1c1e658e26da879dca07092a5086982ca7a7ce882dce', 50, 1, 'token', '[]', 0, '2021-12-13 12:32:16', '2021-12-13 12:32:16', '2022-12-13 12:32:16'),
@@ -2682,6 +2761,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('efd646d5f30d50e0835487944fdddd9901786db859978cd093b88caa2d269c32d2e12f76570dc833', 2, 1, 'token', '[]', 0, '2021-11-29 10:17:30', '2021-11-29 10:17:30', '2022-11-29 10:17:30'),
 ('f0550cab61854b72d7d11d677542ff5848dc21de67938b61c7af8f339c49a0d1ac45c1b45193a49a', 61, 1, 'token', '[]', 0, '2021-12-01 10:26:12', '2021-12-01 10:26:12', '2022-12-01 10:26:12'),
 ('f0768a8990007c8d51d916c53fb8ee8adfce5d78dd4c3d767879212af57043ae8226adc3334de778', 50, 1, 'token', '[]', 0, '2021-11-24 17:58:00', '2021-11-24 17:58:00', '2022-11-24 17:58:00'),
+('f09c624c8c35135be390ee7543f815f763bb2aed1afd72e3808a84bde6a0a57484af621a9480277d', 62, 1, 'token', '[]', 0, '2022-12-20 15:33:17', '2022-12-20 15:33:17', '2023-12-20 15:33:17'),
 ('f0b9f99588b8ddbfefba8df450152102d9ebe35d1c5dbe4a361728f6f6f329717361f5ee5c0960d3', 2, 1, 'token', '[]', 0, '2021-12-14 12:16:38', '2021-12-14 12:16:38', '2022-12-14 12:16:38'),
 ('f0d5533c9a018c590477f5edf99889606787b0ddc86767701f75e7a328792e4912645c82b2356bf0', 80, 1, 'token', '[]', 0, '2021-12-07 10:24:28', '2021-12-07 10:24:28', '2022-12-07 10:24:28'),
 ('f0f23960369f410419c645864a9a39ad9b1de5afbfe9188524a13aea50ca2263c18f0333900b648a', 2, 1, 'token', '[]', 0, '2021-12-07 17:06:40', '2021-12-07 17:06:40', '2022-12-07 17:06:40'),
@@ -2693,7 +2773,8 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('f2fdda0184c0a528aab6bf179f09cdc7638557c188bd5d9bfda707b21972a23fabfb38a1574701f6', 50, 1, 'token', '[]', 0, '2021-11-22 11:25:16', '2021-11-22 11:25:16', '2022-11-22 11:25:16'),
 ('f31451e86468c96e1ac4e789ac708fcdfac9017d1162522b39968026d594605d59ea0f16055d80a2', 2, 1, 'token', '[]', 0, '2021-11-26 18:56:53', '2021-11-26 18:56:53', '2022-11-26 18:56:53'),
 ('f314d2fc8010253c3aae22dc8fa35c68267ce17840e19352281048a6579a5eed9cabe8f908ad0839', 37, 1, 'token', '[]', 0, '2021-11-18 14:57:41', '2021-11-18 14:57:41', '2022-11-18 14:57:41'),
-('f36fa55007ba4e05bdb121849b2ff31d0a451dc3da0fbbedbf99679632bb1711576018766dc012a3', 50, 1, 'token', '[]', 0, '2021-12-01 14:40:52', '2021-12-01 14:40:52', '2022-12-01 14:40:52'),
+('f36fa55007ba4e05bdb121849b2ff31d0a451dc3da0fbbedbf99679632bb1711576018766dc012a3', 50, 1, 'token', '[]', 0, '2021-12-01 14:40:52', '2021-12-01 14:40:52', '2022-12-01 14:40:52');
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
 ('f3a2f81f5e9190328431ce542df9c4c7017a994ade630319f4df249a205aa6fa90c2b35811f8fc82', 50, 1, 'token', '[]', 0, '2021-12-13 14:55:04', '2021-12-13 14:55:04', '2022-12-13 14:55:04'),
 ('f3b134b3f53281fe87553c209e770b7b24efb76a92979b7848159405e64d78c1ac0d097f54fa8b3c', 68, 1, 'token', '[]', 0, '2021-12-14 15:19:39', '2021-12-14 15:19:39', '2022-12-14 15:19:39'),
 ('f3baee595df755776ebfd73e5e25786b01ab9abfb6440768378e034fbefe7963032333b5c260b4a8', 2, 1, 'token', '[]', 0, '2021-12-08 13:53:40', '2021-12-08 13:53:40', '2022-12-08 13:53:40'),
@@ -2744,8 +2825,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('f9faae46acb2fe3b45495432c0ecdd3405aa6687e48fe79836eed1a7f9f88e922df0fd96dc0635dd', 80, 1, 'token', '[]', 0, '2021-12-21 14:04:31', '2021-12-21 14:04:31', '2022-12-21 14:04:31'),
 ('fa1c25703e15dbbd685a1c4de68241db2bff8070775168712cca077338e3ce68133d5be74ba17304', 80, 1, 'token', '[]', 0, '2021-12-07 10:35:57', '2021-12-07 10:35:57', '2022-12-07 10:35:57'),
 ('fa412d382d128c09649a79fbf82d708c46e2a9c187250fedb580007bbccc3b56d6af4dbefeeb7883', 50, 1, 'token', '[]', 0, '2021-11-20 12:08:11', '2021-11-20 12:08:11', '2022-11-20 12:08:11'),
-('fa4a02ba78dfefbafb58cb968b42ca020de30a70d15e2846e80cbc036de3225a50b20b331c382a01', 48, 1, 'token', '[]', 0, '2021-11-20 09:37:29', '2021-11-20 09:37:29', '2022-11-20 09:37:29');
-INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('fa4a02ba78dfefbafb58cb968b42ca020de30a70d15e2846e80cbc036de3225a50b20b331c382a01', 48, 1, 'token', '[]', 0, '2021-11-20 09:37:29', '2021-11-20 09:37:29', '2022-11-20 09:37:29'),
 ('fa98f7b0663b8760f30d1db975e3573ca34e66755131e9c89a7c0cf87ebec0704cd05ea3387b9edd', 61, 1, 'token', '[]', 0, '2021-12-03 12:03:52', '2021-12-03 12:03:52', '2022-12-03 12:03:52'),
 ('fad15c9406da52237beabb808fca3a3cf3163b529e0b736c7ce800e45decd89b8a3fa0945d7b4b1e', 50, 1, 'token', '[]', 0, '2021-11-29 18:08:01', '2021-11-29 18:08:01', '2022-11-29 18:08:01'),
 ('fae622873f3aa72b055f0c1c86437014f8b4462484c2a62570588a617259d1936b55e836bedc65d0', 2, 1, 'token', '[]', 0, '2021-12-08 10:20:40', '2021-12-08 10:20:40', '2022-12-08 10:20:40'),
@@ -2796,7 +2876,7 @@ CREATE TABLE `oauth_auth_codes` (
   `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `client_id` bigint(20) UNSIGNED NOT NULL,
-  `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci,
   `revoked` tinyint(1) NOT NULL,
   `expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2878,25 +2958,37 @@ CREATE TABLE `orders` (
   `price_without_delivery` float NOT NULL,
   `total_products_mrp` float NOT NULL,
   `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `paid_by_wallet` float NOT NULL DEFAULT 0,
-  `rem_price` float NOT NULL DEFAULT 0,
+  `paid_by_wallet` float NOT NULL DEFAULT '0',
+  `rem_price` float NOT NULL DEFAULT '0',
   `avg_tax_per` float DEFAULT NULL,
   `total_tax_price` float DEFAULT NULL,
   `order_date` date NOT NULL,
   `delivery_date` date NOT NULL,
-  `delivery_charge` float NOT NULL DEFAULT 0,
+  `delivery_charge` float NOT NULL DEFAULT '0',
   `time_slot` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dboy_id` int(11) NOT NULL DEFAULT 0,
+  `dboy_id` int(11) NOT NULL DEFAULT '0',
   `order_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Pending',
   `user_signature` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cancelling_reason` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `coupon_id` int(11) NOT NULL DEFAULT 0,
-  `coupon_discount` float NOT NULL DEFAULT 0,
+  `coupon_id` int(11) NOT NULL DEFAULT '0',
+  `coupon_discount` float NOT NULL DEFAULT '0',
   `payment_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cancel_by_store` int(11) NOT NULL DEFAULT 0,
+  `cancel_by_store` int(11) NOT NULL DEFAULT '0',
   `dboy_incentive` int(11) DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `user_id`, `store_id`, `address_id`, `cart_id`, `total_price`, `price_without_delivery`, `total_products_mrp`, `payment_method`, `paid_by_wallet`, `rem_price`, `avg_tax_per`, `total_tax_price`, `order_date`, `delivery_date`, `delivery_charge`, `time_slot`, `dboy_id`, `order_status`, `user_signature`, `cancelling_reason`, `coupon_id`, `coupon_discount`, `payment_status`, `cancel_by_store`, `dboy_incentive`, `updated_at`) VALUES
+(1, 62, 3, 1, 'GGYB840e', 50000, 50000, 100000, 'COD', 0, 50000, 0, 0, '2022-12-20', '2022-12-25', 0, '01:20 pm - 01:25 pm', 0, 'Pending', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
+(2, 62, 3, 1, 'UFGM82f5', 5500, 5500, 9000, 'COD', 0, 5500, 0, 0, '2022-12-21', '2022-12-22', 0, '07:00 am - 07:05 am', 0, 'Pending', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
+(3, 62, 3, 1, 'CGIY31e9', 2500, 2500, 5000, 'COD', 0, 2500, 0, 0, '2022-12-21', '2022-12-22', 0, '07:00 am - 07:05 am', 0, 'Pending', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
+(4, 62, 3, 1, 'CHUP5671', 1700, 1700, 1800, 'COD', 0, 1700, 17, 289, '2022-12-21', '2022-12-22', 0, '07:00 am - 07:05 am', 0, 'Pending', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
+(5, 62, 3, 1, 'NBSG801b', 500, 500, 600, 'COD', 0, 500, 0, 0, '2022-12-22', '2022-12-23', 0, '07:00 am - 07:05 am', 0, 'Pending', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
+(6, 62, 3, 1, 'JQDR965a', 600, 600, 800, 'COD', 0, 600, 0, 0, '2022-12-22', '2022-12-23', 0, '07:00 am - 07:05 am', 0, 'Pending', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2911,7 +3003,7 @@ CREATE TABLE `order_by_photo` (
   `store_id` int(11) NOT NULL,
   `address_id` int(11) NOT NULL,
   `delivery_date` date NOT NULL,
-  `processed` int(11) NOT NULL DEFAULT 0,
+  `processed` int(11) NOT NULL DEFAULT '0',
   `reason` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -2938,7 +3030,7 @@ CREATE TABLE `payout_requests` (
   `store_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `payout_amt` float NOT NULL,
   `req_date` date NOT NULL,
-  `complete` int(11) NOT NULL DEFAULT 0
+  `complete` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2990,9 +3082,9 @@ CREATE TABLE `product` (
   `product_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `hide` int(11) NOT NULL DEFAULT 0,
-  `added_by` int(11) NOT NULL DEFAULT 0,
-  `approved` int(11) NOT NULL DEFAULT 1
+  `hide` int(11) NOT NULL DEFAULT '0',
+  `added_by` int(11) NOT NULL DEFAULT '0',
+  `approved` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3000,58 +3092,58 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `cat_id`, `product_name`, `product_image`, `type`, `hide`, `added_by`, `approved`) VALUES
-(2, 2, 'Ù†ÙˆØªÙŠÙ„Ø§', '/images/product/17-11-2022/nutella.png', 'Regular', 0, 0, 1),
-(5, 2, 'Ø¬Ù„Ø§ÙƒØ³ÙŠ', '/images/product/18-11-2022/index.jpg', 'Regular', 0, 0, 1),
-(6, 2, 'Kit kat', '/images/product/18-11-2022/Screenshot_Ù¢Ù Ù¢Ù¢Ù Ù©Ù¡Ù£-Ù¢Ù Ù Ù¨Ù¡Ù©.png', 'Regular', 0, 0, 1),
-(9, 2, 'Ø²Ø¨Ø¯Ø© Ø§Ù„ÙÙˆÙ„', '/images/product/19-11-2022/2022-07-12-62cd317fb2275.png', 'Regular', 0, 3, 1),
-(39, 27, 'Ø¯Ù‚ÙŠÙ‚ Ø§Ù„Ø§ÙˆÙ„', '/images/product/30-11-2022/download.jfif', 'Regular', 0, 3, 1),
-(40, 28, 'Ù„Ø¨Ù† Ù…Ø¬ÙÙ ÙƒØ§Ø¨Ùˆ', '/images/product/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(5).jpeg', 'Regular', 0, 3, 1),
-(41, 29, 'Ø²ÙŠØª ØµØ¨Ø§Ø­ 1Ù„ØªØ±', '/images/product/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(4).jpeg', 'Regular', 0, 3, 1),
+(2, 2, 'نوتيلا', '/images/product/17-11-2022/nutella.png', 'Regular', 0, 0, 1),
+(5, 2, 'جلاكسي', '/images/product/18-11-2022/index.jpg', 'Regular', 0, 0, 1),
+(6, 2, 'Kit kat', '/images/product/18-11-2022/Screenshot_٢٠٢٢٠٩١٣-٢٠٠٨١٩.png', 'Regular', 0, 0, 1),
+(9, 2, 'زبدة الفول', '/images/product/19-11-2022/2022-07-12-62cd317fb2275.png', 'Regular', 0, 3, 1),
+(39, 27, 'دقيق الاول', '/images/product/30-11-2022/download.jfif', 'Regular', 0, 3, 1),
+(40, 28, 'لبن مجفف كابو', '/images/product/30-11-2022/تنزيل-(5).jpeg', 'Regular', 0, 3, 1),
+(41, 29, 'زيت صباح 1لتر', '/images/product/30-11-2022/تنزيل-(4).jpeg', 'Regular', 0, 3, 1),
 (42, 30, 'raffaello', '/images/product/30-11-2022/th-(20).jfif', 'In Season', 0, 3, 1),
-(43, 31, 'Ø³ÙƒØ± 10ÙƒÙŠÙ„Ùˆ ÙƒÙ†Ø§Ù†Ù‡', '/images/product/30-11-2022/images-(27).jpeg', 'Regular', 0, 3, 1),
-(44, 32, 'Ø·Ø­Ù†ÙŠØ© Ø§Ù„ÙˆØ§ÙÙŠ 1ÙƒÙŠÙ„Ùˆ', '/images/product/30-11-2022/images-(12).jpeg', 'Regular', 0, 3, 1),
-(45, 33, 'Ø¨Ù† Ø§Ù„Ø¨ÙŠØª', '/images/product/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(24).jpeg', 'Regular', 0, 3, 1),
-(46, 34, 'Ø±Ø² ÙƒØ¨Ø³Ù‡', '/images/product/30-11-2022/38(4).jpg', 'Regular', 0, 3, 1),
-(47, 35, 'ØµÙ„ØµØ© Ø³Ø¹ÙŠØ¯', '/images/product/30-11-2022/images-(16).jpeg', 'Regular', 0, 3, 1),
-(48, 36, 'Ø¨Ø³ÙƒÙˆÙŠØª Ø¯ÙŠÙ„Ø§ÙŠØ³Ùˆ', '/images/product/30-11-2022/th-(9).jfif', 'Regular', 0, 3, 1),
-(49, 37, 'Ù…Ø¹ÙƒØ±ÙˆÙ†Ø© Ø§Ù„Ø§Ù…Ø§Ø±Ø§Øª', '/images/product/30-11-2022/th-(23).jfif', 'Regular', 0, 3, 1),
-(50, 38, 'ØµØ§Ø¨ÙˆÙ† Ø¨Ø§Ù„Ù…ÙˆÙ„ÙŠÙ', '/images/product/30-11-2022/th-(24).jfif', 'Regular', 0, 3, 1),
-(51, 39, 'Ù…Ø¹Ø¬ÙˆÙ† Ø³ÙŠØ¬Ù†Ø§Ù„', '/images/product/30-11-2022/th-(12).jfif', 'Regular', 0, 3, 1),
-(52, 40, 'Ù…Ù„Ø­ Ø³Ø§Ø³Ø§', '/images/product/30-11-2022/th-(26).jfif', 'Regular', 0, 3, 1),
-(53, 41, 'ØªÙˆÙ†Ø© Ù…ØºØ±Ø¨ÙŠØ©', '/images/product/30-11-2022/th-(28).jfif', 'Regular', 0, 3, 1),
-(54, 42, 'ØªØ§Ù†Ø¬', '/images/product/30-11-2022/th-(15).jfif', 'Regular', 0, 3, 1),
-(55, 43, 'Ø¬Ø¨Ù†Ø© Ø¨ÙˆÙƒ', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 'Regular', 0, 3, 1),
-(56, 44, 'Ù„ÙŠØ²', '/images/product/30-11-2022/th-(5).jfif', 'Regular', 0, 3, 1),
-(57, 45, 'ÙƒÙ„ÙŠÙ†ÙƒØ³', '/images/product/30-11-2022/th-(31).jfif', 'Regular', 0, 3, 1),
-(58, 46, 'Ø¨Ø§ÙƒÙ†Ø¬ Ø¨Ø§ÙˆØ¯Ø±', '/images/product/02-12-2022/download-(2).jfif', 'Regular', 0, 3, 1),
-(59, 46, 'Ø¨Ø§ÙƒÙ†Ø¬ Ø¨Ø§ÙˆØ¯Ø±', '/images/product/02-12-2022/download-(2).jfif', 'Regular', 0, 3, 1),
-(60, 47, 'Ø³Ù…Ù† Ø§ØµÙŠÙ„', '/images/product/02-12-2022/download-(3).jfif', 'Regular', 0, 3, 1),
-(61, 49, 'Ù…Ø±Ø¨Ù‰ Ø§Ù„Ø¹Ù„Ø§Ù„ÙŠ', '/images/product/02-12-2022/download-(5).jfif', 'Regular', 0, 3, 1),
-(62, 50, 'Ù„Ø¨Ù† Ù†ÙŠØ¯Ùˆ', '/images/product/02-12-2022/ØªÙ†Ø²ÙŠÙ„-(27).jpeg', 'Regular', 0, 3, 1),
-(63, 51, 'Ø¬Ø¨Ù†Ø© Ù…Ø¶ÙØ±Ø© Ø§Ù„Ø¯ÙˆÙŠÙ…', '/images/product/02-12-2022/images-(2).jfif', 'Regular', 0, 3, 1),
-(64, 53, 'Ø§Ù†Ø¯ÙˆÙ…ÙŠ', '/images/product/02-12-2022/download-(9).jfif', 'Regular', 0, 3, 1),
-(65, 54, 'ÙÙˆØ· ÙØ§Ù… Ø§Ù„ØµØ­ÙŠÙ‡', '/images/product/02-12-2022/download-(11).jfif', 'Regular', 0, 3, 1),
-(66, 55, 'Ù…Ù†Ø§Ø¯ÙŠÙ„ ÙØ§ÙŠÙ†', '/images/product/02-12-2022/images-(3).jfif', 'Regular', 0, 3, 1),
-(67, 56, 'Ø´Ø§Ù‰ Ø§Ù„ØºØ²Ø§Ù„ØªÙŠÙ†', '/images/product/02-12-2022/images-(15).jpeg', 'Regular', 0, 3, 1),
-(68, 45, 'Ø¨Ø§Ù…Ø¨Ø±Ø² ÙØ§ÙŠÙ† Ø¨ÙŠØ¨Ù‰', '/images/product/02-12-2022/th-(6).jfif', 'Regular', 0, 3, 1),
-(69, 57, 'Ø¹Ø¯Ø³ Ø§Ù„ÙØ±Ø§Ø´Ù‡', '/images/product/02-12-2022/download-(28).jfif', 'Regular', 0, 3, 1),
-(70, 58, 'ÙØ§ØµÙˆÙ„ÙŠØ§ Ø§Ù„ÙØ±Ø§Ø´Ø©', '/images/product/02-12-2022/download-(29).jfif', 'Regular', 0, 3, 1),
-(71, 59, 'Ø¨Ø³ÙƒÙˆÙŠØª Ø±ÙˆÙŠØ§Ù„', '/images/product/02-12-2022/download-(30).jfif', 'Regular', 0, 3, 1),
-(72, 48, 'Ù…ØµØ§ØµØ© Ù„ÙˆÙ„ÙŠ Ø¨ÙˆØ¨', '/images/product/02-12-2022/download-(31).jfif', 'Regular', 0, 3, 1),
-(73, 60, 'ØµØ§Ø¨ÙˆÙ† ÙØ±ÙŠØ´', '/images/product/02-12-2022/images-(5).jfif', 'Regular', 0, 3, 1),
-(74, 62, 'ØµØ§Ø¨ÙˆÙ† Ø§ØµÙŠÙ„', '/images/product/02-12-2022/download-(32).jfif', 'Regular', 0, 3, 1),
-(75, 61, 'ØµØ§Ø¨ÙˆÙ† ØªÙŠØ±ÙŠ 5Ù„ØªØ±', '/images/product/02-12-2022/download-(33).jfif', 'Regular', 0, 3, 1),
-(76, 71, 'ØµØ§Ø¨ÙˆÙ† Ø¨Ø´Ø±Ù‰', '/images/product/02-12-2022/download-(35).jfif', 'Regular', 0, 3, 1),
-(77, 63, 'Ø¹ØµÙŠØ± ÙÙŠÙ…ØªÙˆ Ø³Ø¹ÙˆØ¯Ù‰', '/images/product/02-12-2022/download-(21).jfif', 'Regular', 0, 3, 1),
-(78, 64, 'Ø³Ù† ØªÙˆØ¨ Ø³Ø¹ÙˆØ¯Ù‰', '/images/product/02-12-2022/download-(36).jfif', 'Regular', 0, 3, 1),
-(79, 67, 'ÙÙ„ÙÙ„ Ø§Ø³ÙˆØ¯', '/images/product/02-12-2022/download-(37).jfif', 'Regular', 0, 3, 1),
-(80, 65, 'Ø´Ø¹ÙŠØ±ÙŠØ© Ø§Ù…Ø§Ø±Ø§ØªÙŠØ©', '/images/product/02-12-2022/download-(22).jfif', 'Regular', 0, 3, 1),
-(81, 66, 'Ø§Ù„Ù…Ù„ÙƒØ© Ø§Ø³Ø¨Ø§ØºØªÙŠ', '/images/product/02-12-2022/download-(23).jfif', 'Regular', 0, 3, 1),
-(82, 68, 'ÙƒØ§ØªØ´Ø¨ Ø±Ù†Ø§', '/images/product/02-12-2022/download-(38).jfif', 'Regular', 0, 3, 1),
-(83, 69, 'ÙØ±Ø´ Ø§Ù„ÙÙ„ÙŠØ¬', '/images/product/02-12-2022/images-(10).jfif', 'Regular', 0, 3, 1),
-(84, 70, 'Ù…ÙˆØ³ Ø§Ù„ØªÙ…Ø³Ø§Ø­', '/images/product/02-12-2022/download-(39).jfif', 'Regular', 0, 3, 1),
-(85, 72, 'ØµØ§Ø¨ÙˆÙ† Ø§Ù„Ø§ÙˆØªÙˆÙ…Ø§ØªÙŠÙƒ', '/images/product/03-12-2022/images-(12).jfif', 'Regular', 0, 3, 1),
-(86, 73, 'ÙƒÙ„ÙˆØ±ÙƒØ³', '/images/product/03-12-2022/download-(41).jfif', 'Regular', 0, 3, 1),
+(43, 31, 'سكر 10كيلو كنانه', '/images/product/30-11-2022/images-(27).jpeg', 'Regular', 0, 3, 1),
+(44, 32, 'طحنية الوافي 1كيلو', '/images/product/30-11-2022/images-(12).jpeg', 'Regular', 0, 3, 1),
+(45, 33, 'بن البيت', '/images/product/30-11-2022/تنزيل-(24).jpeg', 'Regular', 0, 3, 1),
+(46, 34, 'رز كبسه', '/images/product/30-11-2022/38(4).jpg', 'Regular', 0, 3, 1),
+(47, 35, 'صلصة سعيد', '/images/product/30-11-2022/images-(16).jpeg', 'Regular', 0, 3, 1),
+(48, 36, 'بسكويت ديلايسو', '/images/product/30-11-2022/th-(9).jfif', 'Regular', 0, 3, 1),
+(49, 37, 'معكرونة الامارات', '/images/product/30-11-2022/th-(23).jfif', 'Regular', 0, 3, 1),
+(50, 38, 'صابون بالموليف', '/images/product/30-11-2022/th-(24).jfif', 'Regular', 0, 3, 1),
+(51, 39, 'معجون سيجنال', '/images/product/30-11-2022/th-(12).jfif', 'Regular', 0, 3, 1),
+(52, 40, 'ملح ساسا', '/images/product/30-11-2022/th-(26).jfif', 'Regular', 0, 3, 1),
+(53, 41, 'تونة مغربية', '/images/product/30-11-2022/th-(28).jfif', 'Regular', 0, 3, 1),
+(54, 42, 'تانج', '/images/product/30-11-2022/th-(15).jfif', 'Regular', 0, 3, 1),
+(55, 43, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 'Regular', 0, 3, 1),
+(56, 44, 'ليز', '/images/product/30-11-2022/th-(5).jfif', 'Regular', 0, 3, 1),
+(57, 45, 'كلينكس', '/images/product/30-11-2022/th-(31).jfif', 'Regular', 0, 3, 1),
+(58, 46, 'باكنج باودر', '/images/product/02-12-2022/download-(2).jfif', 'Regular', 0, 3, 1),
+(59, 46, 'باكنج باودر', '/images/product/02-12-2022/download-(2).jfif', 'Regular', 0, 3, 1),
+(60, 47, 'سمن اصيل', '/images/product/02-12-2022/download-(3).jfif', 'Regular', 0, 3, 1),
+(61, 49, 'مربى العلالي', '/images/product/02-12-2022/download-(5).jfif', 'Regular', 0, 3, 1),
+(62, 50, 'لبن نيدو', '/images/product/02-12-2022/تنزيل-(27).jpeg', 'Regular', 0, 3, 1),
+(63, 51, 'جبنة مضفرة الدويم', '/images/product/02-12-2022/images-(2).jfif', 'Regular', 0, 3, 1),
+(64, 53, 'اندومي', '/images/product/02-12-2022/download-(9).jfif', 'Regular', 0, 3, 1),
+(65, 54, 'فوط فام الصحيه', '/images/product/02-12-2022/download-(11).jfif', 'Regular', 0, 3, 1),
+(66, 55, 'مناديل فاين', '/images/product/02-12-2022/images-(3).jfif', 'Regular', 0, 3, 1),
+(67, 56, 'شاى الغزالتين', '/images/product/02-12-2022/images-(15).jpeg', 'Regular', 0, 3, 1),
+(68, 45, 'بامبرز فاين بيبى', '/images/product/02-12-2022/th-(6).jfif', 'Regular', 0, 3, 1),
+(69, 57, 'عدس الفراشه', '/images/product/02-12-2022/download-(28).jfif', 'Regular', 0, 3, 1),
+(70, 58, 'فاصوليا الفراشة', '/images/product/02-12-2022/download-(29).jfif', 'Regular', 0, 3, 1),
+(71, 59, 'بسكويت رويال', '/images/product/02-12-2022/download-(30).jfif', 'Regular', 0, 3, 1),
+(72, 48, 'مصاصة لولي بوب', '/images/product/02-12-2022/download-(31).jfif', 'Regular', 0, 3, 1),
+(73, 60, 'صابون فريش', '/images/product/02-12-2022/images-(5).jfif', 'Regular', 0, 3, 1),
+(74, 62, 'صابون اصيل', '/images/product/02-12-2022/download-(32).jfif', 'Regular', 0, 3, 1),
+(75, 61, 'صابون تيري 5لتر', '/images/product/02-12-2022/download-(33).jfif', 'Regular', 0, 3, 1),
+(76, 71, 'صابون بشرى', '/images/product/02-12-2022/download-(35).jfif', 'Regular', 0, 3, 1),
+(77, 63, 'عصير فيمتو سعودى', '/images/product/02-12-2022/download-(21).jfif', 'Regular', 0, 3, 1),
+(78, 64, 'سن توب سعودى', '/images/product/02-12-2022/download-(36).jfif', 'Regular', 0, 3, 1),
+(79, 67, 'فلفل اسود', '/images/product/02-12-2022/download-(37).jfif', 'Regular', 0, 3, 1),
+(80, 65, 'شعيرية اماراتية', '/images/product/02-12-2022/download-(22).jfif', 'Regular', 0, 3, 1),
+(81, 66, 'الملكة اسباغتي', '/images/product/02-12-2022/download-(23).jfif', 'Regular', 0, 3, 1),
+(82, 68, 'كاتشب رنا', '/images/product/02-12-2022/download-(38).jfif', 'Regular', 0, 3, 1),
+(83, 69, 'فرش الفليج', '/images/product/02-12-2022/images-(10).jfif', 'Regular', 0, 3, 1),
+(84, 70, 'موس التمساح', '/images/product/02-12-2022/download-(39).jfif', 'Regular', 0, 3, 1),
+(85, 72, 'صابون الاوتوماتيك', '/images/product/03-12-2022/images-(12).jfif', 'Regular', 0, 3, 1),
+(86, 73, 'كلوركس', '/images/product/03-12-2022/download-(41).jfif', 'Regular', 0, 3, 1),
 (87, 1, '????', 'images/products/', 'Regular', 0, 0, 1);
 
 -- --------------------------------------------------------
@@ -3063,7 +3155,7 @@ INSERT INTO `product` (`product_id`, `cat_id`, `product_name`, `product_image`, 
 CREATE TABLE `product_images` (
   `image_id` int(11) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `type` int(11) NOT NULL DEFAULT 0,
+  `type` int(11) NOT NULL DEFAULT '0',
   `product_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -3082,8 +3174,8 @@ INSERT INTO `product_images` (`image_id`, `image`, `type`, `product_id`) VALUES
 (9, '/images/product/17-11-2022/alwalima.png', 0, 4),
 (10, '/images/product/18-11-2022/index.jpg', 1, 5),
 (11, '/images/product/18-11-2022/index.jpg', 0, 5),
-(12, '/images/product/18-11-2022/Screenshot_Ù¢Ù Ù¢Ù¢Ù Ù©Ù¡Ù£-Ù¢Ù Ù Ù¨Ù¡Ù©.png', 1, 6),
-(13, '/images/product/18-11-2022/Screenshot_Ù¢Ù Ù¢Ù¢Ù Ù©Ù¡Ù£-Ù¢Ù Ù Ù¦Ù¥Ù¡.png', 0, 6),
+(12, '/images/product/18-11-2022/Screenshot_٢٠٢٢٠٩١٣-٢٠٠٨١٩.png', 1, 6),
+(13, '/images/product/18-11-2022/Screenshot_٢٠٢٢٠٩١٣-٢٠٠٦٥١.png', 0, 6),
 (14, '/images/product/18-11-2022/2022-07-12-62cd3c29b2f7c.png', 1, 7),
 (15, '/images/product/18-11-2022/2022-07-12-62cd3c29b2f7c.png', 0, 7),
 (16, '/images/product/19-11-2022/almarai.png', 1, 8),
@@ -3099,17 +3191,17 @@ INSERT INTO `product_images` (`image_id`, `image`, `type`, `product_id`) VALUES
 (28, '/images/product/30-11-2022/download.jfif', 1, 13),
 (29, '/images/product/30-11-2022/download.jfif', 0, 13),
 (30, '/images/product/30-11-2022/images-(9).jpeg', 1, 14),
-(31, '/images/product/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(5).jpeg', 0, 14),
-(32, '/images/product/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(4).jpeg', 1, 15),
-(33, '/images/product/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(4).jpeg', 0, 15),
+(31, '/images/product/30-11-2022/تنزيل-(5).jpeg', 0, 14),
+(32, '/images/product/30-11-2022/تنزيل-(4).jpeg', 1, 15),
+(33, '/images/product/30-11-2022/تنزيل-(4).jpeg', 0, 15),
 (34, '/images/product/30-11-2022/th-(19).jfif', 1, 16),
 (35, '/images/product/30-11-2022/th-(20).jfif', 0, 16),
-(36, '/images/product/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(23).jpeg', 1, 17),
-(37, '/images/product/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(22).jpeg', 0, 17),
+(36, '/images/product/30-11-2022/تنزيل-(23).jpeg', 1, 17),
+(37, '/images/product/30-11-2022/تنزيل-(22).jpeg', 0, 17),
 (38, '/images/product/30-11-2022/images-(12).jpeg', 1, 18),
 (39, '/images/product/30-11-2022/images-(11).jpeg', 0, 18),
-(40, '/images/product/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(24).jpeg', 1, 19),
-(41, '/images/product/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(25).jpeg', 0, 19),
+(40, '/images/product/30-11-2022/تنزيل-(24).jpeg', 1, 19),
+(41, '/images/product/30-11-2022/تنزيل-(25).jpeg', 0, 19),
 (42, '/images/product/30-11-2022/38(4).jpg', 1, 20),
 (43, '/images/product/30-11-2022/38(4).jpg', 0, 20),
 (44, '/images/product/30-11-2022/images-(16).jpeg', 1, 21),
@@ -3134,33 +3226,33 @@ INSERT INTO `product_images` (`image_id`, `image`, `type`, `product_id`) VALUES
 (63, '/images/product/30-11-2022/th-(5).jfif', 0, 30),
 (64, '/images/product/30-11-2022/th-(31).jfif', 1, 31),
 (65, '/images/product/30-11-2022/th-(31).jfif', 0, 31),
-(66, '/images/product/30-11-2022/Ù¤Ù£Ù¥Ù£.jpeg', 1, 32),
-(67, '/images/product/30-11-2022/Ù¤Ù£Ù¥Ù£.jpeg', 0, 32),
+(66, '/images/product/30-11-2022/٤٣٥٣.jpeg', 1, 32),
+(67, '/images/product/30-11-2022/٤٣٥٣.jpeg', 0, 32),
 (68, '/images/product/30-11-2022/download-(1).jfif', 1, 33),
 (69, '/images/product/30-11-2022/download-(1).jfif', 0, 33),
 (70, '/images/product/30-11-2022/dce4fe1d-1339-40ea-90c8-8248f0b0ff5b.jpg', 1, 34),
-(71, '/images/product/30-11-2022/Ù¤Ù£Ù¥Ù£.jpeg', 1, 35),
-(72, '/images/product/30-11-2022/Ù¤Ù£Ù¥Ù£.jpeg', 0, 35),
+(71, '/images/product/30-11-2022/٤٣٥٣.jpeg', 1, 35),
+(72, '/images/product/30-11-2022/٤٣٥٣.jpeg', 0, 35),
 (73, '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 1, 36),
 (74, '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 0, 36),
-(75, '/images/product/30-11-2022/Screenshot_Ù¢Ù Ù¢Ù¢Ù¡Ù¡Ù¡Ù©-Ù¡Ù Ù£Ù©Ù¡Ù .png', 1, 37),
-(76, '/images/product/30-11-2022/Screenshot_Ù¢Ù Ù¢Ù¢Ù¡Ù¡Ù¡Ù©-Ù¡Ù Ù£Ù©Ù¡Ù .png', 0, 37),
-(77, '/images/product/30-11-2022/Ù¤Ù£Ù¥Ù£.jpeg', 1, 38),
-(78, '/images/product/30-11-2022/Ù¤Ù£Ù¥Ù£.jpeg', 0, 38),
+(75, '/images/product/30-11-2022/Screenshot_٢٠٢٢١١١٩-١٠٣٩١٠.png', 1, 37),
+(76, '/images/product/30-11-2022/Screenshot_٢٠٢٢١١١٩-١٠٣٩١٠.png', 0, 37),
+(77, '/images/product/30-11-2022/٤٣٥٣.jpeg', 1, 38),
+(78, '/images/product/30-11-2022/٤٣٥٣.jpeg', 0, 38),
 (79, '/images/product/30-11-2022/download.jfif', 1, 39),
 (80, '/images/product/30-11-2022/download.jfif', 0, 39),
-(81, '/images/product/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(5).jpeg', 1, 40),
+(81, '/images/product/30-11-2022/تنزيل-(5).jpeg', 1, 40),
 (82, '/images/product/30-11-2022/images-(9).jpeg', 0, 40),
-(83, '/images/product/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(4).jpeg', 1, 41),
-(84, '/images/product/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(4).jpeg', 0, 41),
+(83, '/images/product/30-11-2022/تنزيل-(4).jpeg', 1, 41),
+(84, '/images/product/30-11-2022/تنزيل-(4).jpeg', 0, 41),
 (85, '/images/product/30-11-2022/th-(20).jfif', 1, 42),
 (86, '/images/product/30-11-2022/th-(20).jfif', 0, 42),
 (87, '/images/product/30-11-2022/images-(27).jpeg', 1, 43),
 (88, '/images/product/30-11-2022/images-(27).jpeg', 0, 43),
 (89, '/images/product/30-11-2022/images-(12).jpeg', 1, 44),
 (90, '/images/product/30-11-2022/images-(12).jpeg', 0, 44),
-(91, '/images/product/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(24).jpeg', 1, 45),
-(92, '/images/product/30-11-2022/ØªÙ†Ø²ÙŠÙ„-(24).jpeg', 0, 45),
+(91, '/images/product/30-11-2022/تنزيل-(24).jpeg', 1, 45),
+(92, '/images/product/30-11-2022/تنزيل-(24).jpeg', 0, 45),
 (93, '/images/product/30-11-2022/38(4).jpg', 1, 46),
 (94, '/images/product/30-11-2022/38(4).jpg', 0, 46),
 (95, '/images/product/30-11-2022/images-(16).jpeg', 1, 47),
@@ -3192,8 +3284,8 @@ INSERT INTO `product_images` (`image_id`, `image`, `type`, `product_id`) VALUES
 (121, '/images/product/02-12-2022/download-(3).jfif', 0, 60),
 (122, '/images/product/02-12-2022/download-(5).jfif', 1, 61),
 (123, '/images/product/02-12-2022/download-(5).jfif', 0, 61),
-(124, '/images/product/02-12-2022/ØªÙ†Ø²ÙŠÙ„-(27).jpeg', 1, 62),
-(125, '/images/product/02-12-2022/ØªÙ†Ø²ÙŠÙ„-(26).jpeg', 0, 62),
+(124, '/images/product/02-12-2022/تنزيل-(27).jpeg', 1, 62),
+(125, '/images/product/02-12-2022/تنزيل-(26).jpeg', 0, 62),
 (126, '/images/product/02-12-2022/images-(2).jfif', 1, 63),
 (127, '/images/product/02-12-2022/images-(2).jfif', 0, 63),
 (128, '/images/product/02-12-2022/download-(9).jfif', 1, 64),
@@ -3277,8 +3369,8 @@ CREATE TABLE `product_varient` (
   `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `varient_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `barcode` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `approved` int(11) NOT NULL DEFAULT 1,
-  `added_by` int(11) NOT NULL DEFAULT 0
+  `approved` int(11) NOT NULL DEFAULT '1',
+  `added_by` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3286,66 +3378,66 @@ CREATE TABLE `product_varient` (
 --
 
 INSERT INTO `product_varient` (`varient_id`, `product_id`, `initial_quantity`, `weight`, `unit`, `base_mrp`, `base_price`, `description`, `varient_image`, `barcode`, `approved`, `added_by`) VALUES
-(1, 1, 0, 0, 'Ù¢Ù Ù ', 0.03, 4000, 'Ù†ÙŠØ¯Ùˆ Ø­Ù„ÙŠØ¨ Ù…Ø¬ÙÙ Ù…Ø¯Ø¹Ù… Ù¢.Ù¢Ù¥ÙƒØºÙ…', 'N/A', 'Ù¥Ù£Ù¤Ù¥Ù£', 1, 0),
-(2, 2, 0, 0, 'Ù§Ù¥Ù ', 1.11, 2000, 'Ù†ÙˆØªÙŠÙ„Ø§ ÙƒØ±ÙŠÙ…Ø© Ø§Ù„Ø¨Ù†Ø¯Ù‚ Ù…Ø¹ Ø§Ù„ÙƒØ§ÙƒØ§Ùˆ Ù‚Ø§Ø¨Ù„Ø© Ù„Ù„Ø¯Ù‡Ù† Ù§Ù¥Ù ØºØ±Ø§Ù…', 'N/A', 'Ù£Ù¥Ù£Ù¤', 1, 0),
-(3, 3, 0, 0, 'Ù¡Ù  ÙƒÙŠÙ„Ùˆ Ø¬Ø±Ø§Ù…', 0.02, 3000, 'Ø§Ù„Ø£Ø³Ø±Ø© Ø³ÙƒØ± Ù†Ø§Ø¹Ù… Ù¡Ù ÙƒØºÙ…', 'N/A', 'Ù£Ù¥Ù£Ù¤', 1, 0),
-(4, 4, 0, 0, 'Ù¥ ÙƒÙŠÙ„Ùˆ', 0.04, 2000, 'Ø§Ù„ÙˆÙ„ÙŠÙ…Ø© Ø£Ø±Ø² Ù…Ø²Ø© Ø¨Ø³Ù…ØªÙŠ Ù‡Ù†Ø¯ÙŠ Ø­Ø¨Ø© Ø·ÙˆÙŠÙ„Ø© Ù¥ÙƒØºÙ…', 'N/A', 'Ù£Ù¥Ù£Ù¤', 1, 0),
-(5, 5, 0, 0, 'Ù¡Ù  Ù‚Ø·Ø¹', 23, 2000, 'Ø´ÙˆÙƒÙˆÙ„Ø§ØªÙ‡ Ø¬Ù„Ø§ÙƒØ³ÙŠ Ù…Ø­Ø´ÙˆØ© Ø¨Ø§Ù„Ø¨Ù†Ø¯Ù‚ Ø§Ù„Ø±Ù‡ÙŠØ¨Ø© Ø¹Ø¨ÙˆØ© Ø¬Ø¯ÙŠØ¯Ø©', 'N/A', 'Ù£Ù¢', 1, 0),
-(6, 6, 0, 0, '24 pcs', 56, 7000, 'ÙƒÙŠØª ÙƒØ§Øª Ù…Ù† Ù†Ø³ØªÙ„Ø§ ØµÙ†Ø§Ø¹Ù‡ Ø¨Ø±ÙŠØ·Ø§Ù†ÙŠÙ‡', 'N/A', '11', 1, 0),
-(7, 7, 0, 0, '1 kg', 534, 5000, 'Ø§Ù„Ø´ÙØ§Ø¡ Ø¹Ø³Ù„ Ø·Ø¨ÙŠØ¹ÙŠ Ù¡ÙƒØºÙ…', 'N/A', '423', 1, 0),
-(8, 8, 0, 0, '170 kg', 34, 1200, 'Ø§Ù„Ù…Ø±Ø§Ø¹ÙŠ Ø´Ø¨ÙŠÙ‡Ø© Ø§Ù„Ù‚Ø´Ø·Ø© \" Ø§Ø³ØªØ¨Ø¯Ù„ Ø¯Ø³Ù… Ø§Ù„Ø­Ù„ÙŠØ¨ Ø¨Ø§Ù„Ø²ÙŠØª Ø§Ù„Ù†Ø¨Ø§ØªÙŠ\" Ù¡Ù§Ù ØºØ±Ø§Ù…', 'N/A', '43', 1, 3),
-(9, 9, 0, 0, '170 kg', 12, 122314, 'Ù‚ÙˆØ¯ÙŠ Ø²Ø¨Ø¯Ø© ÙÙˆÙ„ Ø³ÙˆØ¯Ø§Ù†ÙŠ Ù†Ø§Ø¹Ù…Ø© Ù¥Ù¡Ù ØºØ±Ø§Ù…', 'N/A', '43', 1, 3),
-(10, 10, 0, 0, 'kg', 250, 200, 'Ø¹Ø¯Ø³ Ù…Ù†Ù‚Ù‰', 'N/A', '30', 1, 3),
-(11, 11, 0, 0, 'Ltrs', 2600, 200, 'Ø¹Ø§ÙÙŠØ© Ø²ÙŠØª Ø¯ÙˆØ§Ø± Ø§Ù„Ø´Ù…Ø³ ØµØ§ÙÙŠ Ù¡.Ù¥Ù„ØªØ±', 'N/A', '30', 1, 0),
-(12, 12, 0, 0, 'kg', 30000, 25000, 'Ø³ÙƒØ±', 'N/A', '0', 1, 0),
-(39, 39, 0, 0, 'kg', 800, 700, 'Ø¯Ù‚ÙŠÙ‚ Ø§Ù„Ø§ÙˆÙ„ Ø³ÙŠÙ‚Ø§', 'N/A', '10001', 1, 3),
-(40, 40, 0, 0, 'gm', 13000, 11000, 'Ù„Ø¨Ù† ÙƒØ§Ø¨Ùˆ', 'N/A', '10002', 1, 3),
-(41, 41, 0, 0, 'ltr', 1800, 1700, 'Ø²ÙŠØª', 'N/A', '10003', 1, 3),
+(1, 1, 0, 0, '٢٠٠', 0.03, 4000, 'نيدو حليب مجفف مدعم ٢.٢٥كغم', 'N/A', '٥٣٤٥٣', 1, 0),
+(2, 2, 0, 0, '٧٥٠', 1.11, 2000, 'نوتيلا كريمة البندق مع الكاكاو قابلة للدهن ٧٥٠غرام', 'N/A', '٣٥٣٤', 1, 0),
+(3, 3, 0, 0, '١٠ كيلو جرام', 0.02, 3000, 'الأسرة سكر ناعم ١٠كغم', 'N/A', '٣٥٣٤', 1, 0),
+(4, 4, 0, 0, '٥ كيلو', 0.04, 2000, 'الوليمة أرز مزة بسمتي هندي حبة طويلة ٥كغم', 'N/A', '٣٥٣٤', 1, 0),
+(5, 5, 0, 0, '١٠ قطع', 23, 2000, 'شوكولاته جلاكسي محشوة بالبندق الرهيبة عبوة جديدة', 'N/A', '٣٢', 1, 0),
+(6, 6, 0, 0, '24 pcs', 56, 7000, 'كيت كات من نستلا صناعه بريطانيه', 'N/A', '11', 1, 0),
+(7, 7, 0, 0, '1 kg', 534, 5000, 'الشفاء عسل طبيعي ١كغم', 'N/A', '423', 1, 0),
+(8, 8, 0, 0, '170 kg', 34, 1200, 'المراعي شبيهة القشطة \" استبدل دسم الحليب بالزيت النباتي\" ١٧٠غرام', 'N/A', '43', 1, 3),
+(9, 9, 0, 0, '170 kg', 12, 122314, 'قودي زبدة فول سوداني ناعمة ٥١٠غرام', 'N/A', '43', 1, 3),
+(10, 10, 0, 0, 'kg', 250, 200, 'عدس منقى', 'N/A', '30', 1, 3),
+(11, 11, 0, 0, 'Ltrs', 2600, 200, 'عافية زيت دوار الشمس صافي ١.٥لتر', 'N/A', '30', 1, 0),
+(12, 12, 0, 0, 'kg', 30000, 25000, 'سكر', 'N/A', '0', 1, 0),
+(39, 39, 0, 0, 'kg', 800, 700, 'دقيق الاول سيقا', 'N/A', '10001', 1, 3),
+(40, 40, 0, 0, 'gm', 13000, 11000, 'لبن كابو', 'N/A', '10002', 1, 3),
+(41, 41, 0, 0, 'ltr', 1800, 1700, 'زيت', 'N/A', '10003', 1, 3),
 (42, 42, 0, 0, 'gm', 2000, 1500, 'raffaello', 'N/A', '10004', 1, 3),
-(43, 43, 0, 0, 'kg', 5000, 4000, 'Ø³ÙƒØ± 10ÙƒÙŠÙ„Ùˆ ÙƒÙ†Ø§Ù†Ù‡', 'N/A', '10005', 1, 3),
-(44, 44, 0, 0, 'kg', 4000, 3000, 'Ø·Ø­Ù†ÙŠØ© Ø§Ù„ÙˆØ§ÙÙŠ 1ÙƒÙŠÙ„Ùˆ', 'N/A', '10007', 1, 3),
-(45, 45, 0, 0, 'gm', 3000, 2500, 'Ø¨Ù† Ø§Ù„Ø¨ÙŠØª', 'N/A', '10008', 1, 3),
-(46, 46, 0, 0, 'kg', 3000, 2000, 'Ø±Ø² ÙƒØ¨Ø³Ù‡', 'N/A', '10009', 1, 3),
-(47, 47, 0, 0, 'gm', 1200, 1100, 'ØµÙ„ØµÙ‡', 'N/A', '100010', 1, 3),
-(48, 48, 0, 0, 'gm', 400, 300, 'ÙˆÙŠÙØ±', 'N/A', '100011', 1, 3),
-(49, 49, 0, 0, 'gm', 1500, 1400, 'Ù…Ø¹ÙƒØ±ÙˆÙ†Ø© Ø§Ù„Ø§Ù…Ø§Ø±Ø§Øª', 'N/A', '100012', 1, 3),
-(50, 50, 0, 0, 'g', 700, 500, 'ØµØ§Ø¨ÙˆÙ† Ø¨Ø§Ù„Ù…ÙˆÙ„ÙŠÙ', 'N/A', '100013', 1, 3),
-(51, 51, 0, 0, 'Ù…Ù„', 1400, 800, 'Ù…Ø¹Ø¬ÙˆÙ† Ø³ÙŠØ¬Ù†Ø§Ù„', 'N/A', '100014', 1, 3),
-(52, 52, 0, 0, 'gm', 800, 700, 'Ù…Ù„Ø­ Ø³Ø§Ø³Ø§', 'N/A', '100015', 1, 3),
-(53, 53, 0, 0, 'gm', 1000, 800, 'ØªÙˆÙ†Ø© Ù…ØºØ±Ø¨ÙŠØ©', 'N/A', '100016', 1, 3),
-(54, 54, 0, 0, 'gm', 10000, 6000, 'ØªØ§Ù†Ø¬', 'N/A', '100018', 1, 3),
-(55, 55, 0, 0, 'g', 5000, 4500, 'Ø¬Ø¨Ù†Ø© Ø¨ÙˆÙƒ', 'N/A', '100020', 1, 3),
-(56, 56, 0, 0, 'g', 700, 400, 'Ù„ÙŠØ²', 'N/A', '100022', 1, 3),
-(57, 57, 0, 0, 'gm', 4000, 3000, 'Ù…Ù†Ø§Ø¯ÙŠÙ„', 'N/A', '100025', 1, 3),
-(58, 58, 0, 0, 'gm', 600, 500, 'Ø¨Ø§ÙƒÙ†Ø¬ Ø¨Ø§ÙˆØ¯Ø±', 'N/A', '10000005', 1, 3),
-(59, 59, 0, 0, 'gm', 600, 500, 'Ø¨Ø§ÙƒÙ†Ø¬ Ø¨Ø§ÙˆØ¯Ø±', 'N/A', '1000005', 1, 3),
-(60, 60, 0, 0, 'kg', 5000, 3000, 'Ø³Ù…Ù† Ø§ØµÙŠÙ„', 'N/A', '1022200', 1, 3),
-(61, 61, 0, 0, 'gm', 2000, 1500, 'Ù…Ø±Ø¨Ù‰ Ø§Ù„Ø¹Ù„Ø§Ù„ÙŠ', 'N/A', '2032022', 1, 3),
-(62, 62, 0, 0, 'kg', 13000, 12500, 'Ù„Ø¨Ù† Ù†ÙŠØ¯Ùˆ', 'N/A', '45466564', 1, 3),
-(63, 63, 0, 0, 'kg', 20000, 18000, 'Ø¬Ø¨Ù†Ø© Ø§Ù„Ø¯ÙˆÙŠÙ…', 'N/A', '6544454', 1, 3),
-(64, 64, 0, 0, 'gm', 7500, 6000, 'Ø§Ù†Ø¯ÙˆÙ…ÙŠ', 'N/A', '64545464', 1, 3),
-(65, 65, 0, 0, 'pcs', 9000, 7000, 'ÙÙˆØ· ÙØ§Ù… Ø§Ù„ØµØ­ÙŠÙ‡', 'N/A', '544545558', 1, 3),
-(66, 66, 0, 0, 'pcs', 700, 500, 'Ù…Ù†Ø§Ø¯ÙŠÙ„ ÙØ§ÙŠÙ†', 'N/A', '257885', 1, 3),
-(67, 67, 0, 0, 'gm', 2000, 1500, 'Ø´Ø§Ù‰ Ø§Ù„ØºØ²Ø§Ù„ØªÙŠÙ†', 'N/A', '5124454', 1, 3),
-(68, 68, 0, 0, 'pcs', 9000, 8000, 'Ø¨Ø§Ù…Ø¨Ø±Ø² ÙØ§ÙŠÙ† Ø¨ÙŠØ¨Ù‰', 'N/A', '5646499', 1, 3),
-(69, 69, 0, 0, 'kg', 700, 500, 'Ø¹Ø¯Ø³ Ø§Ù„ÙØ±Ø§Ø´Ù‡', 'N/A', '546464', 1, 3),
-(70, 70, 0, 0, 'kg', 1500, 1000, 'ÙØ§ØµÙˆÙ„ÙŠØ§ Ø§Ù„ÙØ±Ø§Ø´Ø©', 'N/A', '656465464', 1, 3),
-(71, 71, 0, 0, 'ÙƒØ±ØªÙˆÙ†Ù‡', 3000, 2900, 'Ø¨Ø³ÙƒÙˆÙŠØª Ø±ÙˆÙŠØ§Ù„', 'N/A', '314654678', 1, 3),
-(72, 72, 0, 0, 'pcs', 4000, 3000, 'Ù…ØµØ§ØµØ© Ù„ÙˆÙ„ÙŠ Ø¨ÙˆØ¨', 'N/A', '45444', 1, 3),
-(73, 73, 0, 0, 'kg', 4000, 3000, 'ØµØ§Ø¨ÙˆÙ† ÙØ±ÙŠØ´', 'N/A', '4555', 1, 3),
-(74, 74, 0, 0, 'g', 7000, 6000, 'ØµØ§Ø¨ÙˆÙ† Ø§ØµÙŠÙ„', 'N/A', '646565', 1, 3),
-(75, 75, 0, 0, 'ltr', 3000, 2500, 'ØµØ§Ø¨ÙˆÙ† ØªÙŠØ±ÙŠ 5Ù„ØªØ±', 'N/A', '654647', 1, 3),
-(76, 76, 0, 0, 'kg', 4000, 3000, 'ØµØ§Ø¨ÙˆÙ† Ù…Ø¹Ø¬ÙˆÙ†', 'N/A', '46446455', 1, 3),
-(77, 77, 0, 0, 'Ù…Ù„', 3000, 2500, 'Ø¹ØµÙŠØ± ÙÙŠÙ…ØªÙˆ Ø³Ø¹ÙˆØ¯Ù‰', 'N/A', '25457', 1, 3),
-(78, 78, 0, 0, 'Ù…Ù„', 5000, 4500, 'Ø³Ù† ØªÙˆØ¨ Ø³Ø¹ÙˆØ¯Ù‰', 'N/A', '4545555', 1, 3),
-(79, 79, 0, 0, 'kg', 4000, 3000, 'ÙÙ„ÙÙ„ Ø§Ø³ÙˆØ¯ Ø­Ø¨', 'N/A', '35488', 1, 3),
-(80, 80, 0, 0, 'gm', 1600, 1500, 'Ø´Ø¹ÙŠØ±ÙŠØ© Ø§Ù…Ø§Ø±Ø§ØªÙŠØ©', 'N/A', '777777', 1, 3),
-(81, 81, 0, 0, 'gm', 1400, 1200, 'Ø§Ø³Ø¨Ø§ØºØªÙŠ', 'N/A', '3578', 1, 3),
-(82, 82, 0, 0, 'Ù…Ù„', 2000, 1100, 'ÙƒØ§ØªØ´Ø¨ Ø±Ù†Ø§', 'N/A', '32145', 1, 3),
-(83, 83, 0, 0, 'pcs', 6000, 5000, 'ÙØ±Ø´ Ø§Ù„ÙÙ„ÙŠØ¬', 'N/A', '42555', 1, 3),
-(84, 84, 0, 0, 'pcs', 5000, 4000, 'Ù…ÙˆØ³ Ø§Ù„ØªÙ…Ø³Ø§Ø­', 'N/A', '54555', 1, 3),
-(85, 85, 0, 0, 'kg', 7000, 6000, 'ØµØ§Ø¨ÙˆÙ† Ø§Ù„Ø§ÙˆØªÙˆÙ…Ø§ØªÙŠÙƒ', 'N/A', '366666', 1, 3),
-(86, 86, 0, 0, 'Ù…Ù„', 2500, 2000, 'ÙƒÙ„ÙˆØ±ÙƒØ³', 'N/A', '321555', 1, 3),
+(43, 43, 0, 0, 'kg', 5000, 4000, 'سكر 10كيلو كنانه', 'N/A', '10005', 1, 3),
+(44, 44, 0, 0, 'kg', 4000, 3000, 'طحنية الوافي 1كيلو', 'N/A', '10007', 1, 3),
+(45, 45, 0, 0, 'gm', 3000, 2500, 'بن البيت', 'N/A', '10008', 1, 3),
+(46, 46, 0, 0, 'kg', 3000, 2000, 'رز كبسه', 'N/A', '10009', 1, 3),
+(47, 47, 0, 0, 'gm', 1200, 1100, 'صلصه', 'N/A', '100010', 1, 3),
+(48, 48, 0, 0, 'gm', 400, 300, 'ويفر', 'N/A', '100011', 1, 3),
+(49, 49, 0, 0, 'gm', 1500, 1400, 'معكرونة الامارات', 'N/A', '100012', 1, 3),
+(50, 50, 0, 0, 'g', 700, 500, 'صابون بالموليف', 'N/A', '100013', 1, 3),
+(51, 51, 0, 0, 'مل', 1400, 800, 'معجون سيجنال', 'N/A', '100014', 1, 3),
+(52, 52, 0, 0, 'gm', 800, 700, 'ملح ساسا', 'N/A', '100015', 1, 3),
+(53, 53, 0, 0, 'gm', 1000, 800, 'تونة مغربية', 'N/A', '100016', 1, 3),
+(54, 54, 0, 0, 'gm', 10000, 6000, 'تانج', 'N/A', '100018', 1, 3),
+(55, 55, 0, 0, 'g', 5000, 4500, 'جبنة بوك', 'N/A', '100020', 1, 3),
+(56, 56, 0, 0, 'g', 700, 400, 'ليز', 'N/A', '100022', 1, 3),
+(57, 57, 0, 0, 'gm', 4000, 3000, 'مناديل', 'N/A', '100025', 1, 3),
+(58, 58, 0, 0, 'gm', 600, 500, 'باكنج باودر', 'N/A', '10000005', 1, 3),
+(59, 59, 0, 0, 'gm', 600, 500, 'باكنج باودر', 'N/A', '1000005', 1, 3),
+(60, 60, 0, 0, 'kg', 5000, 3000, 'سمن اصيل', 'N/A', '1022200', 1, 3),
+(61, 61, 0, 0, 'gm', 2000, 1500, 'مربى العلالي', 'N/A', '2032022', 1, 3),
+(62, 62, 0, 0, 'kg', 13000, 12500, 'لبن نيدو', 'N/A', '45466564', 1, 3),
+(63, 63, 0, 0, 'kg', 20000, 18000, 'جبنة الدويم', 'N/A', '6544454', 1, 3),
+(64, 64, 0, 0, 'gm', 7500, 6000, 'اندومي', 'N/A', '64545464', 1, 3),
+(65, 65, 0, 0, 'pcs', 9000, 7000, 'فوط فام الصحيه', 'N/A', '544545558', 1, 3),
+(66, 66, 0, 0, 'pcs', 700, 500, 'مناديل فاين', 'N/A', '257885', 1, 3),
+(67, 67, 0, 0, 'gm', 2000, 1500, 'شاى الغزالتين', 'N/A', '5124454', 1, 3),
+(68, 68, 0, 0, 'pcs', 9000, 8000, 'بامبرز فاين بيبى', 'N/A', '5646499', 1, 3),
+(69, 69, 0, 0, 'kg', 700, 500, 'عدس الفراشه', 'N/A', '546464', 1, 3),
+(70, 70, 0, 0, 'kg', 1500, 1000, 'فاصوليا الفراشة', 'N/A', '656465464', 1, 3),
+(71, 71, 0, 0, 'كرتونه', 3000, 2900, 'بسكويت رويال', 'N/A', '314654678', 1, 3),
+(72, 72, 0, 0, 'pcs', 4000, 3000, 'مصاصة لولي بوب', 'N/A', '45444', 1, 3),
+(73, 73, 0, 0, 'kg', 4000, 3000, 'صابون فريش', 'N/A', '4555', 1, 3),
+(74, 74, 0, 0, 'g', 7000, 6000, 'صابون اصيل', 'N/A', '646565', 1, 3),
+(75, 75, 0, 0, 'ltr', 3000, 2500, 'صابون تيري 5لتر', 'N/A', '654647', 1, 3),
+(76, 76, 0, 0, 'kg', 4000, 3000, 'صابون معجون', 'N/A', '46446455', 1, 3),
+(77, 77, 0, 0, 'مل', 3000, 2500, 'عصير فيمتو سعودى', 'N/A', '25457', 1, 3),
+(78, 78, 0, 0, 'مل', 5000, 4500, 'سن توب سعودى', 'N/A', '4545555', 1, 3),
+(79, 79, 0, 0, 'kg', 4000, 3000, 'فلفل اسود حب', 'N/A', '35488', 1, 3),
+(80, 80, 0, 0, 'gm', 1600, 1500, 'شعيرية اماراتية', 'N/A', '777777', 1, 3),
+(81, 81, 0, 0, 'gm', 1400, 1200, 'اسباغتي', 'N/A', '3578', 1, 3),
+(82, 82, 0, 0, 'مل', 2000, 1100, 'كاتشب رنا', 'N/A', '32145', 1, 3),
+(83, 83, 0, 0, 'pcs', 6000, 5000, 'فرش الفليج', 'N/A', '42555', 1, 3),
+(84, 84, 0, 0, 'pcs', 5000, 4000, 'موس التمساح', 'N/A', '54555', 1, 3),
+(85, 85, 0, 0, 'kg', 7000, 6000, 'صابون الاوتوماتيك', 'N/A', '366666', 1, 3),
+(86, 86, 0, 0, 'مل', 2500, 2000, 'كلوركس', 'N/A', '321555', 1, 3),
 (87, 87, 0, 0, 'KG', 200, 197, 'best quality of berries.', '', NULL, 1, 0);
 
 -- --------------------------------------------------------
@@ -3383,7 +3475,7 @@ CREATE TABLE `recent_search` (
 --
 
 INSERT INTO `recent_search` (`id`, `keyword`, `user_id`) VALUES
-(1, 'Ø¯Ù‚ÙŠÙ‚', 61);
+(1, 'دقيق', 61);
 
 -- --------------------------------------------------------
 
@@ -3454,26 +3546,26 @@ INSERT INTO `reward_points` (`reward_id`, `min_cart_value`, `reward_point`) VALU
 CREATE TABLE `roles` (
   `role_id` int(11) NOT NULL,
   `role_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dashboard` int(11) NOT NULL DEFAULT 0,
-  `tax` int(11) NOT NULL DEFAULT 0,
-  `id` int(11) NOT NULL DEFAULT 0,
-  `membership` int(11) NOT NULL DEFAULT 0,
-  `reports` int(11) NOT NULL DEFAULT 0,
-  `notification` int(11) NOT NULL DEFAULT 0,
-  `users` int(11) NOT NULL DEFAULT 0,
-  `category` int(11) NOT NULL DEFAULT 0,
-  `product` int(11) NOT NULL DEFAULT 0,
-  `area` int(11) NOT NULL DEFAULT 0,
-  `store` int(11) NOT NULL DEFAULT 0,
-  `orders` int(11) NOT NULL DEFAULT 0,
-  `payout` int(11) NOT NULL DEFAULT 0,
-  `rewards` int(11) NOT NULL DEFAULT 0,
-  `delivery_boy` int(11) NOT NULL DEFAULT 0,
-  `pages` int(11) NOT NULL DEFAULT 0,
-  `feedback` int(11) NOT NULL DEFAULT 0,
-  `callback` int(11) NOT NULL DEFAULT 0,
-  `settings` int(11) NOT NULL DEFAULT 0,
-  `reason` int(11) NOT NULL DEFAULT 0
+  `dashboard` int(11) NOT NULL DEFAULT '0',
+  `tax` int(11) NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL DEFAULT '0',
+  `membership` int(11) NOT NULL DEFAULT '0',
+  `reports` int(11) NOT NULL DEFAULT '0',
+  `notification` int(11) NOT NULL DEFAULT '0',
+  `users` int(11) NOT NULL DEFAULT '0',
+  `category` int(11) NOT NULL DEFAULT '0',
+  `product` int(11) NOT NULL DEFAULT '0',
+  `area` int(11) NOT NULL DEFAULT '0',
+  `store` int(11) NOT NULL DEFAULT '0',
+  `orders` int(11) NOT NULL DEFAULT '0',
+  `payout` int(11) NOT NULL DEFAULT '0',
+  `rewards` int(11) NOT NULL DEFAULT '0',
+  `delivery_boy` int(11) NOT NULL DEFAULT '0',
+  `pages` int(11) NOT NULL DEFAULT '0',
+  `feedback` int(11) NOT NULL DEFAULT '0',
+  `callback` int(11) NOT NULL DEFAULT '0',
+  `settings` int(11) NOT NULL DEFAULT '0',
+  `reason` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3505,9 +3597,9 @@ CREATE TABLE `sec_banner` (
 --
 
 INSERT INTO `sec_banner` (`banner_id`, `banner_name`, `banner_image`, `varient_id`, `product_name`, `store_id`, `qty_unit`) VALUES
-(1, 'Ù…Ù†ØªØ¬Ø§Øª Ù†ÙŠØ¯Ùˆ', '/images/banner/18-11-2022/Grocery-creative_750X375-(1).jpg', 1, 'Ù„Ø¨Ù† Ù†ÙŠØ¯Ùˆ', 3, '120 Ù¢Ù Ù '),
-(2, 'ÙƒÙ„ Ù…Ø§ØªØ­ØªØ§Ø¬Ø© ÙŠØµÙ„Ùƒ Ø¨Ø¶ØºØ·Ø© Ø²Ø±', '/images/banner/02-12-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 55, 'Ø¬Ø¨Ù†Ø© Ø¨ÙˆÙƒ', 3, '500 g'),
-(3, 'ÙƒÙ„ Ù…Ø§ØªØ­ØªØ§Ø¬Ø© ÙŠØµÙ„Ùƒ Ø¨Ø¶ØºØ·Ø© Ø²Ø±', '/images/banner/02-12-2022/dce4fe1d-1339-40ea-90c8-8248f0b0ff5b.jpg', 49, 'Ù…Ø¹ÙƒØ±ÙˆÙ†Ø© Ø§Ù„Ø§Ù…Ø§Ø±Ø§Øª', 3, '500 gm');
+(1, 'منتجات نيدو', '/images/banner/18-11-2022/Grocery-creative_750X375-(1).jpg', 1, 'لبن نيدو', 3, '120 ٢٠٠'),
+(2, 'كل ماتحتاجة يصلك بضغطة زر', '/images/banner/02-12-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 55, 'جبنة بوك', 3, '500 g'),
+(3, 'كل ماتحتاجة يصلك بضغطة زر', '/images/banner/02-12-2022/dce4fe1d-1339-40ea-90c8-8248f0b0ff5b.jpg', 49, 'معكرونة الامارات', 3, '500 gm');
 
 -- --------------------------------------------------------
 
@@ -3519,10 +3611,10 @@ CREATE TABLE `service_area` (
   `ser_id` int(11) NOT NULL,
   `society_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `society_id` int(11) NOT NULL,
-  `delivery_charge` float NOT NULL DEFAULT 0,
+  `delivery_charge` float NOT NULL DEFAULT '0',
   `store_id` int(11) NOT NULL,
-  `added_by` int(11) NOT NULL DEFAULT 0,
-  `enabled` int(11) NOT NULL DEFAULT 1,
+  `added_by` int(11) NOT NULL DEFAULT '0',
+  `enabled` int(11) NOT NULL DEFAULT '1',
   `city_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -3575,9 +3667,9 @@ INSERT INTO `settings` (`id`, `name`, `value`, `created_at`, `updated_at`) VALUE
 
 CREATE TABLE `smsby` (
   `by_id` int(11) NOT NULL,
-  `msg91` int(11) NOT NULL DEFAULT 1,
-  `twilio` int(11) NOT NULL DEFAULT 0,
-  `status` int(11) NOT NULL DEFAULT 1
+  `msg91` int(11) NOT NULL DEFAULT '1',
+  `twilio` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3654,7 +3746,7 @@ CREATE TABLE `store` (
   `store_photo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N/A',
   `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `city_id` int(11) NOT NULL,
-  `admin_share` float NOT NULL DEFAULT 0,
+  `admin_share` float NOT NULL DEFAULT '0',
   `device_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -3662,13 +3754,13 @@ CREATE TABLE `store` (
   `lat` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `lng` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `admin_approval` int(11) NOT NULL DEFAULT 1,
-  `orders` int(11) NOT NULL DEFAULT 1,
-  `store_status` int(11) NOT NULL DEFAULT 1,
+  `admin_approval` int(11) NOT NULL DEFAULT '1',
+  `orders` int(11) NOT NULL DEFAULT '1',
+  `store_status` int(11) NOT NULL DEFAULT '1',
   `store_opening_time` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `store_closing_time` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `time_interval` int(11) NOT NULL,
-  `inactive_reason` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `inactive_reason` longtext COLLATE utf8mb4_unicode_ci,
   `id_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
@@ -3679,7 +3771,7 @@ CREATE TABLE `store` (
 --
 
 INSERT INTO `store` (`id`, `store_name`, `employee_name`, `phone_number`, `store_photo`, `city`, `city_id`, `admin_share`, `device_id`, `email`, `password`, `del_range`, `lat`, `lng`, `address`, `admin_approval`, `orders`, `store_status`, `store_opening_time`, `store_closing_time`, `time_interval`, `inactive_reason`, `id_type`, `id_number`, `id_photo`) VALUES
-(3, 'mohammed', 'mohammed', '3', '/images/store/18-11-2022/foods.jpg', 'Khartoum bahri', 2, 20, NULL, 'almoatasem89@gmail.com', '$2y$10$nnm2OyZL9AgGor5e.PU5MeUjM9GaisQegJE8miEKw23l0s0iijMVK', 2, NULL, NULL, 'Ø§Ù„Ø®Ø±Ø·ÙˆÙ… Ø¨Ø­Ø±ÙŠ Ù…Ø®Ø·Ø· Ù†Ø¨ØªØ© Ù…Ø±Ø¨Ø¹ Ù¡ Ù…Ù†Ø²Ù„ Ø±Ù‚Ù… Ù¥Ù§Ù¨', 1, 3, 1, '07:00', '22:00', 5, NULL, 'ZAAD Card', '3', '/images/store/18-11-2022/foods.jpg');
+(3, 'mohammed', 'mohammed', '3', '/images/store/18-11-2022/foods.jpg', 'Khartoum bahri', 2, 20, NULL, 'almoatasem89@gmail.com', '$2y$10$nnm2OyZL9AgGor5e.PU5MeUjM9GaisQegJE8miEKw23l0s0iijMVK', 2, NULL, NULL, 'الخرطوم بحري مخطط نبتة مربع ١ منزل رقم ٥٧٨', 1, 3, 1, '07:00', '22:00', 5, NULL, 'ZAAD Card', '3', '/images/store/18-11-2022/foods.jpg');
 
 -- --------------------------------------------------------
 
@@ -3744,10 +3836,10 @@ CREATE TABLE `store_banner` (
 INSERT INTO `store_banner` (`banner_id`, `banner_name`, `banner_image`, `store_id`, `cat_id`, `type`) VALUES
 (1, 'banner1', '/images/banner/18-11-2022/banner1.jpg', 3, 4, 'H'),
 (2, 'banner2', '/images/banner/18-11-2022/banner2.jpg', 3, 2, 'H'),
-(3, 'ÙƒÙ„ Ù…Ø§ØªØ­ØªØ§Ø¬Ø© ÙŠØµÙ„Ùƒ Ø¨Ø¶ØºØ·Ø© Ø²Ø±', '/images/banner/02-12-2022/download-(9).jfif', 3, 30, 'H'),
-(4, 'ÙƒÙ„ Ù…Ø§ØªØ­ØªØ§Ø¬Ø© ÙŠØµÙ„Ùƒ Ø¨Ø¶ØºØ·Ø© Ø²Ø±', '/images/banner/02-12-2022/download-(6).jfif', 3, 49, 'H'),
-(5, 'ÙƒÙ„ Ù…Ø§ØªØ­ØªØ§Ø¬Ø© ÙŠØµÙ„Ùƒ Ø¨Ø¶ØºØ·Ø© Ø²Ø±', '/images/banner/02-12-2022/th-(3).jfif', 3, 63, 'H'),
-(6, 'ÙƒÙ„ Ù…Ø§ØªØ­ØªØ§Ø¬Ø© ÙŠØµÙ„Ùƒ Ø¨Ø¶ØºØ·Ø© Ø²Ø±', '/images/banner/02-12-2022/images-(22).jpeg', 3, 61, 'H');
+(3, 'كل ماتحتاجة يصلك بضغطة زر', '/images/banner/02-12-2022/download-(9).jfif', 3, 30, 'H'),
+(4, 'كل ماتحتاجة يصلك بضغطة زر', '/images/banner/02-12-2022/download-(6).jfif', 3, 49, 'H'),
+(5, 'كل ماتحتاجة يصلك بضغطة زر', '/images/banner/02-12-2022/th-(3).jfif', 3, 63, 'H'),
+(6, 'كل ماتحتاجة يصلك بضغطة زر', '/images/banner/02-12-2022/images-(22).jpeg', 3, 61, 'H');
 
 -- --------------------------------------------------------
 
@@ -3759,7 +3851,7 @@ CREATE TABLE `store_callback_req` (
   `callback_req_id` int(11) NOT NULL,
   `store_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `store_phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `processed` int(11) NOT NULL DEFAULT 0,
+  `processed` int(11) NOT NULL DEFAULT '0',
   `date` date NOT NULL,
   `store_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -3780,15 +3872,23 @@ CREATE TABLE `store_delivery_boy` (
   `boy_loc` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lng` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
+  `status` int(11) NOT NULL DEFAULT '1',
   `store_id` int(11) NOT NULL,
   `added_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'store',
-  `ad_dboy_id` int(11) NOT NULL DEFAULT 0,
-  `rem_by_admin` int(11) NOT NULL DEFAULT 0,
+  `ad_dboy_id` int(11) NOT NULL DEFAULT '0',
+  `rem_by_admin` int(11) NOT NULL DEFAULT '0',
   `id_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `store_delivery_boy`
+--
+
+INSERT INTO `store_delivery_boy` (`dboy_id`, `boy_name`, `boy_phone`, `boy_city`, `password`, `device_id`, `boy_loc`, `lat`, `lng`, `status`, `store_id`, `added_by`, `ad_dboy_id`, `rem_by_admin`, `id_no`, `id_photo`, `id_name`) VALUES
+(1, 'zaid', '0124736128', 'Khartoum bahri', '7789', NULL, 'Khartoum, السودان', '15.5006544', '32.5598994', 1, 3, 'store', 1, 0, '1', '/images/dboy/22-12-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 'ZAAD Card'),
+(2, 'admin', '0123771002', 'Khartoum bahri', '77897789', NULL, 'Khartoum, السودان', '15.5006544', '32.5598994', 1, 3, 'store', 2, 0, '2', '/images/dboy/22-12-2022/download-(1).jfif', 'ZAAD Card');
 
 -- --------------------------------------------------------
 
@@ -3859,8 +3959,8 @@ CREATE TABLE `store_notification` (
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `not_message` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `store_id` int(11) NOT NULL,
-  `read_by_store` int(11) NOT NULL DEFAULT 0,
-  `created_at` datetime DEFAULT current_timestamp()
+  `read_by_store` int(11) NOT NULL DEFAULT '0',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3868,7 +3968,7 @@ CREATE TABLE `store_notification` (
 --
 
 INSERT INTO `store_notification` (`not_id`, `not_title`, `image`, `not_message`, `store_id`, `read_by_store`, `created_at`) VALUES
-(1, 'Ù…Ø¨Ø±ÙˆÙƒ Ø§Ù„Ù…ØªØ¬Ø±', '/images/notification/18-11-2022/timemarket1.jpeg', 'Ù†Ø±Ø¬Ùˆ Ø§Ù„Ø§Ù„ØªØ²Ø§Ù… Ø¨Ù…ÙˆØ¬Ù‡Ø§Øª Ø§Ù„Ù…Ù†ØµØ©', 3, 0, '2022-11-18 17:07:45');
+(1, 'مبروك المتجر', '/images/notification/18-11-2022/timemarket1.jpeg', 'نرجو الالتزام بموجهات المنصة', 3, 0, '2022-11-18 17:07:45');
 
 -- --------------------------------------------------------
 
@@ -3888,7 +3988,7 @@ CREATE TABLE `store_orders` (
   `total_mrp` float NOT NULL,
   `order_cart_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `order_date` datetime NOT NULL,
-  `store_approval` int(11) NOT NULL DEFAULT 1,
+  `store_approval` int(11) NOT NULL DEFAULT '1',
   `store_id` int(11) NOT NULL,
   `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `tx_per` int(11) DEFAULT NULL,
@@ -3903,8 +4003,22 @@ CREATE TABLE `store_orders` (
 --
 
 INSERT INTO `store_orders` (`store_order_id`, `product_name`, `varient_image`, `quantity`, `unit`, `varient_id`, `qty`, `price`, `total_mrp`, `order_cart_id`, `order_date`, `store_approval`, `store_id`, `description`, `tx_per`, `price_without_tax`, `tx_price`, `tx_name`, `type`) VALUES
-(11, 'Ø¯Ù‚ÙŠÙ‚ Ø§Ù„Ø§ÙˆÙ„', '/images/product/30-11-2022/download.jfif', 1, 'kg', 39, 3, 1800, 2400, 'incart', '2022-12-09 20:11:40', 61, 3, 'Ø¯Ù‚ÙŠÙ‚ Ø§Ù„Ø§ÙˆÙ„ Ø³ÙŠÙ‚Ø§', 0, 1200, 0, 'GST', 'Regular'),
-(12, 'Ø¬Ø¨Ù†Ø© Ø¨ÙˆÙƒ', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 500, 'g', 55, 2, 5000, 10000, 'incart', '2022-12-09 20:12:20', 61, 3, 'Ø¬Ø¨Ù†Ø© Ø¨ÙˆÙƒ', 0, 5000, 0, 'GST', 'Regular');
+(11, 'دقيق الاول', '/images/product/30-11-2022/download.jfif', 1, 'kg', 39, 3, 1800, 2400, 'incart', '2022-12-09 20:11:40', 61, 3, 'دقيق الاول سيقا', 0, 1200, 0, 'GST', 'Regular'),
+(12, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 500, 'g', 55, 2, 5000, 10000, 'incart', '2022-12-09 20:12:20', 61, 3, 'جبنة بوك', 0, 5000, 0, 'GST', 'Regular'),
+(50, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 80, 'g', 55, 20, 50000, 100000, 'GGYB840e', '2022-12-20 17:35:31', 1, 3, 'جبنة بوك', 0, 50000, 0, 'GST', 'Regular'),
+(57, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 80, 'g', 55, 20, 50000, 100000, 'NCPR554c', '2022-12-21 11:54:30', 1, 3, 'جبنة بوك', 0, 50000, 0, 'GST', 'Regular'),
+(58, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 80, 'g', 55, 20, 50000, 100000, 'IPZR86a3', '2022-12-21 11:54:39', 1, 3, 'جبنة بوك', 0, 50000, 0, 'GST', 'Regular'),
+(59, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 80, 'g', 55, 20, 50000, 100000, 'JXZF950a', '2022-12-21 12:12:36', 1, 3, 'جبنة بوك', 0, 50000, 0, 'GST', 'Regular'),
+(62, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 80, 'g', 55, 20, 50000, 100000, 'WVKO1749', '2022-12-21 12:14:29', 1, 3, 'جبنة بوك', 0, 50000, 0, 'GST', 'Regular'),
+(63, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 80, 'g', 55, 20, 50000, 100000, 'PJSU09c3', '2022-12-21 12:14:34', 1, 3, 'جبنة بوك', 0, 50000, 0, 'GST', 'Regular'),
+(68, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 80, 'g', 55, 1, 2500, 5000, 'XUGB9898', '2022-12-21 16:47:12', 1, 3, 'جبنة بوك', 0, 2500, 0, 'GST', 'Regular'),
+(70, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 80, 'g', 55, 1, 2500, 5000, 'YZRT33c0', '2022-12-21 20:38:56', 1, 3, 'جبنة بوك', 0, 2500, 0, 'GST', 'Regular'),
+(72, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 80, 'g', 55, 1, 2500, 5000, 'UFGM82f5', '2022-12-21 20:39:17', 1, 3, 'جبنة بوك', 0, 2500, 0, 'GST', 'Regular'),
+(73, 'طحنية الوافي 1كيلو', '/images/product/30-11-2022/images-(12).jpeg', 20, 'kg', 44, 1, 3000, 4000, 'UFGM82f5', '2022-12-21 20:39:17', 1, 3, 'طحنية الوافي 1كيلو', 0, 3000, 0, 'VAT', 'Regular'),
+(75, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 79, 'g', 55, 1, 2500, 5000, 'CGIY31e9', '2022-12-21 20:41:47', 1, 3, 'جبنة بوك', 0, 2500, 0, 'GST', 'Regular'),
+(77, 'زيت صباح 1لتر', '/images/product/30-11-2022/تنزيل-(4).jpeg', 50, 'ltr', 41, 1, 1700, 1800, 'CHUP5671', '2022-12-21 20:43:28', 1, 3, 'زيت', 17, 1411, 289, 'VAT', 'Regular'),
+(79, 'باكنج باودر', '/images/product/02-12-2022/download-(2).jfif', 11, 'gm', 59, 1, 500, 600, 'NBSG801b', '2022-12-22 13:49:02', 1, 3, 'باكنج باودر', 0, 500, 0, 'GST', 'Regular'),
+(82, 'بسكويت ديلايسو', '/images/product/30-11-2022/th-(9).jfif', 20, 'gm', 48, 2, 600, 800, 'JQDR965a', '2022-12-22 14:19:23', 1, 3, 'ويفر', 0, 600, 0, 'VAT', 'Regular');
 
 -- --------------------------------------------------------
 
@@ -3919,8 +4033,8 @@ CREATE TABLE `store_products` (
   `store_id` int(11) NOT NULL,
   `mrp` float NOT NULL,
   `price` float NOT NULL,
-  `min_ord_qty` int(11) NOT NULL DEFAULT 1,
-  `max_ord_qty` int(11) NOT NULL DEFAULT 100
+  `min_ord_qty` int(11) NOT NULL DEFAULT '1',
+  `max_ord_qty` int(11) NOT NULL DEFAULT '100'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3964,23 +4078,23 @@ INSERT INTO `store_products` (`p_id`, `varient_id`, `quantity`, `store_id`, `mrp
 (47, 38, 0, 3, 200, 150, 1, 100),
 (48, 39, 50, 3, 0, 600, 10, 100),
 (49, 40, 50, 3, 13000, 11000, 1, 100),
-(50, 41, 50, 3, 1800, 1700, 1, 100),
+(50, 41, 49, 3, 1800, 1700, 1, 100),
 (51, 42, 20, 3, 2000, 1500, 1, 100),
 (52, 43, 200, 3, 5000, 4000, 1, 100),
-(53, 44, 20, 3, 4000, 3000, 1, 100),
+(53, 44, 19, 3, 4000, 3000, 1, 100),
 (54, 45, 20, 3, 3000, 2500, 1, 100),
 (55, 46, 20, 3, 3000, 2000, 1, 100),
 (56, 47, 20, 3, 1200, 1100, 1, 100),
-(57, 48, 20, 3, 400, 300, 1, 100),
+(57, 48, 18, 3, 400, 300, 1, 100),
 (58, 49, 20, 3, 1500, 1400, 1, 100),
 (59, 50, 20, 3, 700, 500, 1, 100),
 (60, 51, 50, 3, 1400, 800, 1, 100),
 (61, 52, 50, 3, 800, 700, 1, 100),
 (62, 53, 50, 3, 1000, 800, 1, 100),
 (63, 54, 50, 3, 10000, 6000, 1, 100),
-(64, 55, 80, 3, 5000, 4500, 1, 100),
+(64, 55, 78, 3, 5000, 4500, 1, 100),
 (65, 56, 50, 3, 700, 400, 1, 100),
-(68, 59, 11, 3, 600, 500, 1, 100),
+(68, 59, 10, 3, 600, 500, 1, 100),
 (70, 60, 12, 3, 5000, 3000, 1, 100),
 (71, 61, 6, 3, 2000, 1500, 1, 100),
 (72, 62, 6, 3, 13000, 12500, 1, 100),
@@ -4038,71 +4152,71 @@ CREATE TABLE `tags` (
 --
 
 INSERT INTO `tags` (`tag_id`, `product_id`, `tag`) VALUES
-(1, 1, 'Ù„Ø¨Ù†'),
-(2, 2, 'Ù†ÙˆØªÙŠÙ„Ø§'),
-(3, 3, 'Ø³ÙƒØ±'),
-(4, 4, 'Ø§Ø±Ø²'),
-(5, 5, 'Ø¬Ù„Ø§ÙƒØ³ÙŠ'),
-(6, 5, ' Ø´ÙˆÙƒÙˆÙ„Ø§ØªÙ‡'),
-(7, 6, 'Ø´ÙˆÙƒÙ„Ø§ØªÙ‡'),
-(8, 7, 'Ø¹Ø³Ù„'),
-(9, 8, 'Ø§Ù„Ù‚Ø´Ø·Ø©'),
-(10, 8, ' Ø§Ù„Ù…Ø±Ø§Ø¹ÙŠ'),
-(11, 8, ' Ø§Ù„Ø­Ù„ÙŠØ¨'),
+(1, 1, 'لبن'),
+(2, 2, 'نوتيلا'),
+(3, 3, 'سكر'),
+(4, 4, 'ارز'),
+(5, 5, 'جلاكسي'),
+(6, 5, ' شوكولاته'),
+(7, 6, 'شوكلاته'),
+(8, 7, 'عسل'),
+(9, 8, 'القشطة'),
+(10, 8, ' المراعي'),
+(11, 8, ' الحليب'),
 (12, 9, 'T'),
-(14, 11, 'Ø²ÙŠØª'),
-(15, 12, 'Ø³ÙƒØ±'),
-(16, 12, ' ÙƒÙ†Ø§Ù†Ù‡'),
-(17, 10, 'Ø¯Ù‚ÙŠÙ‚ Ø§Ù„Ø§ÙˆÙ„ Ø·Ø­ÙŠÙ†'),
-(45, 39, 'Ø¯Ù‚ÙŠÙ‚ Ø§Ù„Ø§ÙˆÙ„ Ø³ÙŠÙ‚Ø§'),
-(46, 40, 'Ù„Ø¨Ù† ÙƒØ§Ø¨Ùˆ'),
-(47, 41, 'Ø²ÙŠØª'),
+(14, 11, 'زيت'),
+(15, 12, 'سكر'),
+(16, 12, ' كنانه'),
+(17, 10, 'دقيق الاول طحين'),
+(45, 39, 'دقيق الاول سيقا'),
+(46, 40, 'لبن كابو'),
+(47, 41, 'زيت'),
 (48, 42, 'Raffaello'),
-(49, 43, 'Ø³ÙƒØ± 10ÙƒÙŠÙ„Ùˆ ÙƒÙ†Ø§Ù†Ù‡'),
-(50, 44, 'Ø·Ø­Ù†ÙŠØ© Ø§Ù„ÙˆØ§ÙÙŠ 1ÙƒÙŠÙ„Ùˆ'),
-(51, 45, 'Ø¨Ù† Ø§Ù„Ø¨ÙŠØª'),
-(52, 46, 'Ø±Ø²'),
-(53, 47, 'ØµÙ„ØµÙ‡'),
-(54, 48, 'Ø¨Ø³ÙƒÙˆÙŠØª ÙˆÙŠÙØ±'),
-(55, 49, 'Ù…Ø¹ÙƒØ±ÙˆÙ†Ø© Ø§Ù„Ø§Ù…Ø§Ø±Ø§Øª'),
-(56, 50, 'ØµØ§Ø¨ÙˆÙ† Ø¨Ø§Ù„Ù…ÙˆÙ„ÙŠÙ'),
-(57, 51, 'Ù…Ø¹Ø¬ÙˆÙ† Ø³ÙŠØ¬Ù†Ø§Ù„'),
-(58, 52, 'Ù…Ù„Ø­ Ø³Ø§Ø³Ø§'),
-(59, 53, 'ØªÙˆÙ†Ø© Ù…ØºØ±Ø¨ÙŠØ©'),
-(60, 54, 'ØªØ§Ù†Ø¬'),
-(61, 55, 'Ø¬Ø¨Ù†Ø© Ø¨ÙˆÙƒ'),
-(62, 56, 'Ù„ÙŠØ²'),
-(63, 57, 'Ù…Ù†Ø§Ø¯ÙŠÙ„'),
-(64, 58, 'Ø¨Ø§ÙƒÙ†Ø¬ Ø¨Ø§ÙˆØ¯Ø±'),
-(65, 59, 'Ø¨Ø§ÙƒÙ†Ø¬ Ø¨Ø§ÙˆØ¯Ø±'),
-(66, 60, 'Ø³Ù…Ù† Ø§ØµÙŠÙ„'),
-(67, 61, 'Ù…Ø±Ø¨Ù‰ Ø§Ù„Ø¹Ù„Ø§Ù„ÙŠ'),
-(68, 62, 'Ù„Ø¨Ù† Ù†ÙŠØ¯Ùˆ'),
-(69, 63, 'Ø¬Ø¨Ù†Ø© Ø§Ù„Ø¯ÙˆÙŠÙ…'),
-(70, 64, 'Ø§Ù†Ø¯ÙˆÙ…ÙŠ'),
-(71, 65, 'ÙÙˆØ· ÙØ§Ù… Ø§Ù„ØµØ­ÙŠÙ‡'),
-(72, 66, 'Ù…Ù†Ø§Ø¯ÙŠÙ„ ÙØ§ÙŠÙ†'),
-(73, 67, 'Ø´Ø§Ù‰ Ø§Ù„ØºØ²Ø§Ù„ØªÙŠÙ†'),
-(74, 68, 'Ø¨Ø§Ù…Ø¨Ø±Ø² ÙØ§ÙŠÙ† Ø¨ÙŠØ¨Ù‰'),
-(75, 69, 'Ø¹Ø¯Ø³ Ø§Ù„ÙØ±Ø§Ø´Ù‡'),
-(76, 70, 'ÙØ§ØµÙˆÙ„ÙŠØ§ Ø§Ù„ÙØ±Ø§Ø´Ø©'),
-(77, 71, 'Ø¨Ø³ÙƒÙˆÙŠØª Ø±ÙˆÙŠØ§Ù„'),
-(78, 72, 'Ù…ØµØ§ØµØ© Ù„ÙˆÙ„ÙŠ Ø¨ÙˆØ¨'),
-(79, 73, 'ØµØ§Ø¨ÙˆÙ† ÙØ±ÙŠØ´'),
-(80, 74, 'ØµØ§Ø¨ÙˆÙ† Ø§ØµÙŠÙ„'),
-(81, 75, 'ØµØ§Ø¨ÙˆÙ† ØªÙŠØ±ÙŠ 5Ù„ØªØ±'),
-(82, 76, 'ØµØ§Ø¨ÙˆÙ† Ù…Ø¹Ø¬ÙˆÙ†'),
-(83, 77, 'Ø¹ØµÙŠØ± ÙÙŠÙ…ØªÙˆ Ø³Ø¹ÙˆØ¯Ù‰'),
-(84, 78, 'Ø³Ù† ØªÙˆØ¨ Ø³Ø¹ÙˆØ¯Ù‰Ø³Ù† ØªÙˆØ¨ Ø³Ø¹ÙˆØ¯Ù‰'),
-(85, 79, 'ÙÙ„ÙÙ„ Ø§Ø³ÙˆØ¯ Ø­Ø¨'),
-(86, 80, 'Ø´Ø¹ÙŠØ±ÙŠØ© Ø§Ù…Ø§Ø±Ø§ØªÙŠØ©'),
-(87, 81, 'Ø§Ø³Ø¨Ø§ØºØªÙŠ'),
-(88, 82, 'ÙƒØ§ØªØ´Ø¨ Ø±Ù†Ø§'),
-(89, 83, 'ÙØ±Ø´ Ø§Ù„ÙÙ„ÙŠØ¬'),
-(90, 84, 'Ù…ÙˆØ³ Ø§Ù„ØªÙ…Ø³Ø§Ø­'),
-(91, 85, 'ØµØ§Ø¨ÙˆÙ† Ø§Ù„Ø§ÙˆØªÙˆÙ…Ø§ØªÙŠÙƒ'),
-(92, 86, 'Ø§Ù„Ù…Ù†Ø¸ÙØ§Øª'),
-(93, 86, 'ÙƒÙ„ÙˆØ±ÙƒØ³'),
+(49, 43, 'سكر 10كيلو كنانه'),
+(50, 44, 'طحنية الوافي 1كيلو'),
+(51, 45, 'بن البيت'),
+(52, 46, 'رز'),
+(53, 47, 'صلصه'),
+(54, 48, 'بسكويت ويفر'),
+(55, 49, 'معكرونة الامارات'),
+(56, 50, 'صابون بالموليف'),
+(57, 51, 'معجون سيجنال'),
+(58, 52, 'ملح ساسا'),
+(59, 53, 'تونة مغربية'),
+(60, 54, 'تانج'),
+(61, 55, 'جبنة بوك'),
+(62, 56, 'ليز'),
+(63, 57, 'مناديل'),
+(64, 58, 'باكنج باودر'),
+(65, 59, 'باكنج باودر'),
+(66, 60, 'سمن اصيل'),
+(67, 61, 'مربى العلالي'),
+(68, 62, 'لبن نيدو'),
+(69, 63, 'جبنة الدويم'),
+(70, 64, 'اندومي'),
+(71, 65, 'فوط فام الصحيه'),
+(72, 66, 'مناديل فاين'),
+(73, 67, 'شاى الغزالتين'),
+(74, 68, 'بامبرز فاين بيبى'),
+(75, 69, 'عدس الفراشه'),
+(76, 70, 'فاصوليا الفراشة'),
+(77, 71, 'بسكويت رويال'),
+(78, 72, 'مصاصة لولي بوب'),
+(79, 73, 'صابون فريش'),
+(80, 74, 'صابون اصيل'),
+(81, 75, 'صابون تيري 5لتر'),
+(82, 76, 'صابون معجون'),
+(83, 77, 'عصير فيمتو سعودى'),
+(84, 78, 'سن توب سعودىسن توب سعودى'),
+(85, 79, 'فلفل اسود حب'),
+(86, 80, 'شعيرية اماراتية'),
+(87, 81, 'اسباغتي'),
+(88, 82, 'كاتشب رنا'),
+(89, 83, 'فرش الفليج'),
+(90, 84, 'موس التمساح'),
+(91, 85, 'صابون الاوتوماتيك'),
+(92, 86, 'المنظفات'),
+(93, 86, 'كلوركس'),
 (94, 87, 'fruit'),
 (95, 87, ' grocery'),
 (96, 87, 'berry');
@@ -4165,9 +4279,9 @@ CREATE TABLE `tbl_web_setting` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `favicon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `number_limit` int(11) NOT NULL,
-  `last_loc` int(11) NOT NULL DEFAULT 0,
-  `footer_text` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `live_chat` int(11) NOT NULL DEFAULT 1
+  `last_loc` int(11) NOT NULL DEFAULT '0',
+  `footer_text` longtext COLLATE utf8mb4_unicode_ci,
+  `live_chat` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -4175,7 +4289,7 @@ CREATE TABLE `tbl_web_setting` (
 --
 
 INSERT INTO `tbl_web_setting` (`set_id`, `icon`, `name`, `favicon`, `number_limit`, `last_loc`, `footer_text`, `live_chat`) VALUES
-(1, '/images/app_logo/app_icon/17-11-2022/citysoft_logo.png', 'ZAAD', '/images/app_logo/favicon/17-11-2022/citysoft.png', 10, 1, 'Â© 2022, made with  by ZAAD', 1);
+(1, '/images/app_logo/app_icon/17-11-2022/citysoft_logo.png', 'ZAAD', '/images/app_logo/favicon/17-11-2022/citysoft.png', 10, 1, '© 2022, made with  by ZAAD', 1);
 
 -- --------------------------------------------------------
 
@@ -4270,16 +4384,16 @@ CREATE TABLE `users` (
   `user_area` int(11) DEFAULT NULL,
   `otp_value` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `otp_expires_date` datetime DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
-  `wallet` float NOT NULL DEFAULT 0,
-  `rewards` int(11) NOT NULL DEFAULT 0,
-  `is_verified` int(11) NOT NULL DEFAULT 0,
-  `block` int(11) NOT NULL DEFAULT 2,
+  `status` int(11) NOT NULL DEFAULT '1',
+  `wallet` float NOT NULL DEFAULT '0',
+  `rewards` int(11) NOT NULL DEFAULT '0',
+  `is_verified` int(11) NOT NULL DEFAULT '0',
+  `block` int(11) NOT NULL DEFAULT '2',
   `reg_date` date NOT NULL,
-  `app_update` int(11) NOT NULL DEFAULT 1,
+  `app_update` int(11) NOT NULL DEFAULT '1',
   `facebook_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `referral_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `membership` int(11) NOT NULL DEFAULT 0,
+  `membership` int(11) NOT NULL DEFAULT '0',
   `mem_plan_start` date DEFAULT NULL,
   `mem_plan_expiry` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -4295,8 +4409,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email_verified_at`, `password`, `remember_token`, `user_phone`, `device_id`, `user_image`, `user_city`, `user_area`, `otp_value`, `otp_expires_date`, `status`, `wallet`, `rewards`, `is_verified`, `block`, `reg_date`, `app_update`, `facebook_id`, `referral_code`, `membership`, `mem_plan_start`, `mem_plan_expiry`, `created_at`, `updated_at`, `lat`, `lng`, `address`, `email`) VALUES
-(18, 'Ø¹Ø¨Ø¯Ø§Ù„Ø±Ø­ÙŠÙ…', NULL, '$2y$10$r4aZQD9xPw4Qiox7EdAHcuukitOmrrGN08MVO7WZ0Q/fo4D2FQgge', NULL, '0995769544', NULL, 'N/A', 1, NULL, '16207', NULL, 1, 0, 0, 0, 2, '2022-11-18', 1, NULL, 'Ø¹', 0, NULL, NULL, NULL, NULL, 15.4654821, 32.5165888, NULL, NULL),
-(61, 'abdurrahim', NULL, '$2y$10$UhpJ9YQig7igioYVCWaV5uEi8FR5XGvl0NargTmX3njDhXcXnMR9.', NULL, '0123771002', NULL, 'N/A', 1, NULL, NULL, NULL, 1, 0, 0, 1, 2, '0000-00-00', 1, NULL, 'ABD8NWKB', 0, NULL, NULL, '2022-12-08 02:27:08', '2022-12-08 02:27:56', 15.4654821, 32.5165888, 'FG88+6QQ', NULL);
+(18, 'عبدالرحيم', NULL, '$2y$10$r4aZQD9xPw4Qiox7EdAHcuukitOmrrGN08MVO7WZ0Q/fo4D2FQgge', NULL, '0995769544', NULL, 'N/A', 1, NULL, '16207', NULL, 1, 0, 0, 0, 2, '2022-11-18', 1, NULL, 'ع', 0, NULL, NULL, NULL, NULL, 15.4654821, 32.5165888, NULL, NULL),
+(61, 'abdurrahim', NULL, '$2y$10$UhpJ9YQig7igioYVCWaV5uEi8FR5XGvl0NargTmX3njDhXcXnMR9.', NULL, '0123771002', NULL, 'N/A', 1, NULL, NULL, NULL, 1, 0, 0, 1, 2, '0000-00-00', 1, NULL, 'ABD8NWKB', 0, NULL, NULL, '2022-12-08 02:27:08', '2022-12-08 02:27:56', 15.4654821, 32.5165888, 'FG88+6QQ', NULL),
+(62, 'test', NULL, '$2y$10$uBMgL67VC.IkVnlt./sbaOxdfEXr2XLhgZt9Tg02NRPOFDd4Hxr/a', NULL, '124736128', NULL, 'N/A', NULL, NULL, NULL, NULL, 1, 0, 0, 1, 2, '0000-00-00', 1, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(65, 'عادل عباس سعيد', NULL, '$2y$10$Lf0KFLzHY.KWa1ikg3wSfurhvJAWmnyQ3jVGjo2Ip5bschZEgWfwa', NULL, '123771002', 'e18crMjQTCeynZ780TKdAd:APA91bGPSTGn5t4suPj5pUfeX7l1h4juKrME70J1IMVge_q7uw53EDBdW9Y4eFOlxmd-6MFcNSkZA6Vxs1DwpcyQw9y_Sv8aCAYE7gXV8KcmqdCLv2Npf6oN1wB5xRGBaMOpPrFuJpV9', '/images/user/21-12-2022/image_picker5825519968909551162.jpg', 1, NULL, NULL, '2022-12-21 12:18:31', 1, 0, 0, 1, 2, '2022-12-21', 1, NULL, NULL, 0, NULL, NULL, '2022-12-21 12:16:31', '2022-12-21 12:16:51', 16.454, 32.323, 'الخرطوم شارع القصر', NULL);
 
 -- --------------------------------------------------------
 
@@ -4310,8 +4426,8 @@ CREATE TABLE `user_notification` (
   `noti_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `noti_message` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `read_by_user` int(11) NOT NULL DEFAULT 0,
-  `created_at` datetime DEFAULT current_timestamp()
+  `read_by_user` int(11) NOT NULL DEFAULT '0',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -4361,8 +4477,8 @@ CREATE TABLE `wishlist` (
   `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `varient_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `store_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -5053,7 +5169,7 @@ ALTER TABLE `app_notice`
 -- AUTO_INCREMENT for table `callback_req`
 --
 ALTER TABLE `callback_req`
-  MODIFY `callback_req_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `callback_req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `cancel_for`
@@ -5083,7 +5199,7 @@ ALTER TABLE `cart_rewards`
 -- AUTO_INCREMENT for table `cart_status`
 --
 ALTER TABLE `cart_status`
-  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -5131,7 +5247,7 @@ ALTER TABLE `deal_product`
 -- AUTO_INCREMENT for table `delivery_boy`
 --
 ALTER TABLE `delivery_boy`
-  MODIFY `dboy_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `dboy_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `delivery_rating`
@@ -5305,7 +5421,7 @@ ALTER TABLE `oauth_personal_access_clients`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `order_by_photo`
@@ -5467,7 +5583,7 @@ ALTER TABLE `store_callback_req`
 -- AUTO_INCREMENT for table `store_delivery_boy`
 --
 ALTER TABLE `store_delivery_boy`
-  MODIFY `dboy_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `dboy_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `store_driver_incentive`
@@ -5491,7 +5607,7 @@ ALTER TABLE `store_notification`
 -- AUTO_INCREMENT for table `store_orders`
 --
 ALTER TABLE `store_orders`
-  MODIFY `store_order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `store_order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `store_products`
@@ -5563,7 +5679,7 @@ ALTER TABLE `twilio`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `user_notification`
