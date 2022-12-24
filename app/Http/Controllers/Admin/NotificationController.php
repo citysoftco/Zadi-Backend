@@ -137,11 +137,11 @@ class NotificationController extends Controller
         $url_aws = $this->getImageStorage();
 
         $users = DB::table('users')
-            ->join('city', 'users.user_city', '=', 'city.city_id')
-            ->join('society', 'users.user_area', '=', 'society.society_id')
-            ->join('store', 'city.city_name', '=', 'store.city')
-            ->select('users.name', 'users.id', 'city.city_name', 'society.society_name')
-            ->groupBy('users.name', 'users.id', 'city.city_name', 'society.society_name')
+            // ->join('city', 'users.user_city', '=', 'city.city_id')
+            // ->join('society', 'users.user_area', '=', 'society.society_id')
+            // ->join('store', 'city.city_name', '=', 'store.city')
+            // ->select('users.name', 'users.id', 'city.city_name', 'society.society_name')
+            // ->groupBy('users.name', 'users.id', 'city.city_name', 'society.society_name')
             ->get();
 
         return view('admin.settings.usernotification', compact("title", "admin", "logo", "admin", "users", "url_aws"));
@@ -194,7 +194,6 @@ class NotificationController extends Controller
                 $image->move('images/notification/' . $date . '/', $fileName);
                 $filePath = '/images/notification/' . $date . '/' . $fileName;
                 $notify_image = $url_aws . $filePath;
-
             }
         } else {
             $notify_image = "N/A";
@@ -357,7 +356,6 @@ class NotificationController extends Controller
                 $image->move('images/notification/' . $date . '/', $fileName);
                 $filePath = '/images/notification/' . $date . '/' . $fileName;
                 $notify_image = $url_aws . $filePath;
-
             }
         } else {
             $notify_image = "N/A";
@@ -489,7 +487,6 @@ class NotificationController extends Controller
                 $image->move('images/notification/' . $date . '/', $fileName);
                 $filePath = '/images/notification/' . $date . '/' . $fileName;
                 $notify_image = $url_aws . $filePath;
-
             }
         } else {
             $notify_image = "N/A";

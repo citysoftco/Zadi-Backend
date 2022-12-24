@@ -43,13 +43,13 @@ class UsrnotificationController extends Controller
             ->first();
 
         $users = DB::table('users')
-            ->join('city', 'users.user_city', '=', 'city.city_id')
-            ->join('society', 'users.user_area', '=', 'society.society_id')
-            ->join('store', 'city.city_name', '=', 'store.city')
-            ->where('store.id', $store->id)
-            ->select('users.name', 'users.id', 'city.city_name', 'society.society_name')
-            ->groupBy('users.name', 'users.id', 'city.city_name', 'society.society_name')
-            ->where('city.city_name', $store->city)
+            // ->join('city', 'users.user_city', '=', 'city.city_id')
+            // ->join('society', 'users.user_area', '=', 'society.society_id')
+            // ->join('store', 'city.city_name', '=', 'store.city')
+            // ->where('store.id', $store->id)
+            // ->select('users.name', 'users.id', 'city.city_name', 'society.society_name')
+            // ->groupBy('users.name', 'users.id', 'city.city_name', 'society.society_name')
+            // ->where('city.city_name', $store->city)
             ->get();
 
         return view('store.Notification.notification', compact("title", "store", "logo", "email", "users"));
@@ -99,7 +99,6 @@ class UsrnotificationController extends Controller
                 $image->move('images/notification/' . $date . '/', $fileName);
                 $filePath = '/images/notification/' . $date . '/' . $fileName;
                 $notify_image = $url_aws . $filePath;
-
             }
         } else {
             $notify_image = "N/A";
@@ -261,7 +260,6 @@ class UsrnotificationController extends Controller
                 $image->move('images/notification/' . $date . '/', $fileName);
                 $filePath = '/images/notification/' . $date . '/' . $fileName;
                 $notify_image = $url_aws . $filePath;
-
             }
         } else {
             $notify_image = "N/A";
