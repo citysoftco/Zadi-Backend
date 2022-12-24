@@ -126,7 +126,6 @@ class DriverorderController extends Controller
         foreach ($prodsd as $store) {
 
             $ord[] = $store;
-
         }
 
         if ($ord != NULL) {
@@ -254,75 +253,70 @@ class DriverorderController extends Controller
             ->update(['order_status' => $status]);
 
         if ($update) {
-            $sms = DB::table('notificationby')
-                ->select('sms', 'app')
-                ->where('user_id', $ord->user_id)
-                ->first();
-            $sms_status = $sms->sms;
-            $sms_api_key = DB::table('msg91')
-                ->select('api_key', 'sender_id')
-                ->first();
-            $api_key = $sms_api_key->api_key;
-            $sender_id = $sms_api_key->sender_id;
-            if ($sms_status == 1) {
-                $successmsg = $this->delout($cart_id, $prod_name, $price2, $currency, $ord, $user_phone);
-            }
+            // $sms = DB::table('notificationby')
+            //     ->select('sms', 'app')
+            //     ->where('user_id', $ord->user_id)
+            //     ->first();
+            // $sms_status = $sms->sms;
+            // $sms_api_key = DB::table('msg91')
+            //     ->select('api_key', 'sender_id')
+            //     ->first();
+            // $api_key = $sms_api_key->api_key;
+            // $sender_id = $sms_api_key->sender_id;
+            // if ($sms_status == 1) {
+            //     $successmsg = $this->delout($cart_id, $prod_name, $price2, $currency, $ord, $user_phone);
+            // }
 
             //////send app notification////
-            if ($sms->app == 1) {
-                if ($ord->payment_method == "COD" || $ord->payment_method == "cod") {
+            // if ($sms->app == 1) {
+            if ($ord->payment_method == "COD" || $ord->payment_method == "cod") {
 
-                    $successmsginapp = $this->deloutinapp($cart_id, $prod_name, $price2, $currency, $ord, $user_phone, $user_id, $store_n);
+                $successmsginapp = $this->deloutinapp($cart_id, $prod_name, $price2, $currency, $ord, $user_phone, $user_id, $store_n);
+            } else {
 
-                } else {
-
-                    $successmsginapp = $this->deloutinappcard($cart_id, $prod_name, $price2, $currency, $ord, $user_phone, $user_id, $store_n);
-
-                }
+                $successmsginapp = $this->deloutinappcard($cart_id, $prod_name, $price2, $currency, $ord, $user_phone, $user_id, $store_n);
             }
+            // }
 
             /////send mail
-            $email = DB::table('notificationby')
-                ->select('email')
-                ->where('user_id', $ord->user_id)
-                ->first();
-            $email_status = $email->email;
-            $rem_price = $ord->rem_price;
-            if ($email_status == 1) {
-                if ($ord->payment_method == "COD" || $ord->payment_method == "cod") {
-                    $q = DB::table('users')
-                        ->select('email', 'name')
-                        ->where('id', $ord->user_id)
-                        ->first();
-                    $user_email = $q->email;
-                    $user_name = $q->name;
-                    $successmail = $this->coddeloutMail($cart_id, $prod_name, $price2, $user_email, $user_name, $rem_price);
+            // $email = DB::table('notificationby')
+            //     ->select('email')
+            //     ->where('user_id', $ord->user_id)
+            //     ->first();
+            // $email_status = $email->email;
+            // $rem_price = $ord->rem_price;
+            // if ($email_status == 1) {
+            // if ($ord->payment_method == "COD" || $ord->payment_method == "cod") {
+            //     $q = DB::table('users')
+            //         ->select('email', 'name')
+            //         ->where('id', $ord->user_id)
+            //         ->first();
+            //     $user_email = $q->email;
+            //     $user_name = $q->name;
+            //     $successmail = $this->coddeloutMail($cart_id, $prod_name, $price2, $user_email, $user_name, $rem_price);
+            // } else {
+            //     $q = DB::table('users')
+            //         ->select('email', 'name')
+            //         ->where('id', $ord->user_id)
+            //         ->first();
+            //     $user_email = $q->email;
+            //     $user_name = $q->name;
+            //     $successmail = $this->deloutMail($cart_id, $prod_name, $price2, $user_email, $user_name, $rem_price);
+            // }
 
+            if ($getd) {
+                // $successmailstore = $this->coddeloutMailstore($cart_id, $prod_name, $price2, $user_email, $user_name, $rem_price, $store_n, $store_email);
+                $successmsginapp = $this->deloutinappstore($cart_id, $prod_name, $price2, $currency, $ord, $user_phone, $user_id, $store_id, $store_n);
 
-                } else {
-                    $q = DB::table('users')
-                        ->select('email', 'name')
-                        ->where('id', $ord->user_id)
-                        ->first();
-                    $user_email = $q->email;
-                    $user_name = $q->name;
-                    $successmail = $this->deloutMail($cart_id, $prod_name, $price2, $user_email, $user_name, $rem_price);
-                }
-
-                if ($getd) {
-                    $successmailstore = $this->coddeloutMailstore($cart_id, $prod_name, $price2, $user_email, $user_name, $rem_price, $store_n, $store_email);
-                    $successmsginapp = $this->deloutinappstore($cart_id, $prod_name, $price2, $currency, $ord, $user_phone, $user_id, $store_id, $store_n);
-
-                    $successmsgstore = $this->deloutstore($cart_id, $prod_name, $price2, $currency, $ord, $user_phone, $dboy_name, $store_n, $store_phone);
-                }
-
-                $admin = DB::table('admin')
-                    ->first();
-                $admin_email = $admin->email;
-                $admin_name = $admin->name;
-                $successmailadmin = $this->coddeloutMailadmin($cart_id, $prod_name, $price2, $user_email, $user_name, $rem_price, $admin_name, $admin_email);
-
+                $successmsgstore = $this->deloutstore($cart_id, $prod_name, $price2, $currency, $ord, $user_phone, $dboy_name, $store_n, $store_phone);
             }
+
+            $admin = DB::table('admin')
+                ->first();
+            $admin_email = $admin->email;
+            $admin_name = $admin->name;
+            // $successmailadmin = $this->coddeloutMailadmin($cart_id, $prod_name, $price2, $user_email, $user_name, $rem_price, $admin_name, $admin_email);
+            // }
 
             $cart_status = DB::table('cart_status')
                 ->where('cart_id', $cart_id)
@@ -386,7 +380,6 @@ class DriverorderController extends Controller
 
                 $user_signature->move('images/users/' . $date . '/', $fileName);
                 $filePath = '/images/users/' . $date . '/' . $fileName;
-
             }
         } else {
             $filePath = 'images/';
@@ -434,7 +427,6 @@ class DriverorderController extends Controller
             } else {
                 $in_am = 0;
             }
-
         } else {
             $incentive = DB::table('store_driver_incentive')
                 ->where('store_id', $ord->store_id)
@@ -467,34 +459,33 @@ class DriverorderController extends Controller
                     ->insert(['earned_till_now' => $in_am, 'remaining' => $in_am, 'dboy_id' => $ord->dboy_id, 'paid_till_now' => 0]);
             }
 
-            $sms = DB::table('notificationby')
-                ->select('sms', 'app')
-                ->where('user_id', $ord->user_id)
-                ->first();
-            $sms_status = $sms->sms;
-            $sms_api_key = DB::table('msg91')
-                ->select('api_key', 'sender_id')
-                ->first();
-            $api_key = $sms_api_key->api_key;
-            $sender_id = $sms_api_key->sender_id;
-            if ($sms_status == 1) {
-                $successmsg = $this->delcomsms($cart_id, $prod_name, $price2, $currency, $user_phone);
-
-            }
-            ////send notification to app///
-            if ($sms->app == 1) {
-                $successmsginapp = $this->delcominapp($cart_id, $prod_name, $price2, $currency, $ord, $user_phone, $user_id);
-            }
+            // $sms = DB::table('notificationby')
+            //     ->select('sms', 'app')
+            //     ->where('user_id', $ord->user_id)
+            //     ->first();
+            // $sms_status = $sms->sms;
+            // $sms_api_key = DB::table('msg91')
+            //     ->select('api_key', 'sender_id')
+            //     ->first();
+            // $api_key = $sms_api_key->api_key;
+            // $sender_id = $sms_api_key->sender_id;
+            // if ($sms_status == 1) {
+            //     $successmsg = $this->delcomsms($cart_id, $prod_name, $price2, $currency, $user_phone);
+            // }
+            // ////send notification to app///
+            // if ($sms->app == 1) {
+            $successmsginapp = $this->delcominapp($cart_id, $prod_name, $price2, $currency, $ord, $user_phone, $user_id);
+            // }
 
             /////send mail
-            $email = DB::table('notificationby')
-                ->select('email')
-                ->where('user_id', $ord->user_id)
-                ->first();
-            $email_status = $email->email;
-            if ($email_status == 1) {
-                $successmail = $this->delcomMail($cart_id, $prod_name, $price2, $user_email, $user_name);
-            }
+            // $email = DB::table('notificationby')
+            //     ->select('email')
+            //     ->where('user_id', $ord->user_id)
+            //     ->first();
+            // $email_status = $email->email;
+            // if ($email_status == 1) {
+            //     $successmail = $this->delcomMail($cart_id, $prod_name, $price2, $user_email, $user_name);
+            // }
             ////rewards earned////
             $checkre = DB::table('reward_points')
                 ->where('min_cart_value', '<=', $ord->total_price)
@@ -512,7 +503,6 @@ class DriverorderController extends Controller
                         ->where('plan_id', $checkmem->membership)
                         ->first();
                     $reward_point = $reward_point1 * $plan->reward;
-
                 } else {
                     $reward_point = $reward_point1;
                 }
@@ -525,7 +515,7 @@ class DriverorderController extends Controller
             }
 
             if ($getd) {
-                $successmailstore = $this->delcomMailstore($cart_id, $prod_name, $price2, $user_email, $user_name, $dboy_name, $store_n, $store_email);
+                // $successmailstore = $this->delcomMailstore($cart_id, $prod_name, $price2, $user_email, $user_name, $dboy_name, $store_n, $store_email);
                 $successmsginappstore = $this->delcominappstore($cart_id, $prod_name, $price2, $currency, $ord, $user_phone, $user_id, $store_id);
                 $successmsgstore = $this->delcomsmsstore($cart_id, $prod_name, $price2, $currency, $user_phone, $dboy_name, $store_n, $store_phone);
             }
@@ -534,7 +524,7 @@ class DriverorderController extends Controller
                 ->first();
             $admin_email = $admin->email;
             $admin_name = $admin->name;
-            $successmailadmin = $this->delcomMailadmin($cart_id, $prod_name, $price2, $user_email, $user_name, $dboy_name, $store_n, $admin_email, $admin_name);
+            // $successmailadmin = $this->delcomMailadmin($cart_id, $prod_name, $price2, $user_email, $user_name, $dboy_name, $store_n, $admin_email, $admin_name);
 
             $cart_status = DB::table('cart_status')
                 ->where('cart_id', $cart_id)

@@ -307,7 +307,7 @@ Route::group(['middleware' => ['verifylicense']], function () {
             ////Pending orders/////
             Route::get('admin/pending_orders', [AdminorderController::class, 'admin_pen_orders'])->name('admin_pen_orders');
 
-            Route::post("order/assign/delivery-man", [OrderController::class, 'assignOrderToDeliveryBoy'])->name("order.assign.delivery-man");
+            // Route::post("order/assign/delivery-man", [OrderController::class, 'assignOrderToDeliveryBoy'])->name("order.assign.delivery-man");
             // Route::get("admin/test", function () {
             //     return view("admin.d_boy.orders");
             // });

@@ -73,7 +73,7 @@
                                     <th>{{ __('keywords.Status') }}</th>
                                     <th>{{ __('keywords.Payment Method') }}</th>
                                     <th>{{ __('keywords.Details') }}</th>
-                                    <th>{{ __('keywords.Choose Delivery Man') }}</th>
+                                    {{-- <th>{{ __('keywords.Choose Delivery Man') }}</th> --}}
 
                                 </tr>
                             </thead>
@@ -138,7 +138,7 @@
                                             <td><button type="button" class="btn btn-primary" data-toggle="modal"
                                                     data-target="#exampleModal1{{ $ords->cart_id }}">{{ __('keywords.Details') }}</button>
                                             </td>
-                                            <td>
+                                            {{-- <td>
                                                 <form action="{{ route('order.assign.delivery-man') }}" method="POST">
                                                     @csrf
                                                     <select name="delivery_boy_id" class="" id="" required>
@@ -155,7 +155,7 @@
                                                     <button type="submit"
                                                         class="btn btn-primary">{{ __('keywords.Choose Delivery Man') }}</button>
                                                 </form>
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                         @php $i++; @endphp
                                     @endforeach

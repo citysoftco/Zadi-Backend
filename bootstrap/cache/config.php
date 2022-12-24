@@ -300,7 +300,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'zaad_test',
+        'database' => 'zaad_db',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -310,7 +310,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'zaad_test',
+        'database' => 'zaad_db',
         'username' => 'root',
         'password' => '',
         'unix_socket' => '',
@@ -330,7 +330,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'zaad_test',
+        'database' => 'zaad_db',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -345,7 +345,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'zaad_test',
+        'database' => 'zaad_db',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -1365,7 +1365,7 @@ You can switch the language used with the tabs at the top right (or from the nav
     'personal_access_client' => 
     array (
       'id' => '5',
-      'secret' => 'vK8woJGYa0GYKde2oWFAe4tbnb9VhLweKo36xWwn',
+      'secret' => 'lnevhpUE7yNATbGsyfzKgGgYPccEr5YX9jARaLV0',
     ),
     'storage' => 
     array (
