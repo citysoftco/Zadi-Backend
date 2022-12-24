@@ -3157,7 +3157,8 @@ class CategoryController extends Controller
     public function product_det(Request $request)
     {
         $product_id = $request->product_id;
-        $store_id = $request->store_id;
+        // $store_id = $request->store_id;
+        $store_id = Store::first()->id;
         $prod = DB::table('store_products')
             ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
             ->join('product', 'product_varient.product_id', '=', 'product.product_id')
