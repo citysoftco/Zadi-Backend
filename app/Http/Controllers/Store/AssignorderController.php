@@ -168,14 +168,14 @@ class AssignorderController extends Controller
                 ->where('varient_id', $vs->varient_id)
                 ->where('store_id', $store_id)
                 ->first();
-
-
         }
 
         $orderconfirm = DB::table('orders')
             ->where('cart_id', $cart_id)
-            ->update(['order_status' => 'Confirmed',
-                'dboy_id' => $nearbydboy->ad_dboy_id]);
+            ->update([
+                'order_status' => 'Confirmed',
+                'dboy_id' => $nearbydboy->ad_dboy_id
+            ]);
 
         $v = DB::table('store_orders')
             ->where('order_cart_id', $cart_id)
@@ -269,18 +269,20 @@ class AssignorderController extends Controller
                 ->where('store_id', $store_id)
                 ->first();
             if ($stoc) {
-                $newstock = $stoc->stock - $qt;
+                $newstock = $stoc->quantity - $qt;
                 $st = DB::table('store_products')
                     ->where('varient_id', $vs->varient_id)
                     ->where('store_id', $store_id)
-                    ->update(['stock' => $newstock]);
+                    ->update(['quantity' => $newstock]);
             }
         }
 
         $orderconfirm = DB::table('orders')
             ->where('cart_id', $cart_id)
-            ->update(['order_status' => 'Confirmed',
-                'dboy_id' => $dboy_id]);
+            ->update([
+                'order_status' => 'Confirmed',
+                'dboy_id' => $dboy_id
+            ]);
 
         $v = DB::table('store_orders')
             ->where('order_cart_id', $cart_id)
@@ -288,18 +290,18 @@ class AssignorderController extends Controller
 
         if ($orderconfirm) {
             //send sms and app notification to user//
-            $sms = DB::table('notificationby')
-                ->select('sms', 'app')
-                ->where('user_id', $orr->user_id)
-                ->first();
-            $sms_status = $sms->sms;
-            if ($sms_status == 1) {
-                $codorderplaced = $this->orderconfirmedsms($cart_id, $user_phone, $orr);
-            }
+            // $sms = DB::table('notificationby')
+            //     ->select('sms', 'app')
+            //     ->where('user_id', $orr->user_id)
+            //     ->first();
+            // $sms_status = $sms->sms;
+            // if ($sms_status == 1) {
+            // $codorderplaced = $this->orderconfirmedsms($cart_id, $user_phone, $orr);
+            // }
 
-            if ($sms->app == 1) {
-                $confirmedinappuser = $this->orderconfirmedinapp($cart_id, $user_phone, $orr);
-            }
+            // if ($sms->app == 1) {
+            $confirmedinappuser = $this->orderconfirmedinapp($cart_id, $user_phone, $orr);
+            // }
 
             $confirmedinappdriver = $this->orderconfirmedinappdriver($getDDevice, $cart_id, $user_phone, $orr, $curr);
 

@@ -632,7 +632,35 @@
     </div>
     </div>
     @endforeach
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div>
+        <canvas style="width: 100px !important;" id="myChart"></canvas>
+    </div>
+    <script>
+        const ctx = document.getElementById('myChart');
+        // const labels = Utils.months({
+        //     count: 7
+        // });
 
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 @endsection
 
 @section('postload-section')

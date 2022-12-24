@@ -47,8 +47,10 @@ class StoreorderController extends Controller
                     ->get();
 
 
-                $data[] = array('paid_by_wallet' => $ords->paid_by_wallet, 'coupon_discount' => $ords->coupon_discount, 'delivery_charge' => $ords->delivery_charge, 'user_address' => $ords->house_no . ',' . $ords->society . ',' . $ords->city . ',' . $ords->landmark . ',' . $ords->state . ',' . $ords->pincode, 'cart_id' => $cart_id, 'user_name' => $ords->name, 'user_phone' => $ords->user_phone,
-                    'remaining_price' => $ords->rem_price, 'order_price' => $ords->total_price, 'delivery_boy_name' => $ords->boy_name, 'delivery_boy_phone' => $ords->boy_phone, 'delivery_date' => $ords->delivery_date, 'time_slot' => $ords->time_slot, 'payment_mode' => $ords->payment_method, 'payment_status' => $ords->payment_status, 'order_status' => $ords->order_status, 'customer_phone' => $ords->user_phone, 'order_details' => $details);
+                $data[] = array(
+                    'paid_by_wallet' => $ords->paid_by_wallet, 'coupon_discount' => $ords->coupon_discount, 'delivery_charge' => $ords->delivery_charge, 'user_address' => $ords->house_no . ',' . $ords->society . ',' . $ords->city . ',' . $ords->landmark . ',' . $ords->state . ',' . $ords->pincode, 'cart_id' => $cart_id, 'user_name' => $ords->name, 'user_phone' => $ords->user_phone,
+                    'remaining_price' => $ords->rem_price, 'order_price' => $ords->total_price, 'delivery_boy_name' => $ords->boy_name, 'delivery_boy_phone' => $ords->boy_phone, 'delivery_date' => $ords->delivery_date, 'time_slot' => $ords->time_slot, 'payment_mode' => $ords->payment_method, 'payment_status' => $ords->payment_status, 'order_status' => $ords->order_status, 'customer_phone' => $ords->user_phone, 'order_details' => $details
+                );
             }
         } else {
             $data[] = array('order_details' => 'no orders found');
@@ -85,8 +87,10 @@ class StoreorderController extends Controller
                     ->get();
 
 
-                $data[] = array('paid_by_wallet' => $ords->paid_by_wallet, 'coupon_discount' => $ords->coupon_discount, 'delivery_charge' => $ords->delivery_charge, 'user_address' => $ords->house_no . ',' . $ords->society . ',' . $ords->city . ',' . $ords->landmark . ',' . $ords->state . ',' . $ords->pincode, 'cart_id' => $cart_id, 'user_name' => $ords->name, 'user_phone' => $ords->user_phone,
-                    'remaining_price' => $ords->rem_price, 'order_price' => $ords->total_price, 'delivery_boy_name' => $ords->boy_name, 'delivery_boy_phone' => $ords->boy_phone, 'delivery_date' => $ords->delivery_date, 'time_slot' => $ords->time_slot, 'payment_mode' => $ords->payment_method, 'payment_status' => $ords->payment_status, 'order_status' => $ords->order_status, 'customer_phone' => $ords->user_phone, 'order_details' => $details);
+                $data[] = array(
+                    'paid_by_wallet' => $ords->paid_by_wallet, 'coupon_discount' => $ords->coupon_discount, 'delivery_charge' => $ords->delivery_charge, 'user_address' => $ords->house_no . ',' . $ords->society . ',' . $ords->city . ',' . $ords->landmark . ',' . $ords->state . ',' . $ords->pincode, 'cart_id' => $cart_id, 'user_name' => $ords->name, 'user_phone' => $ords->user_phone,
+                    'remaining_price' => $ords->rem_price, 'order_price' => $ords->total_price, 'delivery_boy_name' => $ords->boy_name, 'delivery_boy_phone' => $ords->boy_phone, 'delivery_date' => $ords->delivery_date, 'time_slot' => $ords->time_slot, 'payment_mode' => $ords->payment_method, 'payment_status' => $ords->payment_status, 'order_status' => $ords->order_status, 'customer_phone' => $ords->user_phone, 'order_details' => $details
+                );
             }
         } else {
             $data[] = array('order_details' => 'no orders found');
@@ -165,8 +169,10 @@ class StoreorderController extends Controller
             $cancel = 2;
             $ordupdate = DB::table('orders')
                 ->where('cart_id', $cart->order_cart_id)
-                ->update(['store_id' => 0,
-                    'cancel_by_store' => $cancel]);
+                ->update([
+                    'store_id' => 0,
+                    'cancel_by_store' => $cancel
+                ]);
             $carte = DB::table('store_orders')
                 ->where('order_cart_id', $cart->order_cart_id)
                 ->where('store_approval', 0)
@@ -198,8 +204,6 @@ class StoreorderController extends Controller
                 ->where('order_cart_id', $cart->order_cart_id)
                 ->update(['store_approval' => 1]);
             $data[] = array('result' => 'order cancelled successfully');
-
-
         } else {
             $cancel_product = DB::table('store_orders')
                 ->where('store_order_id', $id)
@@ -208,7 +212,6 @@ class StoreorderController extends Controller
                 ->where('id', $user_id)
                 ->update(['wallet' => $newbal]);
             $data[] = array('result' => 'product cancelled successfully');
-
         }
         return $data;
     }
@@ -248,7 +251,6 @@ class StoreorderController extends Controller
                     ->first();
 
                 $v_price1 += $v1->price * $v1->qty;
-
             }
             $user_id1 = $ordr->user_id;
             $userwa1 = DB::table('users')
@@ -284,8 +286,10 @@ class StoreorderController extends Controller
         $cancel = 2;
         $ordupdate = DB::table('orders')
             ->where('cart_id', $cart_id)
-            ->update(['store_id' => 0,
-                'cancel_by_store' => $cancel]);
+            ->update([
+                'store_id' => 0,
+                'cancel_by_store' => $cancel
+            ]);
 
         $carte = DB::table('store_orders')
             ->where('order_cart_id', $cart_id)
@@ -311,12 +315,16 @@ class StoreorderController extends Controller
             ->first();
 
         $del_boy = DB::table('delivery_boy')
-            ->select("boy_name", "boy_phone", "dboy_id"
-                , DB::raw("6371 * acos(cos(radians(" . $store->lat . "))
+            ->select(
+                "boy_name",
+                "boy_phone",
+                "dboy_id",
+                DB::raw("6371 * acos(cos(radians(" . $store->lat . "))
         * cos(radians(lat))
         * cos(radians(lng) - radians(" . $store->lng . "))
         + sin(radians(" . $store->lat . "))
-        * sin(radians(lat))) AS distance"))
+        * sin(radians(lat))) AS distance")
+            )
             ->where('delivery_boy.boy_city', $store->city)
             ->orderBy('distance')
             ->first();
@@ -345,11 +353,11 @@ class StoreorderController extends Controller
                 ->where('store_id', $store_id)
                 ->first();
             if ($stoc) {
-                $newstock = $stoc->stock - $qt;
+                $newstock = $stoc->quantity - $qt;
                 $st = DB::table('store_products')
                     ->where('varient_id', $vs->varient_id)
                     ->where('store_id', $store_id)
-                    ->update(['stock' => $newstock]);
+                    ->update(['quantity' => $newstock]);
             } else {
                 $message = array('status' => '0', 'message' => $pr->product_name . "(" . $pr->quantity . " " . $pr->unit . ") is not available in your product list");
                 return $message;
@@ -358,26 +366,27 @@ class StoreorderController extends Controller
         if ($del_boy) {
             $orderconfirm = DB::table('orders')
                 ->where('cart_id', $cart_id)
-                ->update(['order_status' => 'Confirmed',
+                ->update([
+                    'order_status' => 'Confirmed',
                     'dboy_id' => $del_boy->dboy_id,
-                    'confirmed_at' => $currdate]);
+                    'confirmed_at' => $currdate
+                ]);
 
 
             if ($orderconfirm) {
-                $sms = DB::table('notificationby')
-                    ->select('sms', 'app')
-                    ->where('user_id', $orr->user_id)
-                    ->first();
-                $sms_status = $sms->sms;
-                if ($sms_status == 1) {
-                    $codorderplaced = $this->orderconfirmedsms($cart_id, $user_phone, $orr);
-                }
+                // $sms = DB::table('notificationby')
+                //     ->select('sms', 'app')
+                //     ->where('user_id', $orr->user_id)
+                //     ->first();
+                // $sms_status = $sms->sms;
+                // if ($sms_status == 1) {
+                //     $codorderplaced = $this->orderconfirmedsms($cart_id, $user_phone, $orr);
+                // }
 
-                if ($sms->app == 1) {
+                // if ($sms->app == 1) {
 
-                    $confirmedinappuser = $this->orderconfirmedinapp($cart_id, $user_phone, $orr);
-
-                }
+                $confirmedinappuser = $this->orderconfirmedinapp($cart_id, $user_phone, $orr);
+                // }
 
 
                 $confirmedinappdriver = $this->orderconfirmedinappdriver($getDDevice, $cart_id, $user_phone, $orr, $curr);
