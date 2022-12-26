@@ -39,6 +39,12 @@ class CategoryController extends Controller
             }
         }
     }
+    public function getfirststore()
+    {
+        $store = Store::firstOrNew();
+
+        return response()->json(array('status' => '1', 'message' => 'Store Found', 'data' => $store));
+    }
 
     public function getneareststore(Request $request)
     {
