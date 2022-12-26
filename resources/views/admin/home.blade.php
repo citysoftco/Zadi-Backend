@@ -301,9 +301,15 @@
     <!-- END row -->
     <!-- BEGIN row -->
     <div class="row">
-        <canvas id="myChart"></canvas>
-
+        <div class="col-sm-6">
+            <canvas id="doughnutChart"></canvas>
+        </div>
+        <div class="col-sm-6" style="margin-top: 20%">
+            <canvas id="barChart"></canvas>
+        </div>
     </div>
+    <!-- END row -->
+
 
     <div class="row">
         <!-- BEGIN col-6 -->
@@ -632,22 +638,12 @@
     </div>
     </div>
     @endforeach
-    <style>
-        canvas {
-            width: 300px !important;
-            height: 300px !important;
-        }
-    </style>
 
-    <div>
-        <canvas id="myChart"></canvas>
-        <canvas id="barChart"></canvas>
 
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const doughnutChart = document.getElementById('myChart');
+        const doughnutChart = document.getElementById('doughnutChart');
         const barChart = document.getElementById('barChart');
 
 
@@ -681,35 +677,41 @@
 
             },
         });
-        const labels = ["name"];
-        const config = {
+        // const labels = Utils.months({
+        //     count: 7
+        // });
+        const labels = ['New Orders',
+            'Pending Orders',
+            'Cancelled Orders',
+            'This Week App Users'
+        ];
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'My First Dataset',
+                data: [{{ $this_week_ord }}, {{ $this_week_pen }}, {{ $this_week_can }},
+                    {{ $this_week_usr }}
+                ],
+                backgroundColor: [
+                    '#ff784a',
+                    '#e15671',
+                    '#0aab7b',
+                    '#8845f5'
+
+                ],
+                borderColor: [
+                    '#ff784a',
+                    '#e15671',
+                    '#0aab7b',
+                    '#8845f5'
+
+                ],
+                borderWidth: 1
+            }]
+        };
+        new Chart(barChart, {
             type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'My First Dataset',
-                    data: [65, 59, 80, 81, 56, 55, 40],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 205, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(201, 203, 207, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(255, 159, 64)',
-                        'rgb(255, 205, 86)',
-                        'rgb(75, 192, 192)',
-                        'rgb(54, 162, 235)',
-                        'rgb(153, 102, 255)',
-                        'rgb(201, 203, 207)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
+            data: data,
             options: {
                 scales: {
                     y: {
@@ -717,7 +719,7 @@
                     }
                 }
             },
-        };
+        });
     </script>
 @endsection
 
