@@ -307,6 +307,9 @@
         <div class="col-sm-6" style="margin-top: 20%">
             <canvas id="barChart"></canvas>
         </div>
+        <div class="col-sm-12" style="margin-top: 10%;margin-bottom:10%">
+            <canvas id="lineChart"></canvas>
+        </div>
     </div>
     <!-- END row -->
 
@@ -645,6 +648,7 @@
     <script>
         const doughnutChart = document.getElementById('doughnutChart');
         const barChart = document.getElementById('barChart');
+        const lineChart = document.getElementById('lineChart');
 
 
 
@@ -718,6 +722,22 @@
                         beginAtZero: true
                     }
                 }
+            },
+        });
+
+        new Chart(lineChart, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'My First Dataset',
+                    data: [{{ $this_week_ord }}, {{ $this_week_pen }}, {{ $this_week_can }},
+                        {{ $this_week_usr }}
+                    ],
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
             },
         });
     </script>
