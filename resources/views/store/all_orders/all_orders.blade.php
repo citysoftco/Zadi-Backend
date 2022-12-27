@@ -68,6 +68,8 @@
                                     <th>{{ __('keywords.Status') }}</th>
                                     <th>{{ __('keywords.Payment Method') }}</th>
                                     <th>{{ __('keywords.Details') }}</th>
+                                    <th>{{ __('keywords.Invoice') }}</th>
+
                                     {{-- <th>{{ __('keywords.Choose Delivery Man') }}</th> --}}
                                 </tr>
                             </thead>
@@ -131,6 +133,15 @@
                                             <td><button type="button" class="btn btn-primary" data-toggle="modal"
                                                     data-target="#exampleModal1{{ $ords->cart_id }}">{{ __('keywords.Details') }}</button>
                                             </td>
+                                            <td><a target="_blank" rel="noopener noreferrer"
+                                                    style="margin-right: 10px; !important"
+                                                    href="{{ route('invoice', $ords->cart_id) }}" class="btn btn-success">
+                                                    Invoice
+                                                </a>&nbsp; &nbsp;<a target="_blank" rel="noopener noreferrer"
+                                                    href="{{ route('a4invoice', $ords->cart_id) }}"
+                                                    class="btn btn-success">
+                                                    A4 Invoice
+                                                </a></td>
                                             {{-- <td>
                                                 <form action="{{ route('order.assign.delivery-man') }}" method="POST">
                                                     @csrf
