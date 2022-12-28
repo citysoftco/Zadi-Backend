@@ -15,7 +15,8 @@ class OrderlistController extends Controller
     public function orderlist(Request $request)
     {
         $user_id = $request->user_id;
-        $address_id = $request->address_id;
+        // $address_id = $request->address_id;
+        $description = $request->description;
         $store_id = $request->store_id;
         $date = date('Y-m-d');
         $image = $request->orderlist;
@@ -33,7 +34,6 @@ class OrderlistController extends Controller
 
             $image->move('images/order/' . $date . '/', $fileName);
             $filePath = '/images/order/' . $date . '/' . $fileName;
-
         }
 
 
@@ -48,7 +48,8 @@ class OrderlistController extends Controller
                 ->insertgetid([
                     'user_id' => $user_id,
                     'list_photo' => $filePath,
-                    'address_id' => $address_id,
+                    // 'address_id' => $address_id,
+                    'description' => $description,
                     'store_id' => $store_id,
                     'processed' => 0
                 ]);
@@ -64,7 +65,6 @@ class OrderlistController extends Controller
             $message = array('status' => '2', 'message' => 'You already submitted an Order list please wait till the older ones Confirmation.');
             return $message;
         }
-
     }
 
     public function order_show_address(Request $request)
