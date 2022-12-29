@@ -922,7 +922,8 @@ return [
     'See_ID_Photo' => 'انظر صورة الهوية',
     'All_Stores' => 'جميع المتاجر',
     'Assign_Store' => 'جميع المتاجر',
-    'Choose Delivery Man' => "إختيار رجل التوصيل"
+    'Choose Delivery Man' => "إختيار رجل التوصيل",
+    'Bank Accounts' => "الحسابات البنكية"
 
 
 ];

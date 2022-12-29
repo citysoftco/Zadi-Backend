@@ -19,7 +19,9 @@ class CreateBankPaymentsTable extends Migration
             $table->text("description")->nullable();
             $table->string("receipt_photo");
             $table->string("payment_status");
+            $table->string("payment_for");
             $table->unsignedBigInteger("bank_account_id");
+            $table->unsignedBigInteger("store_id");
             $table->timestamps();
         });
     }

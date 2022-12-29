@@ -11,6 +11,8 @@ use App\Http\Controllers\Api\FirebaseController;
 use App\Http\Controllers\Api\forgotpasswordController;
 use App\Http\Controllers\Api\MapsetController;
 use App\Http\Controllers\Api\AppsetController;
+use App\Http\Controllers\Api\BankAccountController;
+use App\Http\Controllers\Api\BankPaymentController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PagesController;
 use App\Http\Controllers\Api\RatingController;
@@ -46,10 +48,7 @@ use App\Http\Controllers\Driverapi\DriverNotificationController;
 use App\Http\Controllers\Driverapi\DriverorderController;
 use App\Http\Controllers\Driverapi\DriverstatusController;
 use App\Http\Controllers\Driverapi\DriversupportController;
-
-
-
-
+use App\Models\BankPayment;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +68,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::namespace("Api")->prefix('')->group(function () {
+
+  /// banks Routes /// 
+  Route::get("stores/{store}/bank-accounts", [BankAccountController::class, "index"]);
+  Route::post("bank-payments", [BankPaymentController::class, "store"]);
+
+
   Route::post('login', [UserController::class, 'login']);
   Route::post('get_otp', [UserController::class, 'getOtp']);
   Route::post('verify_via_firebase', [UserController::class, 'verifyotpfirebase']);

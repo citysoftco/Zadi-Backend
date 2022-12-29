@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use DB;
+use Directory;
+use Illuminate\Support\Facades\File;
 
 /**
  * Class FileHandleService.
@@ -31,5 +33,17 @@ class FileHandleService
         }
 
         return $url_aws;
+    }
+    public static function uploadImageInPublicPath($image, $path)
+    {
+        $extension = $image->getClientOriginalExtension();
+        $publicPath = public_path($path);
+        if (!file_exists($publicPath)) {
+            mkdir($publicPath, 0777, true);
+        }
+        $photo = time() . "." . $extension;
+        $image->move($publicPath, $photo);
+
+        return $path . "/" . $photo;
     }
 }

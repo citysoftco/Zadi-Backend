@@ -96,7 +96,7 @@ use App\Http\Controllers\CityAdmin\CityAdHomeController;
 use App\Http\Controllers\CityAdmin\CityAdNotifyController;
 use App\Http\Controllers\CityAdmin\CityAdDBoyController;
 use App\Http\Controllers\CityAdmin\CityAdStoreController;
-
+use App\Http\Controllers\Store\BankAccountController;
 use Illuminate\Http\Request;
 
 Route::get('/clear-all', function () {
@@ -131,6 +131,7 @@ Route::group(['middleware' => ['verifylicense']], function () {
     });
 
     Route::namespace("Admin")->prefix('')->group(function () {
+        Route::resource("stores.banks-accounts", BankAccountController::class);
         Route::view('/powergrid', 'powergrid-demo');
         Route::get('/', [LoginController::class, 'adminLogin'])->name('adminLogin');
         Route::get('/login', [LoginController::class, 'adminLogin'])->name('login');

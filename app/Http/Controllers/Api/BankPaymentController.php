@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBankPaymentRequest;
 use App\Http\Requests\UpdateBankPaymentRequest;
 use App\Models\BankPayment;
+use App\Services\FileHandleService;
 
 class BankPaymentController extends Controller
 {
@@ -28,7 +29,18 @@ class BankPaymentController extends Controller
      */
     public function store(StoreBankPaymentRequest $request)
     {
-        //
+
+        $data = $request->all();
+        $data["payment_status"] =  "pending";
+        $data["receipt_photo"] = FileHandleService::uploadImageInPublicPath($request->receipt_photo, "images/banks/receipts");
+        $payment = BankPayment::create($data);
+        return response()->json(
+            [
+                "status" => 1,
+                "message" => "Payment Request Sent Successfully",
+                "data" => $payment
+            ]
+        );
     }
 
     /**

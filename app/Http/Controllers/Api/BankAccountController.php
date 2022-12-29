@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBankAccountRequest;
 use App\Http\Requests\UpdateBankAccountRequest;
 use App\Models\BankAccount;
+use App\Services\BankAccountService;
 
 class BankAccountController extends Controller
 {
@@ -14,8 +15,17 @@ class BankAccountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($storeId)
     {
+
+        $banks = BankAccountService::getAllAccounts($storeId);
+        return response()->json(
+            [
+                "status" => 1,
+                "message" => "Get All Banks Successfully",
+                "data" => $banks
+            ]
+        );
     }
 
 

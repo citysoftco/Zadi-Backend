@@ -13,7 +13,7 @@ class StoreBankPaymentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class StoreBankPaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "store_id" => "required",
+            "description" => "nullable",
+            "receipt_photo" => "required|image",
+            "payment_for" => "required",
+            "bank_account_id" => "required"
         ];
     }
 }

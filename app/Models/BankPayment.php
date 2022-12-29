@@ -16,4 +16,8 @@ class BankPayment extends Model
     {
         return $this->belongsTo(BankAccount::class, "bank_account_id");
     }
+    public function store()
+    {
+        return $this->hasMany(Store::class, "store_id");
+    }
 }
