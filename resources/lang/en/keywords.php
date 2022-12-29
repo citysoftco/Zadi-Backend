@@ -923,7 +923,10 @@ return [
     'All_Stores' => 'All Stores',
     'Assign_Store' => 'All Stores',
     'Choose Delivery Man' => "Choose Delivery Man",
-    'Bank Accounts' => 'Bank Accounts'
+    'Bank Accounts' => 'Bank Accounts',
+    'Add Bank Account' => 'Add Bank Account',
+    'Bank Accounts List' => 'Bank Accounts List',
+    'Bank' => 'Bank'
 
 
 

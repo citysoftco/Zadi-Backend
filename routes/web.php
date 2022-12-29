@@ -131,7 +131,6 @@ Route::group(['middleware' => ['verifylicense']], function () {
     });
 
     Route::namespace("Admin")->prefix('')->group(function () {
-        Route::resource("stores.banks-accounts", BankAccountController::class);
         Route::view('/powergrid', 'powergrid-demo');
         Route::get('/', [LoginController::class, 'adminLogin'])->name('adminLogin');
         Route::get('/login', [LoginController::class, 'adminLogin'])->name('login');
@@ -475,6 +474,8 @@ Route::group(['middleware' => ['verifylicense']], function () {
     });
 
     Route::get('lang/change', [LanguageController::class, 'change'])->name('changeLang');
+
+    Route::resource("stores.banks-accounts", BankAccountController::class);
 
 
     Route::namespace("Store")->prefix('store')->group(function () {

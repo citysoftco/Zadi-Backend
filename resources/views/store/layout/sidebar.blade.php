@@ -241,22 +241,20 @@
                    {{ request()->is('store/dboy_incentive') ? 'active' : '' }}">
                  <a href="#" class="menu-link">
                      <span class="menu-icon">
-                         <i class="fa fa-users"></i>
+                         <i class="fas fa-university"></i>
                      </span>
                      <span class="menu-text">{{ __('keywords.Bank Accounts') }}</span>
                      <span class="menu-caret"><b class="caret"></b></span>
                  </a>
                  <div class="menu-submenu">
                      <div class="menu-item {{ request()->is('stores/*/bank-accounts') ? 'active' : '' }}">
-                         <a href="{{ route('store_d_boylist') }}" class="menu-link">
-                             <span
-                                 class="menu-text">{{ __('keywords.Add') }}{{ __('keywords.Bank Accounts') }}</span>
+                         <a href="{{ route('stores.banks-accounts.create', $store->id) }}" class="menu-link">
+                             <span class="menu-text">{{ __('keywords.Add Bank Account') }}</span>
                          </a>
                      </div>
                      <div class="menu-item {{ request()->is('stores/*/bank-accounts/create') ? 'active' : '' }}">
-                         <a href="{{ route('store_boy_incentive') }}" class="menu-link">
-                             <span class="menu-text">{{ __('keywords.List') }}
-                                 {{ __('keywords.Bank Accounts') }}</span>
+                         <a href="{{ route('stores.banks-accounts.index', $store->id) }}" class="menu-link">
+                             <span class="menu-text">{{ __('keywords.Bank Accounts List') }}</span>
                          </a>
                      </div>
 

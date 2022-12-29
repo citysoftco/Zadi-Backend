@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
+use App\Models\Store;
+use DB;
 use Illuminate\Http\Request;
 
 class BankAccountController extends Controller
@@ -22,9 +24,13 @@ class BankAccountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($storeId)
     {
-        //
+        $store = Store::find($storeId);
+        $logo = DB::table('tbl_web_setting')
+            ->where('set_id', '1')
+            ->first();
+        return view("store.banks-accounts.add", compact("store", "logo"));
     }
 
     /**

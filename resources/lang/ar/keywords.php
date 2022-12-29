@@ -923,7 +923,11 @@ return [
     'All_Stores' => 'جميع المتاجر',
     'Assign_Store' => 'جميع المتاجر',
     'Choose Delivery Man' => "إختيار رجل التوصيل",
-    'Bank Accounts' => "الحسابات البنكية"
+    'Bank Accounts' => "الحسابات المصرفية",
+    'Add Bank Account' => 'إضافة حساب مصرفي',
+    'Bank Accounts List' => 'قائمة الحسابات المصرفية',
+    'Bank' => 'مصرف'
+
 
 
 ];

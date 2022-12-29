@@ -1,6 +1,6 @@
 @extends('store.layout.app')
 
-@section('preload-section')
+{{-- @section('preload-section')
     @if ($mapset->mapbox == 1 && $mapset->google_map == 0)
         <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -122,7 +122,7 @@
             }
         </style>
     @endif
-@endsection
+@endsection --}}
 
 @section('content')
     <div class="container-fluid">
@@ -155,9 +155,9 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title">{{ __('keywords.Add') }} {{ __('keywords.Delivery Boy') }}</h4>
-                        <form class="forms-sample" action="{{ route('') }}" method="post"
-                            enctype="multipart/form-data">
+                        <h4 class="card-title">{{ __('keywords.Add') }} {{ __('keywords.Bank Account') }}</h4>
+                        <form class="forms-sample" action="{{ route('stores.banks-accounts.store', $store->id) }}"
+                            method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
                     </div>
                     <div class="card-body">
@@ -165,28 +165,34 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="bmd-label-floating">{{ __('keywords.Boy Name') }}</label>
-                                    <input type="text" name="boy_name" class="form-control">
+                                    <label class="bmd-label-floating">{{ __('keywords.Bank Name') }}</label>
+                                    <input type="text" name="bank_name" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="bmd-label-floating">{{ __('keywords.Boy Phone') }}</label>
-                                    <input type="text" name="boy_phone" class="form-control">
+                                    <label class="bmd-label-floating">{{ __('keywords.Account Number') }}</label>
+                                    <input type="number" name="account_number" class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="bmd-label-floating">{{ __('keywords.Select') }}
-                                        {{ __('keywords.ID') }}</label>
-                                    <select name="id_name" class="form-control" required>
-                                        <option disabled selected>{{ __('keywords.Select') }} {{ __('keywords.ID') }}
+                                    <label class="bmd-label-floating">{{ __('keywords.Select Account Status') }}</label>
+                                    <select name="account_status" class="form-control" required>
+                                        <option disabled selected>{{ __('keywords.Select') }}
+                                            {{ __('keywords.Accout Status') }}
                                         </option>
-                                        @foreach ($id_types as $taxes)
+                                        <option value="on">{{ __('keywords.Select') }}
+                                            {{ __('keywords.Accout On') }}
+                                        </option>
+                                        <option value="on">{{ __('keywords.Select') }}
+                                            {{ __('keywords.Accout Off') }}
+                                        </option>
+                                        {{-- @foreach ($id_types as $taxes)
                                             <option value="{{ $taxes->name }}">{{ $taxes->name }}</option>
-                                        @endforeach
+                                        @endforeach --}}
                                     </select>
                                 </div>
                             </div>
@@ -194,23 +200,22 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="bmd-label-floating">{{ __('keywords.ID Number') }}</label>
-                                    <input type="text" name="id_no" class="form-control" value="{{ old('id_no') }}"
-                                        required>
+                                    <label class="bmd-label-floating">{{ __('keywords.Bank Branch') }}</label>
+                                    <input type="text" name="bank_branch" class="form-control"
+                                        value="{{ old('bank_branch') }}" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="bmd-label-floating">{{ __('keywords.ID') }}
-                                    {{ __('keywords.Image') }}</label>
+                                <label class="bmd-label-floating">{{ __('keywords.Bank Logo') }}</label>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="customFile" name="images"
+                                    <input type="file" class="custom-file-input" id="customFile" name="bank_logo"
                                         accept="image/png, image/jpeg"/ required>
                                     <label class="custom-file-label"
                                         for="customFile">{{ __('keywords.Choose_File') }}</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">{{ __('keywords.Password') }}</label>
@@ -237,13 +242,14 @@
                                     </div>
                                 </div>
                             @endif
-                        </div>
+                        </div> --}}
 
 
                         <br>
 
                         <button type="submit" class="btn btn-primary">{{ __('keywords.Submit') }}</button>
-                        <a href="{{ route('store_d_boylist') }}" class="btn">{{ __('keywords.Close') }}</a>
+                        <a href="{{ route('stores.banks-accounts.index', $store->id) }}"
+                            class="btn">{{ __('keywords.Close') }}</a>
                         <div class="clearfix"></div>
                     </div><br>
                     </form>
@@ -252,160 +258,8 @@
         </div>
     </div>
     </div>
-    @if ($mapset->mapbox == 1 && $mapset->google_map == 0)
-        <script>
-            var geocodingClient = mapboxSdk({
-                accessToken: '{{ $mapbox->mapbox_api }}'
-            });
-
-            function autocompleteSuggestionMapBoxAPI(inputParams, callback) {
-                geocodingClient.geocoding.forwardGeocode({
-                        query: inputParams,
-                        /* countries: ['US'], */
-                        autocomplete: true,
-                        limit: 5,
-                    })
-                    .send()
-                    .then(response => {
-                        const match = response.body;
-                        callback(match);
-                    });
-            }
-
-            function autocompleteInputBox(inp) {
-                var currentFocus;
-                inp.addEventListener("input", function(e) {
-                    var a, b, i, val = this.value;
-                    closeAllLists();
-                    if (!val) {
-                        return false;
-                    }
-                    currentFocus = -1;
-                    a = document.createElement("DIV");
-                    a.setAttribute("id", this.id + "autocomplete-list");
-                    a.setAttribute("class", "autocomplete-items");
-                    this.parentNode.appendChild(a);
-
-                    // suggestion list MapBox api called with callback
-                    autocompleteSuggestionMapBoxAPI($('#myInput').val(), function(results) {
-                        results.features.forEach(function(key) {
-                            b = document.createElement("DIV");
-                            b.innerHTML = "<strong>" + key.place_name.substr(0, val.length) +
-                                "</strong>";
-                            b.innerHTML += key.place_name.substr(val.length);
-                            b.innerHTML += "<input type='hidden' data-lat='" + key.geometry.coordinates[
-                                    1] + "' data-lng='" + key.geometry.coordinates[0] + "'  value='" +
-                                key.place_name + "'>";
-                            b.addEventListener("click", function(e) {
-                                let lat = $(this).find('input').attr('data-lat');
-                                let long = $(this).find('input').attr('data-lng');
-                                inp.value = $(this).find('input').val();
-                                $(inp).attr('data-lat', lat);
-                                $(inp).attr('data-lng', long);
-                                document.getElementById("lat").value = lat;
-                                document.getElementById("lng").value = long;
-                                closeAllLists();
-                            });
-                            a.appendChild(b);
-                        });
-                    })
-                });
 
 
-                /*execute a function presses a key on the keyboard:*/
-                inp.addEventListener("keydown", function(e) {
-                    var x = document.getElementById(this.id + "autocomplete-list");
-                    if (x) x = x.getElementsByTagName("div");
-                    if (e.keyCode == 40) {
-                        /*If the arrow DOWN key is pressed,
-                        increase the currentFocus variable:*/
-                        currentFocus++;
-                        /*and and make the current item more visible:*/
-                        addActive(x);
-                    } else if (e.keyCode == 38) { //up
-                        /*If the arrow UP key is pressed,
-                        decrease the currentFocus variable:*/
-                        currentFocus--;
-                        /*and and make the current item more visible:*/
-                        addActive(x);
-                    } else if (e.keyCode == 13) {
-                        /*If the ENTER key is pressed, prevent the form from being submitted,*/
-                        e.preventDefault();
-                        if (currentFocus > -1) {
-                            /*and simulate a click on the "active" item:*/
-                            if (x) x[currentFocus].click();
-                        }
-                    }
-                });
 
-                function addActive(x) {
-                    /*a function to classify an item as "active":*/
-                    if (!x) return false;
-                    /*start by removing the "active" class on all items:*/
-                    removeActive(x);
-                    if (currentFocus >= x.length) currentFocus = 0;
-                    if (currentFocus < 0) currentFocus = (x.length - 1);
-                    /*add class "autocomplete-active":*/
-                    x[currentFocus].classList.add("autocomplete-active");
-                }
-
-                function removeActive(x) {
-                    /*a function to remove the "active" class from all autocomplete items:*/
-                    for (var i = 0; i < x.length; i++) {
-                        x[i].classList.remove("autocomplete-active");
-                    }
-                }
-
-                function closeAllLists(elmnt) {
-                    /*close all autocomplete lists in the document,
-                    except the one passed as an argument:*/
-                    var x = document.getElementsByClassName("autocomplete-items");
-                    for (var i = 0; i < x.length; i++) {
-                        if (elmnt != x[i] && elmnt != inp) {
-                            x[i].parentNode.removeChild(x[i]);
-                        }
-                    }
-                }
-
-                /*execute a function when someone clicks in the document:*/
-                document.addEventListener("click", function(e) {
-                    closeAllLists(e.target);
-                });
-            }
-
-            autocompleteInputBox(document.getElementById("myInput"));
-        </script>
-    @endif
-
-    @if ($mapset->mapbox == 0 && $mapset->google_map == 1)
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-        </script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-        </script>
-        {{-- javascript code --}}
-        <script src="https://maps.googleapis.com/maps/api/js?key={{ $map }}&libraries=places&callback=initMap" async
-            defer></script>
-        <script>
-            $(document).ready(function() {
-                $("#lat_area").addClass("d-none");
-                $("#long_area").addClass("d-none");
-            });
-        </script>
-        <script>
-            function initMap() {
-                var input = document.getElementById('autocomplete');
-                var autocomplete = new google.maps.places.Autocomplete(input);
-                autocomplete.addListener('place_changed', function() {
-                    var place = autocomplete.getPlace();
-                    $('#latitude').val(place.geometry['location'].lat());
-                    $('#longitude').val(place.geometry['location'].lng());
-                    $("#lat_area").removeClass("d-none");
-                    $("#long_area").removeClass("d-none");
-                });
-            }
-        </script>
-    @endif
 
 @endsection
