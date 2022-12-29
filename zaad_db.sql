@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.7
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Dec 22, 2022 at 11:06 AM
--- Server version: 5.7.23-23
--- PHP Version: 7.4.33
+-- Host: localhost
+-- Generation Time: Dec 29, 2022 at 01:15 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -21,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `zaad_db`
 --
-CREATE DATABASE IF NOT EXISTS `zaad_db` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE `zaad_db`;
 
 -- --------------------------------------------------------
 
@@ -32,8 +29,8 @@ USE `zaad_db`;
 
 CREATE TABLE `aboutuspage` (
   `about_id` int(11) NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL
+  `title` varchar(255) NOT NULL,
+  `description` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -51,23 +48,23 @@ INSERT INTO `aboutuspage` (`about_id`, `title`, `description`) VALUES
 
 CREATE TABLE `address` (
   `address_id` int(11) NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `receiver_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `receiver_phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `society` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `receiver_name` varchar(255) NOT NULL,
+  `receiver_phone` varchar(255) NOT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `society` varchar(255) NOT NULL,
   `city_id` int(11) NOT NULL,
-  `society_id` int(11) NOT NULL DEFAULT '1',
-  `house_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `landmark` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `state` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pincode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lng` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `society_id` int(11) NOT NULL DEFAULT 1,
+  `house_no` varchar(255) NOT NULL,
+  `landmark` varchar(255) DEFAULT NULL,
+  `state` varchar(255) NOT NULL,
+  `pincode` varchar(255) NOT NULL,
+  `lat` varchar(255) NOT NULL,
+  `lng` varchar(255) NOT NULL,
   `select_status` int(11) NOT NULL,
   `added_at` datetime NOT NULL,
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
+  `updated_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -85,13 +82,13 @@ INSERT INTO `address` (`address_id`, `type`, `user_id`, `receiver_name`, `receiv
 
 CREATE TABLE `admin` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `admin_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `role_id` int(11) NOT NULL DEFAULT '0',
-  `role_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `admin_image` varchar(255) NOT NULL,
+  `remember_token` varchar(255) DEFAULT NULL,
+  `role_id` int(11) NOT NULL DEFAULT 0,
+  `role_name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -100,7 +97,7 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`id`, `name`, `email`, `password`, `admin_image`, `remember_token`, `role_id`, `role_name`) VALUES
 (1, 'Zaad Admin', 'citysoftsa@gmail.com', '$2y$10$4BxMhNv0.b27gT7qm/wVb.BctnuSS.OFnUyalgi1zE5kxyTd3OoBG', '/images/admin/17-11-22/logo_under.png', NULL, 0, NULL),
-(4, 'Manager', 'almoatasem89@gmail.com', '$2y$10$dReTNLUjYa3ZoyJuDH1U7eMgMkApVZOPDW2S1jZ5sbIcItxwrKYcq', '/images/category/2022-11-17/milk-icon-myiconfinder-39.png', NULL, 2, 'Manager');
+(4, 'Manager', 'almoatasem89@gmail.com', '$2y$10$sYBEuRioebX3rgWl0Yw./uj1ajxvmsBMnv04SRWhRyjGI/bJeYasS', '/images/category/2022-11-17/milk-icon-myiconfinder-39.png', NULL, 1, 'Manager');
 
 -- --------------------------------------------------------
 
@@ -110,7 +107,7 @@ INSERT INTO `admin` (`id`, `name`, `email`, `password`, `admin_image`, `remember
 
 CREATE TABLE `admin_driver_incentive` (
   `id` int(11) NOT NULL,
-  `incentive` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `incentive` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -121,10 +118,10 @@ CREATE TABLE `admin_driver_incentive` (
 
 CREATE TABLE `admin_payouts` (
   `payout_id` int(11) NOT NULL,
-  `payout_date` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `respond_payout_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bill` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `store_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payout_date` varchar(255) NOT NULL,
+  `respond_payout_id` varchar(255) NOT NULL,
+  `bill` varchar(255) NOT NULL,
+  `store_id` varchar(255) NOT NULL,
   `payout_amt` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -136,8 +133,8 @@ CREATE TABLE `admin_payouts` (
 
 CREATE TABLE `app_link` (
   `id` int(11) NOT NULL,
-  `android_app_link` longtext COLLATE utf8mb4_unicode_ci,
-  `ios_app_link` longtext COLLATE utf8mb4_unicode_ci
+  `android_app_link` longtext DEFAULT NULL,
+  `ios_app_link` longtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -156,7 +153,7 @@ INSERT INTO `app_link` (`id`, `android_app_link`, `ios_app_link`) VALUES
 CREATE TABLE `app_notice` (
   `app_notice_id` int(11) NOT NULL,
   `status` int(11) NOT NULL,
-  `notice` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `notice` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -164,7 +161,43 @@ CREATE TABLE `app_notice` (
 --
 
 INSERT INTO `app_notice` (`app_notice_id`, `status`, `notice`) VALUES
-(1, 1, 'مرحباً بكم في تطبيق زاد للمواد الغذائية باسعار جملة الجملة ومنافسة جداً للسوبر ماركت والبقالات وقريباً جداً طلبات خاصة للاسر');
+(1, 1, 'مرحباً بكم في تطبيق زادى لتوصيل المواد الغذائية  مرحباً بكم في تطبيق زادى لتوصيل المواد الغذائية');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bank_accounts`
+--
+
+CREATE TABLE `bank_accounts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `account_number` bigint(20) NOT NULL,
+  `bank_name` varchar(191) NOT NULL,
+  `branch_name` varchar(191) DEFAULT NULL,
+  `account_status` varchar(50) NOT NULL,
+  `store_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bank_payments`
+--
+
+CREATE TABLE `bank_payments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `amount` double NOT NULL,
+  `description` text DEFAULT NULL,
+  `receipt_photo` varchar(191) NOT NULL,
+  `payment_status` varchar(191) NOT NULL,
+  `payment_for` varchar(191) NOT NULL,
+  `bank_account_id` bigint(20) UNSIGNED NOT NULL,
+  `store_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -175,9 +208,9 @@ INSERT INTO `app_notice` (`app_notice_id`, `status`, `notice`) VALUES
 CREATE TABLE `callback_req` (
   `callback_req_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `user_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `user_phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `processed` int(11) NOT NULL DEFAULT '0',
+  `user_name` varchar(255) NOT NULL,
+  `user_phone` varchar(255) NOT NULL,
+  `processed` int(11) NOT NULL DEFAULT 0,
   `date` date NOT NULL,
   `store_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -187,7 +220,8 @@ CREATE TABLE `callback_req` (
 --
 
 INSERT INTO `callback_req` (`callback_req_id`, `user_id`, `user_name`, `user_phone`, `processed`, `date`, `store_id`) VALUES
-(1, 62, 'test', '124736128', 0, '2022-12-21', 0);
+(1, 62, 'test', '124736128', 1, '2022-12-21', 0),
+(2, 62, 'test', '124736128', 1, '2022-12-27', 0);
 
 -- --------------------------------------------------------
 
@@ -197,7 +231,7 @@ INSERT INTO `callback_req` (`callback_req_id`, `user_id`, `user_name`, `user_pho
 
 CREATE TABLE `cancel_for` (
   `res_id` int(11) NOT NULL,
-  `reason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `reason` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -223,7 +257,7 @@ CREATE TABLE `cart` (
   `varient_id` varchar(255) NOT NULL,
   `user_id` varchar(255) NOT NULL,
   `qty` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -233,13 +267,20 @@ CREATE TABLE `cart` (
 
 CREATE TABLE `cart_payments` (
   `py_id` int(11) NOT NULL,
-  `payment_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `amount` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cart_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payment_gateway` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payment_id` varchar(255) NOT NULL,
+  `amount` varchar(255) NOT NULL,
+  `cart_id` varchar(255) NOT NULL,
+  `payment_gateway` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cart_payments`
+--
+
+INSERT INTO `cart_payments` (`py_id`, `payment_id`, `amount`, `cart_id`, `payment_gateway`, `created_at`, `updated_at`) VALUES
+(1, 'WALLETORCOD', '400', 'GFVL1864', 'WALLETORCOD', '2022-12-26 19:31:23', '2022-12-26 19:31:23');
 
 -- --------------------------------------------------------
 
@@ -249,10 +290,19 @@ CREATE TABLE `cart_payments` (
 
 CREATE TABLE `cart_rewards` (
   `cart_rewards_id` int(11) NOT NULL,
-  `cart_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cart_id` varchar(255) NOT NULL,
   `rewards` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cart_rewards`
+--
+
+INSERT INTO `cart_rewards` (`cart_rewards_id`, `cart_id`, `rewards`, `user_id`) VALUES
+(1, 'BRQZ23ea', 1, 65),
+(2, 'HQQY5866', 450, 62),
+(3, 'GFVL1864', 1, 65);
 
 -- --------------------------------------------------------
 
@@ -267,7 +317,7 @@ CREATE TABLE `cart_status` (
   `out_for_delivery` datetime DEFAULT NULL,
   `completed` datetime DEFAULT NULL,
   `cancelled` datetime DEFAULT NULL,
-  `cart_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `cart_id` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -279,7 +329,15 @@ INSERT INTO `cart_status` (`status_id`, `pending`, `confirm`, `out_for_delivery`
 (2, '2022-12-21 20:41:51', NULL, NULL, NULL, NULL, 'CGIY31e9'),
 (3, '2022-12-21 20:43:31', NULL, NULL, NULL, NULL, 'CHUP5671'),
 (4, '2022-12-22 13:49:11', NULL, NULL, NULL, NULL, 'NBSG801b'),
-(5, '2022-12-22 14:19:37', NULL, NULL, NULL, NULL, 'JQDR965a');
+(5, '2022-12-22 14:19:37', NULL, NULL, NULL, NULL, 'JQDR965a'),
+(6, '2022-12-24 17:32:35', NULL, '2022-12-26 18:33:27', '2022-12-26 19:11:54', NULL, 'HQQY5866'),
+(7, '2022-12-26 18:39:42', NULL, NULL, NULL, NULL, 'FGNE25da'),
+(8, '2022-12-26 18:40:24', NULL, NULL, NULL, NULL, 'FGNE25da'),
+(9, '2022-12-26 18:41:22', NULL, '2022-12-26 18:44:15', '2022-12-26 18:44:37', NULL, 'BRQZ23ea'),
+(10, '2022-12-26 19:19:25', NULL, NULL, NULL, NULL, 'MUTZ23a9'),
+(11, '2022-12-26 19:26:22', NULL, NULL, NULL, NULL, 'KEVM1751'),
+(12, '2022-12-26 19:31:23', NULL, '2022-12-26 19:44:49', '2022-12-26 19:45:17', NULL, 'GFVL1864'),
+(13, '2022-12-27 00:02:16', NULL, NULL, NULL, NULL, 'QLMF336e');
 
 -- --------------------------------------------------------
 
@@ -289,18 +347,18 @@ INSERT INTO `cart_status` (`status_id`, `pending`, `confirm`, `out_for_delivery`
 
 CREATE TABLE `categories` (
   `cat_id` int(11) NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `parent` int(11) NOT NULL DEFAULT '0',
+  `title` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `image` varchar(255) NOT NULL,
+  `parent` int(11) NOT NULL DEFAULT 0,
   `level` int(11) NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `added_by` int(11) NOT NULL DEFAULT '0',
-  `tax_type` int(11) NOT NULL DEFAULT '0',
-  `tax_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tax_per` float NOT NULL DEFAULT '0',
+  `description` varchar(255) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `added_by` int(11) NOT NULL DEFAULT 0,
+  `tax_type` int(11) NOT NULL DEFAULT 0,
+  `tax_name` varchar(255) DEFAULT NULL,
+  `tax_per` float NOT NULL DEFAULT 0,
   `tx_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -384,7 +442,7 @@ INSERT INTO `categories` (`cat_id`, `title`, `slug`, `url`, `image`, `parent`, `
 
 CREATE TABLE `city` (
   `city_id` int(11) NOT NULL,
-  `city_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+  `city_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -403,20 +461,20 @@ INSERT INTO `city` (`city_id`, `city_name`) VALUES
 
 CREATE TABLE `cityadmin` (
   `id` int(10) UNSIGNED NOT NULL,
-  `city_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cityadmin_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cityadmin_image` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cityadmin_phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('0','1','2') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
-  `cityadmin_address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lat` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lng` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `device_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_photo` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city_id` varchar(191) NOT NULL,
+  `cityadmin_name` varchar(191) NOT NULL,
+  `cityadmin_image` varchar(191) NOT NULL,
+  `cityadmin_phone` varchar(191) NOT NULL,
+  `email` varchar(191) NOT NULL,
+  `password` varchar(191) NOT NULL,
+  `status` enum('0','1','2') NOT NULL DEFAULT '1',
+  `cityadmin_address` varchar(191) NOT NULL,
+  `lat` varchar(191) NOT NULL,
+  `lng` varchar(191) NOT NULL,
+  `device_id` varchar(191) NOT NULL,
+  `id_type` varchar(191) NOT NULL,
+  `id_no` varchar(191) NOT NULL,
+  `id_photo` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -447,16 +505,16 @@ INSERT INTO `country_code` (`code_id`, `country_code`) VALUES
 
 CREATE TABLE `coupon` (
   `coupon_id` int(11) NOT NULL,
-  `coupon_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `coupon_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `coupon_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `coupon_description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `coupon_name` varchar(255) NOT NULL,
+  `coupon_image` varchar(255) NOT NULL,
+  `coupon_code` varchar(255) NOT NULL,
+  `coupon_description` varchar(255) NOT NULL,
   `start_date` datetime NOT NULL,
   `end_date` datetime NOT NULL,
   `cart_value` int(100) NOT NULL,
   `amount` int(100) NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `uses_restriction` int(11) NOT NULL DEFAULT '1',
+  `type` varchar(255) NOT NULL,
+  `uses_restriction` int(11) NOT NULL DEFAULT 1,
   `store_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -465,7 +523,7 @@ CREATE TABLE `coupon` (
 --
 
 INSERT INTO `coupon` (`coupon_id`, `coupon_name`, `coupon_image`, `coupon_code`, `coupon_description`, `start_date`, `end_date`, `cart_value`, `amount`, `type`, `uses_restriction`, `store_id`) VALUES
-(1, 'شهر رمضان المعظم', '/images/coupon/18-11-2022/banner2.jpg', 'Ramadan2022', 'تخفيضات شهر رمضان المعظم', '2022-05-12 11:11:00', '2022-06-12 14:22:00', 2000, 10, 'percentage', 20000, 3);
+(1, 'نهاية العام', '/images/coupon/26-12-2022/c0c4ae402e0cdb2ad4422a78a3f480b8.jpg', '250065', 'تخفيضات نهاية العام', '2022-12-26 11:11:00', '2023-01-01 14:22:00', 2000, 10, 'percentage', 2147483647, 3);
 
 -- --------------------------------------------------------
 
@@ -475,8 +533,8 @@ INSERT INTO `coupon` (`coupon_id`, `coupon_name`, `coupon_image`, `coupon_code`,
 
 CREATE TABLE `currency` (
   `id` int(11) NOT NULL,
-  `currency_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `currency_sign` char(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `currency_name` varchar(255) NOT NULL,
+  `currency_sign` char(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -510,7 +568,10 @@ INSERT INTO `deal_product` (`deal_id`, `varient_id`, `deal_price`, `valid_from`,
 (1, 4, 200000, '2022-11-18 11:01:00', '2022-11-30 22:02:00', 1, 3),
 (2, 1, 5000, '2022-11-11 14:22:00', '2023-11-11 23:11:00', 1, 3),
 (4, 55, 2500, '2022-11-30 18:15:00', '2022-12-30 18:15:00', 1, 3),
-(8, 39, 400, '2022-11-30 18:32:00', '2022-12-09 18:32:00', 1, 3);
+(9, 62, 2500, '2022-12-28 11:54:00', '2023-01-01 11:54:00', 1, 3),
+(10, 78, 2500, '2022-12-28 11:55:00', '2023-01-01 11:55:00', 1, 3),
+(11, 5, 1000, '2022-12-28 11:55:00', '2023-01-01 11:55:00', 1, 3),
+(12, 89, 400, '2023-01-01 11:55:00', '2023-01-01 11:55:00', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -520,24 +581,24 @@ INSERT INTO `deal_product` (`deal_id`, `varient_id`, `deal_price`, `valid_from`,
 
 CREATE TABLE `delivery_boy` (
   `dboy_id` int(11) NOT NULL,
-  `boy_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `boy_phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `boy_city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `device_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `boy_loc` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lng` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `store_id` int(11) NOT NULL DEFAULT '0',
-  `store_dboy_id` int(11) NOT NULL DEFAULT '0',
-  `added_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'admin',
-  `id_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `id_photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `id_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `current_lat` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `current_lng` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `boy_name` varchar(255) NOT NULL,
+  `boy_phone` varchar(255) NOT NULL,
+  `boy_city` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `device_id` varchar(255) DEFAULT NULL,
+  `boy_loc` varchar(255) NOT NULL,
+  `lat` varchar(255) NOT NULL,
+  `lng` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `store_id` int(11) NOT NULL DEFAULT 0,
+  `store_dboy_id` int(11) NOT NULL DEFAULT 0,
+  `added_by` varchar(255) NOT NULL DEFAULT 'admin',
+  `id_no` varchar(255) DEFAULT NULL,
+  `id_photo` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `id_name` varchar(255) DEFAULT NULL,
+  `current_lat` varchar(255) DEFAULT NULL,
+  `current_lng` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -545,7 +606,7 @@ CREATE TABLE `delivery_boy` (
 --
 
 INSERT INTO `delivery_boy` (`dboy_id`, `boy_name`, `boy_phone`, `boy_city`, `password`, `device_id`, `boy_loc`, `lat`, `lng`, `status`, `store_id`, `store_dboy_id`, `added_by`, `id_no`, `id_photo`, `image`, `id_name`, `current_lat`, `current_lng`) VALUES
-(1, 'zaid', '0124736128', 'Khartoum bahri', '7789', 'dj_w070yRGuwk9vUjorE-X:APA91bGag75N2-iGVLABaZ4OOHsqtWWsxkHxL7BVoR1TA15dg3HYHxR2SDLXHc6x62bcdtit7Pai_tXDBESFbFySrIkswsmLPAtml7r6iaSDRf_usYUqKJ47vRDGM0WrnVyPasbM1R8I', 'Khartoum, السودان', '15.5006544', '32.5598994', 1, 3, 0, 'store', '1', '/images/dboy/22-12-2022/DJJ19jlXoAEqHYW-1024x731.jpg', NULL, 'ZAAD Card', '15.6007451', '32.5290972'),
+(1, 'عادل عباس', '0124736128', 'Khartoum bahri', '7789', 'eh9BFZ35S0S44HSjMSxai-:APA91bH38thmndy9_fnrbN8VTREEL3TcbvHZOjGMAl82UDAM6G1iXWQN3XUrrE3gJ4svFzYJVPNzN7382axW-lrB65ZRkw1GQabmNE22lBYB01nP0V6h8zKB_IjClFfkSwCamt-baOFv', 'Khartoum, السودان', '15.5006544', '32.5598994', 1, 3, 0, 'store', '1', '/images/dboy/22-12-2022/DJJ19jlXoAEqHYW-1024x731.jpg', NULL, 'ZAAD Card', '15.7180625', '32.6059519'),
 (2, 'admin', '0123771002', 'Khartoum bahri', '77897789', NULL, 'Khartoum, السودان', '15.5006544', '32.5598994', 1, 3, 0, 'store', '2', '/images/dboy/22-12-2022/download-(1).jfif', NULL, 'ZAAD Card', NULL, NULL);
 
 -- --------------------------------------------------------
@@ -559,7 +620,7 @@ CREATE TABLE `delivery_rating` (
   `user_id` int(11) NOT NULL,
   `dboy_id` int(11) NOT NULL,
   `rating` float NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -583,11 +644,11 @@ CREATE TABLE `deliver_boy_stores` (
 CREATE TABLE `driver_bank` (
   `ac_id` int(11) NOT NULL,
   `driver_id` int(11) NOT NULL,
-  `ac_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ifsc` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `holder_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bank_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `upi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `ac_no` varchar(255) NOT NULL,
+  `ifsc` varchar(255) NOT NULL,
+  `holder_name` varchar(255) NOT NULL,
+  `bank_name` varchar(255) NOT NULL,
+  `upi` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -598,9 +659,9 @@ CREATE TABLE `driver_bank` (
 
 CREATE TABLE `driver_callback_req` (
   `callback_req_id` int(11) NOT NULL,
-  `driver_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `driver_phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `processed` int(11) NOT NULL DEFAULT '0',
+  `driver_name` varchar(255) NOT NULL,
+  `driver_phone` varchar(255) NOT NULL,
+  `processed` int(11) NOT NULL DEFAULT 0,
   `date` date NOT NULL,
   `driver_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -614,10 +675,17 @@ CREATE TABLE `driver_callback_req` (
 CREATE TABLE `driver_incentive` (
   `id` int(11) NOT NULL,
   `dboy_id` int(11) NOT NULL,
-  `earned_till_now` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `paid_till_now` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remaining` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `earned_till_now` varchar(255) NOT NULL,
+  `paid_till_now` varchar(255) NOT NULL,
+  `remaining` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `driver_incentive`
+--
+
+INSERT INTO `driver_incentive` (`id`, `dboy_id`, `earned_till_now`, `paid_till_now`, `remaining`) VALUES
+(1, 1, '12', '0', '12');
 
 -- --------------------------------------------------------
 
@@ -627,13 +695,26 @@ CREATE TABLE `driver_incentive` (
 
 CREATE TABLE `driver_notification` (
   `not_id` int(11) NOT NULL,
-  `not_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `not_message` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `not_title` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `not_message` longtext NOT NULL,
   `dboy_id` int(11) NOT NULL,
-  `read_by_driver` int(11) NOT NULL DEFAULT '0',
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP
+  `read_by_driver` int(11) NOT NULL DEFAULT 0,
+  `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `driver_notification`
+--
+
+INSERT INTO `driver_notification` (`not_id`, `not_title`, `image`, `not_message`, `dboy_id`, `read_by_driver`, `created_at`) VALUES
+(1, 'Hey zaid, You Got a New Order for Delivery on 2022-12-26', NULL, 'you got an order with cart id #HQQY5866 of price SDG 54639. It will have to delivered on 2022-12-26 between 07:00 am - 07:05 am.', 1, 0, '2022-12-26 18:32:22'),
+(2, 'Hey zaid, You Got a New Order for Delivery on 2022-12-26', NULL, 'you got an order with cart id #BRQZ23ea of price SDG 400. It will have to delivered on 2022-12-26 between 199.', 1, 0, '2022-12-26 18:41:54'),
+(3, 'Hey zaid, You Got a New Order for Delivery on 2022-12-26', NULL, 'you got an order with cart id #MUTZ23a9 of price SDG 400. It will have to delivered on 2022-12-26 between 199.', 1, 0, '2022-12-26 19:20:24'),
+(4, 'Hey zaid, You Got a New Order for Delivery on 2022-12-26', NULL, 'you got an order with cart id #GFVL1864 of price SDG 400. It will have to delivered on 2022-12-26 between 199.', 1, 0, '2022-12-26 19:40:27'),
+(5, 'مرحبا في زادي', '/images/notification/27-12-2022/sd.jpg', 'اهلين وسهلين في زادي', 1, 0, '2022-12-27 18:10:20'),
+(6, 'مرحبا في زادي', '/images/notification/27-12-2022/sd.jpg', 'اهلين وسهلين في زادي', 2, 0, '2022-12-27 18:10:20'),
+(7, 'Hey عادل عباس, You Got a New Order for Delivery on 2022-12-28', NULL, 'you got an order with cart id #QLMF336e of price SDG 19880. It will have to delivered on 2022-12-28 between 09:00 am - 10:30 am.', 1, 0, '2022-12-28 13:48:38');
 
 -- --------------------------------------------------------
 
@@ -643,12 +724,12 @@ CREATE TABLE `driver_notification` (
 
 CREATE TABLE `failed_jobs` (
   `id` int(11) NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -659,10 +740,10 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `fcm` (
   `id` int(11) NOT NULL,
-  `sender_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `server_key` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `store_server_key` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `driver_server_key` longtext COLLATE utf8mb4_unicode_ci NOT NULL
+  `sender_id` varchar(255) NOT NULL,
+  `server_key` longtext NOT NULL,
+  `store_server_key` longtext NOT NULL,
+  `driver_server_key` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -698,7 +779,7 @@ INSERT INTO `firebase` (`f_id`, `status`) VALUES
 
 CREATE TABLE `firebase_iso` (
   `iso_id` int(11) NOT NULL,
-  `iso_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+  `iso_code` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -716,8 +797,8 @@ INSERT INTO `firebase_iso` (`iso_id`, `iso_code`) VALUES
 
 CREATE TABLE `freedeliverycart` (
   `id` int(11) NOT NULL,
-  `min_cart_value` float NOT NULL DEFAULT '0',
-  `del_charge` float NOT NULL DEFAULT '0',
+  `min_cart_value` float NOT NULL DEFAULT 0,
+  `del_charge` float NOT NULL DEFAULT 0,
   `store_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -728,7 +809,7 @@ CREATE TABLE `freedeliverycart` (
 INSERT INTO `freedeliverycart` (`id`, `min_cart_value`, `del_charge`, `store_id`) VALUES
 (1, 1000, 20, 0),
 (2, 2000, 40, 37),
-(3, 20000, 0, 3);
+(3, 250000, 0, 3);
 
 -- --------------------------------------------------------
 
@@ -738,7 +819,7 @@ INSERT INTO `freedeliverycart` (`id`, `min_cart_value`, `del_charge`, `store_id`
 
 CREATE TABLE `id_types` (
   `type_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -759,7 +840,7 @@ CREATE TABLE `image_space` (
   `digital_ocean` int(11) NOT NULL,
   `aws` int(11) NOT NULL,
   `same_server` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `image_space`
@@ -776,8 +857,8 @@ INSERT INTO `image_space` (`space_id`, `digital_ocean`, `aws`, `same_server`) VA
 
 CREATE TABLE `jobs` (
   `id` int(11) UNSIGNED NOT NULL,
-  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` varchar(255) NOT NULL,
+  `payload` longtext NOT NULL,
   `attempts` tinyint(3) UNSIGNED NOT NULL,
   `reserved_at` int(10) UNSIGNED DEFAULT NULL,
   `available_at` int(10) UNSIGNED NOT NULL,
@@ -792,12 +873,12 @@ CREATE TABLE `jobs` (
 
 CREATE TABLE `licensebox` (
   `id` int(11) NOT NULL,
-  `license` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `client` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `installed_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` enum('active','inactive') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'inactive',
-  `message` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `license` varchar(255) NOT NULL,
+  `client` varchar(255) NOT NULL,
+  `installed_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp(),
+  `status` enum('active','inactive') NOT NULL DEFAULT 'inactive',
+  `message` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -822,7 +903,7 @@ CREATE TABLE `list_cart` (
 
 CREATE TABLE `mapbox` (
   `map_id` int(11) NOT NULL,
-  `mapbox_api` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `mapbox_api` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -840,9 +921,9 @@ INSERT INTO `mapbox` (`map_id`, `mapbox_api`) VALUES
 
 CREATE TABLE `mapbox_countries` (
   `id` int(10) UNSIGNED NOT NULL,
-  `mapbox_country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `country_isocode` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` enum('0','1') COLLATE utf8mb4_unicode_ci NOT NULL
+  `mapbox_country` varchar(191) NOT NULL,
+  `country_isocode` varchar(2) NOT NULL,
+  `is_active` enum('0','1') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -853,7 +934,7 @@ CREATE TABLE `mapbox_countries` (
 
 CREATE TABLE `map_api` (
   `id` int(11) NOT NULL,
-  `map_api_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `map_api_key` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -894,12 +975,12 @@ CREATE TABLE `membership_bought` (
   `mem_id` int(11) NOT NULL,
   `mem_start_date` date NOT NULL,
   `mem_end_date` date NOT NULL,
-  `price` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` varchar(255) NOT NULL,
   `buy_date` date NOT NULL,
-  `paid_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `transaction_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `payment_gateway` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `payment_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'success'
+  `paid_by` varchar(255) DEFAULT NULL,
+  `transaction_id` varchar(255) DEFAULT NULL,
+  `payment_gateway` varchar(255) DEFAULT NULL,
+  `payment_status` varchar(255) NOT NULL DEFAULT 'success'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -910,15 +991,15 @@ CREATE TABLE `membership_bought` (
 
 CREATE TABLE `membership_plan` (
   `plan_id` int(11) NOT NULL,
-  `image` longtext COLLATE utf8mb4_unicode_ci,
-  `plan_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `free_delivery` int(11) NOT NULL DEFAULT '0',
-  `reward` int(11) NOT NULL DEFAULT '0',
-  `instant_delivery` int(11) NOT NULL DEFAULT '0',
-  `plan_description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `days` int(11) NOT NULL DEFAULT '0',
+  `image` longtext DEFAULT NULL,
+  `plan_name` varchar(255) NOT NULL,
+  `free_delivery` int(11) NOT NULL DEFAULT 0,
+  `reward` int(11) NOT NULL DEFAULT 0,
+  `instant_delivery` int(11) NOT NULL DEFAULT 0,
+  `plan_description` longtext NOT NULL,
+  `days` int(11) NOT NULL DEFAULT 0,
   `price` int(11) NOT NULL,
-  `hide` int(11) NOT NULL DEFAULT '0'
+  `hide` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -936,7 +1017,7 @@ INSERT INTO `membership_plan` (`plan_id`, `image`, `plan_name`, `free_delivery`,
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -961,7 +1042,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (22, '2022_05_21_030301_create_mapbox_countries_table', 4),
 (23, '2022_05_27_100830_create_cityadmin_table', 4),
 (24, '2022_06_02_092508_delivery__boy__stores__table', 4),
-(25, '2022_06_11_121542_stores_cityadmin_table', 4);
+(25, '2022_06_11_121542_stores_cityadmin_table', 4),
+(32, '2022_12_29_124658_create_bank_accounts_table', 5),
+(33, '2022_12_29_130155_create_bank_payments_table', 5);
 
 -- --------------------------------------------------------
 
@@ -971,8 +1054,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `minimum_maximum_order_value` (
   `min_max_id` int(100) NOT NULL,
-  `min_value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `max_value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `min_value` varchar(255) NOT NULL,
+  `max_value` varchar(255) NOT NULL,
   `store_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -986,7 +1069,7 @@ INSERT INTO `minimum_maximum_order_value` (`min_max_id`, `min_value`, `max_value
 (3, '200', '5000', 40),
 (5, '100', '10000', 43),
 (6, '100', '10000', 44),
-(7, '20', '50', 3);
+(7, '150000', '5000000', 3);
 
 -- --------------------------------------------------------
 
@@ -996,8 +1079,8 @@ INSERT INTO `minimum_maximum_order_value` (`min_max_id`, `min_value`, `max_value
 
 CREATE TABLE `msg91` (
   `id` int(11) NOT NULL,
-  `sender_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `api_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sender_id` varchar(255) NOT NULL,
+  `api_key` varchar(255) NOT NULL,
   `active` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1073,11 +1156,11 @@ INSERT INTO `notificationby` (`noti_id`, `user_id`, `sms`, `app`, `email`) VALUE
 --
 
 CREATE TABLE `oauth_access_tokens` (
-  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(100) NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `client_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) DEFAULT NULL,
+  `scopes` text DEFAULT NULL,
   `revoked` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1117,6 +1200,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('048010248e0d62c59a85e14320e9c72a986ddd5fe95f0aa87c965a7bafa8f0557240fc831eeccfac', 37, 1, 'token', '[]', 0, '2021-11-15 16:19:29', '2021-11-15 16:19:29', '2022-11-15 16:19:29'),
 ('04a9bf951c2988499eb5b5755355387ab22d51acf55a9b5c040aff07de4a1254745a4ba77d568ec3', 80, 1, 'token', '[]', 0, '2021-12-16 16:30:12', '2021-12-16 16:30:12', '2022-12-16 16:30:12'),
 ('04aa05aa4d0424b7261ebfe82525726bb4b0a3f84d217ce69bbe30b0572833a467881f5da3a6bdd6', 2, 1, 'token', '[]', 0, '2021-11-12 16:53:14', '2021-11-12 16:53:14', '2022-11-12 16:53:14'),
+('04b27c8d8365b2eddfd511075635ca53b36b8e7232b4db9e69945cc146a095c8c864bcda5a3b0658', 62, 1, 'token', '[]', 0, '2022-12-23 20:24:36', '2022-12-23 20:24:36', '2023-12-23 20:24:36'),
 ('04d4f55c526338d190d4be3806d1b41af883ead7b02f5878cbcfa79ccbd15b707a0043087a197e63', 2, 1, 'token', '[]', 0, '2021-12-13 18:35:50', '2021-12-13 18:35:50', '2022-12-13 18:35:50'),
 ('0504591b798ddae605d7c368a26f08c6cc46e0b2ee127e737fb97091825a99e377bf909659be2c88', 50, 1, 'token', '[]', 0, '2021-11-30 19:23:01', '2021-11-30 19:23:01', '2022-11-30 19:23:01'),
 ('051bf32fd72eb2973bfa0b5ac774dea499d18051e973305c8e0e0b572586f7de847d9b46262af0e9', 50, 1, 'token', '[]', 0, '2021-12-03 13:02:42', '2021-12-03 13:02:42', '2022-12-03 13:02:42'),
@@ -1217,6 +1301,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('126e1ac14398b6d4322a371bdea8cb74133fb748b9e9346bc4996fa728825b39e78d338ce9ca1ceb', 80, 1, 'token', '[]', 0, '2021-12-06 10:24:21', '2021-12-06 10:24:21', '2022-12-06 10:24:21'),
 ('1286e5fe9b9a3c8ad55d8cbaa1b8e1c0c0eb1cfc425850eafbff28917c08e68624c925a6aed4bc3d', 50, 1, 'token', '[]', 0, '2021-12-21 15:19:20', '2021-12-21 15:19:20', '2022-12-21 15:19:20'),
 ('129196e51937b2ca496d7c2bdf69f59fe32d5d6c9478873a739562efa5e0c1def480613368cd92c5', 2, 1, 'token', '[]', 0, '2021-11-02 17:59:28', '2021-11-02 17:59:28', '2022-11-02 17:59:28'),
+('12b60142da60973541ef0e8a74f9c6965566a8531d3aaaa946774f029151f0e35b01e09fbedacabb', 62, 1, 'token', '[]', 0, '2022-12-27 00:48:53', '2022-12-27 00:48:53', '2023-12-27 00:48:53'),
 ('12be1416853fd23460c9f29307debb45a4371f8079a870edc3b2adef968e9001f6547e9717c7a3f9', 48, 1, 'token', '[]', 0, '2021-11-19 17:41:51', '2021-11-19 17:41:51', '2022-11-19 17:41:51'),
 ('1318a080e0fe7066707abb67b94f0415c351d37dc670306e701ed942affa80d9ddaa502882885aed', 50, 1, 'token', '[]', 0, '2021-11-20 14:47:17', '2021-11-20 14:47:17', '2022-11-20 14:47:17'),
 ('131c7e53db67d63be791e8a3a1b77f1bcc196e78a7f29e12f9ff1c9f61c358aa5e1746aa5323381a', 2, 1, 'token', '[]', 0, '2021-11-20 10:08:45', '2021-11-20 10:08:45', '2022-11-20 10:08:45'),
@@ -1314,6 +1399,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('1dbc918a0b712595a186e5685b4530faacf3948b35795e9bf5e8134ca0bc7f2f432857b40287b1d2', 2, 1, 'token', '[]', 0, '2021-12-07 17:58:56', '2021-12-07 17:58:56', '2022-12-07 17:58:56'),
 ('1dd126a577302a00db4cb988a1d931cd9cd85a751137bbb08d00e5da6ee120a9b2dcf99caf92c75e', 48, 1, 'token', '[]', 0, '2021-11-18 18:19:12', '2021-11-18 18:19:12', '2022-11-18 18:19:12'),
 ('1dfff4033e6a1f6160811e2935ef94a50a97d8a1f8fe561d913b6eced53ea0f796cc8491b05a1a74', 37, 1, 'token', '[]', 0, '2021-11-18 15:36:46', '2021-11-18 15:36:46', '2022-11-18 15:36:46'),
+('1e09ba50ade8223d09cbe6e316d88896d82b83cf4348ec5654d7c02dc98a5be47698c684ef3b7633', 62, 1, 'token', '[]', 0, '2022-12-28 01:17:31', '2022-12-28 01:17:31', '2023-12-28 01:17:31'),
 ('1e38fc189f0f3d5650bbd0bb140522f73a0e86a485be7d1a8b6e0888be8e2c534b90882ba62f7fbe', 2, 1, 'token', '[]', 0, '2021-11-30 14:15:30', '2021-11-30 14:15:30', '2022-11-30 14:15:30'),
 ('1e72aff83cd51b8f2d9eb4cfad312928c06d9eba7a0fae6b623e316135985379320d718554ef2874', 50, 1, 'token', '[]', 0, '2021-11-20 14:57:45', '2021-11-20 14:57:45', '2022-11-20 14:57:45'),
 ('1e8b8a9bb496429ff3d980b6098a99917f8451a88cedacbb474d49536732ed510bc36c530eeb5a8b', 80, 1, 'token', '[]', 0, '2021-12-16 17:00:48', '2021-12-16 17:00:48', '2022-12-16 17:00:48'),
@@ -1352,24 +1438,27 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('237122783c9c09bbd00813e79cf1cf974fb629994ac44a5a2fd6fe32d4428ba88109a33c1dedb96a', 2, 1, 'token', '[]', 0, '2021-11-26 19:11:56', '2021-11-26 19:11:56', '2022-11-26 19:11:56'),
 ('2376aa796dab39dadcd757c4ad5b2c429aa63439da692559eca56ed7586ecc57b64afd1aa42e691c', 2, 1, 'token', '[]', 0, '2021-12-07 11:07:55', '2021-12-07 11:07:55', '2022-12-07 11:07:55'),
 ('2428a39ea1b3a7b073c05b9c3de262eaf576ca2040ff4c85b9881efdf0b896caff1967092f1c3433', 2, 1, 'token', '[]', 0, '2021-11-29 14:51:26', '2021-11-29 14:51:26', '2022-11-29 14:51:26'),
+('242d9b7eca976bd3b23ccb2367a8e62f7f0da54328d2bcee2482d83fccb1027adc2f5933e613d56d', 62, 1, 'token', '[]', 0, '2022-12-23 20:25:50', '2022-12-23 20:25:50', '2023-12-23 20:25:50'),
 ('2430bb984c2d970eede0019b2c61f7e35b9cc85dec007df5ca9275c7c05dae77112cb7710a3dd879', 2, 1, 'token', '[]', 0, '2021-12-16 17:11:11', '2021-12-16 17:11:11', '2022-12-16 17:11:11'),
 ('248f04c7e31722978cab1d735024723436bab94ef55bca8ef6ace9bf29d59d296eeaa714de80e38e', 50, 1, 'token', '[]', 0, '2021-11-30 19:34:08', '2021-11-30 19:34:08', '2022-11-30 19:34:08'),
 ('24a87564ff8e0b73cd145a849de4b27c9bddaec9e2b595e446ee08c241d528288a36f65a5d253cb5', 37, 1, 'token', '[]', 0, '2021-11-18 10:59:56', '2021-11-18 10:59:56', '2022-11-18 10:59:56'),
 ('24b11973df6e9ded6f3a2b0eb78e7e8c347c20592e2267dc80f245f22e0f7e8722405ac775a8e994', 2, 1, 'token', '[]', 0, '2021-12-14 10:37:24', '2021-12-14 10:37:24', '2022-12-14 10:37:24'),
+('24ca8aa647617dd05aeb39f2d9be64acc34237d116d0a256b163983ef814d509bba292cda0622a34', 62, 1, 'token', '[]', 0, '2022-12-24 17:26:53', '2022-12-24 17:26:53', '2023-12-24 17:26:53'),
 ('251c8347e0ebe6acebf901bd74b57867b9445462e758b6d2488ff272805df23f99c47bf70489ba18', 50, 1, 'token', '[]', 0, '2021-12-03 13:05:59', '2021-12-03 13:05:59', '2022-12-03 13:05:59'),
 ('251ff0a2a1657aa4b9c640a589ea4b8fe116b7ef5654b3e052f12716b991ba5f76272b9525518394', 50, 1, 'token', '[]', 0, '2021-11-30 12:41:01', '2021-11-30 12:41:01', '2022-11-30 12:41:01'),
 ('2520d057e07be196a48958d77c26b86b3ff52fc65609be09deb7d8fe6b184aba0c120ce90c871fdc', 50, 1, 'token', '[]', 0, '2021-12-03 13:05:43', '2021-12-03 13:05:43', '2022-12-03 13:05:43'),
 ('25260b3c8278ae88b10e66eced625800e2dd0d3a6cfdd46de7d279443068fa68cb2d3edaec2f0f0a', 2, 1, 'token', '[]', 0, '2021-11-26 09:38:35', '2021-11-26 09:38:35', '2022-11-26 09:38:35'),
 ('255a09db43de7cb3405c73e947d3c0feb5df3df34cc2542ca9b1c9987f9ef9e8648780ab7dfd9151', 50, 1, 'token', '[]', 0, '2021-12-01 10:23:15', '2021-12-01 10:23:15', '2022-12-01 10:23:15'),
 ('256514dd09a25e729e40975cd8d64a9b455c62a2d872da38e1c88e6d3daf8dbc65f751bf5274a41a', 48, 1, 'token', '[]', 0, '2021-11-20 09:46:41', '2021-11-20 09:46:41', '2022-11-20 09:46:41'),
-('2571ce13c693b941d96879b5de4c1583b3a2d8a0131c10f35658de126cdbb19c57af7666958526d1', 37, 1, 'token', '[]', 0, '2021-11-16 15:49:16', '2021-11-16 15:49:16', '2022-11-16 15:49:16'),
+('2569494362a5a508ec33b9c7fd5ec70601dc051d29faed5bda4215f516579b0404dcea18e8b56bf4', 62, 1, 'token', '[]', 0, '2022-12-24 19:50:44', '2022-12-24 19:50:44', '2023-12-24 19:50:44'),
+('2571ce13c693b941d96879b5de4c1583b3a2d8a0131c10f35658de126cdbb19c57af7666958526d1', 37, 1, 'token', '[]', 0, '2021-11-16 15:49:16', '2021-11-16 15:49:16', '2022-11-16 15:49:16');
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
 ('2583c147b9bb8f77300b2f2024289f6bdd6d51d777e7186ba68445ac2db607cf46ba4d75304ef9ab', 2, 1, 'token', '[]', 0, '2021-11-29 17:22:49', '2021-11-29 17:22:49', '2022-11-29 17:22:49'),
 ('25929ebbe8051c1cec242c806708eb754c927446a9706b8aeddd4fecb58c25936e35e5a4de0034cd', 80, 1, 'token', '[]', 0, '2021-12-16 16:31:07', '2021-12-16 16:31:07', '2022-12-16 16:31:07'),
 ('2599ee4cc274acc0c7c439ce928cbfeb3821fb81d5d842c251e700f14089d46b3c7b7e73de9b7976', 2, 1, 'token', '[]', 0, '2021-11-30 15:52:26', '2021-11-30 15:52:26', '2022-11-30 15:52:26'),
 ('25ab227dc6016d8b2b4f222a13b85dfa52158c27d7f3047ef8deb9786cac1660fab5d33c2d9a9871', 2, 1, 'token', '[]', 0, '2021-12-08 11:01:11', '2021-12-08 11:01:11', '2022-12-08 11:01:11'),
 ('25c05d4f918b648aa537b0e24f4beb77d2c2493ac9015a057839fcc837e810de5171a913fbe39eea', 2, 1, 'token', '[]', 0, '2021-06-09 08:06:11', '2021-06-09 08:06:11', '2022-06-09 08:06:11'),
-('25d096f67c2c3c123cc8b75aef1065d92814387f7e0785ff4bebaec89dc785c4817002f2a622f9b5', 50, 1, 'token', '[]', 0, '2021-11-24 16:13:02', '2021-11-24 16:13:02', '2022-11-24 16:13:02');
-INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('25d096f67c2c3c123cc8b75aef1065d92814387f7e0785ff4bebaec89dc785c4817002f2a622f9b5', 50, 1, 'token', '[]', 0, '2021-11-24 16:13:02', '2021-11-24 16:13:02', '2022-11-24 16:13:02'),
 ('26015759419729e7e625b84aed48cd845650e3a295133d65052cc2f8711ef6a1de29e7add0395fd0', 2, 1, 'token', '[]', 0, '2021-11-29 14:41:04', '2021-11-29 14:41:04', '2022-11-29 14:41:04'),
 ('2619c214a279d18093d2fe3f6dd3ed0652cb202daef0838b86cd1ddcc8b9356038f8056e905c9774', 68, 1, 'token', '[]', 0, '2021-12-03 13:19:05', '2021-12-03 13:19:05', '2022-12-03 13:19:05'),
 ('2673b4114837e30cf544d878802d7a5187446da8cb30ebb46153fc1d5fd763daa8c8ab2079feed20', 2, 1, 'token', '[]', 0, '2021-12-02 16:25:15', '2021-12-02 16:25:15', '2022-12-02 16:25:15'),
@@ -1384,6 +1473,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('27b56bf72be7989cf3e359487cb8c0a21d5018af8806e023752e57885699da560958af7959a4d628', 37, 1, 'token', '[]', 0, '2021-11-17 18:22:00', '2021-11-17 18:22:00', '2022-11-17 18:22:00'),
 ('27c154cbef73e2452e0e73d9b166051cb42fa00bdfbf13598277f681088cd272f0933ac9c2630684', 37, 1, 'token', '[]', 0, '2021-11-13 15:05:12', '2021-11-13 15:05:12', '2022-11-13 15:05:12'),
 ('27f2ccc06840357a3fbb82a47aa61c0c4be3ef93ae88df760b8432d915f93886d78e3b04a2d6a6ef', 2, 1, 'token', '[]', 0, '2021-12-07 17:59:50', '2021-12-07 17:59:50', '2022-12-07 17:59:50'),
+('288c0c25e5ede259e379004b76189cd508bdd54e7af685286e8d1bf16b03d349cbeacc3750b33800', 62, 1, 'token', '[]', 0, '2022-12-28 16:08:14', '2022-12-28 16:08:14', '2023-12-28 16:08:14'),
 ('28b29e8ba0fec94ff4a520d084700ed38ca3aa0ae13917e2dfd2f495838b17ff80d8823d6c0b1ef2', 37, 1, 'token', '[]', 0, '2021-11-13 18:05:02', '2021-11-13 18:05:02', '2022-11-13 18:05:02'),
 ('28c6ff3d7acc6d495a298a27fe9cb2ac86214ed71eeb7f38bde16aa5b7820511ac4ec1fdd0158068', 50, 1, 'token', '[]', 0, '2021-12-01 10:55:10', '2021-12-01 10:55:10', '2022-12-01 10:55:10'),
 ('28eb0b5ee9607ddcafa5ea9470d57b6c752d8c024be16a40a52cebee58f2e1db2ba45139c8fc7f86', 37, 1, 'token', '[]', 0, '2021-11-18 13:01:54', '2021-11-18 13:01:54', '2022-11-18 13:01:54'),
@@ -1482,6 +1572,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('3547ddacacba8c7effa77de142d666e9b346fd94a69a8c37432b3be6c77d5df1118a945a3296ce20', 37, 1, 'token', '[]', 0, '2021-11-29 11:22:04', '2021-11-29 11:22:04', '2022-11-29 11:22:04'),
 ('357c88c3979b421a13a93b71950ed0fffe88fb697a05ebe253230f6560df434b7d260be4dbf8615b', 2, 1, 'token', '[]', 0, '2021-12-09 18:17:16', '2021-12-09 18:17:16', '2022-12-09 18:17:16'),
 ('362f213cf93fede8a22a487e0874af19a2b07918665b9e7509d1b0d377d94f4c08c29a8088338781', 50, 1, 'token', '[]', 0, '2021-11-19 11:07:59', '2021-11-19 11:07:59', '2022-11-19 11:07:59'),
+('365d14fcabc51ad5ed1fef7df16932ccc5dcebc0d434d300ad02913fd1508a4e1a8c9d166f17511d', 62, 1, 'token', '[]', 0, '2022-12-24 19:50:50', '2022-12-24 19:50:50', '2023-12-24 19:50:50'),
 ('3702f651967a06950584a4046599787141536268a060c3191356c828a0f9bb158937ba4aa15bd91b', 50, 1, 'token', '[]', 0, '2021-12-02 17:05:23', '2021-12-02 17:05:23', '2022-12-02 17:05:23'),
 ('370cd49a02604b45f3393835a46ad9937bec7b666371b6cce52b3d778b4da55001af05ff8c46fbac', 37, 1, 'token', '[]', 0, '2021-11-15 13:59:12', '2021-11-15 13:59:12', '2022-11-15 13:59:12'),
 ('373c7c3a725df619f95add5334ed1f688e1eeb1a3bb944db077280ddda709849e683a46319d1c22d', 50, 1, 'token', '[]', 0, '2021-11-23 16:24:42', '2021-11-23 16:24:42', '2022-11-23 16:24:42'),
@@ -1528,6 +1619,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('3de3d0831b93650645759adee6162f180c83b48f8dda4a519de1ee9e522cb553df68eaf48cd102ca', 2, 1, 'token', '[]', 0, '2021-12-06 12:45:06', '2021-12-06 12:45:06', '2022-12-06 12:45:06'),
 ('3def2a9677520495dadde4be19b2f22143bd1d18bdbad4fe31707d4ac3e22ad6590208da784a5891', 37, 1, 'token', '[]', 0, '2021-11-17 17:21:57', '2021-11-17 17:21:57', '2022-11-17 17:21:57'),
 ('3e662a494347677cf616c2d567547071dc5aac3622984d36d986fe2dba51228979881e04fff8599b', 2, 1, 'token', '[]', 0, '2021-11-30 16:56:36', '2021-11-30 16:56:36', '2022-11-30 16:56:36'),
+('3f00344b1d4e0beff03d6e3d2a7cc3bfd905b52acd896d695dd390cfbc421b31685be3ae39c8e3d9', 62, 1, 'token', '[]', 0, '2022-12-26 12:31:56', '2022-12-26 12:31:56', '2023-12-26 12:31:56'),
 ('3f166e5fda00e952c392a1f65e5e0cca283262c10c5570df9a6eae8801f77954326eab24b2ed351e', 2, 1, 'token', '[]', 0, '2021-11-30 18:30:03', '2021-11-30 18:30:03', '2022-11-30 18:30:03'),
 ('3f4ad7fd805e39fcfe82504f58d1e92e8d7d5330642dbd47319c68026c39797097e19f7678635ece', 2, 1, 'token', '[]', 0, '2021-12-09 11:53:27', '2021-12-09 11:53:27', '2022-12-09 11:53:27'),
 ('3f4cc4af051b45989970abb6ab887cc23f063c7168a58a69c0ddf0d9b1a3cfbe547d377f413e7485', 37, 1, 'token', '[]', 0, '2021-11-18 11:00:36', '2021-11-18 11:00:36', '2022-11-18 11:00:36'),
@@ -1536,6 +1628,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('3f953f04e41fc518c425bbb24aa22dec8b3a343e99a1e8171a54768f248b3fd4146cddd1a9519eca', 2, 1, 'token', '[]', 0, '2021-11-23 15:23:55', '2021-11-23 15:23:55', '2022-11-23 15:23:55'),
 ('3f97dda630e7d0583d7d86c1e703bee8b517a5eb878f99c133700bb861331360724fc9e1be6e048d', 37, 1, 'token', '[]', 0, '2021-11-18 10:17:00', '2021-11-18 10:17:00', '2022-11-18 10:17:00'),
 ('3fb64bb5e412279a5f969239f6abc8b69a373d5bc3ea51b2c11b477a640f9754cbff6671acd1fad9', 37, 1, 'token', '[]', 0, '2021-11-16 16:11:26', '2021-11-16 16:11:26', '2022-11-16 16:11:26'),
+('3fb7dd68bdb6f354b9e4e236c211a6c10ddde3c0ad9ca938c56e45014bdbff8ed55029f4ab0f575b', 62, 1, 'token', '[]', 0, '2022-12-24 21:32:11', '2022-12-24 21:32:11', '2023-12-24 21:32:11'),
 ('3fd24e86f6712fc358a4efb673f0bae176156938a06511fcc41cf265f6f0e16f6d47d87d956b479c', 1, 1, 'token', '[]', 0, '2021-10-28 12:45:17', '2021-10-28 12:45:17', '2022-10-28 12:45:17'),
 ('3fde2b7c16c08cc9479118214c2f14c159d11647fccf822a9727d38613dc15bcef25a09734f4089c', 76, 1, 'token', '[]', 0, '2021-12-03 12:25:40', '2021-12-03 12:25:40', '2022-12-03 12:25:40'),
 ('3ff464f543e246ac1392103dd9e3aa39ca5145c36c944b6f7ca24bdf4151fe56025739e3daeb0820', 50, 1, 'token', '[]', 0, '2021-12-01 16:03:32', '2021-12-01 16:03:32', '2022-12-01 16:03:32'),
@@ -1568,6 +1661,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('44fd1865866650ce101486ca939c6a8befef7e950dec13edd5430121374f8d94944e5813c19421ca', 48, 1, 'token', '[]', 0, '2021-11-18 18:20:39', '2021-11-18 18:20:39', '2022-11-18 18:20:39'),
 ('44fe4408dfd71d1e61a0f318f5dc5e0aa106c984bcb1ba7ead31db839d2542610d3759e57bb41ca9', 51, 1, 'token', '[]', 0, '2021-11-30 17:27:44', '2021-11-30 17:27:44', '2022-11-30 17:27:44'),
 ('4541106baa38897026fcd4f7f05c1264c68e3fefd35af17ae5b4aba5191a50a3195a704985e09b50', 50, 1, 'token', '[]', 0, '2021-12-01 10:21:51', '2021-12-01 10:21:51', '2022-12-01 10:21:51'),
+('454d42e5e5d33f82a839a44bbfdad05c6d0abe62df99ecc3a11157cd17eb4235ef1ca6b29941d0e1', 62, 1, 'token', '[]', 0, '2022-12-28 16:01:13', '2022-12-28 16:01:13', '2023-12-28 16:01:13'),
 ('4561578175215e12b83176900af3d6f606c826e2f319b44bf4d0abbaf90973e45276765ddbde5741', 48, 1, 'token', '[]', 0, '2021-11-20 09:39:42', '2021-11-20 09:39:42', '2022-11-20 09:39:42'),
 ('4562abb5c965eb3a10e142c41ea32124663427f769a23f3aa16f1fe9706fa76e9f0b904e10d0f803', 37, 1, 'token', '[]', 0, '2021-11-18 11:03:54', '2021-11-18 11:03:54', '2022-11-18 11:03:54'),
 ('456cfb9cf94544b1ff40af05a3bdd92474994b1c7aa7ea03b6d56efd2e8852be26a69003175fb92d', 2, 1, 'token', '[]', 0, '2021-06-21 15:09:26', '2021-06-21 15:09:26', '2022-06-21 15:09:26'),
@@ -1603,6 +1697,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('4a8fb180de153528079a4a362f9ba7c275fcf885fcc0c8dcec598634b77a7917e1c72b27b81d275c', 2, 1, 'token', '[]', 0, '2021-12-14 12:02:17', '2021-12-14 12:02:17', '2022-12-14 12:02:17'),
 ('4aa06794e40190009f055048e2ff7ada06bc0b1df1606d282a404c0289d1ce2ea902d9edaa0b73ff', 50, 1, 'token', '[]', 0, '2021-12-02 11:41:46', '2021-12-02 11:41:46', '2022-12-02 11:41:46'),
 ('4aaff1645f4df478bfcb03d42f93b866aa7eecde09289dbf2cdae7e449cb96902959e290866f7f5f', 2, 1, 'token', '[]', 0, '2021-11-19 17:43:28', '2021-11-19 17:43:28', '2022-11-19 17:43:28'),
+('4abeb360138b70b8015449f0581a718dcb74b7a701c8ab1d51148273f08d9b776a5fdb69ba41d5cb', 62, 1, 'token', '[]', 0, '2022-12-25 11:32:38', '2022-12-25 11:32:38', '2023-12-25 11:32:38'),
 ('4b3c1986b329ade9e22b93bd373d2816298f3a55d2832733b87a07f4722a135c4d060e62312b49b0', 50, 1, 'token', '[]', 0, '2021-11-30 18:57:19', '2021-11-30 18:57:19', '2022-11-30 18:57:19'),
 ('4b6443251a7454c9e920918a9c063607f9ab8bec579f9e855d91c6affdfae799eee8dbde2f2534a4', 50, 1, 'token', '[]', 0, '2021-11-30 12:07:26', '2021-11-30 12:07:26', '2022-11-30 12:07:26'),
 ('4b757e5e4d8a1cbc473b59ebff7220a6c18e66cb8966be4cb90ea7b925f52ece551468c4a4cbf318', 50, 1, 'token', '[]', 0, '2021-11-30 11:49:41', '2021-11-30 11:49:41', '2022-11-30 11:49:41'),
@@ -1637,7 +1732,8 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('4ecb29d20ec6033f6b5094cb0b63442f6e8ed059b47fdeab0b7e70707db94c9139ea37c70b97dd93', 68, 1, 'token', '[]', 0, '2021-12-13 15:43:38', '2021-12-13 15:43:38', '2022-12-13 15:43:38'),
 ('4ece6d254156868f39aa268ecf3ce81ba51143745ec84034e3768483ef0d58d7ef3ce07c9319d3a9', 37, 1, 'token', '[]', 0, '2021-11-18 12:29:47', '2021-11-18 12:29:47', '2022-11-18 12:29:47'),
 ('4f006d545b47dad1c0c3868d2dd5665b069158e00407867632e5331a4d532e1697d508ff5ed6dc36', 50, 1, 'token', '[]', 0, '2021-11-29 12:49:50', '2021-11-29 12:49:50', '2022-11-29 12:49:50'),
-('4f18915db0f2cfc13b21ea84a87b26017c02d993ecb16631b90592068495e4e8de254d9536b9a306', 2, 1, 'token', '[]', 0, '2021-11-30 15:32:28', '2021-11-30 15:32:28', '2022-11-30 15:32:28'),
+('4f18915db0f2cfc13b21ea84a87b26017c02d993ecb16631b90592068495e4e8de254d9536b9a306', 2, 1, 'token', '[]', 0, '2021-11-30 15:32:28', '2021-11-30 15:32:28', '2022-11-30 15:32:28');
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
 ('4f64365b5040a8175937ba315f1a92ced832ff23060c44f82c805a3fc52a9807283c5bc34d17c681', 50, 1, 'token', '[]', 0, '2021-11-30 13:01:35', '2021-11-30 13:01:35', '2022-11-30 13:01:35'),
 ('4fd21b507d6146456bb522b89857b40acec03f6031bef58a867fe780b795275915e3c8086b79417d', 50, 1, 'token', '[]', 0, '2021-11-27 18:00:27', '2021-11-27 18:00:27', '2022-11-27 18:00:27'),
 ('501d4a3fe811ec4d45f58fc0b5da005a7a77b2a87d74ddd577d55bab49e2e0a7176da87706d6d744', 50, 1, 'token', '[]', 0, '2021-12-03 13:11:37', '2021-12-03 13:11:37', '2022-12-03 13:11:37'),
@@ -1649,8 +1745,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('5090bc761baa98d925385422cd264579b3da9cf127e740f8394675130f79e8e77bfc3a1f9aa429b1', 2, 1, 'token', '[]', 0, '2021-06-22 09:01:38', '2021-06-22 09:01:38', '2022-06-22 09:01:38'),
 ('5090fb139702b9d552e5f0fbe58853ecff92247e13549a200623dc178f6ae15b13ec40f2410d0711', 2, 1, 'token', '[]', 0, '2021-10-27 11:57:43', '2021-10-27 11:57:43', '2022-10-27 11:57:43'),
 ('50b2f413d81b9be0840258c2b051109582469a120791735c41a92cf7980d1debaa788b811405ef98', 2, 1, 'token', '[]', 0, '2021-11-13 12:34:55', '2021-11-13 12:34:55', '2022-11-13 12:34:55'),
-('50b446a7e5806041322768d9ae926803f9f402675278e25a59ebdc1b3bd2e0ca8195d39e77318c48', 50, 1, 'token', '[]', 0, '2021-11-29 17:17:56', '2021-11-29 17:17:56', '2022-11-29 17:17:56');
-INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('50b446a7e5806041322768d9ae926803f9f402675278e25a59ebdc1b3bd2e0ca8195d39e77318c48', 50, 1, 'token', '[]', 0, '2021-11-29 17:17:56', '2021-11-29 17:17:56', '2022-11-29 17:17:56'),
 ('50b830d6b3fa00b9e26cb05e7d17176eab4bc1099c13158ad3c5212fe901bbc6ba5a052e1910d649', 37, 1, 'token', '[]', 0, '2021-11-18 15:20:04', '2021-11-18 15:20:04', '2022-11-18 15:20:04'),
 ('50e25fe24fe1bea47b191a77f55958cc684ec1375d1fe73614633f3287b6624332691b756832392a', 2, 1, 'token', '[]', 0, '2021-06-16 19:46:52', '2021-06-16 19:46:52', '2022-06-16 19:46:52'),
 ('5116a1b50df606f243334f4d03bfd531b8e1b1d3bf0d1bf9a7e08dbf364aecd2276f64f8b08813b8', 50, 1, 'token', '[]', 0, '2021-11-24 17:14:38', '2021-11-24 17:14:38', '2022-11-24 17:14:38'),
@@ -1739,6 +1834,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('5d5fc2a6c8062c18d5b9bffe8bbed71d263a7533a85ea0085e371ed8323248b300fb5657678aa621', 2, 1, 'token', '[]', 0, '2021-11-29 15:27:02', '2021-11-29 15:27:02', '2022-11-29 15:27:02'),
 ('5d71d57d57ebc967c5f269fefba0e82008bc11eb1096d6aa89f168f133b33d9403c28a591f5a6333', 50, 1, 'token', '[]', 0, '2021-12-21 16:39:37', '2021-12-21 16:39:37', '2022-12-21 16:39:37'),
 ('5d96fbc511e8b9f8a790aeff5add4f42a870b0b9d04c91b0d3824847b69a5f3ad4bbe7ed77ae75d5', 37, 1, 'token', '[]', 0, '2021-11-16 09:38:38', '2021-11-16 09:38:38', '2022-11-16 09:38:38'),
+('5d9e005a9301e09843ebc518305efd7f6623a0ced24413050b15a3373e341b29475daf0b7c5873f0', 62, 1, 'token', '[]', 0, '2022-12-25 11:32:40', '2022-12-25 11:32:40', '2023-12-25 11:32:40'),
 ('5dba33c4c34df50ce950e4e72bf87f66b9853bd7faeffea51bae55bf1f81dad9c16ce0aecf3d4466', 80, 1, 'token', '[]', 0, '2021-12-03 13:35:47', '2021-12-03 13:35:47', '2022-12-03 13:35:47'),
 ('5dcfaf4f7a069a8e30bb1facf5ca6922c6e5e2eb35b70a0ade938fbbb9610deb39f3df12225365a0', 2, 1, 'token', '[]', 0, '2021-11-26 16:16:18', '2021-11-26 16:16:18', '2022-11-26 16:16:18'),
 ('5ded5d5be861bd8a7629aaf0734c4895897edfbee03143a60e889069fc988b9272bec5e14e000683', 68, 1, 'token', '[]', 0, '2021-12-14 10:32:30', '2021-12-14 10:32:30', '2022-12-14 10:32:30'),
@@ -1787,6 +1883,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('6383e23246b9f5d7851135fc79109435a5361a2856a90653d6b7a1d7b4ccefa45808dbb1fec9bdf3', 50, 1, 'token', '[]', 0, '2021-11-20 12:52:35', '2021-11-20 12:52:35', '2022-11-20 12:52:35'),
 ('638f78a27b52a969e94edbbce98c6df83ccb84d56e3b807a28efcd3bfe7ff6f69c9ff1a33d836495', 2, 1, 'token', '[]', 0, '2021-11-29 17:52:33', '2021-11-29 17:52:33', '2022-11-29 17:52:33'),
 ('63b246c24c3014d86a6612a6e12e4195a19d3df5ff66ecf36a480bcf11aba42d9b1898a991d72488', 50, 1, 'token', '[]', 0, '2021-11-25 10:57:32', '2021-11-25 10:57:32', '2022-11-25 10:57:32'),
+('63c71dc790c58a06f1f616478e270fbc52ad721ce600b2e2ae8d219c3e044b6f70043baf13a00437', 62, 1, '63aa8c378ad82', '[]', 0, '2022-12-27 11:39:59', '2022-12-27 11:39:59', '2023-12-27 11:39:59'),
 ('640428806202a94b3def5697c4680e5ebd26cf3bf7bb14b40826ba9512ec1c87eec35e61eb766de4', 51, 1, 'token', '[]', 0, '2021-11-19 14:14:08', '2021-11-19 14:14:08', '2022-11-19 14:14:08'),
 ('641ea21c4d864e7d0a2cf8267291ee51d94292e2618056e1ebc61b230d6c8f43efb7fcc48350e05e', 2, 1, 'token', '[]', 0, '2021-12-13 18:35:47', '2021-12-13 18:35:47', '2022-12-13 18:35:47'),
 ('64347a0e414b0799b747baa77cbdf40469ab13ab7f0c263708cbf572402d18c2e64e684974f67330', 80, 1, 'token', '[]', 0, '2021-12-06 11:24:27', '2021-12-06 11:24:27', '2022-12-06 11:24:27'),
@@ -1849,6 +1946,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('6d19014f6cfe752f0978a6bad35acb28000413eb5b9b78106a1da7a6a12d6c03e82617d9c5dfd1ed', 50, 1, 'token', '[]', 0, '2021-12-13 11:26:38', '2021-12-13 11:26:38', '2022-12-13 11:26:38'),
 ('6d2eeed31b6cc7023cfefb45ee77d971788894b3c88732031b0e728e6b3f666494ef9e7f673fafca', 2, 1, 'token', '[]', 0, '2021-11-26 17:50:59', '2021-11-26 17:50:59', '2022-11-26 17:50:59'),
 ('6d2fa7194763503c75f4d64da62ff447ac9919864eed85b478d9d608fdac4db1b012ec9941231609', 2, 1, 'token', '[]', 0, '2021-12-10 19:09:21', '2021-12-10 19:09:21', '2022-12-10 19:09:21'),
+('6d3cb3ccf46116549b94cd8358fdb54f00494985d79b1426f741c0b96c9bf8c80b44333da4604111', 62, 1, 'token', '[]', 0, '2022-12-28 16:01:20', '2022-12-28 16:01:20', '2023-12-28 16:01:20'),
 ('6d79e8ed3e34104fc12e3a7af3f2c1b630fba3caa4d5cb5254ecba53db7088caa0c6f21cf713f499', 37, 1, 'token', '[]', 0, '2021-11-18 10:42:04', '2021-11-18 10:42:04', '2022-11-18 10:42:04'),
 ('6d7da92d89ab3f75a67806425abb39b70ddbd76fca227398bb109d3b474a36e87708dffa2f85dde7', 66, 1, 'token', '[]', 0, '2021-12-02 12:57:12', '2021-12-02 12:57:12', '2022-12-02 12:57:12'),
 ('6ddef54ce22d5c6c797c1f6c58b9e81d7c32b9d240cb610d3a52a85f350dae35fab5621ea64fd367', 37, 1, 'token', '[]', 0, '2021-11-18 12:55:33', '2021-11-18 12:55:33', '2022-11-18 12:55:33'),
@@ -1862,6 +1960,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('6ee08eaaba78064edff81af22c51a191b8ee182771b43854a3541bcb2ef879bf566cc241f90de963', 50, 1, 'token', '[]', 0, '2021-11-29 17:21:23', '2021-11-29 17:21:23', '2022-11-29 17:21:23'),
 ('6eed282cbf8cda3a8a9a6f7e3807e75eec74efb23e92969e791af695a0bcb1cbc7de1b5c8f25a3e9', 106, 1, 'token', '[]', 0, '2021-12-10 11:08:37', '2021-12-10 11:08:37', '2022-12-10 11:08:37'),
 ('6f44ea37537ea84ca6aa3af15c6620f5e05c72eb602f9ed921bae6ead21dd606f33f0abf01ac8e86', 80, 1, 'token', '[]', 0, '2021-12-18 09:59:34', '2021-12-18 09:59:34', '2022-12-18 09:59:34'),
+('6f502a6375ea4a37c65e3563fa78b4a4823ce1551cad53d6952b5ff57f249db93199616c500a96bb', 62, 1, 'token', '[]', 0, '2022-12-28 18:33:33', '2022-12-28 18:33:33', '2023-12-28 18:33:33'),
 ('6f7e1f8dc13e66432156d21b8588979fd6806907e3821cb4bf8885714737352f7a5fad71a0554a50', 37, 1, 'token', '[]', 0, '2021-11-17 17:39:26', '2021-11-17 17:39:26', '2022-11-17 17:39:26'),
 ('6f81da4eeb41b1a0a445a73e0c7a2168c0a676b152aa5c59d34c3371b7bf4d4c2012c315b8103727', 37, 1, 'token', '[]', 0, '2021-11-29 11:18:32', '2021-11-29 11:18:32', '2022-11-29 11:18:32'),
 ('6fd285fbd3c7d6ad2931b363c1bb790f6b24ad46330c9fed71b2092e0e35765b86f3609651ad8649', 50, 1, 'token', '[]', 0, '2021-11-26 15:49:36', '2021-11-26 15:49:36', '2022-11-26 15:49:36'),
@@ -1880,6 +1979,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('725b469f01d89258bfe6cd8758b5c00a23f11a2aed0068971e4776ede1202ced11b39ad524efb9e5', 50, 1, 'token', '[]', 0, '2021-12-14 10:57:44', '2021-12-14 10:57:44', '2022-12-14 10:57:44'),
 ('7299afc52c9fde1bc19c9fb75e87f08d2d91b68c972cf7dc73ce3bbfeb1e765c967a2ce42e12e644', 50, 1, 'token', '[]', 0, '2021-12-03 13:29:53', '2021-12-03 13:29:53', '2022-12-03 13:29:53'),
 ('729c4c1a9090ffc2b5da46e1aad987e899d963477a8f964bac150758441f612540346ef6dc8a6f56', 2, 1, 'token', '[]', 0, '2021-11-22 09:48:27', '2021-11-22 09:48:27', '2022-11-22 09:48:27'),
+('72a6a0a8ba6d5bec0bbd33e276f38badae2fefe1c71c35382fdd66c0fc9f48617b5ddce497181413', 62, 1, 'token', '[]', 0, '2022-12-23 20:18:28', '2022-12-23 20:18:28', '2023-12-23 20:18:28'),
 ('72af8add1de597a07a10f584f48cc69df16556234d5da516c56089016cbbe5dea2e48925b1e23f82', 2, 1, 'token', '[]', 0, '2021-12-07 19:30:48', '2021-12-07 19:30:48', '2022-12-07 19:30:48'),
 ('72ce6bfcf3972229ce1944561c36370a7dbc4b7426bd65ced31393bebc67ff3d358ae4d768f9b790', 2, 1, 'token', '[]', 0, '2021-12-10 17:54:05', '2021-12-10 17:54:05', '2022-12-10 17:54:05'),
 ('72e69397adb050e900bda86e09989cdf9111c5a74ef9693f971c665620893b95b0542cdad493024d', 50, 1, 'token', '[]', 0, '2021-12-03 12:59:20', '2021-12-03 12:59:20', '2022-12-03 12:59:20'),
@@ -1913,7 +2013,8 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('76dc370c4eefd9a49a624245c3a4e82232c0217059ff1fd60305f34b23ba72efaa698ae396372507', 80, 1, 'token', '[]', 0, '2021-12-03 16:56:20', '2021-12-03 16:56:20', '2022-12-03 16:56:20'),
 ('76e11d7539ecf70d9e374b7c386fd2c4ed82210226b3fc1307b3e42ced1a2c75d35cf82d3d743dd6', 37, 1, 'token', '[]', 0, '2021-11-18 10:20:30', '2021-11-18 10:20:30', '2022-11-18 10:20:30'),
 ('76ea2a101297cc12d010f93e055b052fb6f21d7db2dae75fd2661c67cd63b93fbff570c3ce84a93e', 66, 1, 'token', '[]', 0, '2021-12-01 16:35:18', '2021-12-01 16:35:18', '2022-12-01 16:35:18'),
-('77665d1556b4eb3e0b5aa339d771fdd3a1f63fa8680ad21afd981e26689b5c69daf7538d340c94c5', 2, 1, 'token', '[]', 0, '2021-12-11 22:52:55', '2021-12-11 22:52:55', '2022-12-11 22:52:55'),
+('77665d1556b4eb3e0b5aa339d771fdd3a1f63fa8680ad21afd981e26689b5c69daf7538d340c94c5', 2, 1, 'token', '[]', 0, '2021-12-11 22:52:55', '2021-12-11 22:52:55', '2022-12-11 22:52:55');
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
 ('77be8cdcc5ee7cd48967bbebc65d440c26eb9a017de9afc49be69ea24d1fc72659255fa5dfcf1e32', 81, 1, 'token', '[]', 0, '2021-12-03 18:50:28', '2021-12-03 18:50:28', '2022-12-03 18:50:28'),
 ('77d566dc9a8f30069c2a189ee7183d0f3e5ae797df1fe833e8b38c07578ae1052ea8f507537eb65c', 50, 1, 'token', '[]', 0, '2021-12-13 11:06:54', '2021-12-13 11:06:54', '2022-12-13 11:06:54'),
 ('77de1f738fe92edd7bbe11c4fb01f20ec1b3114d5c0583cf5e7618629b907551447dd2d8d8e04dae', 2, 1, 'token', '[]', 0, '2021-11-13 14:22:09', '2021-11-13 14:22:09', '2022-11-13 14:22:09'),
@@ -1930,8 +2031,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('797eb3fa72db4e6808533cc27211ea97c29720d2f4f55a1e78bed51b0c4525d9d7875f92471f2786', 37, 1, 'token', '[]', 0, '2021-11-17 09:44:19', '2021-11-17 09:44:19', '2022-11-17 09:44:19'),
 ('7a8a106399030e6e4c1c0cde2f2ffc8cbfeb939929d7d3f2928e526f828722b29cffffb2cd29332f', 2, 1, 'token', '[]', 0, '2021-06-23 03:38:54', '2021-06-23 03:38:54', '2022-06-23 03:38:54'),
 ('7a8f32a2cbae30d897a81866451e1feafa9d217076bb408b4ae2cd5deeca1c7913b42bb317710e26', 65, 1, '63a2abdb95bc4', '[]', 0, '2022-12-21 12:16:51', '2022-12-21 12:16:51', '2023-12-21 12:16:51'),
-('7a96d629e65fdcd85f5781863b393447886f033754d976267d6ee8f5ece00a4152597e48c9b60ab8', 2, 1, 'token', '[]', 0, '2021-06-22 18:10:45', '2021-06-22 18:10:45', '2022-06-22 18:10:45');
-INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('7a96d629e65fdcd85f5781863b393447886f033754d976267d6ee8f5ece00a4152597e48c9b60ab8', 2, 1, 'token', '[]', 0, '2021-06-22 18:10:45', '2021-06-22 18:10:45', '2022-06-22 18:10:45'),
 ('7ace3f5b373c745985dbfc209346e18d741b05b1128400d0debdea863b1d2cc66bead1a4c3226632', 2, 1, 'token', '[]', 0, '2021-12-03 18:07:13', '2021-12-03 18:07:13', '2022-12-03 18:07:13'),
 ('7b02335d21dfd038540080f0cac80d57318c568c38cf9e1298ef715ee32cffcd2ab5871f4d26e811', 2, 1, 'token', '[]', 0, '2021-12-04 11:12:59', '2021-12-04 11:12:59', '2022-12-04 11:12:59'),
 ('7b54679ba0601f90cdd6c14ebc6de868abfa344a456463d2b27a59ee408117aa56cb08557c6cdbf5', 50, 1, 'token', '[]', 0, '2021-12-01 14:43:02', '2021-12-01 14:43:02', '2022-12-01 14:43:02'),
@@ -1979,6 +2079,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('80770a1e6e3486429deeaeeb882f86d2d62805b1a3de42c20c280272f20b140bfe7f3348ca2dac12', 37, 1, 'token', '[]', 0, '2021-11-17 18:45:19', '2021-11-17 18:45:19', '2022-11-17 18:45:19'),
 ('808b54631fe7dd336867aa6256af6797caa664336e6b453dfcd75b24ed0b91a77c7a091a433203c5', 50, 1, 'token', '[]', 0, '2021-12-01 17:17:53', '2021-12-01 17:17:53', '2022-12-01 17:17:53'),
 ('8098c8404e90f217bb692e2a3dc1a1b97b34ee7d3b7046ab21165056a7b93bf45df6e9d1ea6d47f8', 2, 1, 'token', '[]', 0, '2021-11-18 15:20:19', '2021-11-18 15:20:19', '2022-11-18 15:20:19'),
+('80a8e9aec7658eeb5aafec1ba7ce10d40b9230b75d3dd0b9eadcbe99c79941795ff0a2210cb8c5cd', 62, 1, 'token', '[]', 0, '2022-12-23 19:04:27', '2022-12-23 19:04:27', '2023-12-23 19:04:27'),
 ('80bab502d64ec4ccd3a4336bb0df2f8483e410414109275bc722a995b242037cf2de39a97670cbab', 2, 1, 'token', '[]', 0, '2021-12-07 10:07:28', '2021-12-07 10:07:28', '2022-12-07 10:07:28'),
 ('80d6ce8bdf45405da7c9628b1350784e2f8c51044b94741b70fdce553bcffc6736c4705eeb415950', 50, 1, 'token', '[]', 0, '2021-12-03 13:42:50', '2021-12-03 13:42:50', '2022-12-03 13:42:50'),
 ('80e66ca481aeab6253f6aec45ee1f42e4074747c2dadac4c776465718f9e351d6fbdc80696270fe0', 37, 1, 'token', '[]', 0, '2021-11-17 18:12:25', '2021-11-17 18:12:25', '2022-11-17 18:12:25'),
@@ -2021,7 +2122,9 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('846059c795aa7dab1eb6b159bafb0feb05086943e57b9be59ec58d6b58bfd529719d5108872465e4', 2, 1, 'token', '[]', 0, '2021-11-29 19:01:20', '2021-11-29 19:01:20', '2022-11-29 19:01:20'),
 ('847375889d589f25bd6b1f13a7f24b263ec27a9a584ecadd528e06c7f38d99b9dce3c7b03e4f3bf1', 48, 1, 'token', '[]', 0, '2021-11-29 11:57:16', '2021-11-29 11:57:16', '2022-11-29 11:57:16'),
 ('84953591980fc761de7f08ce01c0f9d447d07633891a55df61c9b6254628a865b4c32cf343d22ab5', 37, 1, 'token', '[]', 0, '2021-11-18 09:37:09', '2021-11-18 09:37:09', '2022-11-18 09:37:09'),
+('849fdf00115b69d7dc5dff632514041090abce0e3fd86a22e5ef378f7debdd7e66acb3b76b24f67b', 62, 1, 'token', '[]', 0, '2022-12-27 14:43:10', '2022-12-27 14:43:10', '2023-12-27 14:43:10'),
 ('84a2d1198312194d2e676ea0a3a10e4a161e1f417ee51514b85e600e0913e543ab0fd8f9295f55f3', 89, 1, 'token', '[]', 0, '2021-12-08 12:10:24', '2021-12-08 12:10:24', '2022-12-08 12:10:24'),
+('84c0231ffe678ee981bc28ae1cfb9cb330b26e010f0c57c143f94b805048a4288781e16a6a214f5b', 62, 1, 'token', '[]', 0, '2022-12-24 19:50:46', '2022-12-24 19:50:46', '2023-12-24 19:50:46'),
 ('84c51b5185b51f27273bec96ad93984925d87f0f09832d684e2e3b38664fb5c4fd962d040813a683', 50, 1, 'token', '[]', 0, '2021-12-01 10:13:05', '2021-12-01 10:13:05', '2022-12-01 10:13:05'),
 ('84e6cb3708c91180958bb0b8da3eb92f16e9ace5819761c986eb02994397d4e16ff6b42b7c5397d7', 37, 1, 'token', '[]', 0, '2021-11-15 10:39:22', '2021-11-15 10:39:22', '2022-11-15 10:39:22'),
 ('85451d0a676cba02e4bdd9e0d8a24711762f122e37deb5cc64ad127307e503846cd86fbf6841984a', 50, 1, 'token', '[]', 0, '2021-11-19 12:57:08', '2021-11-19 12:57:08', '2022-11-19 12:57:08'),
@@ -2065,6 +2168,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('8a7fec803f971b3f6da5833c653d64655a485afba26e17ecc5db4598da79b62330feee853cc5e2b4', 2, 1, 'token', '[]', 0, '2021-12-14 11:19:59', '2021-12-14 11:19:59', '2022-12-14 11:19:59'),
 ('8acd4cc2fc855bbd296795b20d7b916a8704c80b8693ce03789c5f50de4d5b3a12d8982d4b778ee6', 2, 1, 'token', '[]', 0, '2021-06-22 19:08:26', '2021-06-22 19:08:26', '2022-06-22 19:08:26'),
 ('8ae1bbfc96a5876c2e4a67d4e75e17e01380050985ebeddce4e67b49290114a6a9b0b942445a35ae', 2, 1, 'token', '[]', 0, '2021-12-17 16:59:46', '2021-12-17 16:59:46', '2022-12-17 16:59:46'),
+('8af5ebd85a81036b2f66ffd97a2f24b1e5440d655c8fd6af2090761d833594e82819c06d75ff59bc', 62, 1, 'token', '[]', 0, '2022-12-26 14:50:48', '2022-12-26 14:50:48', '2023-12-26 14:50:48'),
 ('8b0cacef9fdf5970cb00c2d9f039729bd9c9b6b40ab7aa9035f0cd9a4d1657839ce4a550b17ee75a', 2, 1, 'token', '[]', 0, '2021-06-22 16:56:02', '2021-06-22 16:56:02', '2022-06-22 16:56:02'),
 ('8b7dbb5d4737b1aea42020720fa10003583da57035602f6d430e04ed3750d182219d687a43e0ae3f', 80, 1, 'token', '[]', 0, '2021-12-03 15:32:14', '2021-12-03 15:32:14', '2022-12-03 15:32:14'),
 ('8b7f9791f8caa3552555b18103b07c605b7efbc407a3d10d10a18d713e76a6bc6853e3fc46ce93ca', 50, 1, 'token', '[]', 0, '2021-11-18 16:54:32', '2021-11-18 16:54:32', '2022-11-18 16:54:32'),
@@ -2190,7 +2294,8 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('9c29a62159edbea2e4c1a325a045c31c43850bc80de1a6855fb4250b225042c9b31e141b1b1c5a57', 50, 1, 'token', '[]', 0, '2021-12-02 18:03:26', '2021-12-02 18:03:26', '2022-12-02 18:03:26'),
 ('9c2b53ccce768644dd5a8db8aa6481eb24b29d36ba687ceedec51e62ef36a880f5af9aeb69c3a9eb', 37, 1, 'token', '[]', 0, '2021-11-12 18:21:01', '2021-11-12 18:21:01', '2022-11-12 18:21:01'),
 ('9c3c46f4fd26f408480bf62e9f9dc965decf7276cf5d1fc543627d581d2323498f588848e2f78622', 80, 1, 'token', '[]', 0, '2021-12-08 12:00:10', '2021-12-08 12:00:10', '2022-12-08 12:00:10'),
-('9c4607debf239e2fc4895365d5b1d9f2fe24d6d350094d8839572a22614dde8bceef1011c9f52c10', 50, 1, 'token', '[]', 0, '2021-11-30 11:29:21', '2021-11-30 11:29:21', '2022-11-30 11:29:21'),
+('9c4607debf239e2fc4895365d5b1d9f2fe24d6d350094d8839572a22614dde8bceef1011c9f52c10', 50, 1, 'token', '[]', 0, '2021-11-30 11:29:21', '2021-11-30 11:29:21', '2022-11-30 11:29:21');
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
 ('9c4789966d5c4822de9c80c3d33647f6bef0a1266f77b6b79f07230318aa1c0565ed09e70a28d61d', 1, 1, 'token', '[]', 0, '2021-10-21 15:05:24', '2021-10-21 15:05:24', '2022-10-21 15:05:24'),
 ('9c8c4e9b06bb3f2719ecde5d6fbd90495879ce9c6e4c088a613b7d59b81bf5976186df91ea062d12', 2, 1, 'token', '[]', 0, '2021-12-07 17:48:01', '2021-12-07 17:48:01', '2022-12-07 17:48:01'),
 ('9c94b29441f0c1175772b3e8a33c8dfc514b0d5c8adb6a84ce6280a9f7b984200a9699371733c62a', 68, 1, 'token', '[]', 0, '2021-12-13 10:35:14', '2021-12-13 10:35:14', '2022-12-13 10:35:14'),
@@ -2204,6 +2309,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('9df777b909bdd3ad6b37f29f8535d93e3830d334b36c2110a5cfe792716e440fdddad12b2d28a65b', 2, 1, 'token', '[]', 0, '2021-12-17 12:51:38', '2021-12-17 12:51:38', '2022-12-17 12:51:38'),
 ('9e0a9855b091426271cd9ded7dd5521b6d6e68fe96b536ac9010592c58b08c446030577efb1acca7', 2, 1, 'token', '[]', 0, '2021-11-01 16:59:38', '2021-11-01 16:59:38', '2022-11-01 16:59:38'),
 ('9e26d9a547038f674d993d8dfdea4e76498f77156c467e31926df2ae2cc4cadf3a7b931bcb6701e3', 2, 1, 'token', '[]', 0, '2021-12-07 12:52:49', '2021-12-07 12:52:49', '2022-12-07 12:52:49'),
+('9e2ac88aeb3bb60f8dec8ef03f2ed3ab7d056a6d6de5749586c93f871db44d83a43c25b9a803e59c', 62, 1, 'token', '[]', 0, '2022-12-24 21:32:15', '2022-12-24 21:32:15', '2023-12-24 21:32:15'),
 ('9e2b2da04f63bbf07581c52e2698058f19f9e55594ed483085e5858a26ef592adfb2a0dbd2cc1b17', 50, 1, 'token', '[]', 0, '2021-11-24 16:54:54', '2021-11-24 16:54:54', '2022-11-24 16:54:54'),
 ('9e3bd45c0b597f686e15cbe09bdefaae244b460f97974b6f98651cb5718276787b078786cd0874fa', 37, 1, 'token', '[]', 0, '2021-11-18 10:22:43', '2021-11-18 10:22:43', '2022-11-18 10:22:43'),
 ('9e4dacf47527709561b84c1e9c85543740ea89a85b84ca5a4d810dfe45da4d19b2582dca39e94a47', 50, 1, 'token', '[]', 0, '2021-11-30 18:50:46', '2021-11-30 18:50:46', '2022-11-30 18:50:46'),
@@ -2211,8 +2317,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('9ec751d877c0d57945d3093abbddd26a5c90d07f5e125f7585b15d394673ffc2d7db6102b7451d01', 37, 1, 'token', '[]', 0, '2021-11-18 10:30:16', '2021-11-18 10:30:16', '2022-11-18 10:30:16'),
 ('9ef7cb66801f7ccf93f6d11007a434a636da09bb9dc2402d23846956149783f6bcaf631a8b02d980', 2, 1, 'token', '[]', 0, '2021-11-26 18:22:05', '2021-11-26 18:22:05', '2022-11-26 18:22:05'),
 ('9f13a9d21fae96d2f36601bcc270c06a6508be2b7c4a4c31750d2c2e6c8806ea8f72b90d2a37228c', 2, 1, 'token', '[]', 0, '2021-12-08 10:38:14', '2021-12-08 10:38:14', '2022-12-08 10:38:14'),
-('9f421c9b33b93e9627f4e024d57a66cc00bc2d3c670d0425539d4ad2acc76d9ec8c798c1426a3e9c', 2, 1, 'token', '[]', 0, '2021-11-30 18:17:56', '2021-11-30 18:17:56', '2022-11-30 18:17:56');
-INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('9f421c9b33b93e9627f4e024d57a66cc00bc2d3c670d0425539d4ad2acc76d9ec8c798c1426a3e9c', 2, 1, 'token', '[]', 0, '2021-11-30 18:17:56', '2021-11-30 18:17:56', '2022-11-30 18:17:56'),
 ('9fb1468e8383518ab0c1cd3e0ee1e4b9d6aab3c24cfbcd19158ebae3043bd78467ffc9bc5c0eb1a7', 2, 1, 'token', '[]', 0, '2021-12-07 17:55:30', '2021-12-07 17:55:30', '2022-12-07 17:55:30'),
 ('9fb8077dc291d7f591778167ecd053fba188519e1c30d2f72457ec30b36862db10691dbe500212a3', 2, 1, 'token', '[]', 0, '2021-12-14 10:38:13', '2021-12-14 10:38:13', '2022-12-14 10:38:13'),
 ('9fbc555ac9da9eebd81c9fd2e41a6991d0e68b4ceba05fb798049050c937ed54907eee63ca493a7a', 48, 1, 'token', '[]', 0, '2021-11-19 12:48:59', '2021-11-19 12:48:59', '2022-11-19 12:48:59'),
@@ -2251,6 +2356,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('a47a6903288f9b04bbb291bdfc209472b4215c9f32eb8e6df12e4d9a236904ff649d30b0bb109fb4', 2, 1, 'token', '[]', 0, '2021-11-30 14:23:06', '2021-11-30 14:23:06', '2022-11-30 14:23:06'),
 ('a4b55a42541f548a9f6d9b6cc73c0bb0fe557fcd313845b858520ddf731c272df9c28940713a4f98', 37, 1, 'token', '[]', 0, '2021-11-13 09:41:36', '2021-11-13 09:41:36', '2022-11-13 09:41:36'),
 ('a4bdebd0b43feafdcd36b8bdf663112f497a2fe37350bbbd4e1cc3178e34762f51d2c57d2e96fee0', 2, 1, 'token', '[]', 0, '2021-12-09 09:53:57', '2021-12-09 09:53:57', '2022-12-09 09:53:57'),
+('a5611806b8de1f6ad006a6d2528e051fd16ac6e40f13136663ac6a13091bad1de6f9b461681016eb', 62, 1, 'token', '[]', 0, '2022-12-25 21:51:55', '2022-12-25 21:51:55', '2023-12-25 21:51:55'),
 ('a56254a492bdf350dff0b30559b3c950a1ac36b2b7cb4e87b19c6a032aa70db800a296e454df6f87', 2, 1, 'token', '[]', 0, '2021-06-09 09:05:12', '2021-06-09 09:05:12', '2022-06-09 09:05:12'),
 ('a563f9d37e1cbff4f3fd97f0db13f29ef39892df7b025940b7a14d66c502f6a25f593744890bd9b6', 2, 1, 'token', '[]', 0, '2021-12-02 09:49:46', '2021-12-02 09:49:46', '2022-12-02 09:49:46'),
 ('a56578988f38703620a1499c6d0494bb9a8182862c7b6799d1df673d43d2a58b24b47617e497c7a7', 50, 1, 'token', '[]', 0, '2021-12-13 17:46:56', '2021-12-13 17:46:56', '2022-12-13 17:46:56'),
@@ -2283,6 +2389,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('a9c6362ffe9b75926234d5a23baa88f7c1ae97a3135ee10f91fc20891baad07ea430b743acbb2c9d', 2, 1, 'token', '[]', 0, '2021-11-26 18:23:06', '2021-11-26 18:23:06', '2022-11-26 18:23:06'),
 ('aa02ed7cc66e92e74c1496e74e5631ed8ac3cc1b29712dd971cc949a25644f44c217382bb2d897ba', 50, 1, 'token', '[]', 0, '2021-12-01 12:14:41', '2021-12-01 12:14:41', '2022-12-01 12:14:41'),
 ('aafef52aca67541caf525c88690a7ff586bfe40cc45bee556807b9f501ef9f4ab267509f08afe92d', 2, 1, 'token', '[]', 0, '2021-11-26 18:03:04', '2021-11-26 18:03:04', '2022-11-26 18:03:04'),
+('ab150af36ec4867b5000264fcf75adcf751781b0f9433e977c5cf9853730ebacc86989380957af6e', 62, 1, 'token', '[]', 0, '2022-12-25 11:33:17', '2022-12-25 11:33:17', '2023-12-25 11:33:17'),
 ('ab1b63b83b8a1b5fd93749f9262b02ad8ae2148337aa5a692cd00466cd2f2d6b602ca11a65cd0eaa', 48, 1, 'token', '[]', 0, '2021-11-19 16:42:12', '2021-11-19 16:42:12', '2022-11-19 16:42:12'),
 ('ab577a42851789df43c67d40bab06abc92e4dc4fcc73ad73036a8525702699411bd49e4869968548', 68, 1, 'token', '[]', 0, '2021-12-03 13:18:50', '2021-12-03 13:18:50', '2022-12-03 13:18:50'),
 ('ab63eb184da5ed96ada86f9a6f56f0a7b0de1cad4a6d78d98fe425fd441419fcabcbd9dddb8ff870', 2, 1, 'token', '[]', 0, '2021-06-22 19:43:59', '2021-06-22 19:43:59', '2022-06-22 19:43:59'),
@@ -2332,6 +2439,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('b10b9ebd326d64674fd2bcde852202bf81bb54a1f93860eb15a3452f85004d85aa3c288338893521', 2, 1, 'token', '[]', 0, '2021-11-26 17:55:06', '2021-11-26 17:55:06', '2022-11-26 17:55:06'),
 ('b12abc833e9e82a009f8adab63c3bdb61b2618c450d2f462710b2c9c9da8c90dba4fdbd30df6357c', 37, 1, 'token', '[]', 0, '2021-11-18 11:15:01', '2021-11-18 11:15:01', '2022-11-18 11:15:01'),
 ('b144475a177620da7642e3d3a3676c3b4570630ac15dd156eedaaf0dcf86305ad25aec1fa6c68266', 2, 1, 'token', '[]', 0, '2021-12-14 10:36:03', '2021-12-14 10:36:03', '2022-12-14 10:36:03'),
+('b1544ddae3de5b185b92bf712017a3e88711b0b18c04bab29af7d870abde59cb01a8d18a59afc03b', 62, 1, 'token', '[]', 0, '2022-12-28 16:01:11', '2022-12-28 16:01:11', '2023-12-28 16:01:11'),
 ('b15da3d9df98568c4f82db8259d538e67f659f8d90d2e3be2be7614880bd570d1fc3057e836991c4', 2, 1, 'token', '[]', 0, '2021-12-14 11:25:07', '2021-12-14 11:25:07', '2022-12-14 11:25:07'),
 ('b174ecd32f47daa8dccd033626d1d20d8159a7eb15b5d8f108cf80983a02aa45e0852930e6bd4830', 2, 1, 'token', '[]', 0, '2021-11-30 14:14:28', '2021-11-30 14:14:28', '2022-11-30 14:14:28'),
 ('b1a1bedb4687b8d4d46a053b344dd787403b673785bd34440b32d10dda2de8bb9fce2bb2bd82b2c8', 50, 1, 'token', '[]', 0, '2021-11-24 17:49:44', '2021-11-24 17:49:44', '2022-11-24 17:49:44'),
@@ -2355,6 +2463,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('b3d27365dc485f5815fc4bb50c5cb6334179ad86de8e4b97edabadf7b6ecf1d2628fc770f35be541', 50, 1, 'token', '[]', 0, '2021-11-29 15:33:21', '2021-11-29 15:33:21', '2022-11-29 15:33:21'),
 ('b4165003bf93f812bf0a0253827182196302c8ab149f4ab61d4ce42ff01f53096c5f8abf8aaa17dd', 50, 1, 'token', '[]', 0, '2021-11-30 19:30:56', '2021-11-30 19:30:56', '2022-11-30 19:30:56'),
 ('b43c8ce71570b3e04a0c0cadd42cd36787df5acd98c51e5f924de956c6ae28c7f5f9f5f39b17dbde', 2, 1, 'token', '[]', 0, '2021-12-08 09:57:39', '2021-12-08 09:57:39', '2022-12-08 09:57:39'),
+('b46a06047cbde72771049e7a11eb9036d4ba85ed2f4002560e2c769ae89d5f6762ab4fbb33fe5289', 62, 1, 'token', '[]', 0, '2022-12-27 14:43:29', '2022-12-27 14:43:29', '2023-12-27 14:43:29'),
 ('b48771d5ac57034cf4e07be5530c9dc1d773e08b35b4fe3cc9b09733767bd344327f948052a1aa74', 66, 1, 'token', '[]', 0, '2021-12-01 11:54:14', '2021-12-01 11:54:14', '2022-12-01 11:54:14'),
 ('b496baccdc32a361976bb8f4812a68e1e3d427346a3e5ee15cb2b891e6a645315505ca84f2cf6b67', 37, 1, 'token', '[]', 0, '2021-11-19 11:59:38', '2021-11-19 11:59:38', '2022-11-19 11:59:38'),
 ('b568c8402d6bd4617d9547b3b0f954557be578780e8e258d506bd2dac086c393bd4d90c8e4882545', 50, 1, 'token', '[]', 0, '2021-11-24 16:46:35', '2021-11-24 16:46:35', '2022-11-24 16:46:35'),
@@ -2452,6 +2561,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('c40a5f6b596eafed2e521854dec005c4779d03e2d68a727254ba9f7b98c986285770273b305a0c75', 2, 1, 'token', '[]', 0, '2021-11-27 15:42:49', '2021-11-27 15:42:49', '2022-11-27 15:42:49'),
 ('c40aee48a4ea7b002c8e9343373ac6d778377e61cc30a7ae7cbdd285cab51d3c82238a08bafbe282', 50, 1, 'token', '[]', 0, '2021-11-30 10:36:54', '2021-11-30 10:36:54', '2022-11-30 10:36:54'),
 ('c414d93f8dfc771b265479ee153a353c955af43a00df5afff8f96ac7f7e0d08b771e27623cc150a8', 50, 1, 'token', '[]', 0, '2021-11-20 14:47:33', '2021-11-20 14:47:33', '2022-11-20 14:47:33'),
+('c4248af4e763d89fc7d178b9e9f47f97a459ab1ca53253b6c6d9302c90fa8994df8b59c79e583c05', 62, 1, 'token', '[]', 0, '2022-12-26 12:40:05', '2022-12-26 12:40:05', '2023-12-26 12:40:05'),
 ('c43309eb0a0baf82d8b6f499f970d3bf38702603dbd7f5fdde249400761ee7db1871c25af20bd191', 50, 1, 'token', '[]', 0, '2021-11-18 17:30:03', '2021-11-18 17:30:03', '2022-11-18 17:30:03'),
 ('c478cc4f2f9b6f0245df03c294cdc6436c8f9e62ed57869e43f7284909e0e54404e4011430639b15', 66, 1, 'token', '[]', 0, '2021-12-01 17:23:34', '2021-12-01 17:23:34', '2022-12-01 17:23:34'),
 ('c48883730562fc42446061fc9b79a6470b42a4cbab444d978ec5a6f55873a4e4467f658d9102542f', 2, 1, 'token', '[]', 0, '2021-12-04 16:12:30', '2021-12-04 16:12:30', '2022-12-04 16:12:30'),
@@ -2465,7 +2575,8 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('c5c369af9049c06465a83dc2f7aacddfe79a5b834e8cf07ccc6cff2702f62fe5eda842649641dcd2', 2, 1, 'token', '[]', 0, '2021-12-02 11:25:46', '2021-12-02 11:25:46', '2022-12-02 11:25:46'),
 ('c5d48e01ca9015adcd8105ed8c79d2ccc2ea1ce77013b26c5ed9bd21e7033d5021aa1937b1f93d03', 66, 1, 'token', '[]', 0, '2021-12-01 17:22:35', '2021-12-01 17:22:35', '2022-12-01 17:22:35'),
 ('c6828bb2f1601a1f305c8c06ae09f06b689b06d94aad2ed829506a44e22102887660dc4ce9e904f1', 68, 1, 'token', '[]', 0, '2021-12-14 10:56:40', '2021-12-14 10:56:40', '2022-12-14 10:56:40'),
-('c6849f910ecf3243a6866c016ae6c12a91222bbe669d70f9b3c5ef72bd5b6af96c037e5305ea7243', 37, 1, 'token', '[]', 0, '2021-11-18 10:43:53', '2021-11-18 10:43:53', '2022-11-18 10:43:53'),
+('c6849f910ecf3243a6866c016ae6c12a91222bbe669d70f9b3c5ef72bd5b6af96c037e5305ea7243', 37, 1, 'token', '[]', 0, '2021-11-18 10:43:53', '2021-11-18 10:43:53', '2022-11-18 10:43:53');
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
 ('c6a5e57c0ebd6592774970f9141e0c9c679edf3bf967348f138d6bda716ab2c3a5a6732a8ff8fde2', 2, 1, 'token', '[]', 0, '2021-12-16 11:05:14', '2021-12-16 11:05:14', '2022-12-16 11:05:14'),
 ('c6aed0f88dda3943e10efe015ddbd3a58fe0f69c8708de6ffd2b97cb9ecab0d9e3fb053e46b0c3fc', 37, 1, 'token', '[]', 0, '2021-11-18 10:58:10', '2021-11-18 10:58:10', '2022-11-18 10:58:10'),
 ('c6fef192690cf29727045a71e16648cbdede89ca77f324be0e8733d8140cc222df0a788d083bb508', 50, 1, 'token', '[]', 0, '2021-12-03 13:26:31', '2021-12-03 13:26:31', '2022-12-03 13:26:31'),
@@ -2485,6 +2596,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('c9243e41fee84da18f2e672b82cf80015222ff88667b3bf2ba42f3943981e295486541efa2a9e6bb', 62, 1, '63a16ff46e41f', '[]', 0, '2022-12-20 13:49:00', '2022-12-20 13:49:00', '2023-12-20 13:49:00'),
 ('c92d97b6a996e34265e4fdb7bb94b1cdaf26a2713484d4d8181eeea00701129ba7736073562f550b', 37, 1, 'token', '[]', 0, '2021-11-15 15:07:36', '2021-11-15 15:07:36', '2022-11-15 15:07:36'),
 ('c93b821b2d3892c570890605bad3d789a90d809e5c78f73b5ad01870078145b2ce870bb1b37e6a62', 81, 1, 'token', '[]', 0, '2021-12-08 10:33:31', '2021-12-08 10:33:31', '2022-12-08 10:33:31'),
+('c948692f5fe63f7c23cea868e9c8db91a49d7095d59803c626cf5dcef17444fe16e158a36756bde9', 62, 1, 'token', '[]', 0, '2022-12-28 16:08:16', '2022-12-28 16:08:16', '2023-12-28 16:08:16'),
 ('c94f73da06fd2cbc6ec90251d0cf0249aae64dc781b77584d75f26d0b2cec6e788fa79837e05c33b', 2, 1, 'token', '[]', 0, '2021-12-04 17:23:13', '2021-12-04 17:23:13', '2022-12-04 17:23:13'),
 ('c987770f59d9e45dc2f3ea03d07618cccb9f14fa70d24e08fa7d774d92d557b570bfdea2f67df122', 2, 1, 'token', '[]', 0, '2021-06-22 10:10:45', '2021-06-22 10:10:45', '2022-06-22 10:10:45'),
 ('c9a2d5f0830ed0de5f28eebcd547362dc3765e888efb7c5acfdf9f1da7794754be82f091438f89d3', 51, 1, 'token', '[]', 0, '2021-11-30 18:25:06', '2021-11-30 18:25:06', '2022-11-30 18:25:06'),
@@ -2492,8 +2604,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('ca16f51ae5fd646e4de8f3d7e2e997df336568651b0e38845b463b5a1d0d391e7b3e41dd72635e13', 2, 1, 'token', '[]', 0, '2021-06-19 22:54:46', '2021-06-19 22:54:46', '2022-06-19 22:54:46'),
 ('ca290049567f0095b1bf5cbab938613ce3c24b0348691787e5d14c674137ae7c2052005a3b3fbfe8', 2, 1, 'token', '[]', 0, '2021-12-08 09:23:19', '2021-12-08 09:23:19', '2022-12-08 09:23:19'),
 ('ca4d4dbb861d9a4652940c7f6f70c5ee07486a44e9e470f8e6a512f8df9b81a5f0ef347691bab5fb', 50, 1, 'token', '[]', 0, '2021-11-30 12:40:49', '2021-11-30 12:40:49', '2022-11-30 12:40:49'),
-('ca7320119c871e541f069bb1f5d33339cc1f08271ca11e47eea1d178c84891cf3e5dbdb2787e9d8b', 62, 1, 'token', '[]', 0, '2022-12-21 11:27:07', '2022-12-21 11:27:07', '2023-12-21 11:27:07');
-INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('ca7320119c871e541f069bb1f5d33339cc1f08271ca11e47eea1d178c84891cf3e5dbdb2787e9d8b', 62, 1, 'token', '[]', 0, '2022-12-21 11:27:07', '2022-12-21 11:27:07', '2023-12-21 11:27:07'),
 ('ca846d0ffbb6514f7e7087ea2fb15ffee0914c4313cf337edec193f8912ac8e7b4e173ae408e3b74', 2, 1, 'token', '[]', 0, '2021-11-18 16:10:37', '2021-11-18 16:10:37', '2022-11-18 16:10:37'),
 ('caaa66d886cf7f5f7c9ba3f9e63fddba562a785f1e0153cab335d1ab26115266e8048d7dfc468e3e', 50, 1, 'token', '[]', 0, '2021-11-30 11:53:46', '2021-11-30 11:53:46', '2022-11-30 11:53:46'),
 ('cab1d9df7d3cd8a87ecf79da6d0760fc675b1eed5e66ed9101b38ff882a365fe27e3a715e959769b', 50, 1, 'token', '[]', 0, '2021-11-18 16:39:27', '2021-11-18 16:39:27', '2022-11-18 16:39:27'),
@@ -2515,6 +2626,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('cd669815d711f5f2c1e270a0977e7a846a5a2de77d6613ebe1799ffb8fa6c180be6e2a0d3aced007', 2, 1, 'token', '[]', 0, '2021-11-27 17:47:43', '2021-11-27 17:47:43', '2022-11-27 17:47:43'),
 ('cd7ebdaa3e769eef5cb7098aa8712c9bbfa4818499e2fd7117ef2e654dcf511af7269e1c7d1343ff', 48, 1, 'token', '[]', 0, '2021-11-30 16:55:51', '2021-11-30 16:55:51', '2022-11-30 16:55:51'),
 ('cd820c26fe311611005e287b4bc339775405014f31a27765d03c0a5e1b1472c19a50942b36cfb132', 50, 1, 'token', '[]', 0, '2021-12-02 17:58:08', '2021-12-02 17:58:08', '2022-12-02 17:58:08'),
+('cd8aaff790bb102988a1eb02856d63ad73b91945fe6a9fe9a80c5ef948ee3fa61eaeef04311de879', 62, 1, 'token', '[]', 0, '2022-12-27 00:15:36', '2022-12-27 00:15:36', '2023-12-27 00:15:36'),
 ('cd983a1b9597aa7575ff75db3f10868d6cc0413ca541051840be28a4881c07368e9b63a74101b571', 62, 1, '63a185187c97c', '[]', 0, '2022-12-20 15:19:12', '2022-12-20 15:19:12', '2023-12-20 15:19:12'),
 ('cde1879cb996734c7ba55c2d5860fc658eb5dc7c383071c5eb0bdc72134ddba78a6ac384b0ec6313', 62, 1, '63a16bd22737e', '[]', 0, '2022-12-20 13:31:22', '2022-12-20 13:31:22', '2023-12-20 13:31:22'),
 ('ce39d2dc61552175cce781c3147b130779b15c021fb889fd86a7fb1b60658beb88f067457aae2943', 80, 1, 'token', '[]', 0, '2021-12-16 15:11:18', '2021-12-16 15:11:18', '2022-12-16 15:11:18'),
@@ -2538,6 +2650,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('cfff6230b84de30dfc3dbbd3cf388670f0dcec743af72c35e2984e1ab6410259c9abb536eb4344bc', 2, 1, 'token', '[]', 0, '2021-12-13 11:13:49', '2021-12-13 11:13:49', '2022-12-13 11:13:49'),
 ('d011ec749372a056d60009cbb9b3f947d23747617d5e1cb72a8d4ffdd9c6deb629f9c2f0862246c7', 2, 1, 'token', '[]', 0, '2021-12-13 11:54:32', '2021-12-13 11:54:32', '2022-12-13 11:54:32'),
 ('d0239ccd16a697be10c4d7c46d8c29d2d4b5e44559c5e30813ab3933a1cb0b0fa25c93d493492e6e', 50, 1, 'token', '[]', 0, '2021-11-19 09:54:59', '2021-11-19 09:54:59', '2022-11-19 09:54:59'),
+('d05e72f5272519d614f1690eb3333cfe671837f06089507813ab20630547ec76a79f0300e3dd0986', 62, 1, 'token', '[]', 0, '2022-12-24 17:26:57', '2022-12-24 17:26:57', '2023-12-24 17:26:57'),
 ('d0ce8421c6651333dc519abaec375acebef49601813318d811477f4b1b0f543378a8e2386d688989', 2, 1, 'token', '[]', 0, '2021-11-26 14:44:40', '2021-11-26 14:44:40', '2022-11-26 14:44:40'),
 ('d0d664705bd52f37a12944218103acf40d897f85751a473511878f0b139202365c554d13f781a390', 80, 1, 'token', '[]', 0, '2021-12-17 12:14:36', '2021-12-17 12:14:36', '2022-12-17 12:14:36'),
 ('d0e7ccb4e066f617be1ec7c01cc51e16417d4de0610df80aae5c14945b7ce2ba47aede61fb4892a1', 50, 1, 'token', '[]', 0, '2021-12-03 10:16:02', '2021-12-03 10:16:02', '2022-12-03 10:16:02'),
@@ -2656,8 +2769,10 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('e04f89c00d29f06e8c5b80a64ce5d1c3ecb0a57df909396eb9ea5e45653f3cce13b87b54c80dcf23', 2, 1, 'token', '[]', 0, '2021-12-16 10:50:14', '2021-12-16 10:50:14', '2022-12-16 10:50:14'),
 ('e099f10191e5f7d7828a0f34f7305c4d2b1f503274f637791bab5d5d2e35fd5fb1300f03034b6db1', 58, 1, 'token', '[]', 0, '2021-11-30 22:28:47', '2021-11-30 22:28:47', '2022-11-30 22:28:47'),
 ('e09b0dd81d4340dc858ce57aeac94e43d2ed538585aba993a089198248085ba3b17e9c64922f653d', 50, 1, 'token', '[]', 0, '2021-12-13 11:31:38', '2021-12-13 11:31:38', '2022-12-13 11:31:38'),
+('e0a62a28dab199206da9b82dc16e22b4db84f8f7a9710dd5e41582af5dfc878e00c6b5b2a4169790', 62, 1, 'token', '[]', 0, '2022-12-25 11:33:15', '2022-12-25 11:33:15', '2023-12-25 11:33:15'),
 ('e0d13211598daec5ded9bed234023485ea69824b5873aab32cc5f99de71ec1a75d39fceaf12d8fc5', 48, 1, 'token', '[]', 0, '2021-11-30 16:59:36', '2021-11-30 16:59:36', '2022-11-30 16:59:36'),
 ('e0d82a01e2c0704318abed659cbd3b8862dbc4b03d6842d1e9f0b9b5a80e80b7c575e73e24c2d3a3', 37, 1, 'token', '[]', 0, '2021-11-18 10:45:11', '2021-11-18 10:45:11', '2022-11-18 10:45:11'),
+('e0ee21f801a679065d6f430aa0a4bc835f0fdd1e7a3b82a490e7f1f8dbd3166604f1906bd4c1264a', 62, 1, 'token', '[]', 0, '2022-12-24 00:57:38', '2022-12-24 00:57:38', '2023-12-24 00:57:38'),
 ('e10b568b0083f3226bce1b554ebbca3ec1a989b9498a1883aa8bdddb5407436d0a509a34cdd61992', 2, 1, 'token', '[]', 0, '2021-12-13 15:20:19', '2021-12-13 15:20:19', '2022-12-13 15:20:19'),
 ('e10ddc4567318bdac5efafd45933e4275e1bc80c1955d7b3bc58beb8726c2640ab70e383b94025d3', 50, 1, 'token', '[]', 0, '2021-11-26 15:26:49', '2021-11-26 15:26:49', '2022-11-26 15:26:49'),
 ('e128423568f945a270c8fb5c341ad8648176f77bfc16664143610b917c9007c85198ec42d5fa9ab2', 37, 1, 'token', '[]', 0, '2021-11-18 09:40:37', '2021-11-18 09:40:37', '2022-11-18 09:40:37'),
@@ -2731,6 +2846,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('ea0fb4ced92ffb1247adf33bef4f47dad0db582c0507100a895e2432fe03cf73bd275b2c9e1aaf20', 62, 1, '63a16c56e36cf', '[]', 0, '2022-12-20 13:33:34', '2022-12-20 13:33:34', '2023-12-20 13:33:34'),
 ('ea3595c2f7df63fef573a5b211e0e69321aa145a75a0e63a67b189cd31091fa3235a0899f16af4ff', 2, 1, 'token', '[]', 0, '2021-12-08 11:34:34', '2021-12-08 11:34:34', '2022-12-08 11:34:34'),
 ('ea493b9038acb400eaef07c2693e32955845074e155cffebf0e7c9de4177e06e750d91b91818e9f5', 68, 1, 'token', '[]', 0, '2021-12-21 15:53:27', '2021-12-21 15:53:27', '2022-12-21 15:53:27'),
+('ea88fb9f49be3b0d2c56b526bf3a3f91b45655be880c7a13542e7162912cfd63ed98fb8642516ee1', 62, 1, 'token', '[]', 0, '2022-12-24 19:51:02', '2022-12-24 19:51:02', '2023-12-24 19:51:02'),
 ('eafa78cf218510cbc894064cb07fa47ae0bfc4e11432eb123b1e1b23cfd1323f6d22bf4640a3299e', 37, 1, 'token', '[]', 0, '2021-11-17 18:19:04', '2021-11-17 18:19:04', '2022-11-17 18:19:04'),
 ('eb0f33128623d9e4bf3e5500b0247df2134daea6801ff818ea065133695e4785969f4cfbb2f27677', 2, 1, 'token', '[]', 0, '2021-12-02 14:48:20', '2021-12-02 14:48:20', '2022-12-02 14:48:20'),
 ('eb798e4dda263959f28aed4cb51f57b425f0d8a6b63c325c0d90aacadd5e9a942aa09fd405f39e28', 50, 1, 'token', '[]', 0, '2021-12-02 17:48:01', '2021-12-02 17:48:01', '2022-12-02 17:48:01'),
@@ -2740,7 +2856,9 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('ec47810849d5b9d0e90f35465e5024dcdcd2388ae9aa8714f88bfbf44f001321b9340dc9e720c094', 48, 1, 'token', '[]', 0, '2021-11-29 12:39:28', '2021-11-29 12:39:28', '2022-11-29 12:39:28'),
 ('ec7848e26b15d3e08f6f8d1dd1609b03ee1a48fec649fc63193252099c3ca36bc8850e815586aa50', 2, 1, 'token', '[]', 0, '2021-11-13 11:43:15', '2021-11-13 11:43:15', '2022-11-13 11:43:15'),
 ('ecb5f427556509917c98baa763fd3245d5b8bf66f798ec80341af214ba009bb96bd6c84110ba579e', 2, 1, 'token', '[]', 0, '2021-11-29 15:28:26', '2021-11-29 15:28:26', '2022-11-29 15:28:26'),
-('ecd37c5f25fa1839090f0552e06f4aeb3641030074c899dfcdc202617d354e059c699c2c75b3168c', 37, 1, 'token', '[]', 0, '2021-11-18 10:39:56', '2021-11-18 10:39:56', '2022-11-18 10:39:56'),
+('ecd37c5f25fa1839090f0552e06f4aeb3641030074c899dfcdc202617d354e059c699c2c75b3168c', 37, 1, 'token', '[]', 0, '2021-11-18 10:39:56', '2021-11-18 10:39:56', '2022-11-18 10:39:56');
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('ecf552db9bb9e132f10f1577ef0b833caf107b01e98e2144a80cc2b52604fea7085febb792081cab', 62, 1, 'token', '[]', 0, '2022-12-23 23:33:06', '2022-12-23 23:33:06', '2023-12-23 23:33:06'),
 ('ed107d831debd240b83c88ea2b0c25e4a18f934ebbea0d898958c9b72404709f3bcc40b62151c59f', 50, 1, 'token', '[]', 0, '2021-12-01 09:58:18', '2021-12-01 09:58:18', '2022-12-01 09:58:18'),
 ('ed7f8a1ce3e95f7aa15191698e4b6b09d8d891019b1eb2e9bffd9146c27766d03fdfd0030ad6d4e8', 2, 1, 'token', '[]', 0, '2021-12-14 11:28:05', '2021-12-14 11:28:05', '2022-12-14 11:28:05'),
 ('ed8e593f26d2280486128b1afe40fdfc89c410a6de6f54b97f6ee6fe08b4e4926150c4be19182d4b', 50, 1, 'token', '[]', 0, '2021-11-18 17:01:53', '2021-11-18 17:01:53', '2022-11-18 17:01:53'),
@@ -2759,6 +2877,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('ef96078d1b935b3293a8755ef9f8e43274e202acf40083ffeb88b8d380e6873b00d810c256a43209', 2, 1, 'token', '[]', 0, '2021-11-24 16:11:38', '2021-11-24 16:11:38', '2022-11-24 16:11:38'),
 ('efb2c3192d27fe5d2db5954ff6fab08a567c5e4129ab5905c0e702cb23e50dfe95bad66ddc9c77be', 48, 1, 'token', '[]', 0, '2021-11-20 10:19:06', '2021-11-20 10:19:06', '2022-11-20 10:19:06'),
 ('efd646d5f30d50e0835487944fdddd9901786db859978cd093b88caa2d269c32d2e12f76570dc833', 2, 1, 'token', '[]', 0, '2021-11-29 10:17:30', '2021-11-29 10:17:30', '2022-11-29 10:17:30'),
+('f048b89468a10a6167559a6f65ddfb878feb538aa15eb3f6ee7c95d9cfd6df9b4bcd087be425010b', 62, 1, 'token', '[]', 0, '2022-12-25 22:31:53', '2022-12-25 22:31:53', '2023-12-25 22:31:53'),
 ('f0550cab61854b72d7d11d677542ff5848dc21de67938b61c7af8f339c49a0d1ac45c1b45193a49a', 61, 1, 'token', '[]', 0, '2021-12-01 10:26:12', '2021-12-01 10:26:12', '2022-12-01 10:26:12'),
 ('f0768a8990007c8d51d916c53fb8ee8adfce5d78dd4c3d767879212af57043ae8226adc3334de778', 50, 1, 'token', '[]', 0, '2021-11-24 17:58:00', '2021-11-24 17:58:00', '2022-11-24 17:58:00'),
 ('f09c624c8c35135be390ee7543f815f763bb2aed1afd72e3808a84bde6a0a57484af621a9480277d', 62, 1, 'token', '[]', 0, '2022-12-20 15:33:17', '2022-12-20 15:33:17', '2023-12-20 15:33:17'),
@@ -2773,8 +2892,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('f2fdda0184c0a528aab6bf179f09cdc7638557c188bd5d9bfda707b21972a23fabfb38a1574701f6', 50, 1, 'token', '[]', 0, '2021-11-22 11:25:16', '2021-11-22 11:25:16', '2022-11-22 11:25:16'),
 ('f31451e86468c96e1ac4e789ac708fcdfac9017d1162522b39968026d594605d59ea0f16055d80a2', 2, 1, 'token', '[]', 0, '2021-11-26 18:56:53', '2021-11-26 18:56:53', '2022-11-26 18:56:53'),
 ('f314d2fc8010253c3aae22dc8fa35c68267ce17840e19352281048a6579a5eed9cabe8f908ad0839', 37, 1, 'token', '[]', 0, '2021-11-18 14:57:41', '2021-11-18 14:57:41', '2022-11-18 14:57:41'),
-('f36fa55007ba4e05bdb121849b2ff31d0a451dc3da0fbbedbf99679632bb1711576018766dc012a3', 50, 1, 'token', '[]', 0, '2021-12-01 14:40:52', '2021-12-01 14:40:52', '2022-12-01 14:40:52');
-INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('f36fa55007ba4e05bdb121849b2ff31d0a451dc3da0fbbedbf99679632bb1711576018766dc012a3', 50, 1, 'token', '[]', 0, '2021-12-01 14:40:52', '2021-12-01 14:40:52', '2022-12-01 14:40:52'),
 ('f3a2f81f5e9190328431ce542df9c4c7017a994ade630319f4df249a205aa6fa90c2b35811f8fc82', 50, 1, 'token', '[]', 0, '2021-12-13 14:55:04', '2021-12-13 14:55:04', '2022-12-13 14:55:04'),
 ('f3b134b3f53281fe87553c209e770b7b24efb76a92979b7848159405e64d78c1ac0d097f54fa8b3c', 68, 1, 'token', '[]', 0, '2021-12-14 15:19:39', '2021-12-14 15:19:39', '2022-12-14 15:19:39'),
 ('f3baee595df755776ebfd73e5e25786b01ab9abfb6440768378e034fbefe7963032333b5c260b4a8', 2, 1, 'token', '[]', 0, '2021-12-08 13:53:40', '2021-12-08 13:53:40', '2022-12-08 13:53:40'),
@@ -2873,10 +2991,10 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 --
 
 CREATE TABLE `oauth_auth_codes` (
-  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(100) NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `client_id` bigint(20) UNSIGNED NOT NULL,
-  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `scopes` text DEFAULT NULL,
   `revoked` tinyint(1) NOT NULL,
   `expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2890,10 +3008,10 @@ CREATE TABLE `oauth_auth_codes` (
 CREATE TABLE `oauth_clients` (
   `id` int(11) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `secret` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `provider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `redirect` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `secret` varchar(100) DEFAULT NULL,
+  `provider` varchar(255) DEFAULT NULL,
+  `redirect` text NOT NULL,
   `personal_access_client` tinyint(1) NOT NULL,
   `password_client` tinyint(1) NOT NULL,
   `revoked` tinyint(1) NOT NULL,
@@ -2936,8 +3054,8 @@ INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `u
 --
 
 CREATE TABLE `oauth_refresh_tokens` (
-  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(100) NOT NULL,
+  `access_token_id` varchar(100) NOT NULL,
   `revoked` tinyint(1) NOT NULL,
   `expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2953,27 +3071,27 @@ CREATE TABLE `orders` (
   `user_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
   `address_id` int(11) NOT NULL,
-  `cart_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cart_id` varchar(255) NOT NULL,
   `total_price` float NOT NULL,
   `price_without_delivery` float NOT NULL,
   `total_products_mrp` float NOT NULL,
-  `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `paid_by_wallet` float NOT NULL DEFAULT '0',
-  `rem_price` float NOT NULL DEFAULT '0',
+  `payment_method` varchar(255) DEFAULT NULL,
+  `paid_by_wallet` float NOT NULL DEFAULT 0,
+  `rem_price` float NOT NULL DEFAULT 0,
   `avg_tax_per` float DEFAULT NULL,
   `total_tax_price` float DEFAULT NULL,
   `order_date` date NOT NULL,
   `delivery_date` date NOT NULL,
-  `delivery_charge` float NOT NULL DEFAULT '0',
-  `time_slot` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dboy_id` int(11) NOT NULL DEFAULT '0',
-  `order_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Pending',
-  `user_signature` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cancelling_reason` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `coupon_id` int(11) NOT NULL DEFAULT '0',
-  `coupon_discount` float NOT NULL DEFAULT '0',
-  `payment_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cancel_by_store` int(11) NOT NULL DEFAULT '0',
+  `delivery_charge` float NOT NULL DEFAULT 0,
+  `time_slot` varchar(255) NOT NULL,
+  `dboy_id` int(11) NOT NULL DEFAULT 0,
+  `order_status` varchar(255) NOT NULL DEFAULT 'Pending',
+  `user_signature` varchar(255) DEFAULT NULL,
+  `cancelling_reason` varchar(255) DEFAULT NULL,
+  `coupon_id` int(11) NOT NULL DEFAULT 0,
+  `coupon_discount` float NOT NULL DEFAULT 0,
+  `payment_status` varchar(255) DEFAULT NULL,
+  `cancel_by_store` int(11) NOT NULL DEFAULT 0,
   `dboy_incentive` int(11) DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2983,12 +3101,19 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `store_id`, `address_id`, `cart_id`, `total_price`, `price_without_delivery`, `total_products_mrp`, `payment_method`, `paid_by_wallet`, `rem_price`, `avg_tax_per`, `total_tax_price`, `order_date`, `delivery_date`, `delivery_charge`, `time_slot`, `dboy_id`, `order_status`, `user_signature`, `cancelling_reason`, `coupon_id`, `coupon_discount`, `payment_status`, `cancel_by_store`, `dboy_incentive`, `updated_at`) VALUES
-(1, 62, 3, 1, 'GGYB840e', 50000, 50000, 100000, 'COD', 0, 50000, 0, 0, '2022-12-20', '2022-12-25', 0, '01:20 pm - 01:25 pm', 0, 'Pending', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
-(2, 62, 3, 1, 'UFGM82f5', 5500, 5500, 9000, 'COD', 0, 5500, 0, 0, '2022-12-21', '2022-12-22', 0, '07:00 am - 07:05 am', 0, 'Pending', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
-(3, 62, 3, 1, 'CGIY31e9', 2500, 2500, 5000, 'COD', 0, 2500, 0, 0, '2022-12-21', '2022-12-22', 0, '07:00 am - 07:05 am', 0, 'Pending', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
-(4, 62, 3, 1, 'CHUP5671', 1700, 1700, 1800, 'COD', 0, 1700, 17, 289, '2022-12-21', '2022-12-22', 0, '07:00 am - 07:05 am', 0, 'Pending', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
-(5, 62, 3, 1, 'NBSG801b', 500, 500, 600, 'COD', 0, 500, 0, 0, '2022-12-22', '2022-12-23', 0, '07:00 am - 07:05 am', 0, 'Pending', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
-(6, 62, 3, 1, 'JQDR965a', 600, 600, 800, 'COD', 0, 600, 0, 0, '2022-12-22', '2022-12-23', 0, '07:00 am - 07:05 am', 0, 'Pending', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL);
+(1, 62, 3, 1, 'GGYB840e', 50000, 50000, 100000, 'COD', 0, 50000, 0, 0, '2022-12-20', '2022-12-25', 0, '01:20 pm - 01:25 pm', 0, 'Cancelled', NULL, 'Cancelled By Admin', 0, 0, 'COD', 0, NULL, '2022-12-26 18:37:14'),
+(2, 62, 3, 1, 'UFGM82f5', 5500, 5500, 9000, 'COD', 0, 5500, 0, 0, '2022-12-21', '2022-12-24', 0, 'anytime', 1, 'Confirmed', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
+(3, 62, 3, 1, 'CGIY31e9', 2500, 2500, 5000, 'COD', 0, 2500, 0, 0, '2022-12-21', '2022-12-22', 0, '07:00 am - 07:05 am', 0, 'Cancelled', NULL, 'Cancelled By Admin', 0, 0, 'COD', 0, NULL, '2022-12-23 21:16:04'),
+(4, 62, 3, 1, 'CHUP5671', 1700, 1700, 1800, 'COD', 0, 1700, 17, 289, '2022-12-21', '2022-12-24', 0, 'anytime', 1, 'Confirmed', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
+(5, 62, 3, 1, 'NBSG801b', 500, 500, 600, 'COD', 0, 500, 0, 0, '2022-12-22', '2022-12-25', 0, 'anytime', 1, 'Confirmed', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
+(6, 62, 3, 1, 'JQDR965a', 600, 600, 800, 'COD', 0, 600, 0, 0, '2022-12-22', '2022-12-27', 0, 'anytime', 1, 'Confirmed', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
+(7, 62, 3, 1, 'HQQY5866', 54639, 54639, 66500, 'COD', 0, 54639, 17, 1564.64, '2022-12-24', '2022-12-26', 0, '07:00 am - 07:05 am', 1, 'Completed', '/images/users/26-12-2022/image.png', NULL, 0, 0, 'COD', 0, 4, NULL),
+(8, 65, 3, 1, 'FGNE25da', 400, 400, 700, 'cod', 0, 400, 0, 0, '2022-12-26', '2022-12-24', 0, '199', 0, 'Pending', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
+(10, 65, 3, 1, 'BRQZ23ea', 400, 400, 700, 'cod', 0, 400, 0, 0, '2022-12-26', '2022-12-26', 0, '199', 1, 'Completed', '/images/users/26-12-2022/image.png', NULL, 0, 0, 'COD', 0, 4, NULL),
+(11, 65, 3, 1, 'MUTZ23a9', 400, 400, 700, 'cod', 0, 400, 0, 0, '2022-12-26', '2022-12-26', 0, '199', 1, 'Confirmed', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
+(12, 65, 0, 1, 'KEVM1751', 400, 400, 700, 'cod', 0, 400, 0, 0, '2022-12-26', '2022-12-26', 0, '199', 0, 'Pending', NULL, NULL, 0, 0, 'COD', 2, NULL, NULL),
+(13, 65, 3, 1, 'GFVL1864', 400, 400, 700, 'wallet', 0, 400, 0, 0, '2022-12-26', '2022-12-26', 0, '199', 1, 'Completed', '/images/users/26-12-2022/image.png', NULL, 0, 0, 'success', 0, 4, NULL),
+(14, 62, 3, 1, 'QLMF336e', 19880, 19880, 25800, 'COD', 0, 17892, 34, 2162.05, '2022-12-27', '2022-12-28', 0, '09:00 am - 10:30 am', 1, 'Confirmed', NULL, NULL, 1, 1988, 'COD', 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2999,12 +3124,13 @@ INSERT INTO `orders` (`order_id`, `user_id`, `store_id`, `address_id`, `cart_id`
 CREATE TABLE `order_by_photo` (
   `ord_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `list_photo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `list_photo` varchar(255) NOT NULL,
   `store_id` int(11) NOT NULL,
-  `address_id` int(11) NOT NULL,
-  `delivery_date` date NOT NULL,
-  `processed` int(11) NOT NULL DEFAULT '0',
-  `reason` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+  `description` text DEFAULT NULL,
+  `address_id` int(11) DEFAULT NULL,
+  `delivery_date` date DEFAULT NULL,
+  `processed` int(11) NOT NULL DEFAULT 0,
+  `reason` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3014,8 +3140,8 @@ CREATE TABLE `order_by_photo` (
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -3027,11 +3153,18 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `payout_requests` (
   `req_id` int(11) NOT NULL,
-  `store_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `store_id` varchar(255) NOT NULL,
   `payout_amt` float NOT NULL,
   `req_date` date NOT NULL,
-  `complete` int(11) NOT NULL DEFAULT '0'
+  `complete` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `payout_requests`
+--
+
+INSERT INTO `payout_requests` (`req_id`, `store_id`, `payout_amt`, `req_date`, `complete`) VALUES
+(1, '3', 50000, '2022-12-26', 0);
 
 -- --------------------------------------------------------
 
@@ -3061,13 +3194,13 @@ INSERT INTO `payout_req_valid` (`val_id`, `min_amt`, `min_days`) VALUES
 CREATE TABLE `plan_buy_history` (
   `wallet_id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL,
   `created_at` date NOT NULL,
-  `transaction_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `transaction_id` varchar(255) DEFAULT NULL,
   `before_recharge` int(11) DEFAULT NULL,
   `after_recharge` int(11) DEFAULT NULL,
-  `payment_gateway` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `payment_gateway` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3079,12 +3212,12 @@ CREATE TABLE `plan_buy_history` (
 CREATE TABLE `product` (
   `product_id` int(11) NOT NULL,
   `cat_id` int(11) NOT NULL,
-  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `product_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `hide` int(11) NOT NULL DEFAULT '0',
-  `added_by` int(11) NOT NULL DEFAULT '0',
-  `approved` int(11) NOT NULL DEFAULT '1'
+  `product_name` varchar(255) NOT NULL,
+  `product_image` varchar(255) NOT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `hide` int(11) NOT NULL DEFAULT 0,
+  `added_by` int(11) NOT NULL DEFAULT 0,
+  `approved` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3144,7 +3277,17 @@ INSERT INTO `product` (`product_id`, `cat_id`, `product_name`, `product_image`, 
 (84, 70, 'موس التمساح', '/images/product/02-12-2022/download-(39).jfif', 'Regular', 0, 3, 1),
 (85, 72, 'صابون الاوتوماتيك', '/images/product/03-12-2022/images-(12).jfif', 'Regular', 0, 3, 1),
 (86, 73, 'كلوركس', '/images/product/03-12-2022/download-(41).jfif', 'Regular', 0, 3, 1),
-(87, 1, '????', 'images/products/', 'Regular', 0, 0, 1);
+(87, 1, '????', 'images/products/', 'Regular', 0, 0, 1),
+(88, 27, 'دقيق دخن', '/images/product/28-12-2022/download.jpeg', NULL, 0, 3, 1),
+(89, 27, 'gold flour', '/images/product/28-12-2022/download-(1).jpeg', NULL, 0, 3, 1),
+(90, 32, 'الوطنيه', '/images/product/28-12-2022/download-(2).jpeg', NULL, 0, 3, 1),
+(91, 32, 'البطريق', '/images/product/28-12-2022/images.jpeg', NULL, 0, 3, 1),
+(92, 30, 'كادبوري', '/images/product/28-12-2022/download-(3).jpeg', NULL, 0, 3, 1),
+(93, 30, 'كادبوري فلوت', '/images/product/28-12-2022/download-(5).jpeg', NULL, 0, 3, 1),
+(94, 31, 'سكر صافي', '/images/product/28-12-2022/download-(7).jpeg', NULL, 0, 3, 1),
+(95, 31, 'سكر ناعم', '/images/product/28-12-2022/download-(6).jpeg', NULL, 0, 3, 1),
+(96, 29, 'زيت عافيه', '/images/product/28-12-2022/download-(8).jpeg', NULL, 0, 3, 1),
+(97, 29, 'زيت زيتون جلخي', '/images/product/28-12-2022/download-(10).jpeg', NULL, 0, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -3155,9 +3298,9 @@ INSERT INTO `product` (`product_id`, `cat_id`, `product_name`, `product_image`, 
 CREATE TABLE `product_images` (
   `image_id` int(11) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `type` int(11) NOT NULL DEFAULT '0',
+  `type` int(11) NOT NULL DEFAULT 0,
   `product_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_images`
@@ -3333,7 +3476,27 @@ INSERT INTO `product_images` (`image_id`, `image`, `type`, `product_id`) VALUES
 (170, '/images/product/03-12-2022/images-(12).jfif', 1, 85),
 (171, '/images/product/03-12-2022/images-(12).jfif', 0, 85),
 (172, '/images/product/03-12-2022/download-(41).jfif', 1, 86),
-(173, '/images/product/03-12-2022/download-(41).jfif', 0, 86);
+(173, '/images/product/03-12-2022/download-(41).jfif', 0, 86),
+(174, '/images/product/28-12-2022/download.jpeg', 1, 88),
+(175, '/images/product/28-12-2022/download.jpeg', 0, 88),
+(176, '/images/product/28-12-2022/download-(1).jpeg', 1, 89),
+(177, '/images/product/28-12-2022/download-(1).jpeg', 0, 89),
+(178, '/images/product/28-12-2022/download-(2).jpeg', 1, 90),
+(179, '/images/product/28-12-2022/download-(2).jpeg', 0, 90),
+(180, '/images/product/28-12-2022/images.jpeg', 1, 91),
+(181, '/images/product/28-12-2022/images.jpeg', 0, 91),
+(182, '/images/product/28-12-2022/download-(3).jpeg', 1, 92),
+(183, '/images/product/28-12-2022/download-(3).jpeg', 0, 92),
+(184, '/images/product/28-12-2022/download-(5).jpeg', 1, 93),
+(185, '/images/product/28-12-2022/download-(5).jpeg', 0, 93),
+(186, '/images/product/28-12-2022/download-(7).jpeg', 1, 94),
+(187, '/images/product/28-12-2022/download-(7).jpeg', 0, 94),
+(188, '/images/product/28-12-2022/download-(6).jpeg', 1, 95),
+(189, '/images/product/28-12-2022/download-(6).jpeg', 0, 95),
+(190, '/images/product/28-12-2022/download-(8).jpeg', 1, 96),
+(191, '/images/product/28-12-2022/download-(8).jpeg', 0, 96),
+(192, '/images/product/28-12-2022/download-(10).jpeg', 1, 97),
+(193, '/images/product/28-12-2022/download-(10).jpeg', 0, 97);
 
 -- --------------------------------------------------------
 
@@ -3345,8 +3508,8 @@ CREATE TABLE `product_rating` (
   `rate_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
   `varient_id` int(11) NOT NULL,
-  `rating` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rating` varchar(255) NOT NULL,
+  `description` longtext NOT NULL,
   `user_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
@@ -3363,14 +3526,14 @@ CREATE TABLE `product_varient` (
   `product_id` int(11) NOT NULL,
   `initial_quantity` int(11) NOT NULL,
   `weight` int(11) NOT NULL,
-  `unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unit` varchar(255) NOT NULL,
   `base_mrp` float DEFAULT NULL,
   `base_price` float NOT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `varient_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `barcode` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `approved` int(11) NOT NULL DEFAULT '1',
-  `added_by` int(11) NOT NULL DEFAULT '0'
+  `description` longtext NOT NULL,
+  `varient_image` varchar(255) NOT NULL,
+  `barcode` varchar(255) DEFAULT NULL,
+  `approved` int(11) NOT NULL DEFAULT 1,
+  `added_by` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3438,7 +3601,17 @@ INSERT INTO `product_varient` (`varient_id`, `product_id`, `initial_quantity`, `
 (84, 84, 0, 0, 'pcs', 5000, 4000, 'موس التمساح', 'N/A', '54555', 1, 3),
 (85, 85, 0, 0, 'kg', 7000, 6000, 'صابون الاوتوماتيك', 'N/A', '366666', 1, 3),
 (86, 86, 0, 0, 'مل', 2500, 2000, 'كلوركس', 'N/A', '321555', 1, 3),
-(87, 87, 0, 0, 'KG', 200, 197, 'best quality of berries.', '', NULL, 1, 0);
+(87, 87, 0, 0, 'KG', 200, 197, 'best quality of berries.', '', NULL, 1, 0),
+(88, 88, 10, 1, 'Kg', 800, 700, 'دقيق دخن', 'N/A', '25478554', 1, 3),
+(89, 89, 10, 1, 'Kg', 1000, 950, 'gold flour', 'N/A', '1111111111', 1, 3),
+(90, 90, 10, 1, 'Kg', 5000, 4000, 'الوطنيه', 'N/A', '4217727', 1, 3),
+(91, 91, 10, 1, 'Kg', 5000, 4500, 'البطريق', 'N/A', '222222', 1, 3),
+(92, 92, 10, 130, 'gm', 2000, 1500, 'كادبوري', 'N/A', '2365236', 1, 3),
+(93, 93, 20, 500, 'gm', 10000, 6000, 'كادبوري فلوت', 'N/A', '25742', 1, 3),
+(94, 94, 10, 1000, 'gm', 5000, 2000, 'سكر صافي', 'N/A', '1212121', 1, 3),
+(95, 95, 10, 1000, 'gm', 1200, 1000, 'سكر ناعم', 'N/A', '25412411', 1, 3),
+(96, 96, 10, 4, 'Ltrs', 5000, 4000, 'زيت عافيه', 'N/A', '252525', 1, 3),
+(97, 97, 10, 600, 'Ml', 10000, 9000, 'زيت زيتون', 'N/A', '8888888', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -3448,7 +3621,7 @@ INSERT INTO `product_varient` (`varient_id`, `product_id`, `initial_quantity`, `
 
 CREATE TABLE `razorpay_key` (
   `key_id` int(11) NOT NULL,
-  `api_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `api_key` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3466,7 +3639,7 @@ INSERT INTO `razorpay_key` (`key_id`, `api_key`) VALUES
 
 CREATE TABLE `recent_search` (
   `id` int(11) NOT NULL,
-  `keyword` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `keyword` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -3486,7 +3659,7 @@ INSERT INTO `recent_search` (`id`, `keyword`, `user_id`) VALUES
 CREATE TABLE `reedem_values` (
   `reedem_id` int(11) NOT NULL,
   `reward_point` int(100) NOT NULL,
-  `value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `value` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3508,7 +3681,7 @@ CREATE TABLE `referral_points` (
   `points` varchar(255) NOT NULL,
   `created_at` varchar(255) NOT NULL,
   `updated_at` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `referral_points`
@@ -3535,7 +3708,7 @@ CREATE TABLE `reward_points` (
 
 INSERT INTO `reward_points` (`reward_id`, `min_cart_value`, `reward_point`) VALUES
 (3, 10, 1),
-(4, 1000, 450);
+(4, 1000000, 10);
 
 -- --------------------------------------------------------
 
@@ -3545,27 +3718,27 @@ INSERT INTO `reward_points` (`reward_id`, `min_cart_value`, `reward_point`) VALU
 
 CREATE TABLE `roles` (
   `role_id` int(11) NOT NULL,
-  `role_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dashboard` int(11) NOT NULL DEFAULT '0',
-  `tax` int(11) NOT NULL DEFAULT '0',
-  `id` int(11) NOT NULL DEFAULT '0',
-  `membership` int(11) NOT NULL DEFAULT '0',
-  `reports` int(11) NOT NULL DEFAULT '0',
-  `notification` int(11) NOT NULL DEFAULT '0',
-  `users` int(11) NOT NULL DEFAULT '0',
-  `category` int(11) NOT NULL DEFAULT '0',
-  `product` int(11) NOT NULL DEFAULT '0',
-  `area` int(11) NOT NULL DEFAULT '0',
-  `store` int(11) NOT NULL DEFAULT '0',
-  `orders` int(11) NOT NULL DEFAULT '0',
-  `payout` int(11) NOT NULL DEFAULT '0',
-  `rewards` int(11) NOT NULL DEFAULT '0',
-  `delivery_boy` int(11) NOT NULL DEFAULT '0',
-  `pages` int(11) NOT NULL DEFAULT '0',
-  `feedback` int(11) NOT NULL DEFAULT '0',
-  `callback` int(11) NOT NULL DEFAULT '0',
-  `settings` int(11) NOT NULL DEFAULT '0',
-  `reason` int(11) NOT NULL DEFAULT '0'
+  `role_name` varchar(255) NOT NULL,
+  `dashboard` int(11) NOT NULL DEFAULT 0,
+  `tax` int(11) NOT NULL DEFAULT 0,
+  `id` int(11) NOT NULL DEFAULT 0,
+  `membership` int(11) NOT NULL DEFAULT 0,
+  `reports` int(11) NOT NULL DEFAULT 0,
+  `notification` int(11) NOT NULL DEFAULT 0,
+  `users` int(11) NOT NULL DEFAULT 0,
+  `category` int(11) NOT NULL DEFAULT 0,
+  `product` int(11) NOT NULL DEFAULT 0,
+  `area` int(11) NOT NULL DEFAULT 0,
+  `store` int(11) NOT NULL DEFAULT 0,
+  `orders` int(11) NOT NULL DEFAULT 0,
+  `payout` int(11) NOT NULL DEFAULT 0,
+  `rewards` int(11) NOT NULL DEFAULT 0,
+  `delivery_boy` int(11) NOT NULL DEFAULT 0,
+  `pages` int(11) NOT NULL DEFAULT 0,
+  `feedback` int(11) NOT NULL DEFAULT 0,
+  `callback` int(11) NOT NULL DEFAULT 0,
+  `settings` int(11) NOT NULL DEFAULT 0,
+  `reason` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3573,7 +3746,7 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`role_id`, `role_name`, `dashboard`, `tax`, `id`, `membership`, `reports`, `notification`, `users`, `category`, `product`, `area`, `store`, `orders`, `payout`, `rewards`, `delivery_boy`, `pages`, `feedback`, `callback`, `settings`, `reason`) VALUES
-(1, 'sub admin', 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(1, 'Manager', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 (2, 'Manager', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
@@ -3584,12 +3757,12 @@ INSERT INTO `roles` (`role_id`, `role_name`, `dashboard`, `tax`, `id`, `membersh
 
 CREATE TABLE `sec_banner` (
   `banner_id` int(11) NOT NULL,
-  `banner_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `banner_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `banner_name` varchar(255) NOT NULL,
+  `banner_image` varchar(255) DEFAULT NULL,
   `varient_id` int(11) NOT NULL,
-  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_name` varchar(255) NOT NULL,
   `store_id` int(11) NOT NULL,
-  `qty_unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `qty_unit` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3609,12 +3782,12 @@ INSERT INTO `sec_banner` (`banner_id`, `banner_name`, `banner_image`, `varient_i
 
 CREATE TABLE `service_area` (
   `ser_id` int(11) NOT NULL,
-  `society_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `society_name` varchar(255) NOT NULL,
   `society_id` int(11) NOT NULL,
-  `delivery_charge` float NOT NULL DEFAULT '0',
+  `delivery_charge` float NOT NULL DEFAULT 0,
   `store_id` int(11) NOT NULL,
-  `added_by` int(11) NOT NULL DEFAULT '0',
-  `enabled` int(11) NOT NULL DEFAULT '1',
+  `added_by` int(11) NOT NULL DEFAULT 0,
+  `enabled` int(11) NOT NULL DEFAULT 1,
   `city_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -3633,8 +3806,8 @@ INSERT INTO `service_area` (`ser_id`, `society_name`, `society_id`, `delivery_ch
 
 CREATE TABLE `settings` (
   `id` int(11) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `value` longtext NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -3667,9 +3840,9 @@ INSERT INTO `settings` (`id`, `name`, `value`, `created_at`, `updated_at`) VALUE
 
 CREATE TABLE `smsby` (
   `by_id` int(11) NOT NULL,
-  `msg91` int(11) NOT NULL DEFAULT '1',
-  `twilio` int(11) NOT NULL DEFAULT '0',
-  `status` int(11) NOT NULL DEFAULT '1'
+  `msg91` int(11) NOT NULL DEFAULT 1,
+  `twilio` int(11) NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3687,7 +3860,7 @@ INSERT INTO `smsby` (`by_id`, `msg91`, `twilio`, `status`) VALUES
 
 CREATE TABLE `society` (
   `society_id` int(11) NOT NULL,
-  `society_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `society_name` varchar(255) NOT NULL,
   `city_id` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -3730,7 +3903,20 @@ INSERT INTO `spotlight` (`sp_id`, `p_id`, `store_id`) VALUES
 (13, 75, 3),
 (14, 78, 3),
 (15, 82, 3),
-(16, 39, 3);
+(16, 39, 3),
+(17, 71, 3),
+(18, 41, 3),
+(19, 43, 3),
+(20, 44, 3),
+(21, 46, 3),
+(22, 47, 3),
+(23, 49, 3),
+(24, 52, 3),
+(25, 53, 3),
+(26, 54, 3),
+(27, 55, 3),
+(28, 56, 3),
+(29, 59, 3);
 
 -- --------------------------------------------------------
 
@@ -3740,30 +3926,30 @@ INSERT INTO `spotlight` (`sp_id`, `p_id`, `store_id`) VALUES
 
 CREATE TABLE `store` (
   `id` int(11) NOT NULL,
-  `store_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `employee_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `store_photo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N/A',
-  `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `store_name` varchar(255) NOT NULL,
+  `employee_name` varchar(255) NOT NULL,
+  `phone_number` varchar(255) NOT NULL,
+  `store_photo` varchar(255) NOT NULL DEFAULT 'N/A',
+  `city` varchar(255) NOT NULL,
   `city_id` int(11) NOT NULL,
-  `admin_share` float NOT NULL DEFAULT '0',
-  `device_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `admin_share` float NOT NULL DEFAULT 0,
+  `device_id` varchar(255) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `del_range` float NOT NULL,
-  `lat` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `lng` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `admin_approval` int(11) NOT NULL DEFAULT '1',
-  `orders` int(11) NOT NULL DEFAULT '1',
-  `store_status` int(11) NOT NULL DEFAULT '1',
-  `store_opening_time` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `store_closing_time` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lat` varchar(255) DEFAULT NULL,
+  `lng` varchar(255) DEFAULT NULL,
+  `address` varchar(255) NOT NULL,
+  `admin_approval` int(11) NOT NULL DEFAULT 1,
+  `orders` int(11) NOT NULL DEFAULT 1,
+  `store_status` int(11) NOT NULL DEFAULT 1,
+  `store_opening_time` varchar(255) NOT NULL,
+  `store_closing_time` varchar(255) NOT NULL,
   `time_interval` int(11) NOT NULL,
-  `inactive_reason` longtext COLLATE utf8mb4_unicode_ci,
-  `id_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `id_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `id_photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `inactive_reason` longtext DEFAULT NULL,
+  `id_type` varchar(255) DEFAULT NULL,
+  `id_number` varchar(255) DEFAULT NULL,
+  `id_photo` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3771,7 +3957,8 @@ CREATE TABLE `store` (
 --
 
 INSERT INTO `store` (`id`, `store_name`, `employee_name`, `phone_number`, `store_photo`, `city`, `city_id`, `admin_share`, `device_id`, `email`, `password`, `del_range`, `lat`, `lng`, `address`, `admin_approval`, `orders`, `store_status`, `store_opening_time`, `store_closing_time`, `time_interval`, `inactive_reason`, `id_type`, `id_number`, `id_photo`) VALUES
-(3, 'mohammed', 'mohammed', '3', '/images/store/18-11-2022/foods.jpg', 'Khartoum bahri', 2, 20, NULL, 'almoatasem89@gmail.com', '$2y$10$nnm2OyZL9AgGor5e.PU5MeUjM9GaisQegJE8miEKw23l0s0iijMVK', 2, NULL, NULL, 'الخرطوم بحري مخطط نبتة مربع ١ منزل رقم ٥٧٨', 1, 3, 1, '07:00', '22:00', 5, NULL, 'ZAAD Card', '3', '/images/store/18-11-2022/foods.jpg');
+(3, 'mohammed', 'mohammed', '0116925162', '/images/store/18-11-2022/foods.jpg', 'Khartoum bahri', 2, 0, 'dBW0CZv3QjGc0XoTZVpEc4:APA91bEdiZtipJvuPyqh-_-0rgXlTaDVyhWZAIv7hNYUgncgFKdutAy_iWPyQzvwyVlxFSCGCpyu7hKWvpIF3FaSlithQKJJEKiXLkPHhWNRcNkYrrRCxKOJWCbZf6qDvtLTv8IuZAbC', 'almoatasem89@gmail.com', '$2y$10$.fWZF0BummKzk2YHYTS53ucT3MG.f8xZ/uVwWqBxd9iIRAUsxrE6G', 2, '15.6647809', '32.5556575', 'الخرطوم بحري مخطط نبتة مربع ١ منزل رقم ٥٧٨', 1, 3, 1, '09:00', '16:00', 90, NULL, 'ZAAD Card', '3', '/images/store/18-11-2022/foods.jpg'),
+(4, 'zaddi', 'ayman', '0122436555', '/images/store/22-12-2022/image_picker4366680373834556072.jpg', 'Khartoum', 1, 0, NULL, 'ayman@gmail.com', '$2y$10$CLbN72YWnVSaAEhMkI1iHOjrneShYEjUxDMIen2QofpROU.bCGsbO', 100, '15.5006544', '32.5598994', 'Khartoum, Sudan', 0, 1, 1, '10:00', '22:00', 60, NULL, 'ZAAD Card', '12345', '/images/store/22-12-2022/image_picker4366680373834556072.jpg');
 
 -- --------------------------------------------------------
 
@@ -3783,7 +3970,7 @@ CREATE TABLE `stores_cityadmin` (
   `id` int(10) UNSIGNED NOT NULL,
   `cityadmin_owner` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
-  `is_assigned` enum('0','1') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1'
+  `is_assigned` enum('0','1') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3794,8 +3981,8 @@ CREATE TABLE `stores_cityadmin` (
 
 CREATE TABLE `store_assign_homecat` (
   `assign_id` int(11) NOT NULL,
-  `homecat_id` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cat_id` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL
+  `homecat_id` varchar(500) NOT NULL,
+  `cat_id` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3807,12 +3994,19 @@ CREATE TABLE `store_assign_homecat` (
 CREATE TABLE `store_bank` (
   `ac_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
-  `ac_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ifsc` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `holder_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bank_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `upi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `ac_no` varchar(255) NOT NULL,
+  `ifsc` varchar(255) NOT NULL,
+  `holder_name` varchar(255) NOT NULL,
+  `bank_name` varchar(255) NOT NULL,
+  `upi` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `store_bank`
+--
+
+INSERT INTO `store_bank` (`ac_id`, `store_id`, `ac_no`, `ifsc`, `holder_name`, `bank_name`, `upi`) VALUES
+(1, 3, '1504839', '7789', 'mohamed moatasem', 'bank of khartoum', '7789');
 
 -- --------------------------------------------------------
 
@@ -3822,11 +4016,11 @@ CREATE TABLE `store_bank` (
 
 CREATE TABLE `store_banner` (
   `banner_id` int(100) NOT NULL,
-  `banner_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `banner_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `banner_name` varchar(255) NOT NULL,
+  `banner_image` varchar(255) DEFAULT NULL,
   `store_id` int(11) NOT NULL,
   `cat_id` int(11) NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'H'
+  `type` varchar(255) NOT NULL DEFAULT 'H'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3849,9 +4043,9 @@ INSERT INTO `store_banner` (`banner_id`, `banner_name`, `banner_image`, `store_i
 
 CREATE TABLE `store_callback_req` (
   `callback_req_id` int(11) NOT NULL,
-  `store_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `store_phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `processed` int(11) NOT NULL DEFAULT '0',
+  `store_name` varchar(255) NOT NULL,
+  `store_phone` varchar(255) NOT NULL,
+  `processed` int(11) NOT NULL DEFAULT 0,
   `date` date NOT NULL,
   `store_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -3864,22 +4058,22 @@ CREATE TABLE `store_callback_req` (
 
 CREATE TABLE `store_delivery_boy` (
   `dboy_id` int(11) NOT NULL,
-  `boy_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `boy_phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `boy_city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `device_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `boy_loc` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lng` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
+  `boy_name` varchar(255) NOT NULL,
+  `boy_phone` varchar(255) NOT NULL,
+  `boy_city` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `device_id` varchar(255) DEFAULT NULL,
+  `boy_loc` varchar(255) NOT NULL,
+  `lat` varchar(255) NOT NULL,
+  `lng` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
   `store_id` int(11) NOT NULL,
-  `added_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'store',
-  `ad_dboy_id` int(11) NOT NULL DEFAULT '0',
-  `rem_by_admin` int(11) NOT NULL DEFAULT '0',
-  `id_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `id_photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `id_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `added_by` varchar(255) NOT NULL DEFAULT 'store',
+  `ad_dboy_id` int(11) NOT NULL DEFAULT 0,
+  `rem_by_admin` int(11) NOT NULL DEFAULT 0,
+  `id_no` varchar(255) DEFAULT NULL,
+  `id_photo` varchar(255) DEFAULT NULL,
+  `id_name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3899,7 +4093,7 @@ INSERT INTO `store_delivery_boy` (`dboy_id`, `boy_name`, `boy_phone`, `boy_city`
 CREATE TABLE `store_doc` (
   `doc_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
-  `document` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `document` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3910,7 +4104,7 @@ CREATE TABLE `store_doc` (
 
 CREATE TABLE `store_driver_incentive` (
   `id` int(11) NOT NULL,
-  `incentive` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `incentive` varchar(255) NOT NULL,
   `store_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -3919,7 +4113,7 @@ CREATE TABLE `store_driver_incentive` (
 --
 
 INSERT INTO `store_driver_incentive` (`id`, `incentive`, `store_id`) VALUES
-(1, '4', 3);
+(1, '2000', 3);
 
 -- --------------------------------------------------------
 
@@ -3941,9 +4135,9 @@ CREATE TABLE `store_earning` (
 
 CREATE TABLE `store_homecat` (
   `homecat_id` int(200) NOT NULL,
-  `homecat_name` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `order` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `homecat_status` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `homecat_name` varchar(500) NOT NULL,
+  `order` varchar(200) NOT NULL,
+  `homecat_status` varchar(200) NOT NULL,
   `store_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -3955,12 +4149,12 @@ CREATE TABLE `store_homecat` (
 
 CREATE TABLE `store_notification` (
   `not_id` int(11) NOT NULL,
-  `not_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `not_message` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `not_title` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `not_message` longtext NOT NULL,
   `store_id` int(11) NOT NULL,
-  `read_by_store` int(11) NOT NULL DEFAULT '0',
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP
+  `read_by_store` int(11) NOT NULL DEFAULT 0,
+  `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3968,7 +4162,16 @@ CREATE TABLE `store_notification` (
 --
 
 INSERT INTO `store_notification` (`not_id`, `not_title`, `image`, `not_message`, `store_id`, `read_by_store`, `created_at`) VALUES
-(1, 'مبروك المتجر', '/images/notification/18-11-2022/timemarket1.jpeg', 'نرجو الالتزام بموجهات المنصة', 3, 0, '2022-11-18 17:07:45');
+(1, 'مبروك المتجر', '/images/notification/18-11-2022/timemarket1.jpeg', 'نرجو الالتزام بموجهات المنصة', 3, 0, '2022-11-18 17:07:45'),
+(2, 'hi', '/images/notification/24-12-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 'hi', 3, 0, '2022-12-24 12:12:51'),
+(3, 'hi', '/images/notification/24-12-2022/dce4fe1d-1339-40ea-90c8-8248f0b0ff5b.jpg', 'ffffff', 3, 0, '2022-12-24 12:20:07'),
+(4, 'hi', '/images/notification/24-12-2022/dce4fe1d-1339-40ea-90c8-8248f0b0ff5b.jpg', 'ffffff', 4, 0, '2022-12-24 12:20:07'),
+(5, 'Hey mohammed, Order id #HQQY5866 is Out For Delivery.', NULL, 'Out For Delivery: Order id #HQQY5866 contains of جبنة بوك(78g)*3,raffaello(20gm)*7,اندومي(8gm)*5,دقيق الاول(50kg)*11 of price SDG 54639 is Out For Delivery.', 3, 0, '2022-12-26 18:33:27'),
+(6, 'Hey mohammed, Order id #BRQZ23ea is Out For Delivery.', NULL, 'Out For Delivery: Order id #BRQZ23ea contains of ليز(48g)*1 of price SDG 400 is Out For Delivery.', 3, 0, '2022-12-26 18:44:15'),
+(7, 'Hey mohammed, Order id #BRQZ23ea has been Delivered.', NULL, 'Delivery Completed: Order id #BRQZ23ea contains of ليز(48g)*1 of price SDG 400 has been delivered.', 3, 0, '2022-12-26 18:44:37'),
+(8, 'Hey mohammed, Order id #HQQY5866 has been Delivered.', NULL, 'Delivery Completed: Order id #HQQY5866 contains of جبنة بوك(78g)*3,raffaello(20gm)*7,اندومي(8gm)*5,دقيق الاول(50kg)*11 of price SDG 54639 has been delivered.', 3, 0, '2022-12-26 19:11:54'),
+(9, 'Hey mohammed, Order id #GFVL1864 is Out For Delivery.', NULL, 'Out For Delivery: Order id #GFVL1864 contains of ليز(43g)*1 of price SDG 400 is Out For Delivery.', 3, 0, '2022-12-26 19:44:49'),
+(10, 'Hey mohammed, Order id #GFVL1864 has been Delivered.', NULL, 'Delivery Completed: Order id #GFVL1864 contains of ليز(43g)*1 of price SDG 400 has been delivered.', 3, 0, '2022-12-26 19:45:17');
 
 -- --------------------------------------------------------
 
@@ -3978,24 +4181,24 @@ INSERT INTO `store_notification` (`not_id`, `not_title`, `image`, `not_message`,
 
 CREATE TABLE `store_orders` (
   `store_order_id` int(11) NOT NULL,
-  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `varient_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `varient_image` varchar(255) NOT NULL,
   `quantity` float NOT NULL,
-  `unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unit` varchar(255) NOT NULL,
   `varient_id` int(11) NOT NULL,
   `qty` int(11) NOT NULL,
   `price` float NOT NULL,
   `total_mrp` float NOT NULL,
-  `order_cart_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `order_cart_id` varchar(255) NOT NULL,
   `order_date` datetime NOT NULL,
-  `store_approval` int(11) NOT NULL DEFAULT '1',
+  `store_approval` int(11) NOT NULL DEFAULT 1,
   `store_id` int(11) NOT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` longtext NOT NULL,
   `tx_per` int(11) DEFAULT NULL,
   `price_without_tax` float DEFAULT NULL,
   `tx_price` float DEFAULT NULL,
-  `tx_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `tx_name` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -4018,7 +4221,25 @@ INSERT INTO `store_orders` (`store_order_id`, `product_name`, `varient_image`, `
 (75, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 79, 'g', 55, 1, 2500, 5000, 'CGIY31e9', '2022-12-21 20:41:47', 1, 3, 'جبنة بوك', 0, 2500, 0, 'GST', 'Regular'),
 (77, 'زيت صباح 1لتر', '/images/product/30-11-2022/تنزيل-(4).jpeg', 50, 'ltr', 41, 1, 1700, 1800, 'CHUP5671', '2022-12-21 20:43:28', 1, 3, 'زيت', 17, 1411, 289, 'VAT', 'Regular'),
 (79, 'باكنج باودر', '/images/product/02-12-2022/download-(2).jfif', 11, 'gm', 59, 1, 500, 600, 'NBSG801b', '2022-12-22 13:49:02', 1, 3, 'باكنج باودر', 0, 500, 0, 'GST', 'Regular'),
-(82, 'بسكويت ديلايسو', '/images/product/30-11-2022/th-(9).jfif', 20, 'gm', 48, 2, 600, 800, 'JQDR965a', '2022-12-22 14:19:23', 1, 3, 'ويفر', 0, 600, 0, 'VAT', 'Regular');
+(82, 'بسكويت ديلايسو', '/images/product/30-11-2022/th-(9).jfif', 20, 'gm', 48, 2, 600, 800, 'JQDR965a', '2022-12-22 14:19:23', 1, 3, 'ويفر', 0, 600, 0, 'VAT', 'Regular'),
+(100, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 78, 'g', 55, 3, 7500, 15000, 'PFUN436f', '2022-12-24 17:31:02', 1, 3, 'جبنة بوك', 0, 7500, 0, 'GST', 'Regular'),
+(101, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 78, 'g', 55, 3, 7500, 15000, 'CYRJ19c8', '2022-12-24 17:31:08', 1, 3, 'جبنة بوك', 0, 7500, 0, 'GST', 'Regular'),
+(102, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 78, 'g', 55, 3, 7500, 15000, 'SGSF0144', '2022-12-24 17:31:15', 1, 3, 'جبنة بوك', 0, 7500, 0, 'GST', 'Regular'),
+(103, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 78, 'g', 55, 3, 7500, 15000, 'VRUC0271', '2022-12-24 17:31:26', 1, 3, 'جبنة بوك', 0, 7500, 0, 'GST', 'Regular'),
+(113, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 78, 'g', 55, 3, 7500, 15000, 'HQQY5866', '2022-12-24 17:32:17', 1, 3, 'جبنة بوك', 0, 7500, 0, 'GST', 'Regular'),
+(114, 'raffaello', '/images/product/30-11-2022/th-(20).jfif', 20, 'gm', 42, 7, 10500, 14000, 'HQQY5866', '2022-12-24 17:32:17', 1, 3, 'raffaello', 17, 8974.36, 1525.64, 'VAT', 'In Season'),
+(115, 'اندومي', '/images/product/02-12-2022/download-(9).jfif', 8, 'gm', 64, 5, 30039, 37500, 'HQQY5866', '2022-12-24 17:32:17', 1, 3, 'اندومي', 0, 30000, 39, 'VAT', 'Regular'),
+(116, 'دقيق الاول', '/images/product/30-11-2022/download.jfif', 50, 'kg', 39, 11, 6600, 0, 'HQQY5866', '2022-12-24 17:32:17', 1, 3, 'دقيق الاول سيقا', 0, 6600, 0, 'GST', 'Regular'),
+(127, 'ليز', '/images/product/30-11-2022/th-(5).jfif', 50, 'g', 56, 1, 400, 700, 'FGNE25da', '2022-12-26 18:39:28', 1, 3, 'ليز', 0, 400, 0, 'VAT', 'Regular'),
+(132, 'ليز', '/images/product/30-11-2022/th-(5).jfif', 48, 'g', 56, 1, 400, 700, 'BRQZ23ea', '2022-12-26 18:41:04', 1, 3, 'ليز', 0, 400, 0, 'VAT', 'Regular'),
+(134, 'ليز', '/images/product/30-11-2022/th-(5).jfif', 46, 'g', 56, 1, 400, 700, 'MUTZ23a9', '2022-12-26 19:19:08', 1, 3, 'ليز', 0, 400, 0, 'VAT', 'Regular'),
+(136, 'ليز', '/images/product/30-11-2022/th-(5).jfif', 44, 'g', 56, 1, 400, 700, 'KEVM1751', '2022-12-26 19:24:24', 1, 3, 'ليز', 0, 400, 0, 'VAT', 'Regular'),
+(138, 'ليز', '/images/product/30-11-2022/th-(5).jfif', 43, 'g', 56, 1, 400, 700, 'GFVL1864', '2022-12-26 19:27:18', 1, 3, 'ليز', 0, 400, 0, 'VAT', 'Regular'),
+(141, 'سكر 10كيلو كنانه', '/images/product/30-11-2022/images-(27).jpeg', 200, 'kg', 43, 1, 4680, 5000, 'QLMF336e', '2022-12-27 00:00:10', 1, 3, 'سكر 10كيلو كنانه', 17, 4000, 680, 'VAT', 'Regular'),
+(142, 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 75, 'g', 55, 2, 5000, 10000, 'QLMF336e', '2022-12-27 00:00:10', 1, 3, 'جبنة بوك', 0, 5000, 0, 'GST', 'Regular'),
+(143, 'زيت صباح 1لتر', '/images/product/30-11-2022/تنزيل-(4).jpeg', 49, 'ltr', 41, 6, 10200, 10800, 'QLMF336e', '2022-12-27 00:00:10', 1, 3, 'زيت', 17, 8717.95, 1482.05, 'VAT', 'Regular'),
+(171, 'raffaello', '/images/product/30-11-2022/th-(20).jfif', 6, 'gm', 42, 15, 22500, 30000, 'incart', '2022-12-28 15:38:51', 62, 3, 'raffaello', 17, 18675, 3825, 'VAT', 'In Season'),
+(180, 'زيت صباح 1لتر', '/images/product/30-11-2022/تنزيل-(4).jpeg', 31, 'ltr', 41, 15, 25500, 27000, 'incart', '2022-12-28 17:51:50', 62, 3, 'زيت', 17, 21794.9, 3705.13, 'VAT', 'Regular');
 
 -- --------------------------------------------------------
 
@@ -4033,8 +4254,8 @@ CREATE TABLE `store_products` (
   `store_id` int(11) NOT NULL,
   `mrp` float NOT NULL,
   `price` float NOT NULL,
-  `min_ord_qty` int(11) NOT NULL DEFAULT '1',
-  `max_ord_qty` int(11) NOT NULL DEFAULT '100'
+  `min_ord_qty` int(11) NOT NULL DEFAULT 1,
+  `max_ord_qty` int(11) NOT NULL DEFAULT 100
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -4076,35 +4297,35 @@ INSERT INTO `store_products` (`p_id`, `varient_id`, `quantity`, `store_id`, `mrp
 (45, 36, 0, 3, 3, 2000, 1, 100),
 (46, 37, 0, 3, 0, 700, 1, 100),
 (47, 38, 0, 3, 200, 150, 1, 100),
-(48, 39, 50, 3, 0, 600, 10, 100),
+(48, 39, 28, 3, 0, 600, 1, 0),
 (49, 40, 50, 3, 13000, 11000, 1, 100),
-(50, 41, 49, 3, 1800, 1700, 1, 100),
-(51, 42, 20, 3, 2000, 1500, 1, 100),
-(52, 43, 200, 3, 5000, 4000, 1, 100),
+(50, 41, 31, 3, 1800, 1700, 1, 100),
+(51, 42, 6, 3, 2000, 1500, 1, 100),
+(52, 43, 197, 3, 5000, 4000, 1, 100),
 (53, 44, 19, 3, 4000, 3000, 1, 100),
 (54, 45, 20, 3, 3000, 2500, 1, 100),
 (55, 46, 20, 3, 3000, 2000, 1, 100),
 (56, 47, 20, 3, 1200, 1100, 1, 100),
-(57, 48, 18, 3, 400, 300, 1, 100),
+(57, 48, 16, 3, 400, 300, 1, 100),
 (58, 49, 20, 3, 1500, 1400, 1, 100),
 (59, 50, 20, 3, 700, 500, 1, 100),
 (60, 51, 50, 3, 1400, 800, 1, 100),
 (61, 52, 50, 3, 800, 700, 1, 100),
 (62, 53, 50, 3, 1000, 800, 1, 100),
 (63, 54, 50, 3, 10000, 6000, 1, 100),
-(64, 55, 78, 3, 5000, 4500, 1, 100),
-(65, 56, 50, 3, 700, 400, 1, 100),
+(64, 55, 66, 3, 5000, 4500, 1, 100),
+(65, 56, 41, 3, 700, 400, 1, 100),
 (68, 59, 10, 3, 600, 500, 1, 100),
 (70, 60, 12, 3, 5000, 3000, 1, 100),
 (71, 61, 6, 3, 2000, 1500, 1, 100),
 (72, 62, 6, 3, 13000, 12500, 1, 100),
 (73, 63, 4, 3, 20000, 18000, 1, 100),
-(74, 64, 8, 3, 7500, 6000, 1, 100),
+(74, 64, 98, 3, 7500, 6000, 1, 100),
 (75, 65, 5, 3, 9000, 7000, 1, 100),
 (76, 66, 9, 3, 700, 500, 1, 100),
 (77, 67, 10, 3, 2000, 1500, 1, 100),
 (78, 68, 5, 3, 9000, 8000, 1, 100),
-(79, 69, 2, 3, 700, 500, 1, 100),
+(79, 69, 1002, 3, 700, 500, 1, 100),
 (80, 70, 3, 3, 1500, 1000, 1, 100),
 (81, 76, 3, 3, 4000, 3000, 1, 100),
 (82, 74, 5, 3, 7000, 6000, 1, 100),
@@ -4120,8 +4341,20 @@ INSERT INTO `store_products` (`p_id`, `varient_id`, `quantity`, `store_id`, `mrp
 (92, 82, 5, 3, 2000, 1100, 1, 100),
 (93, 83, 6, 3, 6000, 5000, 1, 100),
 (94, 84, 5, 3, 5000, 4000, 1, 100),
-(95, 85, 2, 3, 7000, 6000, 1, 100),
-(96, 86, 3, 3, 2500, 2000, 1, 100);
+(95, 85, 1002, 3, 7000, 6000, 1, 100),
+(96, 86, 3, 3, 2500, 2000, 1, 100),
+(98, 88, 10, 3, 800, 700, 1, 100),
+(99, 89, 10, 3, 1000, 950, 1, 100),
+(100, 97, 10, 3, 10000, 9000, 1, 100),
+(101, 91, 10, 3, 5000, 4500, 1, 100),
+(102, 95, 10, 3, 1200, 1000, 1, 100),
+(103, 92, 10, 3, 2000, 1500, 1, 100),
+(104, 92, 10, 3, 2000, 1500, 1, 100),
+(105, 90, 10, 3, 5000, 4000, 1, 100),
+(106, 91, 10, 3, 5000, 4500, 1, 100),
+(107, 93, 20, 3, 10000, 6000, 1, 100),
+(108, 96, 10, 3, 5000, 4000, 1, 100),
+(109, 94, 10, 3, 5000, 2000, 1, 100);
 
 -- --------------------------------------------------------
 
@@ -4145,7 +4378,7 @@ CREATE TABLE `tags` (
   `tag_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `tag` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tags`
@@ -4219,7 +4452,17 @@ INSERT INTO `tags` (`tag_id`, `product_id`, `tag`) VALUES
 (93, 86, 'كلوركس'),
 (94, 87, 'fruit'),
 (95, 87, ' grocery'),
-(96, 87, 'berry');
+(96, 87, 'berry'),
+(97, 88, 'دقيق دخن'),
+(98, 89, 'Gold flour'),
+(99, 90, 'الوطنيه'),
+(100, 91, 'البطريق'),
+(101, 92, 'كادبوري'),
+(102, 93, 'كادبوري فلوت'),
+(103, 94, 'سكر صافي'),
+(104, 95, 'سكر ناعم'),
+(105, 96, 'زيت عافيه'),
+(106, 97, 'زيت زيتون');
 
 -- --------------------------------------------------------
 
@@ -4229,7 +4472,7 @@ INSERT INTO `tags` (`tag_id`, `product_id`, `tag`) VALUES
 
 CREATE TABLE `tax_types` (
   `tax_id` int(11) NOT NULL,
-  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL
+  `name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -4251,7 +4494,7 @@ CREATE TABLE `tbl_referral` (
   `user_id` int(11) NOT NULL,
   `referral_by` int(11) NOT NULL,
   `created_at` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -4263,8 +4506,8 @@ CREATE TABLE `tbl_top_cat` (
   `id` int(11) NOT NULL,
   `cat_id` int(11) NOT NULL,
   `cat_rank` int(11) NOT NULL,
-  `created_at` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_at` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `created_at` varchar(255) NOT NULL,
+  `updated_at` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -4275,13 +4518,13 @@ CREATE TABLE `tbl_top_cat` (
 
 CREATE TABLE `tbl_web_setting` (
   `set_id` int(11) NOT NULL,
-  `icon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `favicon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `icon` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `favicon` varchar(255) NOT NULL,
   `number_limit` int(11) NOT NULL,
-  `last_loc` int(11) NOT NULL DEFAULT '0',
-  `footer_text` longtext COLLATE utf8mb4_unicode_ci,
-  `live_chat` int(11) NOT NULL DEFAULT '1'
+  `last_loc` int(11) NOT NULL DEFAULT 0,
+  `footer_text` longtext DEFAULT NULL,
+  `live_chat` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -4299,8 +4542,8 @@ INSERT INTO `tbl_web_setting` (`set_id`, `icon`, `name`, `favicon`, `number_limi
 
 CREATE TABLE `termspage` (
   `terms_id` int(11) NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL
+  `title` varchar(255) NOT NULL,
+  `description` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -4318,8 +4561,8 @@ INSERT INTO `termspage` (`terms_id`, `title`, `description`) VALUES
 
 CREATE TABLE `time_slot` (
   `time_slot_id` int(11) NOT NULL,
-  `open_hour` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `close_hour` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `open_hour` varchar(255) NOT NULL,
+  `close_hour` varchar(255) NOT NULL,
   `time_slot` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -4352,9 +4595,9 @@ INSERT INTO `trending_search` (`trend_id`, `varient_id`) VALUES
 
 CREATE TABLE `twilio` (
   `twilio_id` int(11) NOT NULL,
-  `twilio_sid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `twilio_token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `twilio_phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `twilio_sid` varchar(255) NOT NULL,
+  `twilio_token` varchar(255) NOT NULL,
+  `twilio_phone` varchar(255) NOT NULL,
   `active` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -4373,35 +4616,35 @@ INSERT INTO `twilio` (`twilio_id`, `twilio_sid`, `twilio_token`, `twilio_phone`,
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `device_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'N/A',
+  `password` varchar(255) DEFAULT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
+  `user_phone` varchar(255) DEFAULT NULL,
+  `device_id` varchar(255) DEFAULT NULL,
+  `user_image` varchar(255) DEFAULT 'N/A',
   `user_city` int(11) DEFAULT NULL,
   `user_area` int(11) DEFAULT NULL,
-  `otp_value` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `otp_value` varchar(255) DEFAULT NULL,
   `otp_expires_date` datetime DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `wallet` float NOT NULL DEFAULT '0',
-  `rewards` int(11) NOT NULL DEFAULT '0',
-  `is_verified` int(11) NOT NULL DEFAULT '0',
-  `block` int(11) NOT NULL DEFAULT '2',
+  `status` int(11) NOT NULL DEFAULT 1,
+  `wallet` float NOT NULL DEFAULT 0,
+  `rewards` int(11) NOT NULL DEFAULT 0,
+  `is_verified` int(11) NOT NULL DEFAULT 0,
+  `block` int(11) NOT NULL DEFAULT 2,
   `reg_date` date NOT NULL,
-  `app_update` int(11) NOT NULL DEFAULT '1',
-  `facebook_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `referral_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `membership` int(11) NOT NULL DEFAULT '0',
+  `app_update` int(11) NOT NULL DEFAULT 1,
+  `facebook_id` varchar(255) DEFAULT NULL,
+  `referral_code` varchar(255) DEFAULT NULL,
+  `membership` int(11) NOT NULL DEFAULT 0,
   `mem_plan_start` date DEFAULT NULL,
   `mem_plan_expiry` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `lat` double DEFAULT NULL,
   `lng` double DEFAULT NULL,
-  `address` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `address` varchar(500) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -4411,8 +4654,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email_verified_at`, `password`, `remember_token`, `user_phone`, `device_id`, `user_image`, `user_city`, `user_area`, `otp_value`, `otp_expires_date`, `status`, `wallet`, `rewards`, `is_verified`, `block`, `reg_date`, `app_update`, `facebook_id`, `referral_code`, `membership`, `mem_plan_start`, `mem_plan_expiry`, `created_at`, `updated_at`, `lat`, `lng`, `address`, `email`) VALUES
 (18, 'عبدالرحيم', NULL, '$2y$10$r4aZQD9xPw4Qiox7EdAHcuukitOmrrGN08MVO7WZ0Q/fo4D2FQgge', NULL, '0995769544', NULL, 'N/A', 1, NULL, '16207', NULL, 1, 0, 0, 0, 2, '2022-11-18', 1, NULL, 'ع', 0, NULL, NULL, NULL, NULL, 15.4654821, 32.5165888, NULL, NULL),
 (61, 'abdurrahim', NULL, '$2y$10$UhpJ9YQig7igioYVCWaV5uEi8FR5XGvl0NargTmX3njDhXcXnMR9.', NULL, '0123771002', NULL, 'N/A', 1, NULL, NULL, NULL, 1, 0, 0, 1, 2, '0000-00-00', 1, NULL, 'ABD8NWKB', 0, NULL, NULL, '2022-12-08 02:27:08', '2022-12-08 02:27:56', 15.4654821, 32.5165888, 'FG88+6QQ', NULL),
-(62, 'test', NULL, '$2y$10$uBMgL67VC.IkVnlt./sbaOxdfEXr2XLhgZt9Tg02NRPOFDd4Hxr/a', NULL, '124736128', NULL, 'N/A', NULL, NULL, NULL, NULL, 1, 0, 0, 1, 2, '0000-00-00', 1, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(65, 'عادل عباس سعيد', NULL, '$2y$10$Lf0KFLzHY.KWa1ikg3wSfurhvJAWmnyQ3jVGjo2Ip5bschZEgWfwa', NULL, '123771002', 'e18crMjQTCeynZ780TKdAd:APA91bGPSTGn5t4suPj5pUfeX7l1h4juKrME70J1IMVge_q7uw53EDBdW9Y4eFOlxmd-6MFcNSkZA6Vxs1DwpcyQw9y_Sv8aCAYE7gXV8KcmqdCLv2Npf6oN1wB5xRGBaMOpPrFuJpV9', '/images/user/21-12-2022/image_picker5825519968909551162.jpg', 1, NULL, NULL, '2022-12-21 12:18:31', 1, 0, 0, 1, 2, '2022-12-21', 1, NULL, NULL, 0, NULL, NULL, '2022-12-21 12:16:31', '2022-12-21 12:16:51', 16.454, 32.323, 'الخرطوم شارع القصر', NULL);
+(62, 'test', NULL, '$2y$10$uBMgL67VC.IkVnlt./sbaOxdfEXr2XLhgZt9Tg02NRPOFDd4Hxr/a', NULL, '124736128', NULL, 'N/A', NULL, NULL, NULL, NULL, 1, 112.5, 0, 1, 2, '0000-00-00', 1, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(65, 'عادل عباس سعيد', NULL, '$2y$10$Lf0KFLzHY.KWa1ikg3wSfurhvJAWmnyQ3jVGjo2Ip5bschZEgWfwa', NULL, '123771002', 'e18crMjQTCeynZ780TKdAd:APA91bGPSTGn5t4suPj5pUfeX7l1h4juKrME70J1IMVge_q7uw53EDBdW9Y4eFOlxmd-6MFcNSkZA6Vxs1DwpcyQw9y_Sv8aCAYE7gXV8KcmqdCLv2Npf6oN1wB5xRGBaMOpPrFuJpV9', '/images/user/21-12-2022/image_picker5825519968909551162.jpg', 1, NULL, NULL, '2022-12-21 12:18:31', 1, 0, 1, 1, 2, '2022-12-21', 1, NULL, NULL, 0, NULL, NULL, '2022-12-21 12:16:31', '2022-12-21 12:16:51', 16.454, 32.323, 'الخرطوم شارع القصر', NULL);
 
 -- --------------------------------------------------------
 
@@ -4423,12 +4666,32 @@ INSERT INTO `users` (`id`, `name`, `email_verified_at`, `password`, `remember_to
 CREATE TABLE `user_notification` (
   `noti_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `noti_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `noti_message` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `read_by_user` int(11) NOT NULL DEFAULT '0',
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP
+  `noti_title` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `noti_message` longtext NOT NULL,
+  `read_by_user` int(11) NOT NULL DEFAULT 0,
+  `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `user_notification`
+--
+
+INSERT INTO `user_notification` (`noti_id`, `user_id`, `noti_title`, `image`, `noti_message`, `read_by_user`, `created_at`) VALUES
+(1, 62, 'hk', '/images/notification/24-12-2022/dce4fe1d-1339-40ea-90c8-8248f0b0ff5b.jpg', 'hi', 0, '2022-12-24 12:21:45'),
+(2, 62, 'zadi', '/images/notification/24-12-2022/download-(8).jfif', 'السلام عليكم ورحمة الله وبركاته', 0, '2022-12-24 12:23:50'),
+(3, 65, 'zadi', '/images/notification/24-12-2022/download-(8).jfif', 'السلام عليكم ورحمة الله وبركاته', 0, '2022-12-24 12:23:50'),
+(4, 62, 'Hey test, Your Order is Confirmed', NULL, 'Your Order is confirmed: Your order id #HQQY5866 is confirmed by the store.You can expect your item(s) will be delivered on 2022-12-26 (07:00 am - 07:05 am).', 0, '2022-12-26 18:32:22'),
+(5, 62, 'Hey test, Your Order is Out For Delivery', NULL, 'Out For Delivery: Your order id #HQQY5866 contains of جبنة بوك(78g)*3,raffaello(20gm)*7,اندومي(8gm)*5,دقيق الاول(50kg)*11 of price SDG 54639 is Out For Delivery.Get ready with SDG 54639 cash.', 0, '2022-12-26 18:33:27'),
+(6, 65, 'Hey عادل عباس سعيد, Your Order is Confirmed', NULL, 'Your Order is confirmed: Your order id #BRQZ23ea is confirmed by the store.You can expect your item(s) will be delivered on 2022-12-26 (199).', 0, '2022-12-26 18:41:54'),
+(7, 65, 'Hey عادل عباس سعيد, Your Order is Out For Delivery', NULL, 'Out For Delivery: Your order id #BRQZ23ea contains of ليز(48g)*1 of price SDG 400 is Out For Delivery.Get ready with SDG 400 cash.', 0, '2022-12-26 18:44:15'),
+(8, 65, 'Hey عادل عباس سعيد, Your Order has been Delivered', NULL, 'Delivery Completed: Your order id #BRQZ23ea contains of ليز(48g)*1 of price SDG 400 is Delivered Successfully.', 0, '2022-12-26 18:44:37'),
+(9, 62, 'Hey test, Your Order has been Delivered', NULL, 'Delivery Completed: Your order id #HQQY5866 contains of جبنة بوك(78g)*3,raffaello(20gm)*7,اندومي(8gm)*5,دقيق الاول(50kg)*11 of price SDG 54639 is Delivered Successfully.', 0, '2022-12-26 19:11:53'),
+(10, 65, 'Hey عادل عباس سعيد, Your Order is Confirmed', NULL, 'Your Order is confirmed: Your order id #MUTZ23a9 is confirmed by the store.You can expect your item(s) will be delivered on 2022-12-26 (199).', 0, '2022-12-26 19:20:24'),
+(11, 65, 'Hey عادل عباس سعيد, Your Order is Confirmed', NULL, 'Your Order is confirmed: Your order id #GFVL1864 is confirmed by the store.You can expect your item(s) will be delivered on 2022-12-26 (199).', 0, '2022-12-26 19:40:27'),
+(12, 65, 'Hey عادل عباس سعيد, Your Order is Out For Delivery', NULL, 'Out For Delivery: Your order id #GFVL1864 contains of ليز(43g)*1 of price SDG 400 is Out For Delivery.Get ready.', 0, '2022-12-26 19:44:49'),
+(13, 65, 'Hey عادل عباس سعيد, Your Order has been Delivered', NULL, 'Delivery Completed: Your order id #GFVL1864 contains of ليز(43g)*1 of price SDG 400 is Delivered Successfully.', 0, '2022-12-26 19:45:17'),
+(14, 62, 'Hey test, Your Order is Confirmed', NULL, 'Your Order is confirmed: Your order id #QLMF336e is confirmed by the store.You can expect your item(s) will be delivered on 2022-12-28 (09:00 am - 10:30 am).', 0, '2022-12-28 13:48:37');
 
 -- --------------------------------------------------------
 
@@ -4438,10 +4701,10 @@ CREATE TABLE `user_notification` (
 
 CREATE TABLE `user_support` (
   `supp_id` int(11) NOT NULL,
-  `query` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `query` varchar(255) NOT NULL,
   `id` int(11) NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `type` varchar(255) NOT NULL,
+  `created_at` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -4453,11 +4716,18 @@ CREATE TABLE `user_support` (
 CREATE TABLE `wallet_recharge_history` (
   `wallet_recharge_history` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `recharge_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `recharge_status` varchar(255) NOT NULL,
   `amount` float NOT NULL,
-  `payment_gateway` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payment_gateway` varchar(255) NOT NULL,
   `date_of_recharge` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wallet_recharge_history`
+--
+
+INSERT INTO `wallet_recharge_history` (`wallet_recharge_history`, `user_id`, `recharge_status`, `amount`, `payment_gateway`, `date_of_recharge`) VALUES
+(1, 62, 'success', 112.5, 'Rewards', '2022-12-28');
 
 -- --------------------------------------------------------
 
@@ -4469,17 +4739,27 @@ CREATE TABLE `wishlist` (
   `wish_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `varient_id` int(11) NOT NULL,
-  `quantity` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mrp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `varient_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantity` varchar(255) NOT NULL,
+  `unit` varchar(255) NOT NULL,
+  `price` varchar(255) NOT NULL,
+  `mrp` varchar(255) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `description` longtext NOT NULL,
+  `varient_image` varchar(255) NOT NULL,
   `store_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wishlist`
+--
+
+INSERT INTO `wishlist` (`wish_id`, `user_id`, `varient_id`, `quantity`, `unit`, `price`, `mrp`, `product_name`, `description`, `varient_image`, `store_id`, `created_at`, `updated_at`) VALUES
+(1, 62, 55, '70', 'g', '2500', '5000', 'جبنة بوك', 'جبنة بوك', '/images/product/30-11-2022/DJJ19jlXoAEqHYW-1024x731.jpg', 3, '2022-12-27 00:14:23', '2022-12-27 00:14:23'),
+(2, 62, 41, '43', 'ltr', '1700', '1800', 'زيت صباح 1لتر', 'زيت', '/images/product/30-11-2022/تنزيل-(4).jpeg', 3, '2022-12-27 00:14:32', '2022-12-27 00:14:32'),
+(3, 62, 42, '6', 'gm', '1500', '2000', 'raffaello', 'raffaello', '/images/product/30-11-2022/th-(20).jfif', 3, '2022-12-27 00:23:12', '2022-12-27 00:23:12'),
+(4, 62, 39, '28', 'kg', '600', '0', 'دقيق الاول', 'دقيق الاول سيقا', '/images/product/30-11-2022/download.jfif', 3, '2022-12-28 17:07:57', '2022-12-28 17:07:57');
 
 --
 -- Indexes for dumped tables
@@ -4526,6 +4806,18 @@ ALTER TABLE `app_link`
 --
 ALTER TABLE `app_notice`
   ADD PRIMARY KEY (`app_notice_id`);
+
+--
+-- Indexes for table `bank_accounts`
+--
+ALTER TABLE `bank_accounts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `bank_payments`
+--
+ALTER TABLE `bank_payments`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `callback_req`
@@ -5166,10 +5458,22 @@ ALTER TABLE `app_notice`
   MODIFY `app_notice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `bank_accounts`
+--
+ALTER TABLE `bank_accounts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `bank_payments`
+--
+ALTER TABLE `bank_payments`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `callback_req`
 --
 ALTER TABLE `callback_req`
-  MODIFY `callback_req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `callback_req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `cancel_for`
@@ -5187,19 +5491,19 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT for table `cart_payments`
 --
 ALTER TABLE `cart_payments`
-  MODIFY `py_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `py_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `cart_rewards`
 --
 ALTER TABLE `cart_rewards`
-  MODIFY `cart_rewards_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cart_rewards_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `cart_status`
 --
 ALTER TABLE `cart_status`
-  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -5241,7 +5545,7 @@ ALTER TABLE `currency`
 -- AUTO_INCREMENT for table `deal_product`
 --
 ALTER TABLE `deal_product`
-  MODIFY `deal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `deal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `delivery_boy`
@@ -5277,13 +5581,13 @@ ALTER TABLE `driver_callback_req`
 -- AUTO_INCREMENT for table `driver_incentive`
 --
 ALTER TABLE `driver_incentive`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `driver_notification`
 --
 ALTER TABLE `driver_notification`
-  MODIFY `not_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -5385,7 +5689,7 @@ ALTER TABLE `membership_plan`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `minimum_maximum_order_value`
@@ -5421,7 +5725,7 @@ ALTER TABLE `oauth_personal_access_clients`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `order_by_photo`
@@ -5433,7 +5737,7 @@ ALTER TABLE `order_by_photo`
 -- AUTO_INCREMENT for table `payout_requests`
 --
 ALTER TABLE `payout_requests`
-  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `payout_req_valid`
@@ -5451,13 +5755,13 @@ ALTER TABLE `plan_buy_history`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=194;
 
 --
 -- AUTO_INCREMENT for table `product_rating`
@@ -5469,7 +5773,7 @@ ALTER TABLE `product_rating`
 -- AUTO_INCREMENT for table `product_varient`
 --
 ALTER TABLE `product_varient`
-  MODIFY `varient_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `varient_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `razorpay_key`
@@ -5541,13 +5845,13 @@ ALTER TABLE `society`
 -- AUTO_INCREMENT for table `spotlight`
 --
 ALTER TABLE `spotlight`
-  MODIFY `sp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `sp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `store`
 --
 ALTER TABLE `store`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `stores_cityadmin`
@@ -5565,7 +5869,7 @@ ALTER TABLE `store_assign_homecat`
 -- AUTO_INCREMENT for table `store_bank`
 --
 ALTER TABLE `store_bank`
-  MODIFY `ac_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ac_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `store_banner`
@@ -5601,19 +5905,19 @@ ALTER TABLE `store_earning`
 -- AUTO_INCREMENT for table `store_notification`
 --
 ALTER TABLE `store_notification`
-  MODIFY `not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `store_orders`
 --
 ALTER TABLE `store_orders`
-  MODIFY `store_order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `store_order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
 
 --
 -- AUTO_INCREMENT for table `store_products`
 --
 ALTER TABLE `store_products`
-  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT for table `store_society`
@@ -5625,7 +5929,7 @@ ALTER TABLE `store_society`
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT for table `tax_types`
@@ -5685,7 +5989,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_notification`
 --
 ALTER TABLE `user_notification`
-  MODIFY `noti_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `noti_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `user_support`
@@ -5697,13 +6001,13 @@ ALTER TABLE `user_support`
 -- AUTO_INCREMENT for table `wallet_recharge_history`
 --
 ALTER TABLE `wallet_recharge_history`
-  MODIFY `wallet_recharge_history` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `wallet_recharge_history` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `wish_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `wish_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
