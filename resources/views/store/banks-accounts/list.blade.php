@@ -40,11 +40,12 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <h5 class="card-title"><b>{{ __('keywords.Delivery Boy') }} {{ __('keywords.List') }}</b>
+                                <h5 class="card-title"><b>{{ __('keywords.Bank Accounts List') }} </b>
                                 </h5>
                             </div>
                             <div class="col-md-6">
-                                <a href="{{ route('store_AddD_boy') }}" class="btn btn-primary p-1 ml-auto"
+                                <a href="{{ route('stores.banks-accounts.create', $store->id) }}"
+                                    class="btn btn-primary p-1 ml-auto"
                                     style="width:15%;float:right;padding: 3px 0px 3px 0px;">{{ __('keywords.Add') }}</a>
                             </div>
                         </div>
