@@ -106,17 +106,11 @@
                                             <td>{{ $bankPayment->bankAccount->account_number }}</td>
                                             <td>{{ $bankPayment->bankAccount->branch_name }}</td>
 
-                                            {{-- <td> <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#exampleModal1{{ $bankPayment->id }}">{{ __('keywords.Details') }}</button>
-                                            </td> --}}
+
                                             <td class="td-actions text-right">
                                                 <div class="d-flex flex-column gap-1 align-items-start">
 
-                                                    {{-- <form
-                                                        action="{{ route('stores.bank-accounts.destroy', [$store->id, $bankPayment->id]) }}"
-                                                        method="post"
-                                                        onsubmit="return confirm('are you sure want to use this action?')">
-                                                        @csrf --}}
+
                                                     <button data-toggle="modal"
                                                         data-target="#exampleModal1{{ $bankPayment->id }}" type="submit"
                                                         name="action" value="confirm" rel="tooltip"
