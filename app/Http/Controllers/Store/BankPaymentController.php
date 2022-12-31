@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
+use App\Models\Store;
+use App\Services\BankPaymentService;
+use DB;
 use Illuminate\Http\Request;
 
 class BankPaymentController extends Controller
@@ -12,9 +15,15 @@ class BankPaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($storeId)
     {
-        //
+
+        $logo = DB::table('tbl_web_setting')
+            ->where('set_id', '1')
+            ->first();
+        $bankPayments = BankPaymentService::getStoreAllPaymentsPaginated($storeId);
+        $store = Store::find($storeId);
+        return view("store.bank-payments.list", compact("store", "bankPayments", "logo"));
     }
 
     /**
@@ -67,9 +76,12 @@ class BankPaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $storeId, $paymentId)
     {
-        //
+
+        $store = BankPaymentService::updateBankPaymentStatus($paymentId, $request->status, $request->amount);
+
+        return back()->withSuccess(trans('keywords.Updated Successfully'));
     }
 
     /**

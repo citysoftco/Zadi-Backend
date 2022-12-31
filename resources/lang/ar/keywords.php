@@ -515,7 +515,7 @@ return [
     'Total Incentive' => 'Total Incentive',
     'Paid Incentive' => 'Paid Incentive',
     'Pending Incentive' => 'Pending Incentive',
-    'Amount' => 'Amount',
+    'Amount' => 'المبلغ',
     'Please select at least one product' => 'Please select at least one product',
     'Missed Orders' => 'Missed Orders',
     'Select Users' => 'Select Users',
@@ -739,7 +739,7 @@ return [
     'Buy Date' => 'Buy Date',
     'Expiry Date' => 'Expiry Date',
     'Membership Price' => 'Membership Price',
-    'Payment Status' => 'Payment Status',
+    'Payment Status' => 'حالة الدفع',
     'Membership Plans' => 'خطط العضوية',
     'Tax' => 'Tax',
     'Tax Name' => 'Tax Name',
@@ -937,7 +937,13 @@ return [
     'Account Name' => 'إسم الحساب',
     'Bank Logo' => 'شعار المصرف',
     "Bank Payment Requests" => "طلبات الدفع عن طريق البنوك",
-    "Bank Payment Requests List" => "قائمة طلبات الدفع"
+    "Bank Payment Requests List" => "قائمة طلبات الدفع",
+    'Payment For' => "دفع لأجل",
+    'Payment Receipt' => 'إيصال الدفع',
+    'Wallet Recharge' => 'شحن المحفظة',
+    "Confirm" => "تأكيد",
+    "Cancelled" => "ملغي"
+
 
 
 

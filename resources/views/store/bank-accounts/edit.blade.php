@@ -175,8 +175,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">{{ __('keywords.Account Name') }}</label>
-                                    <input type="text" required value="{{ $bankAccount->bank_name }}" name="account_name"
-                                        class="form-control">
+                                    <input type="text" required value="{{ $bankAccount->account_name }}"
+                                        name="account_name" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">

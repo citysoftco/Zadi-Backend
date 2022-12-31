@@ -935,7 +935,13 @@ return [
     'Bank Logo' => 'Bank Logo',
     'Account Name' => 'Account Name',
     "Bank Payment Requests" => "Bank Payments Requests",
-    "Bank Payment Requests List" => "Bank Payment Requests List"
+    "Bank Payment Requests List" => "Bank Payment Requests List",
+    'Payment For' => "Payment For",
+    'Payment Receipt' => 'Payment Receipt',
+    'Wallet Recharge' => 'Wallet Recharge',
+    "Confirm" => "Confirm",
+    "Cancelled" => "Cancelled",
+
 
 
 

@@ -29,12 +29,10 @@ class UserService
     public static function getUserBankPayments($userId, $paymentFor)
     {
 
-        return User::with([
-            "bankPaymentRequests" => function ($q) {
-                $q->paginate(10);
-            },
-            "bankPaymentRequests.bankAccount"
-        ])->find($userId);
+        return BankPayment::with([
+            "bankAccount",
+            "user:id,name,address,user_phone"
+        ])->where("user_id", $userId)->paginate(10);
     }
 
     public static function register($request)
