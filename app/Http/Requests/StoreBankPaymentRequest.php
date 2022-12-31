@@ -28,7 +28,8 @@ class StoreBankPaymentRequest extends FormRequest
             "description" => "nullable",
             "receipt_photo" => "required|image",
             "payment_for" => "required",
-            "bank_account_id" => "required"
+            "bank_account_id" => "required",
+            "user_id" => "required"
         ];
     }
 }

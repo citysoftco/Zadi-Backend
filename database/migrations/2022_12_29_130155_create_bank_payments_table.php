@@ -22,6 +22,7 @@ class CreateBankPaymentsTable extends Migration
             $table->string("payment_for");
             $table->unsignedBigInteger("bank_account_id");
             $table->unsignedBigInteger("store_id");
+            $table->unsignedBigInteger("user_id");
             $table->timestamps();
         });
     }
