@@ -100,7 +100,7 @@ class BankAccountController extends Controller
         $bankAccount = BankAccount::find($bankAccountId);
         $data["bank_logo"] = FileHandleService::updateImageInPublicPath($bankAccount->bank_logo, $request->bank_logo, "images/banks/images");
         $bankAccount->update($data);
-        return back()->withSuccess(trans('keywords.Added Successfully'));
+        return back()->withSuccess(trans('keywords.Updated Successfully'));
     }
 
     /**
@@ -109,8 +109,11 @@ class BankAccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($storeId, $bankAccountId)
     {
-        //
+        $bankAccount = BankAccount::find($bankAccountId);
+        FileHandleService::deleteImageInPublicPath($bankAccount->bank_logo);
+        $bankAccount->delete();
+        return back()->withSuccess(trans('keywords.Deleted Successfully'));
     }
 }

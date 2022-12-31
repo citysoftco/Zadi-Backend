@@ -66,4 +66,11 @@ class FileHandleService
         }
         return $oldImagePath;
     }
+    public static function deleteImageInPublicPath($path)
+    {
+        if (file_exists(public_path($path))) {
+            unlink($path);
+        }
+        return true;
+    }
 }

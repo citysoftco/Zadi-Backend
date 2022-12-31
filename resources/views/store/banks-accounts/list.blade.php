@@ -97,8 +97,10 @@
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                     <form
-                                                        action=""{{ route('stores.banks-accounts.destroy', [$store->id, $bankAccount->id]) }}"
+                                                        action="{{ route('stores.banks-accounts.destroy', [$store->id, $bankAccount->id]) }}"
                                                         method="post">
+                                                        @method('delete')
+                                                        @csrf
                                                         <button type="submit" rel="tooltip" class="btn btn-danger">
                                                             <i class="fa fa-trash"></i>
                                                             </a>
