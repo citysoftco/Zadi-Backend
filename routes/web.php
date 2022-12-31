@@ -476,8 +476,8 @@ Route::group(['middleware' => ['verifylicense']], function () {
 
     Route::get('lang/change', [LanguageController::class, 'change'])->name('changeLang');
 
-    Route::resource("stores.bank-accounts", BankAccountController::class);
-    Route::resource("stores.bank-payments", BankPaymentController::class);
+    Route::resource("stores.bank-accounts", BankAccountController::class)->middleware("auth:store");
+    Route::resource("stores.bank-payments", BankPaymentController::class)->middleware("auth:store");
 
 
     Route::namespace("Store")->prefix('store')->group(function () {
