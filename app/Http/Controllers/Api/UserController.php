@@ -44,7 +44,19 @@ class UserController extends Controller
         return Auth::guard();
     }
 
+    public function getUserBankPayments($userId, $paymentFor)
+    {
 
+        $payments = UserService::getUserBankPayments($userId, $paymentFor);
+
+        return response()->json(
+            [
+                "status" => 1,
+                "message" => "User Bank Payments Returned Successfully",
+                "data" => $payments
+            ]
+        );
+    }
     public function social_login(Request $request)
     {
 

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\BankPayment;
 use App\Models\User;
 use App\Traits\ImageStoragePicker;
 use App\Traits\SendMail;
@@ -25,6 +26,16 @@ class UserService
     use SendMail;
     use ImageStoragePicker;
 
+    public static function getUserBankPayments($userId, $paymentFor)
+    {
+
+        return User::with([
+            "bankPaymentRequests" => function ($q) {
+                $q->paginate(10);
+            },
+            "bankPaymentRequests.bankAccount"
+        ])->find($userId);
+    }
 
     public static function register($request)
     {

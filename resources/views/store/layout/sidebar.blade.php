@@ -237,7 +237,7 @@
 
              <div class="menu-header">{{ __('keywords.Bank Accounts') }} {{ __('keywords.Management') }}</div>
              <div
-                 class="menu-item has-sub {{ request()->is('stores/*/banks-accounts/create') ? 'active' : '' }} {{ request()->is('stores/*/banks-accounts') ? 'active' : '' }}">
+                 class="menu-item has-sub {{ request()->is('stores/*/bank-accounts/create') ? 'active' : '' }} {{ request()->is('stores/*/bank-accounts') ? 'active' : '' }}">
                  <a href="#" class="menu-link">
                      <span class="menu-icon">
                          <i class="fas fa-university"></i>
@@ -246,14 +246,35 @@
                      <span class="menu-caret"><b class="caret"></b></span>
                  </a>
                  <div class="menu-submenu">
-                     <div class="menu-item {{ request()->is('stores/*/banks-accounts/create') ? 'active' : '' }}">
-                         <a href="{{ route('stores.banks-accounts.create', $store->id) }}" class="menu-link">
+                     <div class="menu-item {{ request()->is('stores/*/bank-accounts/create') ? 'active' : '' }}">
+                         <a href="{{ route('stores.bank-accounts.create', $store->id) }}" class="menu-link">
                              <span class="menu-text">{{ __('keywords.Add Bank Account') }}</span>
                          </a>
                      </div>
-                     <div class="menu-item {{ request()->is('stores/*/banks-accounts') ? 'active' : '' }}">
-                         <a href="{{ route('stores.banks-accounts.index', $store->id) }}" class="menu-link">
+                     <div class="menu-item {{ request()->is('stores/*/bank-accounts') ? 'active' : '' }}">
+                         <a href="{{ route('stores.bank-accounts.index', $store->id) }}" class="menu-link">
                              <span class="menu-text">{{ __('keywords.Bank Accounts List') }}</span>
+                         </a>
+                     </div>
+
+
+                 </div>
+             </div>
+             <div class="menu-header">{{ __('keywords.Bank Payment Requests') }} {{ __('keywords.Management') }}
+             </div>
+             <div
+                 class="menu-item has-sub {{ request()->is('stores/*/bank-payments/create') ? 'active' : '' }} {{ request()->is('stores/*/banks-paymets') ? 'active' : '' }}">
+                 <a href="#" class="menu-link">
+                     <span class="menu-icon">
+                         <i class="fas fa-university"></i>
+                     </span>
+                     <span class="menu-text">{{ __('keywords.Bank Payment Requests') }}</span>
+                     <span class="menu-caret"><b class="caret"></b></span>
+                 </a>
+                 <div class="menu-submenu">
+                     <div class="menu-item {{ request()->is('stores/*/bank-payments') ? 'active' : '' }}">
+                         <a href="{{ route('stores.bank-payments.index', $store->id) }}" class="menu-link">
+                             <span class="menu-text">{{ __('keywords.Bank Payment Requests List') }}</span>
                          </a>
                      </div>
 

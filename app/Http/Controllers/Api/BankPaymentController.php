@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBankPaymentRequest;
 use App\Http\Requests\UpdateBankPaymentRequest;
 use App\Models\BankPayment;
+use App\Services\BankPaymentService;
 use App\Services\FileHandleService;
 
 class BankPaymentController extends Controller

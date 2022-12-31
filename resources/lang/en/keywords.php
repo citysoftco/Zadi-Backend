@@ -934,6 +934,11 @@ return [
     'Bank Branch' => 'Bank Branch',
     'Bank Logo' => 'Bank Logo',
     'Account Name' => 'Account Name',
+    "Bank Payment Requests" => "Bank Payments Requests",
+    "Bank Payment Requests List" => "Bank Payment Requests List"
+
+
+
 
 
 

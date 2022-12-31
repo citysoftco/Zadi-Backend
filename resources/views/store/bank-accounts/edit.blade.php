@@ -157,7 +157,7 @@
                     <div class="card-header card-header-primary">
                         <h4 class="card-title">{{ __('keywords.Add Bank Account') }}</h4>
                         <form class="forms-sample"
-                            action="{{ route('stores.banks-accounts.update', [$store->id, $bankAccount->id]) }}"
+                            action="{{ route('stores.bank-accounts.update', [$store->id, $bankAccount->id]) }}"
                             method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             @method('put')
@@ -258,7 +258,7 @@
                         <br>
 
                         <button type="submit" class="btn btn-primary">{{ __('keywords.Submit') }}</button>
-                        <a href="{{ route('stores.banks-accounts.index', $store->id) }}"
+                        <a href="{{ route('stores.bank-accounts.index', $store->id) }}"
                             class="btn">{{ __('keywords.Close') }}</a>
                         <div class="clearfix"></div>
                     </div><br>

@@ -71,7 +71,8 @@ Route::namespace("Api")->prefix('')->group(function () {
 
   /// banks Routes /// 
   Route::get("stores/{store}/bank-accounts", [BankAccountController::class, "index"]);
-  Route::post("bank-payments", [BankPaymentController::class, "store"]);
+  Route::post("bank-payment", [BankPaymentController::class, "store"]);
+  Route::get("users/{user}/bank-payments/{paymentFor}", [UserController::class, "getUserBankPayments"]);
 
 
   Route::post('login', [UserController::class, 'login']);

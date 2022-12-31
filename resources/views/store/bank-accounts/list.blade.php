@@ -44,7 +44,7 @@
                                 </h5>
                             </div>
                             <div class="col-md-6">
-                                <a href="{{ route('stores.banks-accounts.create', $store->id) }}"
+                                <a href="{{ route('stores.bank-accounts.create', $store->id) }}"
                                     class="btn btn-primary p-1 ml-auto"
                                     style="width:15%;float:right;padding: 3px 0px 3px 0px;">{{ __('keywords.Add') }}</a>
                             </div>
@@ -59,8 +59,8 @@
                                     <th>{{ __('keywords.Bank Name') }}</th>
                                     <th>{{ __('keywords.Account Name') }}</th>
                                     <th>{{ __('keywords.Account Number') }}</th>
-                                    <th>{{ __('keywords.Bank Branch') }}</th>
                                     <th>{{ __('keywords.Account Status') }}</th>
+                                    <th>{{ __('keywords.Bank Branch') }}</th>
                                     <th>{{ __('keywords.Bank Logo') }}</th>
                                     <th class="text-right">{{ __('keywords.Actions') }}</th>
                                 </tr>
@@ -74,7 +74,6 @@
                                             <td>{{ $bankAccount->bank_name }}</td>
                                             <td>{{ $bankAccount->account_name }}</td>
                                             <td>{{ $bankAccount->account_number }}</td>
-                                            <td>{{ $bankAccount->branch_name }}</td>
                                             @if ($bankAccount->account_status == 'on')
                                                 <td>
                                                     <p style="color:green">on</p>
@@ -84,6 +83,8 @@
                                                     <p style="color:red">off</p>
                                                 </td>
                                             @endif
+                                            <td>{{ $bankAccount->branch_name }}</td>
+
                                             <td>
                                                 <img style="width:50px;height:50px;border-radius:50%"
                                                     src="{{ asset($bankAccount->bank_logo) }}" alt="">
@@ -93,13 +94,14 @@
                                             </td> --}}
                                             <td class="td-actions text-right">
                                                 <div class="d-flex flex-column gap-1 align-items-start">
-                                                    <a href="{{ route('stores.banks-accounts.edit', [$store->id, $bankAccount->id]) }}"
+                                                    <a href="{{ route('stores.bank-accounts.edit', [$store->id, $bankAccount->id]) }}"
                                                         rel="tooltip" class="btn btn-warning">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                     <form
-                                                        action="{{ route('stores.banks-accounts.destroy', [$store->id, $bankAccount->id]) }}"
-                                                        method="post">
+                                                        action="{{ route('stores.bank-accounts.destroy', [$store->id, $bankAccount->id]) }}"
+                                                        method="post"
+                                                        onsubmit="return confirm('are you sure want to delete this bank account?')">
                                                         @method('delete')
                                                         @csrf
                                                         <button type="submit" rel="tooltip" class="btn btn-danger">

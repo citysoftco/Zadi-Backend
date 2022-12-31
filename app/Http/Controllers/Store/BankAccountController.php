@@ -28,7 +28,7 @@ class BankAccountController extends Controller
             ->first();
         $bankAccounts = BankAccountService::getAllAccountsPaginated($storeId);
         $store = Store::find($storeId);
-        return view("store.banks-accounts.list", compact("store", "bankAccounts", "logo"));
+        return view("store.bank-accounts.list", compact("store", "bankAccounts", "logo"));
     }
 
     /**
@@ -42,7 +42,7 @@ class BankAccountController extends Controller
         $logo = DB::table('tbl_web_setting')
             ->where('set_id', '1')
             ->first();
-        return view("store.banks-accounts.add", compact("store", "logo"));
+        return view("store.bank-accounts.add", compact("store", "logo"));
     }
 
     /**
@@ -84,7 +84,7 @@ class BankAccountController extends Controller
         $logo = DB::table('tbl_web_setting')
             ->where('set_id', '1')
             ->first();
-        return view("store.banks-accounts.edit", compact("store", "logo", "bankAccount"));
+        return view("store.bank-accounts.edit", compact("store", "logo", "bankAccount"));
     }
 
     /**

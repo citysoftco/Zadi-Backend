@@ -52,6 +52,7 @@ use App\Http\Controllers\Admin\TrendingController;
 use App\Http\Controllers\Admin\IdController;
 use App\Http\Controllers\Admin\SubadController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Store\BankPaymentController;
 use App\Http\Controllers\Admin\TaxreportController;
 use App\Http\Controllers\Admin\CityAdminController;
 
@@ -475,7 +476,8 @@ Route::group(['middleware' => ['verifylicense']], function () {
 
     Route::get('lang/change', [LanguageController::class, 'change'])->name('changeLang');
 
-    Route::resource("stores.banks-accounts", BankAccountController::class);
+    Route::resource("stores.bank-accounts", BankAccountController::class);
+    Route::resource("stores.bank-payments", BankPaymentController::class);
 
 
     Route::namespace("Store")->prefix('store')->group(function () {

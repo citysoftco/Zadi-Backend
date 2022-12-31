@@ -935,7 +935,10 @@ return [
     'Account Number' => 'رقم الحساب',
     'Bank Branch' => 'فرع المصرف',
     'Account Name' => 'إسم الحساب',
-    'Bank Logo' => 'شعار المصرف'
+    'Bank Logo' => 'شعار المصرف',
+    "Bank Payment Requests" => "طلبات الدفع عن طريق البنوك",
+    "Bank Payment Requests List" => "قائمة طلبات الدفع"
+
 
 
 
