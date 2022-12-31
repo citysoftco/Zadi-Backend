@@ -46,4 +46,24 @@ class FileHandleService
 
         return $path . "/" . $photo;
     }
+    public static function updateImageInPublicPath($oldImagePath, $image, $path)
+    {
+        if ($image != null) {
+            if (file_exists(public_path($oldImagePath))) {
+                unlink($oldImagePath);
+            }
+
+            $extension = $image->getClientOriginalExtension();
+            $publicPath = public_path($path);
+            if (!file_exists($publicPath)) {
+                mkdir($publicPath, 0777, true);
+            }
+            $photo = time() . "." . $extension;
+            $image->move($publicPath, $photo);
+
+
+            return $path . "/" . $photo;
+        }
+        return $oldImagePath;
+    }
 }

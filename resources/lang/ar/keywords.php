@@ -926,7 +926,16 @@ return [
     'Bank Accounts' => "الحسابات المصرفية",
     'Add Bank Account' => 'إضافة حساب مصرفي',
     'Bank Accounts List' => 'قائمة الحسابات المصرفية',
-    'Bank' => 'مصرف'
+    'Bank' => 'مصرف',
+    'Select Account Status' => 'إختر حالة الحساب',
+    'Account Status' => 'حالة الحساب',
+    'Account On' => 'مفعل',
+    'Account Off' => 'غير مفعل',
+    'Bank Name' => 'إسم المصرف',
+    'Account Number' => 'رقم الحساب',
+    'Bank Branch' => 'فرع المصرف',
+    'Account Name' => 'إسم الحساب',
+    'Bank Logo' => 'شعار المصرف'
 
 
 

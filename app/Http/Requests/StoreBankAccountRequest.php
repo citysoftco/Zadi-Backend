@@ -13,7 +13,7 @@ class StoreBankAccountRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class StoreBankAccountRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "account_number" => "required",
+            "bank_name" => "required",
+            "branch_name" => "nullable",
+            "bank_logo" => "nullable",
+            "account_status" => "required",
+            "account_name" => "required"
         ];
     }
 }

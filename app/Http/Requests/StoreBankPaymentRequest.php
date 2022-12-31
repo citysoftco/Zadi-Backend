@@ -29,7 +29,8 @@ class StoreBankPaymentRequest extends FormRequest
             "receipt_photo" => "required|image",
             "payment_for" => "required",
             "bank_account_id" => "required",
-            "user_id" => "required"
+            "user_id" => "required",
+            "amount" => "required|numeric"
         ];
     }
 }

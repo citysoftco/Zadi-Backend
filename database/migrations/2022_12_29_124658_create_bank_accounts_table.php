@@ -17,6 +17,7 @@ class CreateBankAccountsTable extends Migration
             $table->id();
             $table->bigInteger("account_number");
             $table->string("bank_name");
+            $table->string("account_name");
             $table->string("branch_name")->nullable();
             $table->string("bank_logo")->nullable();
             $table->string("account_status", 50);

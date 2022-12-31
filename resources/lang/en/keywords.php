@@ -926,7 +926,15 @@ return [
     'Bank Accounts' => 'Bank Accounts',
     'Add Bank Account' => 'Add Bank Account',
     'Bank Accounts List' => 'Bank Accounts List',
-    'Bank' => 'Bank'
+    'Bank' => 'Bank',
+    'Select Account Status' => 'Select Account Status',
+    'Account Status' => 'Account Status',
+    'Account On' => 'On',
+    'Account Off' => 'Off',
+    'Bank Branch' => 'Bank Branch',
+    'Bank Logo' => 'Bank Logo',
+    'Account Name' => 'Account Name',
+
 
 
 

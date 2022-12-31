@@ -18,7 +18,7 @@ class BankAccountController extends Controller
     public function index($storeId)
     {
 
-        $banks = BankAccountService::getAllAccounts($storeId);
+        $banks = BankAccountService::getAllActiveAccounts($storeId);
         return response()->json(
             [
                 "status" => 1,

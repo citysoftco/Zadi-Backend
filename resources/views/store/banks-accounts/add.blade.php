@@ -155,7 +155,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title">{{ __('keywords.Add') }} {{ __('keywords.Bank Account') }}</h4>
+                        <h4 class="card-title">{{ __('keywords.Add Bank Account') }}</h4>
                         <form class="forms-sample" action="{{ route('stores.banks-accounts.store', $store->id) }}"
                             method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
@@ -166,29 +166,35 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">{{ __('keywords.Bank Name') }}</label>
-                                    <input type="text" name="bank_name" class="form-control">
+                                    <input type="text" required value="{{ old('bank_name') }}" name="bank_name"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">{{ __('keywords.Account Name') }}</label>
+                                    <input type="text" required value="{{ old('account_name') }}" name="account_name"
+                                        class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">{{ __('keywords.Account Number') }}</label>
-                                    <input type="number" name="account_number" class="form-control">
+                                    <input type="number" value="{{ old('account_number') }}" name="account_number"
+                                        class="form-control">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="bmd-label-floating">{{ __('keywords.Select Account Status') }}</label>
+                                    <label class="bmd-label-floating">{{ __('keywords.Account Status') }}</label>
                                     <select name="account_status" class="form-control" required>
-                                        <option disabled selected>{{ __('keywords.Select') }}
-                                            {{ __('keywords.Accout Status') }}
+                                        <option disabled selected>{{ __('keywords.Select Account Status') }}
                                         </option>
-                                        <option value="on">{{ __('keywords.Select') }}
-                                            {{ __('keywords.Accout On') }}
+                                        <option value="on">
+                                            {{ __('keywords.Account On') }}
                                         </option>
-                                        <option value="on">{{ __('keywords.Select') }}
-                                            {{ __('keywords.Accout Off') }}
+                                        <option value="off">
+                                            {{ __('keywords.Account Off') }}
                                         </option>
                                         {{-- @foreach ($id_types as $taxes)
                                             <option value="{{ $taxes->name }}">{{ $taxes->name }}</option>
@@ -197,12 +203,15 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- <div class="row"> --}}
+
+                        {{-- </div> --}}
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">{{ __('keywords.Bank Branch') }}</label>
-                                    <input type="text" name="bank_branch" class="form-control"
-                                        value="{{ old('bank_branch') }}" required>
+                                    <input type="text" name="branch_name" class="form-control"
+                                        value="{{ old('branch_name') }}" required>
                                 </div>
                             </div>
                             <div class="col-md-6">

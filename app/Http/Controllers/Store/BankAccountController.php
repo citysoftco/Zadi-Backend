@@ -3,9 +3,15 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreBankAccountRequest;
+use App\Http\Requests\UpdateBankAccountRequest;
+use App\Models\BankAccount;
 use App\Models\Store;
+use App\Services\BankAccountService;
+use App\Services\FileHandleService;
 use DB;
 use Illuminate\Http\Request;
+use Stripe\Service\FileService;
 
 class BankAccountController extends Controller
 {
@@ -14,9 +20,15 @@ class BankAccountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($storeId)
     {
-        //
+
+        $logo = DB::table('tbl_web_setting')
+            ->where('set_id', '1')
+            ->first();
+        $bankAccounts = BankAccountService::getAllAccountsPaginated($storeId);
+        $store = Store::find($storeId);
+        return view("store.banks-accounts.list", compact("store", "bankAccounts", "logo"));
     }
 
     /**
@@ -39,9 +51,13 @@ class BankAccountController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBankAccountRequest $request, $storeId)
     {
-        //
+        $data = $request->all();
+        $data["store_id"] = $storeId;
+        $data["bank_logo"] = FileHandleService::uploadImageInPublicPath($request->bank_logo, "images/banks/images");
+        $bankAccount = BankAccount::create($data);
+        return back()->withSuccess(trans('keywords.Added Successfully'));
     }
 
     /**
@@ -61,9 +77,14 @@ class BankAccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($storeId, $bankAccountId)
     {
-        //
+        $store = Store::find($storeId);
+        $bankAccount = BankAccount::find($bankAccountId);
+        $logo = DB::table('tbl_web_setting')
+            ->where('set_id', '1')
+            ->first();
+        return view("store.banks-accounts.edit", compact("store", "logo", "bankAccount"));
     }
 
     /**
@@ -73,9 +94,13 @@ class BankAccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBankAccountRequest $request, $storeId, $bankAccountId)
     {
-        //
+        $data = $request->all();
+        $bankAccount = BankAccount::find($bankAccountId);
+        $data["bank_logo"] = FileHandleService::updateImageInPublicPath($bankAccount->bank_logo, $request->bank_logo, "images/banks/images");
+        $bankAccount->update($data);
+        return back()->withSuccess(trans('keywords.Added Successfully'));
     }
 
     /**
