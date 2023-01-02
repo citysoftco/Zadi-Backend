@@ -20,6 +20,7 @@ class CreateBankPaymentsTable extends Migration
             $table->string("receipt_photo");
             $table->string("payment_status");
             $table->string("payment_for");
+            $table->string("cancelled_reason")->nullable();
             $table->unsignedBigInteger("bank_account_id");
             $table->unsignedBigInteger("store_id");
             $table->unsignedBigInteger("user_id");

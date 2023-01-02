@@ -941,6 +941,11 @@ return [
     'Wallet Recharge' => 'Wallet Recharge',
     "Confirm" => "Confirm",
     "Cancelled" => "Cancelled",
+    'Cancel Reason' => "Cancel Reason",
+    'Cancel Payment Request' => 'Cancel Payment Request',
+    "Cancel Request" => "Cancel Request",
+    'Confirm Payment Request' => 'Confirm Payment Request',
+
 
 
 

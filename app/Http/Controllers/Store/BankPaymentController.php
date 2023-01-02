@@ -78,8 +78,8 @@ class BankPaymentController extends Controller
      */
     public function update(Request $request, $storeId, $paymentId)
     {
-
-        $store = BankPaymentService::updateBankPaymentStatus($paymentId, $request->status, $request->amount);
+        // return $request->all();
+        $store = BankPaymentService::updateBankPaymentStatus($paymentId, $request->all());
 
         return back()->withSuccess(trans('keywords.Updated Successfully'));
     }

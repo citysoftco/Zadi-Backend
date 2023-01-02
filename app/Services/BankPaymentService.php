@@ -19,13 +19,19 @@ class BankPaymentService
         ])->where("store_id", $storeId)->paginate(10);
     }
 
-    public static function updateBankPaymentStatus($bankPaymentId, $status, $newAmount)
+    public static function updateBankPaymentStatus($bankPaymentId, $data)
     {
         $payment = BankPayment::find($bankPaymentId);
-        $payment->update([
-            "status" => $status,
-            "amount" => $newAmount
-        ]);
+        if ($data["action"] == "confirm")
+            $payment->update([
+                "payment_status" => "confirmed",
+                "amount" => $data["amount"]
+            ]);
+        else if ($data["action"] == "cancel")
+            $payment->update([
+                "payment_status" => "cancelled",
+                "cancelled_reason" => $data["cancelled_reason"]
+            ]);
 
         return $payment;
     }

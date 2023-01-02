@@ -942,7 +942,14 @@ return [
     'Payment Receipt' => 'إيصال الدفع',
     'Wallet Recharge' => 'شحن المحفظة',
     "Confirm" => "تأكيد",
-    "Cancelled" => "ملغي"
+    "Cancelled" => "ملغي",
+    "Cancel Reason" => "سبب الإلغاء",
+    'Cancel Payment Request' => 'إلغاء طلب دفع',
+    'Confirm Payment Request' => 'تأكيد طلب دفع',
+
+    "Cancel Request" => "إلغاء الطلب"
+
+
 
 
 

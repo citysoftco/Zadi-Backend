@@ -106,22 +106,32 @@
                                             <td>{{ $bankPayment->bankAccount->account_number }}</td>
                                             <td>{{ $bankPayment->bankAccount->branch_name }}</td>
 
-
+                                            {{-- @if ($bankPayment->cancelled_reason != null)
+                                                <th>{{ __('keywords.Cancel Reason') }}</th>
+                                                <td>{{ $bankPayment->cancelled_reason }}</td>
+                                            @endif --}}
                                             <td class="td-actions text-right">
                                                 <div class="d-flex flex-column gap-1 align-items-start">
-
-
-                                                    <button data-toggle="modal"
-                                                        data-target="#exampleModal1{{ $bankPayment->id }}" type="submit"
-                                                        name="action" value="confirm" rel="tooltip"
-                                                        class="btn btn-success">
-                                                        <i class="fas fa-check-circle"></i>
-                                                    </button>
-                                                    <button type="submit" name="action" value="cancel" rel="tooltip"
-                                                        class="btn btn-danger">
-                                                        <i class="fas fa-times"></i>
-                                                    </button>
-                                                    {{-- </form> --}}
+                                                    {{-- <form
+                                                        action="{{ route('stores.bank-payments.update', [$store->id, $bankPayment]) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('put') --}}
+                                                    @if ($bankPayment->payment_status == 'cancelled' || $bankPayment->payment_status == 'pending')
+                                                        <button data-toggle="modal"
+                                                            data-target="#confirmModal{{ $bankPayment->id }}"
+                                                            name="action" value="confirm" rel="tooltip"
+                                                            class="btn btn-success">
+                                                            <i class="fas fa-check-circle"></i>
+                                                        </button>
+                                                    @endif
+                                                    @if ($bankPayment->payment_status == 'confirmed' || $bankPayment->payment_status == 'pending')
+                                                        <button data-toggle="modal"
+                                                            data-target="#cancelModal{{ $bankPayment->id }}" name="action"
+                                                            value="cancel" rel="tooltip" class="btn btn-danger">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    @endif
                                                 </div>
 
                                             </td>
@@ -149,23 +159,25 @@
     <div>
     </div>
     @foreach ($bankPayments as $bankPayment)
-        <div class="modal fade" id="exampleModal1{{ $bankPayment->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="confirmModal{{ $bankPayment->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="confirmModalLabel" aria-hidden="true">
             <div class="container">
-                <form action="{{ route('stores.bank-payments.update', [$store->id, $bankPayment]) }}" method="post">
-                    @csrf
-                    @method('put')
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                {{-- <h5 class="modal-title" id="exampleModalLabel"><b>{{ $bankPayment->boy_name }} --}}
-                                {{ __('keywords.Confirm') }}
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="material-datatables">
 
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            {{-- <h5 class="modal-title" id="confirmModalLabel"><b>{{ $bankPayment->boy_name }} --}}
+                            {{-- {{ __('keywords.Confirm') }}
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button> --}}
+                            {{ __('keywords.Confirm Payment Request') }}
+                        </div>
+                        <form class="forms-sample"
+                            action="{{ route('stores.bank-payments.update', [$store->id, $bankPayment]) }}" method="post">
+                            @csrf
+                            @method('put')
+                            <div class="material-datatables">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">{{ __('keywords.Amount') }}</label>
@@ -176,23 +188,67 @@
                             </div>
                             <div class="modal-footer">
 
-                                <button type="submit" name="status" value="confirmed" class="btn btn-success"
-                                    data-dismiss="modal" aria-hidden="true">{{ __('keywords.Confirm') }}</button>
-                                <button type="submit" name="status" value="cancelled" hidden value="cancelled"
-                                    class="btn btn-success" data-dismiss="modal"
-                                    aria-hidden="true">{{ __('keywords.Confirm') }}</button>
+                                <button type="submit" name="action" value="confirm"
+                                    class="btn btn-success">{{ __('keywords.Confirm') }}</button>
+
 
                                 <button class="btn btn-danger" data-dismiss="modal"
                                     aria-hidden="true">{{ __('keywords.Close') }}</button>
                             </div>
-                        </div>
-                        <!-- end content-->
+                        </form>
+
                     </div>
-                </form>
+                    <!-- end content-->
+                </div>
 
             </div>
             <!--  end card  -->
         </div>
+
+        {{-- Cancel Modal --}}
+        <div class="modal fade" id="cancelModal{{ $bankPayment->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="cancelModalLabel" aria-hidden="true">
+            <div class="container">
+
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            {{-- <h5 class="modal-title" id="cancelModalLabel"><b>{{ $bankPayment->boy_name }} --}}
+                            {{-- {{ __('keywords.Cancel') }}
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button> --}}
+                            {{ __('keywords.Cancel Payment Request') }}
+                        </div>
+                        <form class="forms-sample"
+                            action="{{ route('stores.bank-payments.update', [$store->id, $bankPayment]) }}" method="post">
+                            @csrf
+                            @method('put')
+                            <div class="material-datatables">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">{{ __('keywords.Cancel Reason') }}</label>
+                                        <textarea placeholder="Cancel Reason" name="cancelled_reason" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+
+                                <button type="submit" name="action" value="cancel"
+                                    class="btn btn-danger">{{ __('keywords.Cancel Request') }}</button>
+
+                                <button class="btn btn-dark" data-dismiss="modal"
+                                    aria-hidden="true">{{ __('keywords.Close') }}</button>
+                            </div>
+                        </form>
+
+                    </div>
+                    <!-- end content-->
+                </div>
+
+            </div>
+            <!--  end card  -->
         </div>
     @endforeach
 @endsection
