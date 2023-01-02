@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBankPaymentRequest;
 use App\Http\Requests\UpdateBankPaymentRequest;
 use App\Models\BankPayment;
+use App\Models\User;
 use App\Services\BankPaymentService;
 use App\Services\FileHandleService;
+use App\Services\NotificationService;
 
 class BankPaymentController extends Controller
 {
@@ -32,9 +34,11 @@ class BankPaymentController extends Controller
     {
 
         $data = $request->all();
+        $user = User::find($data["user_id"]);
         $data["payment_status"] =  "pending";
         $data["receipt_photo"] = FileHandleService::uploadImageInPublicPath($request->receipt_photo, "images/banks/receipts");
         $payment = BankPayment::create($data);
+        NotificationService::sendNotificationToStore($data["store_id"], "لديك طلب شحن محفظة جديد", "يريد المستخدم " . $user->name . " أن يشحن مبلغ" . " " . number_format($data["amount"]));
         return response()->json(
             [
                 "status" => 1,

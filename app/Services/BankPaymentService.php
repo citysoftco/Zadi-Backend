@@ -16,18 +16,19 @@ class BankPaymentService
         return BankPayment::with([
             "bankAccount",
             "user"
-        ])->where("store_id", $storeId)->paginate(10);
+        ])->where("store_id", $storeId)->latest()->paginate(10);
     }
 
     public static function updateBankPaymentStatus($bankPaymentId, $data)
     {
         $payment = BankPayment::find($bankPaymentId);
-        if ($data["action"] == "confirm")
+        if ($data["action"] == "confirm") {
             $payment->update([
                 "payment_status" => "confirmed",
                 "amount" => $data["amount"]
             ]);
-        else if ($data["action"] == "cancel")
+            NotificationService::sendNotificationToUser($payment->user->id, "تم تأكيد عملية الدفع بنجاح", "لقد تم شحن مبلغ " . number_format($payment->amount) . " في محفظتك \n شكرا لإختيارك زادي");
+        } else if ($data["action"] == "cancel")
             $payment->update([
                 "payment_status" => "cancelled",
                 "cancelled_reason" => $data["cancelled_reason"]
