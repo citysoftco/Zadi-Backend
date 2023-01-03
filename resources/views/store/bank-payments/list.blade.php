@@ -66,6 +66,7 @@
                                     <th>{{ __('keywords.Account Name') }}</th>
                                     <th>{{ __('keywords.Account Number') }}</th>
                                     <th>{{ __('keywords.Bank Branch') }}</th>
+                                    <th>{{ __('keywords.Cancel Reason') }}</th>
                                     <th class="text-right">{{ __('keywords.Actions') }}</th>
                                 </tr>
                             </thead>
@@ -106,10 +107,7 @@
                                             <td>{{ $bankPayment->bankAccount->account_number }}</td>
                                             <td>{{ $bankPayment->bankAccount->branch_name }}</td>
 
-                                            {{-- @if ($bankPayment->cancelled_reason != null)
-                                                <th>{{ __('keywords.Cancel Reason') }}</th>
-                                                <td>{{ $bankPayment->cancelled_reason }}</td>
-                                            @endif --}}
+                                            <td>{{ $bankPayment->cancelled_reason }}</td>
                                             <td class="td-actions text-right">
                                                 <div class="d-flex flex-column gap-1 align-items-start">
                                                     {{-- <form

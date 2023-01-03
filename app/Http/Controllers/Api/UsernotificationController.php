@@ -13,7 +13,7 @@ class UsernotificationController extends Controller
         $user = $request->user_id;
         $notifybys = DB::table('user_notification')
             ->where('user_id', $user)
-            ->orderBy('noti_id')
+            ->orderBy('noti_id', "desc")
             ->paginate(10);
 
         if (count($notifybys) > 0) {
