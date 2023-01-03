@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\RewardService;
 use DB;
 use Carbon\Carbon;
 use App\Traits\SendMail;
@@ -150,7 +151,6 @@ class OrderController extends Controller
                 $rem_amount = $prii;
                 $walletamt = 0;
             }
-
             $oo = DB::table('orders')
                 ->where('cart_id', $cart_id)
                 ->update([
@@ -255,7 +255,7 @@ class OrderController extends Controller
                         ->update(['quantity' => $newquantity]);
                 }
             }
-
+            RewardService::giveRewardToUser($user_id, $orderr->total_price);
             $message = array('status' => '1', 'message' => 'Order Placed successfully', 'data' => $orderr1);
             return $message;
         } else {
@@ -403,7 +403,7 @@ class OrderController extends Controller
                             ->update(['quantity' => $newquantity]);
                     }
                 }
-
+                RewardService::giveRewardToUser($user_id, $orderr->total_price);
                 $message = array('status' => '1', 'message' => 'Order Placed successfully', 'data' => $orderr1);
 
                 return $message;

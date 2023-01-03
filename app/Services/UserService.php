@@ -64,8 +64,8 @@ class UserService
         } else {
             $data["user_image"] = 'N/A';
         }
-        // $data["otp_value"] = OtpService::otpmsg($data["name"], $data["user_phone"]);
-        $data["otp_value"] = rand(12345, 99999);
+        $data["otp_value"] = OtpService::otpmsg($data["name"], $data["user_phone"]);
+        // $data["otp_value"] = rand(12345, 99999);
         $user = User::create($data);
         $user->token = $user->createToken(uniqid())->accessToken;
 
@@ -83,7 +83,6 @@ class UserService
     {
         // $data['is_verified'] = 1;
         $data = $request->all();
-        // $data["user_phone"] = HelperService::removeFirstChars('0', $data["user_phone"]);
 
 
         if (Auth::guard()->attempt($data)) {
@@ -130,8 +129,8 @@ class UserService
         $data = $request->all();
         $data["otp_expires_date"] = Carbon::now()->addMinutes(2);
         $user = User::where("user_phone", $data["user_phone"])->first();
-        $data["otp_value"] = rand(12345, 99999);
-        // $data["otp_value"] = OtpService::otpmsg($user->name, $user->user_phone);
+        // $data["otp_value"] = rand(12345, 99999);
+        $data["otp_value"] = OtpService::otpmsg($user->name, $user->user_phone);
         $user->update([
             "otp_expires_date" => $data["otp_expires_date"],
             "otp_value" => $data["otp_value"]

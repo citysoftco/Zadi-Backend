@@ -11,10 +11,14 @@ class OtpService
 {
     public static function otpmsg($user_name, $user_phone)
     {
-        $otp = rand(12345, 99999);
-        $msg =  $otp . ' Welcome ' . $user_name . ' to Zadi application your activation OTP';
 
-        $apiResponse = Http::post('https://api.gawali.net/', [
+        // $otp = rand(12345, 99999);
+
+        $otp = random_int(12345, 99999);
+        //'Welcome ' . $user_name . 
+        $msg =  'Zadi App: your code is ' . $otp . ' +ERdiZp3hz8';
+
+        $apiResponse = Http::post('https://api.gawali.net', [
             'username'      => 'zadi',
             'password'      => 'C2022!@##@!s',
             "text_encode"   => "utf-8",
