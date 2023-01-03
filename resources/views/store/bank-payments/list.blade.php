@@ -226,7 +226,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">{{ __('keywords.Cancel Reason') }}</label>
-                                        <textarea placeholder="Cancel Reason" name="cancelled_reason" class="form-control"></textarea>
+                                        <textarea placeholder="{{ __('keywords.Cancel Reason') }}" name="cancelled_reason" class="form-control"></textarea>
                                     </div>
                                 </div>
                             </div>

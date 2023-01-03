@@ -393,7 +393,7 @@ return [
     'Banner' => 'Banner',
     'Redirect' => 'Redirect',
     'ID' => 'ID',
-    'User Name' => 'User Name',
+    'User Name' => 'إسم المستخدم',
     'Process' => 'Process',
     'Processed' => 'Processed',
     'Deal Product' => 'Deal Product',
@@ -946,8 +946,8 @@ return [
     "Cancel Reason" => "سبب الإلغاء",
     'Cancel Payment Request' => 'إلغاء طلب دفع',
     'Confirm Payment Request' => 'تأكيد طلب دفع',
-
-    "Cancel Request" => "إلغاء الطلب"
+    "Cancel Request" => "إلغاء الطلب",
+    "Confirmed" => "تم التأكيد"
 
 
 
