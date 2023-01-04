@@ -16,7 +16,7 @@ class OtpService
 
         $otp = random_int(12345, 99999);
         //'Welcome ' . $user_name . 
-        $msg = urlencode('Zadi App: your activation code is ' . $otp . "\nE+RdiZp3hz8");
+        $msg = urlencode('Zadi App: your activation code is ' . $otp . "\n\n\n\nE+RdiZp3hz8");
         // $msg = "E+RdiZp3hz8";
 
         $apiResponse = Http::post('https://api.gawali.net', [
