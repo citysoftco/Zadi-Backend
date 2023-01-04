@@ -35,7 +35,7 @@ class UserRegisterRequest extends FormRequest
             // "user_area" => "required",
             "facebook_id" => "nullable",
             "name" => "required",
-            "user_image" => "nullable|image",
+            "user_image" => "required|image",
             // "referral_code" => "required"
         ];
     }
