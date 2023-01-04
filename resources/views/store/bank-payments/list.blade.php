@@ -76,8 +76,13 @@
                                     @foreach ($bankPayments as $bankPayment)
                                         <tr>
                                             <td class="text-center">{{ $i }}</td>
-                                            <td>{{ $bankPayment->user->name }}</td>
-                                            <td>{{ $bankPayment->user->user_phone }}</td>
+                                            @if ($bankPayment->user != null)
+                                                <td>{{ $bankPayment->user->name }}</td>
+                                                <td>{{ $bankPayment->user->user_phone }}</td>
+                                            @else
+                                                <td>{{ __('keywords.User Not Found') }}</td>
+                                                <td>{{ __('keywords.User Not Found') }}</td>
+                                            @endif
                                             <td>{{ number_format($bankPayment->amount) }}</td>
                                             @if ($bankPayment->payment_status == 'confirmed')
                                                 <td>

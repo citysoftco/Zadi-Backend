@@ -22,6 +22,7 @@ class BankPaymentController extends Controller
             ->where('set_id', '1')
             ->first();
         $bankPayments = BankPaymentService::getStoreAllPaymentsPaginated($storeId);
+        // dd($bankPayments);
         $store = Store::find($storeId);
         return view("store.bank-payments.list", compact("store", "bankPayments", "logo"));
     }
