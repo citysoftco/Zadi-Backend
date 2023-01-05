@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Store;
 use App\Http\Controllers\Controller;
 use App\Models\Store;
 use App\Services\BankPaymentService;
+use Crypt;
 use DB;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,6 @@ class BankPaymentController extends Controller
      */
     public function index($storeId)
     {
-
         $logo = DB::table('tbl_web_setting')
             ->where('set_id', '1')
             ->first();
