@@ -98,6 +98,7 @@ use App\Http\Controllers\CityAdmin\CityAdNotifyController;
 use App\Http\Controllers\CityAdmin\CityAdDBoyController;
 use App\Http\Controllers\CityAdmin\CityAdStoreController;
 use App\Http\Controllers\Store\BankAccountController;
+use App\Http\Controllers\Store\ReportController;
 use Illuminate\Http\Request;
 
 Route::get('/clear-all', function () {
@@ -520,6 +521,9 @@ Route::group(['middleware' => ['verifylicense']], function () {
 
             Route::get('itemlist/requirement/today', [StRequiredController::class, 'reqfortoday'])->name('reqfortoday');
             Route::post('itemlist/requirement/datewise', [StRequiredController::class, 'reqfordate'])->name('datewise_itemsales');
+
+            Route::get('itemlist/purchases_report', [ReportController::class, 'purchasesReport'])->name('purchases_report');
+
 
             Route::get('store_orders/today/all/', [StSalesreportController::class, 'sales_today'])->name('store_sales_today');
             Route::post('store_orders/day-wise/', [StSalesreportController::class, 'orders'])->name('store_datewise_orders');

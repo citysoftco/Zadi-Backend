@@ -255,7 +255,7 @@ class OrderController extends Controller
                         ->update(['quantity' => $newquantity]);
                 }
             }
-            RewardService::giveRewardToUser($user_id, $orderr->total_price);
+
             $message = array('status' => '1', 'message' => 'Order Placed successfully', 'data' => $orderr1);
             return $message;
         } else {

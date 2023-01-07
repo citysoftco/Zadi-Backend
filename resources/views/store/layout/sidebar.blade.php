@@ -278,7 +278,6 @@
                          </a>
                      </div>
 
-
                  </div>
              </div>
 
@@ -310,7 +309,7 @@
              </div>
              <div class="menu-header">{{ __('keywords.Analytics') }}</div>
              <div
-                 class="menu-item has-sub {{ request()->is('store/itemlist/requirement/today') ? 'active' : '' }} {{ request()->is('store/item-sales-report/last-30-days') ? 'active' : '' }}">
+                 class="menu-item has-sub {{ request()->is('store/itemlist/requirement/today') ? 'active' : '' }} {{ request()->is('store/item-sales-report/last-30-days') ? 'active' : '' }} {{ request()->is('store/purchases-report') ? 'active' : '' }}">
                  <a href="#" class="menu-link">
                      <span class="menu-icon">
                          <i class="fa fa-cubes"></i>
@@ -331,6 +330,13 @@
                              <span class="menu-icon"><i class="fa fa-map"></i></span>
                              <span class="menu-text">{{ __('keywords.Item Sale Report') }}
                                  ({{ __('keywords.Last 30 Days') }})</span>
+                         </a>
+                     </div>
+                       <div
+                         class="menu-item {{ request()->is('store/purchases-report') ? 'active' : '' }}">
+                         <a href="{{ route('purchases_report') }}" class="menu-link">
+                             <span class="menu-icon"><i class="fa fa-map"></i></span>
+                             <span class="menu-text">{{ __('keywords.Purchases Report') }}</span>
                          </a>
                      </div>
 

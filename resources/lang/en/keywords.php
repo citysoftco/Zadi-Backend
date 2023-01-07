@@ -945,7 +945,9 @@ return [
     'Cancel Payment Request' => 'Cancel Payment Request',
     "Cancel Request" => "Cancel Request",
     'Confirm Payment Request' => 'Confirm Payment Request',
-    "User Not Found" => "User Not Found"
+    "User Not Found" => "User Not Found",
+    "Purchases Report" => "Purchases Report",
+    "Product Price" => "Product Price"
 
 
 

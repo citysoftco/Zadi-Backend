@@ -948,7 +948,10 @@ return [
     'Confirm Payment Request' => 'تأكيد طلب دفع',
     "Cancel Request" => "إلغاء الطلب",
     "Confirmed" => "تم التأكيد",
-    "User Not Found" => "لم يتم إيجاد المستخدم"
+    "User Not Found" => "لم يتم إيجاد المستخدم",
+    "Purchases Report" => "تقرير المشتريات",
+    "Product Price" => "سعر المنتج"
+
 
 
 
