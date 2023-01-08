@@ -34,10 +34,11 @@ class ReportController extends Controller
             ->first();
 
 
-        $orders =
-            OrderService::getPurchasesByDate(Auth::guard("store")->id(), $request->from_date, $request->to_date);
         $fromDate = $request->from_date;
         $toDate = $request->to_date;
+        $orders =
+            OrderService::getPurchasesByDate(Auth::guard("store")->id(), $fromDate, $toDate);
+
 
         $orders =
             OrderService::getPurchasesByDate(Auth::guard("store")->id(), $fromDate, $toDate);
