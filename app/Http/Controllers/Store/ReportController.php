@@ -20,7 +20,7 @@ class ReportController extends Controller
             ->first();
 
         $fromDate = date('Y-m-d', now()->addDays(1)->timestamp);
-        $toDate = date('Y-m-d', now()->addDays(2)->timestamp);
+        $toDate = date('Y-m-d', now()->addDays(1)->timestamp);
 
         $orders =
             OrderService::getPurchasesByDate(Auth::guard("store")->id(), $fromDate, $toDate);

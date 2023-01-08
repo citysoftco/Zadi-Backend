@@ -75,7 +75,7 @@
                                     <th>{{ __('keywords.Payment Method') }}</th>
                                     <th>{{ __('keywords.Cart Products') }}</th>
                                     <th>{{ __('keywords.Assign') }}</th>
-                                    <th>{{ __('keywords.Order Status') }}</th>
+                                    {{-- <th>{{ __('keywords.Order Status') }}</th> --}}
                                     <th>{{ __('keywords.Invoice') }}</th>
                                 </tr>
                             </thead>
@@ -151,8 +151,8 @@
                                                     @endif
                                                 </button><br>
                                             </td>
-                                            <td><a href="{{ route('changeStatus', $ords->cart_id) }}"
-                                                    class="btn btn-primary">Cancel/Refund</a></td>
+                                            {{-- <td><a href="{{ route('changeStatus', $ords->cart_id) }}"
+                                                    class="btn btn-primary">Cancel/Refund</a></td> --}}
                                             <td><a target="_blank" rel="noopener noreferrer"
                                                     style="margin-right: 10px; !important"
                                                     href="{{ route('invoice', $ords->cart_id) }}" class="btn btn-success">
