@@ -49,7 +49,7 @@
     </div>
         <div class="card-header card-header-secondary">
    
-      <form class="forms-sample" action="{{ route('daywise_reg') }}" method="post"
+      <form class="forms-sample" action="{{ route('purchases_report.post') }}" method="post"
                             enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="row">
@@ -57,13 +57,13 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>{{ __('keywords.From Date') }}</label><br>
-                                        <input  type="date" name="from_date" class="form-control">
+                                        <input  type="date" value="{{$fromDate}}" name="from_date" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>{{ __('keywords.To Date') }}</label><br>
-                                        <input type="date" name="to_date" class="form-control">
+                                        <input type="date" value="{{$toDate}}" name="to_date" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-4"><br>

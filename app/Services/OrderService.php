@@ -23,7 +23,7 @@ class OrderService
 
 
             // ->where()
-            ->orderBy("store_order_id", "desc")
+            ->orderBy("orders.delivery_date")
             ->get([
                 "store_orders.product_name",
                 "store_orders.qty",

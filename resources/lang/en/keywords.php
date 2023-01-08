@@ -948,7 +948,8 @@ return [
     "User Not Found" => "User Not Found",
     "Purchases Report" => "Purchases Report",
     "Product Price" => "Product Price",
-    "Delivery Date" => "Delivery Date"
+    "Delivery Date" => "Delivery Date",
+    "Show Purchases" => "Show Purchases"
 
 
 

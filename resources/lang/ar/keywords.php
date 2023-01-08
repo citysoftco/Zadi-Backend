@@ -951,7 +951,9 @@ return [
     "User Not Found" => "لم يتم إيجاد المستخدم",
     "Purchases Report" => "تقرير المشتريات",
     "Product Price" => "سعر المنتج",
-    "Delivery Date" => "تاريخ التوصيل"
+    "Delivery Date" => "تاريخ التوصيل",
+    "Show Purchases" => "إظهار المشتريات"
+
 
 
 
