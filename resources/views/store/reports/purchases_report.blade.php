@@ -56,27 +56,36 @@
         <tr>
             <th>#</th>
             <th>{{ __('keywords.Product Name')}}</th>
-            <th>{{ __('keywords.Quantity')}}</th>
+             <th>{{ __('keywords.Category')}}</th>
+            <th>{{ __('keywords.Quantity')}}</th>    
+             <th>{{ __('keywords.Unit')}}</th>
             <th>{{ __('keywords.Product Price')}}</th>
-            <th>{{ __('keywords.Total')}}</th>
-            <th>{{ __('keywords.Category')}}</th>
+            <th>{{ __('keywords.Total Price')}}</th>
 
         </tr>
     </thead>
     <tbody>
-           {{-- @if(count($ord)>0) --}}
-          @php $i=1; @endphp
+           @if(count($orders)>0)
+          @php $i=1; 
+          $totalPrice = 0;
+          @endphp
+          @foreach ($orders as $order )
         <tr>
             <td class="text-center">{{$i}}</td>
-            <td>سكر 10 كيلو</td>
-            <td>{{number_format(300)}}</td>
-            <td>{{number_format(1000)}}</td>
-            <td>{{number_format(30000)}}</td>
-            <td>سكر</td>
-
-            
+            <td>{{$order->product_name}}</td>
+            <td>{{$order->category_name}}</td>
+            <td>{{number_format($order->qty)}}</td>
+            <td>{{$order->unit}}</td>
+            <td>{{number_format($order->base_price)}}</td>
+            <td>{{number_format($order->total_price)}}</td>
+              
         </tr>
-          @php $i++; @endphp
+          @php 
+          $i++;
+          $totalPrice += $order->total_price;
+           @endphp
+                    @endforeach
+@endif
                   {{-- @else
                     <tr>
                       <td>{{ __('keywords.No data found')}}</td>
@@ -87,6 +96,8 @@
                   @endif --}}
     </tbody>
 </table>
+<br>
+<h1 class="text-black">{{__("keywords.Total")}} {{number_format($totalPrice)}}</h1>
 </div>  
 </div>
 </div>
