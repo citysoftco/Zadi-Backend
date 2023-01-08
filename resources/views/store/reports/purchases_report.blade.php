@@ -49,7 +49,35 @@
     </div>
         <div class="card-header card-header-secondary">
    
-       </div>
+      <form class="forms-sample" action="{{ route('daywise_reg') }}" method="post"
+                            enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>{{ __('keywords.From Date') }}</label><br>
+                                        <input  type="date" name="from_date" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>{{ __('keywords.To Date') }}</label><br>
+                                        <input type="date" name="to_date" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4"><br>
+                                    <div class="form-group">
+                                        <label></label><br>
+                                        <button type="submit" value="SUBMIT"
+                                            class="btn btn-primary">{{ __('keywords.Show Purchases') }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form> 
+                               </div>
+
+
 <div class="container"> <br> 
 <table id="datatableDefault" class="table text-nowrap w-100 table-striped">
     <thead class="thead-light">
@@ -61,14 +89,16 @@
              <th>{{ __('keywords.Unit')}}</th>
             <th>{{ __('keywords.Product Price')}}</th>
             <th>{{ __('keywords.Total Price')}}</th>
+            <th>{{ __('keywords.Delivery Date')}}</th>
 
         </tr>
     </thead>
     <tbody>
-           @if(count($orders)>0)
-          @php $i=1; 
+        @php $i=1; 
           $totalPrice = 0;
           @endphp
+           @if(count($orders)>0)
+        
           @foreach ($orders as $order )
         <tr>
             <td class="text-center">{{$i}}</td>
@@ -78,13 +108,14 @@
             <td>{{$order->unit}}</td>
             <td>{{number_format($order->base_price)}}</td>
             <td>{{number_format($order->total_price)}}</td>
+            <td>{{$order->delivery_date}}</td>
               
         </tr>
           @php 
           $i++;
           $totalPrice += $order->total_price;
            @endphp
-                    @endforeach
+              @endforeach
 @endif
                   {{-- @else
                     <tr>

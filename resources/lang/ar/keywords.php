@@ -950,7 +950,8 @@ return [
     "Confirmed" => "تم التأكيد",
     "User Not Found" => "لم يتم إيجاد المستخدم",
     "Purchases Report" => "تقرير المشتريات",
-    "Product Price" => "سعر المنتج"
+    "Product Price" => "سعر المنتج",
+    "Delivery Date" => "تاريخ التوصيل"
 
 
 

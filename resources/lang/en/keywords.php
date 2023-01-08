@@ -947,7 +947,8 @@ return [
     'Confirm Payment Request' => 'Confirm Payment Request',
     "User Not Found" => "User Not Found",
     "Purchases Report" => "Purchases Report",
-    "Product Price" => "Product Price"
+    "Product Price" => "Product Price",
+    "Delivery Date" => "Delivery Date"
 
 
 
