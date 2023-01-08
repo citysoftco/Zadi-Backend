@@ -19,8 +19,8 @@ class ReportController extends Controller
             ->where('set_id', '1')
             ->first();
 
-        $fromDate = date('Y-m-d', now()->timestamp);
-        $toDate = date('Y-m-d', now()->addDays(1)->timestamp);
+        $fromDate = date('Y-m-d', now()->addDays(1)->timestamp);
+        $toDate = date('Y-m-d', now()->addDays(2)->timestamp);
 
         $orders =
             OrderService::getPurchasesByDate(Auth::guard("store")->id(), $fromDate, $toDate);
