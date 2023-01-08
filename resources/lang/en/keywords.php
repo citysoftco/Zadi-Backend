@@ -951,6 +951,8 @@ return [
     "Delivery Date" => "Delivery Date",
     "Show Purchases" => "Show Purchases",
     "Total Quantity" => "Total Quantity",
+    "Print" => "Print"
+
 
 
 

@@ -522,8 +522,9 @@ Route::group(['middleware' => ['verifylicense']], function () {
             Route::get('itemlist/requirement/today', [StRequiredController::class, 'reqfortoday'])->name('reqfortoday');
             Route::post('itemlist/requirement/datewise', [StRequiredController::class, 'reqfordate'])->name('datewise_itemsales');
 
-            Route::get('itemlist/purchases_report', [ReportController::class, 'purchasesReport'])->name('purchases_report');
-            Route::post('itemlist/purchases_report', [ReportController::class, 'showPurchasesReport'])->name('purchases_report.post');
+            Route::get('purchases_report', [ReportController::class, 'purchasesReport'])->name('purchases_report');
+            Route::post('purchases_report', [ReportController::class, 'showPurchasesReport'])->name('purchases_report.post');
+            Route::get('purchases_report_print/{from}/{to}', [ReportController::class, 'printPurchasesReport'])->name('print_purchases_report');
 
 
             Route::get('store_orders/today/all/', [StSalesreportController::class, 'sales_today'])->name('store_sales_today');

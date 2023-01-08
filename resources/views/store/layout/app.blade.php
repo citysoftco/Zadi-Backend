@@ -175,7 +175,8 @@
             processing: true,
             ordering: true,
             paging: false,
-            buttons: [{
+            buttons: [
+                {
                     extend: 'print',
                     className: 'btn btn-default'
                 },

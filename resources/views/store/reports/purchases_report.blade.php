@@ -45,10 +45,9 @@
    
 <div class="card">    
 <div class="card-header card-header-primary">
-      <h4 class="card-title ">Title</h4>
+      <h4 class="card-title ">{{__("keywords.Purchases Report")}}</h4>
     </div>
         <div class="card-header card-header-secondary">
-   
       <form class="forms-sample" action="{{ route('purchases_report.post') }}" method="post"
                             enctype="multipart/form-data">
                             {{ csrf_field() }}
@@ -79,7 +78,10 @@
 
 
 <div class="container"> <br> 
-<table id="datatableDefault" class="table text-nowrap w-100 table-striped">
+       <a target="_blank" href="{{route('print_purchases_report',[$fromDate,$toDate])}}" class="btn btn-dark">{{__("keywords.Print")}}</a>
+<br>
+<br>
+<table id="datatableDefaultss" class="table text-nowrap w-100 table-striped">
     <thead class="thead-light">
         <tr>
             <th>#</th>
@@ -118,7 +120,7 @@
           $totalQty += $order->qty
            @endphp
               @endforeach
-@endif
+          @endif
                   {{-- @else
                     <tr>
                       <td>{{ __('keywords.No data found')}}</td>
@@ -145,3 +147,4 @@
     @endsection
     
 </div>
+

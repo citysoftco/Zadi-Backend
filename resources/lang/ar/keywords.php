@@ -954,7 +954,9 @@ return [
     "Delivery Date" => "تاريخ التوصيل",
     "Show Purchases" => "إظهار المشتريات",
     "Total Quantity" => "إجمالي الكمية",
-    "Total" => "الإجمالي"
+    "Total" => "الإجمالي",
+    "Total Price" => "سعر الإجمالي",
+    "Print" => "طباعة"
 
 
 
