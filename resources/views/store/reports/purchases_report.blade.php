@@ -78,10 +78,9 @@
 
 
 <div class="container"> <br> 
-       <a target="_blank" href="{{route('print_purchases_report',[$fromDate,$toDate])}}" class="btn btn-dark">{{__("keywords.Print")}}</a>
-<br>
-<br>
-<table id="datatableDefaultss" class="table text-nowrap w-100 table-striped">
+       <a target="_blank"  href="{{route('print_purchases_report',[$fromDate,$toDate])}}" class="btn btn-dark offset-1">{{__("keywords.Print")}}</a>
+
+<table id="datatableDefault" class="table text-nowrap w-100 table-striped">
     <thead class="thead-light">
         <tr>
             <th>#</th>

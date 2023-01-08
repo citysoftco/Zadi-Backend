@@ -167,6 +167,7 @@
     <script>
         $('#datatableDefault').DataTable({
             dom: "<'row mb-3'<'col-sm-4'l><'col-sm-8 text-right'<'d-flex justify-content-end'fB>>>t<'d-flex align-items-center'<'mr-auto'i><'mb-0'p>>",
+            // dom:"",
             responsive: true,
             lengthMenu: false,
             autoWidth: true,
@@ -176,14 +177,14 @@
             ordering: true,
             paging: false,
             buttons: [
-                {
-                    extend: 'print',
-                    className: 'btn btn-default'
-                },
-                {
-                    extend: 'csv',
-                    className: 'btn btn-default'
-                }
+                // {
+                //     extend: 'print',
+                //     className: 'btn btn-default'
+                // },
+                // {
+                //     extend: 'csv',
+                //     className: 'btn btn-default'
+                // }
             ]
         });
     </script>
