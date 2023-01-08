@@ -96,6 +96,7 @@
     <tbody>
         @php $i=1; 
           $totalPrice = 0;
+          $totalQty = 0;
           @endphp
            @if(count($orders)>0)
         
@@ -114,6 +115,7 @@
           @php 
           $i++;
           $totalPrice += $order->total_price;
+          $totalQty += $order->qty
            @endphp
               @endforeach
 @endif
@@ -128,7 +130,10 @@
     </tbody>
 </table>
 <br>
-<h1 class="text-black">{{__("keywords.Total")}} {{number_format($totalPrice)}}</h1>
+<h1 class="text-black">{{__("keywords.Total")}} = {{number_format($totalPrice)}}</h1>
+<h1 class="text-black">{{__("keywords.Total Quantity")}} = {{number_format($totalQty)}}</h1>
+<br>
+
 </div>  
 </div>
 </div>

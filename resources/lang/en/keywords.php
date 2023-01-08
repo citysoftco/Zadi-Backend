@@ -949,7 +949,9 @@ return [
     "Purchases Report" => "Purchases Report",
     "Product Price" => "Product Price",
     "Delivery Date" => "Delivery Date",
-    "Show Purchases" => "Show Purchases"
+    "Show Purchases" => "Show Purchases",
+    "Total Quantity" => "Total Quantity",
+
 
 
 
