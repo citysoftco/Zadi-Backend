@@ -38,10 +38,12 @@ img {
         <br>
         <br>
 
-    <div class="d-flex justify-content-center align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
     <h5>{{__("keywords.Date")}} : {{now()->toDateString()}}</h5>
-    <br>
-    <br>
+     <img src="{{$url_aws.$logo->icon}}" alt="app logo" class="rounded-circle" style="width:100px; height:100px;">
+
+    {{-- <br>
+    <br> --}}
     </div>
              <table  class="table">
              
@@ -88,8 +90,12 @@ img {
     </tbody>
 </table>
 <br>
+<div class="d-flex">
+    <div>
 <h5 class="text-black">{{__("keywords.Total")}} = {{number_format($totalPrice)}}</h5>
 <h5 class="text-black">{{__("keywords.Total Quantity")}} = {{number_format($totalQty)}}</h5>
+</div>
+</div>
 <br>
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Store;
 use App\Http\Controllers\Controller;
 use App\Models\Store;
 use App\Services\OrderService;
+use App\Traits\ImageStoragePicker;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
+    use ImageStoragePicker;
     public function purchasesReport()
     {
         $store = Auth::guard('store')->user();
@@ -52,15 +54,15 @@ class ReportController extends Controller
             ->where('set_id', '1')
             ->first();
 
-
-        // $fromDate = date('Y-m-d', now()->addDays(1)->timestamp);
-        // $toDate = date('Y-m-d', now()->addDays(2)->timestamp);
         $orders =
             OrderService::getPurchasesByDate(Auth::guard("store")->id(), $fromDate, $toDate);
 
 
         $orders =
             OrderService::getPurchasesByDate(Auth::guard("store")->id(), $fromDate, $toDate);
-        return view("store.reports.purchases_report_print", compact("store", 'logo', "orders", "fromDate", "toDate"));
+        $url_aws = $this->getImageStorage();
+
+
+        return view("store.reports.purchases_report_print", compact("store", 'logo', "orders", "fromDate", "toDate", "url_aws"));
     }
 }
