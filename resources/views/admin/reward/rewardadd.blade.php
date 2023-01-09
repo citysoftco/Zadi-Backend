@@ -51,7 +51,7 @@
                       <div class="col-md-4">
                         <div class="form-group">
                           <!--<label class="bmd-label-floating">Minimum Cart Value</label>-->
-                          <p class="card-description">{{ __('keywords.Reward Points')}}</p>
+                          <p class="card-description">{{ __('keywords.Reward Points')}} %</p>
                           <input type="text" name="reward_points" value="" class="form-control">
                         </div>
                       </div>

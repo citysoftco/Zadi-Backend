@@ -19,8 +19,8 @@ class RewardService
         foreach ($rewards as $reward) {
             # 
             if ($amount >= $reward->min_cart_value) {
-                $gainedRewards += $amount * $reward->reward_point / $reward->min_cart_value;
-                break;
+                $gainedRewards += $amount * $reward->reward_point / 100;
+                // break;
             }
         }
         $user->update(["rewards" => $user->rewards + $gainedRewards]);

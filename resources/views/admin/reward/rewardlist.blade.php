@@ -46,7 +46,7 @@
         <tr>
             <th class="text-center">#</th>
                       <th>{{ __('keywords.Cart Value')}}</th>
-                      <th>{{ __('keywords.Reward Points')}}</th>
+                      <th>{{ __('keywords.Reward Points')}} %</th>
                       <th>{{ __('keywords.Action')}}</th>
                     </thead>
                     <tbody>
