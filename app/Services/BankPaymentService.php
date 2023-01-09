@@ -22,7 +22,7 @@ class BankPaymentService
     public static function updateBankPaymentStatus($bankPaymentId, $data)
     {
         $payment = BankPayment::find($bankPaymentId);
-        if ($data["action"] == "confirm") {
+        if ($data["action"] == "confirm" && $payment->user != null) {
             $payment->update([
                 "payment_status" => "confirmed",
                 "amount" => $data["amount"]
