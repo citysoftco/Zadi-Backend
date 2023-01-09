@@ -40,7 +40,7 @@ img {
 
     <div class="d-flex align-items-center justify-content-between">
     <h5>{{__("keywords.Date")}} : {{now()->toDateString()}}</h5>
-     <img src="{{$url_aws.$logo->icon}}" alt="app logo" class="rounded-circle" style="width:100px; height:100px;">
+     <img src="{{$url_aws.$logo->icon}}" alt="app logo" class="" style="width:100px; height:100px;">
 
     {{-- <br>
     <br> --}}

@@ -143,23 +143,23 @@ class InvoiceController extends Controller
 </div>
 </body>
 </html>';
-// instantiate and use the dompdf class
+        // instantiate and use the dompdf class
         $dompdf = new Dompdf();
         $options = $dompdf->getOptions();
         $options->set(array('isRemoteEnabled' => true));
         $dompdf->setOptions($options);
         $dompdf->loadHtml($output);
 
-// /// (Optional) Setup the paper size and orientation
+        // /// (Optional) Setup the paper size and orientation
         $dompdf->setPaper('A7', 'potrait');
 
-// // Render the HTML as PDF
+        // // Render the HTML as PDF
         $dompdf->render();
         $frame = $dompdf->getTree()->get_frame(0);
         $height = $frame->get_style()->height;
-// // Output the generated PDF to Browser
+        // // Output the generated PDF to Browser
         $dompdf->stream();
-// $dompdf->download('invoice.pdf');
+        // $dompdf->download('invoice.pdf');
 
     }
 }

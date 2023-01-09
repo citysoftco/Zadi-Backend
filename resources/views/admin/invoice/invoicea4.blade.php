@@ -43,8 +43,8 @@ img {
                                     <td valign="top" style="width:50%">
                                     <strong> {{ __('keywords.Order_Id')}} : </strong> {{$order->cart_id}}
                                     <br />
-                                      <strong>{{ __('keywords.Customer_name')}} : </strong>{{$order->receiver_name}}<br/>
-                                        <strong>{{ __('keywords.Contact')}} : </strong>{{$order->receiver_phone}}, @if($order->user_phone != $order->receiver_phone){{$order->receiver_phone}}@endif <br/> 
+                                      <strong>{{ __('keywords.Customer_name')}} : </strong>{{$order->name}}<br/>
+                                        <strong>{{ __('keywords.Contact')}} : </strong>{{$order->user_phone}}, @if($order->user_phone != $order->user_phone){{$order->user_phone}}@endif <br/> 
                                     <strong>  {{ __('keywords.Delivery_Date')}} : </strong>{{$order->delivery_date}}
                                     <br />
                                     <strong>  {{ __('keywords.Time_Slot')}} : </strong>{{$order->time_slot}}
@@ -53,8 +53,9 @@ img {
                                     <td  style="width:50%" align="right">
                                         <strong> {{ __('keywords.Delivery Address')}} </strong><br />
                                       
-                                        <b>{{$order->type}} :</b> {{$order->house_no}},{{$order->society}},<br>@if($order->landmark !=NULL) {{$order->landmark}},<br>@endif {{$order->city}},{{$order->state}},<br>
-                                          {{$order->pincode}}
+                                        {{-- <b>{{$order->type}} :</b> {{$order->house_no}},{{$order->society}},<br>@if($order->landmark !=NULL) {{$order->landmark}},<br>@endif {{$order->city}},{{$order->state}},<br>
+                                          {{$order->pincode}} --}}
+                                          <b>{{$order->address}}</b>
                                      </td>
                                     
                                 </tr>
