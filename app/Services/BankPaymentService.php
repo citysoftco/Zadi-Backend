@@ -27,7 +27,7 @@ class BankPaymentService
                 "payment_status" => "confirmed",
                 "amount" => $data["amount"]
             ]);
-            $user = $payment->user();
+            $user = $payment->user;
             $user->update([
                 "wallet" => $user->wallet + $data["amount"]
             ]);
