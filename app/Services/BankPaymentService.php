@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\BankPayment;
 use App\Models\Store;
+use App\Models\User;
 
 /**
  * Class BankPaymentService.
@@ -27,11 +28,10 @@ class BankPaymentService
                 "payment_status" => "confirmed",
                 "amount" => $data["amount"]
             ]);
-            $payment->user->wallet += $data["amount"];
-            $payment->user()->save();
-            // $user->update([
-            //     "wallet" => $user->wallet + $data["amount"]
-            // ]);
+            $user = User::find($payment->user->id);
+            $user->update([
+                "wallet" => $user->wallet + $data["amount"]
+            ]);
 
             $text = array(
                 "التاريخ والزمن : " . $payment->created_at,
