@@ -27,6 +27,10 @@ class BankPaymentService
                 "payment_status" => "confirmed",
                 "amount" => $data["amount"]
             ]);
+            $payment->user()->update([
+                "wallet" => $payment->user->wallet + $data["amount"]
+            ]);
+
             $text = array(
                 "التاريخ والزمن : " . $payment->created_at,
                 "المرسل : " . $payment->user->name,
