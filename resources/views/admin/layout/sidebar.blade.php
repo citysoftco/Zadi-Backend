@@ -522,7 +522,7 @@
                  </div>
 
 
-                 <div class="menu-header">{{ __('keywords.Reward management') }}</div>
+                 {{-- <div class="menu-header">{{ __('keywords.Reward management') }}</div>
                  <div
                      class="menu-item has-sub {{ request()->is('reward/*') ? 'active' : '' }}{{ request()->is('reward') ? 'active' : '' }}{{ request()->is('reedem') ? 'active' : '' }}">
                      <a href="#" class="menu-link">
@@ -546,7 +546,8 @@
 
 
                      </div>
-                 </div>
+                 </div> --}}
+
 
 
                  <div class="menu-header">{{ __('keywords.Page management') }}</div>

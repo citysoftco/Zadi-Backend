@@ -25,7 +25,7 @@ use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\AdminorderController;
 use App\Http\Controllers\Admin\FinanceController;
 use App\Http\Controllers\Admin\PagesController;
-use App\Http\Controllers\Admin\RewardController;
+use App\Http\Controllers\Store\RewardController;
 use App\Http\Controllers\Admin\ReedemController;
 use App\Http\Controllers\Admin\SecondaryBannerController;
 use App\Http\Controllers\Admin\SecretloginController;
@@ -278,12 +278,13 @@ Route::group(['middleware' => ['verifylicense']], function () {
             Route::post('prv/update', [SettingsController::class, 'updateprv'])->name('updateprv');
 
             // for reward
-            Route::get('reward', [RewardController::class, 'RewardList'])->name('RewardList');
-            Route::get('reward/add', [RewardController::class, 'reward'])->name('reward');
-            Route::post('reward/add/new', [RewardController::class, 'rewardadd'])->name('rewardadd');
-            Route::get('reward/edit/{reward_id}', [RewardController::class, 'rewardedit'])->name('rewardedit');
-            Route::post('reward/update', [RewardController::class, 'rewardupate'])->name('rewardupate');
-            Route::get('reward/delete/{reward_id}', [RewardController::class, 'rewarddelete'])->name('rewarddelete');
+            // Route::get('reward', [RewardController::class, 'RewardList'])->name('RewardList');
+            // Route::get('reward/add', [RewardController::class, 'reward'])->name('reward');
+            // Route::post('reward/add/new', [RewardController::class, 'rewardadd'])->name('rewardadd');
+            // Route::get('reward/edit/{reward_id}', [RewardController::class, 'rewardedit'])->name('rewardedit');
+            // Route::post('reward/update', [RewardController::class, 'rewardupate'])->name('rewardupate');
+            // Route::get('reward/delete/{reward_id}', [RewardController::class, 'rewarddelete'])->name('rewarddelete');
+
 
             // for reedem
             Route::get('reedem', [ReedemController::class, 'reedem'])->name('reedem');
@@ -483,6 +484,9 @@ Route::group(['middleware' => ['verifylicense']], function () {
 
     Route::namespace("Store")->prefix('store')->group(function () {
 
+
+
+
         // for login
         Route::get('/', [StoreLoginController::class, 'storeLogin'])->name('storeLogin');
         Route::get('secret-store-login/{id}', [StoreLoginController::class, 'secretStoreLogin'])->name('secret-store-login');
@@ -492,6 +496,11 @@ Route::group(['middleware' => ['verifylicense']], function () {
         Route::post('loginCheck', [StoreLoginController::class, 'storeLoginCheck'])->name('storeLoginCheck');
 
         Route::group(['middleware' => 'auth:store'], function () {
+
+            //Reward v2
+            Route::get('reward', [RewardController::class, 'reward2'])->name('reward2');
+            Route::post('reward/update', [RewardController::class, 'rewardupate2'])->name('rewardupate2');
+
             Route::get('logout', [StoreLoginController::class, 'logout'])->name('storelogout');
             Route::get('home', [StoreHomeController::class, 'storeHome'])->name('storeHome');
             Route::get('product/add', [StProductController::class, 'sel_product'])->name('sel_product');

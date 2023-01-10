@@ -343,6 +343,29 @@
                  </div>
              </div>
 
+
+                   <div class="menu-header">{{ __('keywords.Reward management') }}</div>
+                 <div
+                     class="menu-item has-sub {{ request()->is('reward/*') ? 'active' : '' }}{{ request()->is('reward') ? 'active' : '' }}{{ request()->is('reedem') ? 'active' : '' }}">
+                     <a href="#" class="menu-link">
+                         <span class="menu-icon">
+                             <i class="fa fa-trophy"></i>
+                         </span>
+                         <span class="menu-text">{{ __('keywords.Rewards') }}</span>
+                         <span class="menu-caret"><b class="caret"></b></span>
+                     </a>
+                     <div class="menu-submenu">
+                         <div class="menu-item {{ request()->is('reward') ? 'active' : '' }}">
+                             <a href="{{ route('reward2') }}" class="menu-link">
+                                 <span class="menu-text">{{ __('keywords.Update Rewards') }}</span>
+                             </a>
+                         </div>
+            
+
+
+                     </div>
+                 </div>
+
              <div class="menu-header">{{ __('keywords.Callback') }}</div>
              <div
                  class="menu-item has-sub {{ request()->is('store/callback_requests') ? 'active' : '' }}

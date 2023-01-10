@@ -31,7 +31,7 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">{{ __('keywords.Edit')}} {{ __('keywords.Rewards Points')}} %</h4>
+                  <h4 class="card-title">{{ __('keywords.Edit')}} {{ __('keywords.Rewards Points')}}</h4>
                   <form class="forms-sample" action="{{route('rewardupate')}}" method="post" enctype="multipart/form-data">
                       {{csrf_field()}}
                 </div>

@@ -144,7 +144,6 @@ class RewardController extends Controller
         $delete = DB::table('reward_points')->where('reward_id', $reward_id)->delete();
         if ($delete) {
             return redirect()->back()->withSuccess(trans('keywords.Deleted successfully'));
-
         } else {
             return redirect()->back()->withErrors(trans('keywords.Something Wents Wrong'));
         }
