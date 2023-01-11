@@ -958,7 +958,9 @@ return [
     "Total Price" => "سعر الإجمالي",
     "Print" => "طباعة",
     "ON" => "مفعل",
-    "Reward Percent" => "مكافاة النسبة المئوية"
+    "Reward Percent" => "مكافاة النسبة المئوية",
+    "Update Rewards" => "تحديث المكافات"
+
 
 
 

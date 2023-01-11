@@ -952,7 +952,8 @@ return [
     "Show Purchases" => "Show Purchases",
     "Total Quantity" => "Total Quantity",
     "Print" => "Print",
-    "Reward Percent" => "Reward Percent"
+    "Reward Percent" => "Reward Percent",
+    "Update Rewards" => "Update Rewards"
 
 
 
