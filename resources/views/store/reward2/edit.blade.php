@@ -1,4 +1,4 @@
-@extends('admin.layout.app')
+@extends('store.layout.app')
 
 @section ('content')
 <div class="container-fluid">
@@ -43,10 +43,15 @@
                       <div class="col-md-4">
                         <div class="form-group">
                           <!--<label class="bmd-label-floating">Valid From</label>-->
-                          <p class="card-description">{{ __('keywords.Reward Points')}}</p>
+                          <p class="card-description">{{ __('keywords.Reward')}} %</p>
                          
-                          <input type="text" name="reward_point" value="{{$reward->reward}}" class="form-control">
+                          <input type="number" step="0.1" name="reward" value="{{$reward->reward}}" class="form-control">
+                       
                         </div>
+                           <div class="">
+                          <label for="is_active">{{__("keywords.ON")}}</label>
+                          <input  @if($reward->is_active == true)  checked @endif  type="checkbox" id="is_active" name="is_active">
+                          </div>
                       </div>
                      
                     </div>

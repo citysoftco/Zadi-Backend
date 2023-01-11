@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Reward2;
 use App\Models\User;
 use DB;
 
@@ -24,5 +25,18 @@ class RewardService
             }
         }
         $user->update(["rewards" => $user->rewards + $gainedRewards]);
+    }
+    public static function giveRewardToUserPercent($userId, $amount)
+    {
+        $user = User::find($userId);
+        $rewards = Reward2::firstOrNew();
+        if ($rewards->is_active) {
+            $gainedRewards = $amount * $rewards->reward / 100;
+
+            $user->update([
+                "wallet" =>  $user->wallet + $gainedRewards,
+                "rewards" => $user->rewards + $gainedRewards
+            ]);
+        }
     }
 }

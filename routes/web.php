@@ -499,7 +499,7 @@ Route::group(['middleware' => ['verifylicense']], function () {
 
             //Reward v2
             Route::get('reward', [RewardController::class, 'reward2'])->name('reward2');
-            Route::post('reward/update', [RewardController::class, 'rewardupate2'])->name('rewardupate2');
+            Route::put('reward/update', [RewardController::class, 'rewardupdate2'])->name('rewardupdate2');
 
             Route::get('logout', [StoreLoginController::class, 'logout'])->name('storelogout');
             Route::get('home', [StoreHomeController::class, 'storeHome'])->name('storeHome');

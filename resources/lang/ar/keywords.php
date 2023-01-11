@@ -956,7 +956,9 @@ return [
     "Total Quantity" => "إجمالي الكمية",
     "Total" => "الإجمالي",
     "Total Price" => "سعر الإجمالي",
-    "Print" => "طباعة"
+    "Print" => "طباعة",
+    "ON" => "مفعل",
+    "Reward Percent" => "مكافاة النسبة المئوية"
 
 
 

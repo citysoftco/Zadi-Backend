@@ -277,10 +277,11 @@ class OrderController extends Controller
 
                     $rem_amount = $prii - $ph->wallet;
                     $walletamt = $ph->wallet;
-                    $rem_wallet = 0;
-                    $walupdate = DB::table('users')
-                        ->where('id', $user_id)
-                        ->update(['wallet' => $rem_wallet]);
+                    // $rem_wallet = 0;
+                    // $walupdate = DB::table('users')
+                    //     ->where('id', $user_id)
+                    //     ->update(['wallet' => $rem_wallet]);
+                    return array('status' => '0', 'message' => 'Payment Failed: No Enough Money In Wallet');
                 }
             } else {
                 $rem_amount = $prii;
@@ -403,7 +404,7 @@ class OrderController extends Controller
                             ->update(['quantity' => $newquantity]);
                     }
                 }
-                RewardService::giveRewardToUser($user_id, $orderr->total_price);
+                RewardService::giveRewardToUserPercent($user_id, $orderr->total_price);
                 $message = array('status' => '1', 'message' => 'Order Placed successfully', 'data' => $orderr1);
 
                 return $message;
