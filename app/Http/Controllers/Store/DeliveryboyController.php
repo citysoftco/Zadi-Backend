@@ -245,6 +245,9 @@ class DeliveryboyController extends Controller
         $password = $request->password;
         $boy_loc = $request->boy_loc;
         $city = $request->city;
+        $date = date('d-m-Y');
+        $id_no = $request->id_no;
+        $id_name = $request->id_name;
         $mapset = DB::table('map_settings')
             ->first();
         $addres = str_replace(" ", "+", $boy_loc);
@@ -363,8 +366,13 @@ class DeliveryboyController extends Controller
     {
         $dboy_id = $request->id;
 
-        $delete = DB::table('store_delivery_boy')
-            ->where('dboy_id', $dboy_id)->delete();
+        $storeDeliveryBoy = DB::table('store_delivery_boy')
+            ->where('dboy_id', $dboy_id);
+
+
+        $delete = DB::table("delivery_boy")->where("dboy_id", $storeDeliveryBoy->first()->ad_dboy_id)->delete();
+        $storeDeliveryBoy->delete();
+
         if ($delete) {
             return redirect()->back()->withSuccess(trans('keywords.Deleted Successfully'));
         } else {
