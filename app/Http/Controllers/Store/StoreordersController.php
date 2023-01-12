@@ -41,6 +41,7 @@ class StoreordersController extends Controller
             ->Where('order_status', 'Completed')
             ->paginate(150);
 
+
         $details = DB::table('orders')
             ->join('store_orders', 'orders.cart_id', '=', 'store_orders.order_cart_id')
             ->where('store_orders.store_approval', 1)

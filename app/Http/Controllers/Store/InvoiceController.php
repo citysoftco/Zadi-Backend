@@ -44,7 +44,7 @@ class InvoiceController extends Controller
             ->where('set_id', '1')
             ->first();
         $order = DB::table('orders')
-            // ->leftJoin('address', 'orders.address_id', '=', 'address.address_id')
+            ->leftJoin('address', 'orders.address_id', '=', 'address.address_id')
             ->leftJoin('users', 'orders.user_id', '=', 'users.id')
             ->where('cart_id', $cart_id)
             ->first();

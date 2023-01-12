@@ -211,7 +211,7 @@
                                             <tr>
                                                 <td colspan="5">
                                                     <table class="table">
-                                                        <tr>
+                                                        {{-- <tr>
                                                             <td valign="top" style="width:50%">
                                                                 <strong> {{ __('keywords.Order_Id') }} : </strong>
                                                                 {{ $ords->cart_id }}
@@ -243,7 +243,27 @@
                                                                 {{ $ords->pincode }}
                                                             </td>
 
-                                                        </tr>
+                                                        </tr> --}}
+                                                                      <tr>
+                                    <td valign="top" style="width:50%">
+                                    <strong> {{ __('keywords.Order_Id')}} : </strong> {{$ords->cart_id}}
+                                    <br />
+                                      <strong>{{ __('keywords.Customer_name')}} : </strong>{{$ords->name}}<br/>
+                                        <strong>{{ __('keywords.Contact')}} : </strong>{{$ords->user_phone}}, @if($ords->user_phone != $ords->user_phone){{$ords->user_phone}}@endif <br/> 
+                                    <strong>  {{ __('keywords.Delivery_Date')}} : </strong>{{$ords->delivery_date}}
+                                    <br />
+                                    <strong>  {{ __('keywords.Time_Slot')}} : </strong>{{$ords->time_slot}}
+                                    <br />
+                                    </td>
+                                    <td  style="width:50%" align="right">
+                                        <strong> {{ __('keywords.Delivery Address')}} </strong><br />
+                                      
+                                        {{-- <b>{{$ords->type}} :</b> {{$ords->house_no}},{{$ords->society}},<br>@if($ords->landmark !=NULL) {{$ords->landmark}},<br>@endif {{$ords->city}},{{$ords->state}},<br>
+                                          {{$ords->pincode}} --}}
+                                          {{$ords->address}}
+                                     </td>
+                                    
+                                </tr>
                                                     </table>
                                                 </td>
                                             </tr>
