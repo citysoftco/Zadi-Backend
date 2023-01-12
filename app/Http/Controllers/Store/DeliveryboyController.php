@@ -106,7 +106,6 @@ class DeliveryboyController extends Controller
 
                 $image->move('images/dboy/' . $date . '/', $fileName);
                 $filePath = '/images/dboy/' . $date . '/' . $fileName;
-
             }
         } else {
             $filePath = 'N/A';
@@ -274,7 +273,6 @@ class DeliveryboyController extends Controller
 
                 $image->move('images/coupon/' . $date . '/', $fileName);
                 $filePath = '/images/coupon/' . $date . '/' . $fileName;
-
             }
         } else {
             $filePath = $chkdeli->id_photo;

@@ -28,13 +28,17 @@ class RewardController extends Controller
 
     public function rewardupdate2(Request $request)
     {
-        $reward = Reward2::firstOrCreate();
+        $data = $request->all();
+        $data["store_id"] = Auth::guard("store")->id();
         if ($request->is_active)
-            $request->merge(["is_active" => 1]);
+            $data["is_active"] = 1;
         else
-            $request->merge(["is_active" => 0]);
+            $data["is_active"] = 0;
 
-        $reward->update($request->all());
+        $reward = Reward2::updateOrCreate(["store_id" => $data["store_id"]], $data);
+
+
+        // $reward->update($data);
 
         return redirect()->back()->withSuccess(trans('keywords.Updated Successfully'));
     }

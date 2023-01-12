@@ -26,10 +26,10 @@ class RewardService
         }
         $user->update(["rewards" => $user->rewards + $gainedRewards]);
     }
-    public static function giveRewardToUserPercent($userId, $amount)
+    public static function giveRewardToUserPercent($userId, $amount, $storeId)
     {
         $user = User::find($userId);
-        $rewards = Reward2::firstOrNew();
+        $rewards = Reward2::firstOrNew(["store_id" => $storeId]);
         if ($rewards->is_active) {
             $gainedRewards = $amount * $rewards->reward / 100;
 

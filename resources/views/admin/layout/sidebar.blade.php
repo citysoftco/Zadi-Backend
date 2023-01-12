@@ -285,7 +285,7 @@
                  </div>
 
 
-                 <div class="menu-header">{{ __('keywords.Delivery Settings') }}</div>
+                 {{-- <div class="menu-header">{{ __('keywords.Delivery Settings') }}</div>
 
                  <div
                      class="menu-item has-sub {{ request()->is('d_boy/*') ? 'active' : '' }} {{ request()->is('dboy_incentive') ? 'active' : '' }} {{ request()->is('set_delivery_boy_incentive') ? 'active' : '' }}">
@@ -318,7 +318,7 @@
 
                      </div>
                  </div>
-
+ --}}
 
                  <div
                      class="menu-item has-sub {{ request()->is('city/*') ? 'active' : '' }}{{ request()->is('society/*') ? 'active' : '' }}{{ request()->is('area_bulk_upload/*') ? 'active' : '' }}">

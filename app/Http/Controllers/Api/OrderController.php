@@ -404,7 +404,7 @@ class OrderController extends Controller
                             ->update(['quantity' => $newquantity]);
                     }
                 }
-                RewardService::giveRewardToUserPercent($user_id, $orderr->total_price);
+                RewardService::giveRewardToUserPercent($user_id, $orderr->total_price, $store_id);
                 $message = array('status' => '1', 'message' => 'Order Placed successfully', 'data' => $orderr1);
 
                 return $message;
