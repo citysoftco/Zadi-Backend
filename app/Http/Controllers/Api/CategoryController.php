@@ -3358,7 +3358,7 @@ class CategoryController extends Controller
                     $app = DB::table('store_products')
                         ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
                         ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                        ->select('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
+                        ->select('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product_varient.weight', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
                         ->where('store_products.store_id', $store_id)
                         ->whereIn('product_varient.product_id', $apps)
                         ->where('store_products.price', '!=', NULL)
@@ -3468,6 +3468,7 @@ class CategoryController extends Controller
                     }
 
                     $result[$z]->varients = $app;
+
                     $z++;
                 }
             }
@@ -3483,7 +3484,7 @@ class CategoryController extends Controller
             $app = DB::table('store_products')
                 ->join('product_varient', 'store_products.varient_id', '=', 'product_varient.varient_id')
                 ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                ->select('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
+                ->select('store_products.store_id', 'store_products.quantity', 'product_varient.varient_id', 'product_varient.description', 'store_products.price', 'store_products.mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'product_varient.weight', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
                 ->where('store_products.store_id', $store_id)
                 ->where('product_varient.product_id', $p_id)
                 ->where('store_products.price', '!=', NULL)
@@ -3515,6 +3516,7 @@ class CategoryController extends Controller
             $result[$j]->tags = $tag;
             $j++;
             foreach ($app as $aas) {
+
                 $d = Carbon::Now();
                 $deal = DB::table('deal_product')
                     ->where('varient_id', $aas->varient_id)
@@ -3588,6 +3590,7 @@ class CategoryController extends Controller
                 $aasss[] = $aas;
             }
             $result[$i]->varients = $aasss;
+
             $i++;
 
             $data = array('detail' => $prod, 'similar_product' => $prod1);
