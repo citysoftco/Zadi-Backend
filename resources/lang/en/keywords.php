@@ -953,7 +953,15 @@ return [
     "Total Quantity" => "Total Quantity",
     "Print" => "Print",
     "Reward Percent" => "Reward Percent",
-    "Update Rewards" => "Update Rewards"
+    "Update Rewards" => "Update Rewards",
+    "Saturday" => "Saturday",
+    "Sunday" => "Sunday",
+    "Monday" => "Monday",
+    "Tuesday" => "Tuesday",
+    "Wednesday" => "Wednesday",
+    "Thursday" => "Thursday",
+    "Friday" => "Friday"
+
 
 
 

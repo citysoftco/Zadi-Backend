@@ -959,7 +959,15 @@ return [
     "Print" => "طباعة",
     "ON" => "مفعل",
     "Reward Percent" => "مكافاة النسبة المئوية",
-    "Update Rewards" => "تحديث المكافات"
+    "Update Rewards" => "تحديث المكافات",
+    "Saturday" => "Saturday",
+    "Sunday" => "Sunday",
+    "Monday" => "Monday",
+    "Tuesday" => "Tuesday",
+    "Wednesday" => "Wednesday",
+    "Thursday" => "Thursday",
+    "Friday" => "Friday"
+
 
 
 

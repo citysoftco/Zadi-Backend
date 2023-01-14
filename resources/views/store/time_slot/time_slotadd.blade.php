@@ -111,10 +111,10 @@
                 <!-- BEGIN #general -->
                 <div id="general" class="mb-5">
                     <div class="card">
-                  <form class="forms-sample" action="{{route('storetimeslotupdate')}}" method="post" enctype="multipart/form-data">
-                      {{csrf_field()}}
+                  {{-- <form class="forms-sample" action="{{route('storetimeslotupdate')}}" method="post" enctype="multipart/form-data">
+                      {{csrf_field()}} --}}
                 <div class="card-body">
-                  <form>
+                  {{-- <form> --}}
 {{-- 
                     <div class="row">
                       <div class="col-md-4">
@@ -139,7 +139,8 @@
                           <input type="number" name="interval" value="{{$city->time_interval}}" class="form-control">
                         </div>
                       </div>
-                    </div>  --}}
+                    </div> --}}
+              
                   <style>
                     /* The switch - the box around the slider */
 .switch {
@@ -204,15 +205,24 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
                   </style>
-      <div class="row">
+                 
+                  @foreach ($daysList as $day )
+                    
+                   @php
+                   $currentDay = $StoreSchedules->where("day_name", $day)->first();
+                  @endphp
+      <form action="{{route('storetimeslotupdate')}}" method="POST" class="row">
+
+
           <div class="col-md-2 d-flex align-items-center">
-                   <h1>Sunday</h1>
+                   <h1>{{__("keywords.$day")}}</h1>
         </div>
         <div class="col-md-2">
             <div class="form-group">
                 <p class="card-description">{{ __('keywords.ON')}}</p>
               <label class="switch">
-  <input type="checkbox">
+  <input type="checkbox" @if ($currentDay && $currentDay->status == "on")
+    checked @endif name="status">
   <span class="slider round"></span>
 </label>
             </div>
@@ -220,47 +230,31 @@ input:checked + .slider:before {
          <div class="col-md-3">
                         <div class="form-group">
                           <p class="card-description">{{ __('keywords.Store Opening Time')}}</p>
-                          <input type="time" name="open_hrs" value="{{$city->store_opening_time}}" class="form-control">
+                          <input type="time" name="store_opening_time" @if($currentDay) value="{{date("H:i", strtotime("2021-11-17 $currentDay->store_opening_time"))}}" @endif class="form-control">
                         </div>
                       </div>
         <div class="col-md-3">
             <div class="form-group">
                 <p class="card-description">{{ __('keywords.Store Closing Time')}}</p>
-                <input type="time" name="close_hrs" value="{{$city->store_closing_time}}" class="form-control">
+                <input type="time" name="store_closing_time" @if($currentDay) value="{{date("H:i", strtotime("2021-11-17 $currentDay->store_closing_time"))}}" @endif class="form-control">
             </div>
         </div>
         <div class="col-md-2 d-flex align-items-center">
-           <button class="btn btn-success">Update</button>
+
+            @csrf
+            <input type="text" hidden name="day_name" value="{{$day}}">
+           <button class="btn btn-success" type="submit" >Update</button>
         </div>
-          
-       
-      </div>
-      <div class="row d-flex align-items-center">
-          <div class="col-md-2">
-                   <h1>Monday</h1>
-        </div>
-         <div class="col-md-4">
-                        <div class="form-group">
-                          <p class="card-description">{{ __('keywords.Store Opening Time')}}</p>
-                          <input type="time" name="open_hrs" value="{{$city->store_opening_time}}" class="form-control">
-                        </div>
-                      </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <p class="card-description">{{ __('keywords.Store Closing Time')}}</p>
-                <input type="time" name="close_hrs" value="{{$city->store_closing_time}}" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-2 d-flex align-items-center">
-           <button class="btn btn-success">Update</button>
-        </div>
-          
-       
-      </div>
+     
+
+                 </form>
+                 @endforeach
+
+                  
       <br>
                     {{-- <button type="submit" class="btn btn-primary pull-center">{{ __('keywords.Submit')}}</button> --}}
                     <div class="clearfix"></div>
-                  </form>
+                  {{-- </form> --}}
                 </div>
               </div>
                   
@@ -420,14 +414,14 @@ input:checked + .slider:before {
                           <!--<label class="bmd-label-floating">Valid From</label>-->
                           <p class="card-description">Store Opening Time</p>
                          
-                          <input type="time" name="open_hrs" value="{{$city->store_opening_time}}" class="form-control">
+                          <input type="time" name="store_opening_time" value="{{$city->store_opening_time}}" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <!--<label class="bmd-label-floating">Valid To</label>-->
                           <p class="card-description">Store Closing Time</p>
-                          <input type="time" name="close_hrs" value="{{$city->store_closing_time}}" class="form-control">
+                          <input type="time" name="store_closing_time" value="{{$city->store_closing_time}}" class="form-control">
                         </div>
                       </div>
                       <div class="col-md-4">

@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Store;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\StoreSchedule;
+use App\Models\WorkDay;
 use DB;
 use Session;
 use Auth;
+use Carbon\Carbon;
 
 class StoreTimeslotController extends Controller
 {
@@ -40,29 +43,45 @@ class StoreTimeslotController extends Controller
             ->where('store_id', $store->id)
             ->first();
 
-        return view('store.time_slot.time_slotadd', compact('title', "city", 'store', 'logo', 'email', 'del_charge', 'minmax', 'incentive', 'currency'));
+        // return view('store.time_slot.time_slotadd', compact('title', "city", 'store', 'logo', 'email', 'del_charge', 'minmax', 'incentive', 'currency'));
+
+        $StoreSchedules = StoreSchedule::where("store_id", $city->id)->get();
+        $daysList = Carbon::getDays();
+
+        return view('store.time_slot.time_slotadd', compact('title', "city", 'store', 'logo', 'email', 'del_charge', 'minmax', 'incentive', 'currency', 'StoreSchedules', 'daysList'));
     }
 
     public function timeslotupdate(Request $request)
     {
+
         $title = "Home";
-        $email = Auth::guard('store')->user()->email;
-        $store = DB::table('store')
-            ->where('email', $email)
-            ->first();
-        $store_id = $store->id;
-        $open_hrs = $request->open_hrs;
-        $close_hrs = $request->close_hrs;
-        $interval = $request->interval;
+        // $email = Auth::guard('store')->user()->email;
+        // $store = DB::table('store')
+        //     ->where('email', $email)
+        //     ->first();
+        // $store_id = $store->id;
+        // $open_hrs = $request->open_hrs;
+        // $close_hrs = $request->close_hrs;
+        // $interval = $request->interval;
 
-        $insert = DB::table('store')
-            ->where('id', $store_id)
-            ->update([
-                'store_opening_time' => $open_hrs,
-                'store_closing_time' => $close_hrs,
-                'time_interval' => $interval
-            ]);
+        // $insert = DB::table('store')
+        //     ->where('id', $store_id)
+        //     ->update([
+        //         'store_opening_time' => $open_hrs,
+        //         'store_closing_time' => $close_hrs,
+        //         'time_interval' => $interval
+        //     ]);
+        $data = $request->all();
 
+        if ($request->status != "on")
+            // $data["status"] == "off";
+            $request->merge(["status" => "off"]);
+
+        $id = Auth::guard("store")->id();
+        StoreSchedule::updateOrCreate([
+            "day_name" => $request->day_name,
+            "store_id" => $id
+        ], $request->all());
         return redirect()->back()->withSuccess(trans('keywords.Updated Successfully'));
     }
 
@@ -94,13 +113,16 @@ class StoreTimeslotController extends Controller
 
             $update = DB::table('freedeliverycart')
                 ->where('store_id', $store_id)
-                ->update(['min_cart_value' => $min_cart_value,
-                    'del_charge' => $del_charge]);
-
+                ->update([
+                    'min_cart_value' => $min_cart_value,
+                    'del_charge' => $del_charge
+                ]);
         } else {
             $update = DB::table('freedeliverycart')
-                ->insert(['min_cart_value' => $min_cart_value,
-                    'del_charge' => $del_charge, 'store_id' => $store_id]);
+                ->insert([
+                    'min_cart_value' => $min_cart_value,
+                    'del_charge' => $del_charge, 'store_id' => $store_id
+                ]);
         }
         if ($update) {
             return redirect()->back()->withSuccess(trans('keywords.Updated Successfully'));
