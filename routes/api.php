@@ -128,7 +128,10 @@ Route::namespace("Api")->prefix('')->group(function () {
   Route::post('checkout', [OrderController::class, 'checkout']);
   /////time slot////// 
   Route::post('resendotp', [UserController::class, 'resendotp']);
-  Route::post('timeslot', [TimeslotController::class, 'timeslot']);
+  // Route::post('timeslot', [TimeslotController::class, 'timeslot']);
+  Route::post('timeslot', [TimeslotController::class, 'timeslot2']);
+  Route::get('working-days/{storeId}', [TimeslotController::class, 'workingDays']);
+
   Route::get('membership_plan', [AppController::class, 'membership_plan']);
   Route::post('forgot_password', [forgotpasswordController::class, 'forgot_password']);
   Route::post('change_pass', [forgotpasswordController::class, 'change_pass'])->name('change_pass');

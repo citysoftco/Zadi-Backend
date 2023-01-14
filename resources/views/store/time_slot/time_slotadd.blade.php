@@ -230,20 +230,35 @@ input:checked + .slider:before {
          <div class="col-md-3">
                         <div class="form-group">
                           <p class="card-description">{{ __('keywords.Store Opening Time')}}</p>
-                          <input type="time" name="store_opening_time" @if($currentDay) value="{{date("H:i", strtotime("2021-11-17 $currentDay->store_opening_time"))}}" @endif class="form-control">
+                          <input type="time" name="store_opening_time" @if($currentDay) value="{{date("H:i", strtotime("$currentDay->store_opening_time"))}}" @endif class="form-control">
                         </div>
                       </div>
         <div class="col-md-3">
             <div class="form-group">
                 <p class="card-description">{{ __('keywords.Store Closing Time')}}</p>
-                <input type="time" name="store_closing_time" @if($currentDay) value="{{date("H:i", strtotime("2021-11-17 $currentDay->store_closing_time"))}}" @endif class="form-control">
+                <input type="time" name="store_closing_time" @if($currentDay) value="{{date("H:i", strtotime("$currentDay->store_closing_time"))}}" @endif class="form-control">
             </div>
         </div>
         <div class="col-md-2 d-flex align-items-center">
 
             @csrf
             <input type="text" hidden name="day_name" value="{{$day}}">
-           <button class="btn btn-success" type="submit" >Update</button>
+            @if ($day == "Monday")
+                  <input type="text" hidden name="day_number" value="1">
+            @elseif ($day == "Tuesday")
+                  <input type="text" hidden name="day_number" value="2">
+             @elseif ($day == "Wednesday")
+                  <input type="text" hidden name="day_number" value="3">
+             @elseif ($day == "Thursday")
+                  <input type="text" hidden name="day_number" value="4">
+             @elseif ($day == "Friday")
+                  <input type="text" hidden name="day_number" value="5">
+             @elseif ($day == "Saturday")
+                  <input type="text" hidden name="day_number" value="6">
+             @elseif ($day == "Sunday")
+                  <input type="text" hidden name="day_number" value="7">
+            @endif
+           <button class="btn btn-primary" type="submit" >Update</button>
         </div>
      
 

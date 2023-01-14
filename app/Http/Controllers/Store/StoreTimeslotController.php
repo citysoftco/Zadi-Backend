@@ -48,6 +48,7 @@ class StoreTimeslotController extends Controller
         $StoreSchedules = StoreSchedule::where("store_id", $city->id)->get();
         $daysList = Carbon::getDays();
 
+
         return view('store.time_slot.time_slotadd', compact('title', "city", 'store', 'logo', 'email', 'del_charge', 'minmax', 'incentive', 'currency', 'StoreSchedules', 'daysList'));
     }
 

@@ -960,13 +960,14 @@ return [
     "ON" => "مفعل",
     "Reward Percent" => "مكافاة النسبة المئوية",
     "Update Rewards" => "تحديث المكافات",
-    "Saturday" => "Saturday",
-    "Sunday" => "Sunday",
-    "Monday" => "Monday",
-    "Tuesday" => "Tuesday",
-    "Wednesday" => "Wednesday",
-    "Thursday" => "Thursday",
-    "Friday" => "Friday"
+    "Saturday" => "السبت",
+    "Sunday" => "الأحد",
+    "Monday" => "الإثنين",
+    "Tuesday" => "الثلاثاء",
+    "Wednesday" => "الأربعاء",
+    "Thursday" => "الخميس",
+    "Friday" => "الجمعة",
+
 
 
 

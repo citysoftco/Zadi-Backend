@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\StoreSchedule;
 use DB;
 use Carbon\Carbon;
 
@@ -46,7 +47,6 @@ class TimeslotController extends Controller
             $new_array_of_time = array();
             for ($i = 0; $i < count($array_of_time) - 1; $i++) {
                 $new_array_of_time[] = '' . $array_of_time[$i] . ' - ' . $array_of_time[$i + 1];
-
             }
 
             $items = last($new_array_of_time);
@@ -76,12 +76,10 @@ class TimeslotController extends Controller
                     if ($orders > $totorders) {
 
                         $new_array_of_time1[] = array('timeslot' => '' . $array_of_time1[$i] . ' - ' . $array_of_time1[$i + 1], 'availibility' => 'available');
-
                     } else {
 
                         $new_array_of_time1[] = array('timeslot' => '' . $array_of_time1[$i] . ' - ' . $array_of_time1[$i + 1], 'availibility' => 'unavailable');
                     }
-
                 }
             } else {
                 while ($start_time <= $end_time) // loop between time
@@ -100,14 +98,12 @@ class TimeslotController extends Controller
                     if ($orders > $totorders) {
 
                         $new_array_of_time1[] = array('timeslot' => '' . $array_of_time1[$i] . ' - ' . $array_of_time1[$i + 1], 'availibility' => 'available');
-
                     } else {
 
                         $new_array_of_time1[] = array('timeslot' => '' . $array_of_time1[$i] . ' - ' . $array_of_time1[$i + 1], 'availibility' => 'unavailable');
                     }
                 }
             }
-
         } elseif (strtotime($date) > strtotime($selected_date)) {
 
             $message = array('status' => '0', 'message' => "You can't select the back date", 'data' => $current_time);
@@ -129,13 +125,11 @@ class TimeslotController extends Controller
                 if ($orders > $totorders) {
 
                     $new_array_of_time1[] = array('timeslot' => '' . $array_of_time1[$i] . ' - ' . $array_of_time1[$i + 1], 'availibility' => 'available');
-
                 } else {
 
                     $new_array_of_time1[] = array('timeslot' => '' . $array_of_time1[$i] . ' - ' . $array_of_time1[$i + 1], 'availibility' => 'unavailable');
                 }
             }
-
         }
         if (count($new_array_of_time1) > 0) {
 
@@ -146,5 +140,46 @@ class TimeslotController extends Controller
             $message = array('status' => '0', 'message' => 'Oops No time slot present', 'data' => $current_time);
             return $message;
         }
+    }
+    public function timeslot2(Request $request)
+    {
+
+        $selectedDay = $request->day_number;
+        $storeId = $request->store_id;
+        $workingTime =   StoreSchedule::where("store_id", $storeId)
+            ->where("status", "on")
+            ->where("day_number", $selectedDay)
+            ->first();
+
+        if ($workingTime == null)
+            return response()->json([
+                'status' => '0',
+                'message' => "Error",
+            ]);
+
+        $start = Carbon::parse($workingTime->store_opening_time);
+        $end = Carbon::parse($workingTime->store_closing_time);
+        $diff = $start->diffInHours($end);
+        $times = [];
+        for ($x = 1; $x < $diff; $x += 2) {
+            //   ' - ' . $array_of_time1[$i + 1], 'availibility' => 'available'
+            $times[] = ['timeslot' => '' .  $start->isoFormat("hh:mm A") . ' - ' . $start->addHour()->isoFormat("hh:mm A"), 'availibility' => 'available'];
+        }
+        // $times[] = $end->isoFormat("hh:mm A");
+
+        return response()->json([
+            'status' => '1',
+            'message' => "Success",
+            "data" => $times
+        ]);
+    }
+    public function workingDays($storeId)
+    {
+        $days =  StoreSchedule::where("store_id", $storeId)->where("status", "on")->get();
+        return response()->json([
+            'status' => '1',
+            'message' => "Success",
+            "data" => $days
+        ]);
     }
 }
