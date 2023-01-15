@@ -206,12 +206,12 @@ input:checked + .slider:before {
 }
                   </style>
                  
-                  @foreach ($daysList as $day )
+                  @foreach ($daysList as $index => $day)
                     
                    @php
                    $currentDay = $StoreSchedules->where("day_name", $day)->first();
                   @endphp
-      <form action="{{route('storetimeslotupdate')}}" method="POST" class="row">
+      <form id="storetimeslotupdate{{$index}}" action="{{route('storetimeslotupdate')}}" method="POST" class="row">
 
 
           <div class="col-md-2 d-flex align-items-center">
@@ -221,9 +221,14 @@ input:checked + .slider:before {
             <div class="form-group">
                 <p class="card-description">{{ __('keywords.ON')}}</p>
               <label class="switch">
-  <input type="checkbox" @if ($currentDay && $currentDay->status == "on")
+  <input id="checkBox{{$index}}" type="checkbox" @if ($currentDay && $currentDay->status == "on")
     checked @endif name="status">
   <span class="slider round"></span>
+  <script>
+  document.getElementById("checkBox{{$index}}").onclick = function(){
+     document.getElementById("storetimeslotupdate{{$index}}").submit();
+   }
+  </script>
 </label>
             </div>
         </div>
