@@ -161,11 +161,12 @@ class TimeslotController extends Controller
         $end = Carbon::parse($workingTime->store_closing_time);
         $diff = $start->diffInHours($end);
         $times = [];
-        for ($x = 0; $x < $diff; $x++) {
+        for ($x = 1; $x < $diff; $x++) {
             //   ' - ' . $array_of_time1[$i + 1], 'availibility' => 'available'
             $times[] = ['timeslot' => '' .  $start->isoFormat("hh:mm A") . ' - ' . $start->addHour()->isoFormat("hh:mm A"), 'availibility' => 'available'];
         }
-        // $times[] = $end->isoFormat("hh:mm A");
+        $times[] = ['timeslot' => '' .  $start->isoFormat("hh:mm A") . ' - ' . $end->isoFormat("hh:mm A"), 'availibility' => 'available'];
+
 
         return response()->json([
             'status' => '1',
