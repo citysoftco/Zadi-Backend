@@ -206,13 +206,14 @@ input:checked + .slider:before {
 }
                   </style>
                  
+                       <form id="storetimeslotupdate" action="{{route('storetimeslotupdate')}}" method="POST">
+
                   @foreach ($daysList as $index => $day)
-                    
+                    <div class="row">
+
                    @php
                    $currentDay = $StoreSchedules->where("day_name", $day)->first();
                   @endphp
-      <form id="storetimeslotupdate{{$index}}" action="{{route('storetimeslotupdate')}}" method="POST" class="row">
-
 
           <div class="col-md-2 d-flex align-items-center">
                    <h1>{{__("keywords.$day")}}</h1>
@@ -221,54 +222,57 @@ input:checked + .slider:before {
             <div class="form-group">
                 <p class="card-description">{{ __('keywords.ON')}}</p>
               <label class="switch">
-  <input id="checkBox{{$index}}" type="checkbox" @if ($currentDay && $currentDay->status == "on")
-    checked @endif name="status">
+  <input type="checkbox" @if ($currentDay && $currentDay->status == "on")
+    checked @endif name="status{{$index}}">
   <span class="slider round"></span>
-  <script>
+  {{-- <script>
   document.getElementById("checkBox{{$index}}").onclick = function(){
      document.getElementById("storetimeslotupdate{{$index}}").submit();
    }
-  </script>
+  </script> --}}
 </label>
             </div>
         </div>
          <div class="col-md-3">
                         <div class="form-group">
                           <p class="card-description">{{ __('keywords.Store Opening Time')}}</p>
-                          <input type="time" name="store_opening_time" @if($currentDay) value="{{date("H:i", strtotime("$currentDay->store_opening_time"))}}" @endif class="form-control">
+                          <input type="time" name="store_opening_time{{$index}}" @if($currentDay) value="{{date("H:i", strtotime("$currentDay->store_opening_time"))}}" @endif class="form-control">
                         </div>
                       </div>
         <div class="col-md-3">
             <div class="form-group">
                 <p class="card-description">{{ __('keywords.Store Closing Time')}}</p>
-                <input type="time" name="store_closing_time" @if($currentDay) value="{{date("H:i", strtotime("$currentDay->store_closing_time"))}}" @endif class="form-control">
+                <input type="time" name="store_closing_time{{$index}}" @if($currentDay) value="{{date("H:i", strtotime("$currentDay->store_closing_time"))}}" @endif class="form-control">
             </div>
         </div>
         <div class="col-md-2 d-flex align-items-center">
 
             @csrf
-            <input type="text" hidden name="day_name" value="{{$day}}">
+            <input type="text" hidden name="day_name{{$index}}" value="{{$day}}">
             @if ($day == "Monday")
-                  <input type="text" hidden name="day_number" value="1">
+                  <input type="text" hidden name="day_number{{$index}}" value="1">
             @elseif ($day == "Tuesday")
-                  <input type="text" hidden name="day_number" value="2">
+                  <input type="text" hidden name="day_number{{$index}}" value="2">
              @elseif ($day == "Wednesday")
-                  <input type="text" hidden name="day_number" value="3">
+                  <input type="text" hidden name="day_number{{$index}}" value="3">
              @elseif ($day == "Thursday")
-                  <input type="text" hidden name="day_number" value="4">
+                  <input type="text" hidden name="day_number{{$index}}" value="4">
              @elseif ($day == "Friday")
-                  <input type="text" hidden name="day_number" value="5">
+                  <input type="text" hidden name="day_number{{$index}}" value="5">
              @elseif ($day == "Saturday")
-                  <input type="text" hidden name="day_number" value="6">
+                  <input type="text" hidden name="day_number{{$index}}" value="6">
              @elseif ($day == "Sunday")
-                  <input type="text" hidden name="day_number" value="7">
+                  <input type="text" hidden name="day_number{{$index}}" value="7">
             @endif
-           <button class="btn btn-primary" type="submit" >Update</button>
+           {{-- <button class="btn btn-primary" type="submit" >Update</button> --}}
+        </div>
         </div>
      
 
-                 </form>
                  @endforeach
+                            <button class="btn btn-primary" type="submit" >Update</button>
+                 </form>
+
 
                   
       <br>

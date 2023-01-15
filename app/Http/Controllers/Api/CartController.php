@@ -16,6 +16,9 @@ class CartController extends Controller
 
     public function add_to_cart(Request $request)
     {
+
+
+
         $current = Carbon::now();
         $user_id = $request->user_id;
         $qty = $request->qty;
@@ -65,6 +68,7 @@ class CartController extends Controller
                     ->where('store_products.varient_id', $varient_id)
                     ->where('store_products.store_id', $store_id)
                     ->first();
+
 
                 if ($qty > $p->max_ord_qty) {
                     $p_name = $p->product_name . "(" . $p->quantity . $p->unit . ")*" . $qty;

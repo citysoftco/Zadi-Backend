@@ -54,7 +54,6 @@ class StoreTimeslotController extends Controller
 
     public function timeslotupdate(Request $request)
     {
-
         $title = "Home";
         // $email = Auth::guard('store')->user()->email;
         // $store = DB::table('store')
@@ -72,17 +71,28 @@ class StoreTimeslotController extends Controller
         //         'store_closing_time' => $close_hrs,
         //         'time_interval' => $interval
         //     ]);
+
         $data = $request->all();
 
-        if ($request->status != "on")
-            // $data["status"] == "off";
-            $request->merge(["status" => "off"]);
-
         $id = Auth::guard("store")->id();
-        StoreSchedule::updateOrCreate([
-            "day_name" => $request->day_name,
-            "store_id" => $id
-        ], $request->all());
+
+        for ($x = 0; $x <= 6; $x++) {
+            if (!isset($data["status$x"]) || $data["status$x"] != "on")
+                $data["status$x"] = "off";
+
+
+
+            StoreSchedule::updateOrCreate([
+                "day_name" => $data["day_name$x"],
+                "store_id" => $id
+            ], [
+                "day_name" => $data["day_name$x"],
+                "day_number" => $data["day_number$x"],
+                "status" => $data["status$x"],
+                "store_opening_time" => $data["store_opening_time$x"],
+                "store_closing_time" => $data["store_closing_time$x"],
+            ]);
+        }
         return redirect()->back()->withSuccess(trans('keywords.Updated Successfully'));
     }
 
