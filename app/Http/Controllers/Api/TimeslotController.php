@@ -176,7 +176,10 @@ class TimeslotController extends Controller
     }
     public function workingDays($storeId)
     {
-        $days =  StoreSchedule::where("store_id", $storeId)->where("status", "on")->get();
+        $days =  StoreSchedule::where("store_id", $storeId)
+            ->where("status", "on")
+            ->orderBy("day_number")
+            ->get();
         return response()->json([
             'status' => '1',
             'message' => "Success",
