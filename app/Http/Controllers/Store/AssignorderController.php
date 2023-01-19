@@ -198,7 +198,7 @@ class AssignorderController extends Controller
                 ->first();
             $sms_status = $sms->sms;
             if ($sms_status == 1) {
-                $codorderplaced = $this->orderconfirmedsms($cart_id, $user_phone, $orr);
+                // $codorderplaced = $this->orderconfirmedsms($cart_id, $user_phone, $orr);
             }
 
             if ($sms->app == 1) {
@@ -290,11 +290,11 @@ class AssignorderController extends Controller
 
         if ($orderconfirm) {
             //send sms and app notification to user//
-            // $sms = DB::table('notificationby')
-            //     ->select('sms', 'app')
-            //     ->where('user_id', $orr->user_id)
-            //     ->first();
-            // $sms_status = $sms->sms;
+            $sms = DB::table('notificationby')
+                ->select('sms', 'app')
+                ->where('user_id', $orr->user_id)
+                ->first();
+            $sms_status = $sms->sms;
             // if ($sms_status == 1) {
             // $codorderplaced = $this->orderconfirmedsms($cart_id, $user_phone, $orr);
             // }

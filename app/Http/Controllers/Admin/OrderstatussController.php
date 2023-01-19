@@ -8,10 +8,18 @@ use DB;
 use Session;
 use Carbon\carbon;
 use App;
+use App\Models\User;
+use App\Traits\SendInapp;
+use App\Traits\SendMail;
+use App\Traits\SendSms;
 use Auth;
 
 class OrderstatussController extends Controller
 {
+    use SendSms;
+    use SendInapp;
+    use SendMail;
+
     public function change(Request $request)
     {
         $cart_id = $request->cart_id;
@@ -31,7 +39,8 @@ class OrderstatussController extends Controller
             ->update([
                 'cancelling_reason' => $reason,
                 'order_status' => $order_status,
-                'updated_at' => $updated_at]);
+                'updated_at' => $updated_at
+            ]);
 
         if ($order) {
             if ($user->payment_method == 'COD' || $user->payment_method == 'Cod' || $user->payment_method == 'cod') {
@@ -77,9 +86,21 @@ class OrderstatussController extends Controller
             ->where('set_id', '1')
             ->first();
 
+        $curr = DB::table('currency')
+            ->first();
+
         $ord = DB::table('orders')
-            ->where('cart_id', $cart_id)
-            ->update(['dboy_id' => $d_boy, 'time_slot' => 'anytime', 'delivery_date' => $next_date, 'order_status' => 'Confirmed']);
+            ->where('cart_id', $cart_id);
+
+        $ord->update(['dboy_id' => $d_boy, 'time_slot' => 'anytime', 'delivery_date' => $next_date, 'order_status' => 'Confirmed']);
+
+        $user = User::find($ord->first()->user_id);
+
+
+        $confirmedinappuser = $this->orderconfirmedinapp($cart_id, $user->user_phone, $ord);
+
+        $confirmedinappdriver = $this->orderconfirmedinappdriver($boy, $cart_id, $user->user_phone, $ord, $curr);
+
 
         return redirect()->back()->withSuccess(trans('keywords.Assigned to') . ' ' . $boy->boy_name . ' ' . trans('keywords.Successfully'));
     }
