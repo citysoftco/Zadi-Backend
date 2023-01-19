@@ -23,10 +23,15 @@ class AssignController extends Controller
             ->where("order_id", $request->order_id)
             ->first();
 
+        if ($dboyToIgnore == null)
+            $dboyToIgnore = 0;
+        else
+            $dboyToIgnore = $dboyToIgnore->dboy_id;
+
         $boys = DB::table('delivery_boy')
             // ->join("orders", "orders.dboy_id", "=", "delivery_boy.dboy_id")
             ->where("delivery_boy.store_id", $request->store_id)
-            ->where("delivery_boy.dboy_id", "!=", $dboyToIgnore->dboy_id)
+            ->where("delivery_boy.dboy_id", "!=", $dboyToIgnore)
             ->get([
                 "delivery_boy.dboy_id",
                 "boy_name",
