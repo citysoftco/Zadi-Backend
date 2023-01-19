@@ -16,13 +16,19 @@ class AssignController extends Controller
     use SendSms;
     use SendInapp;
 
-    public function getStoreDeliveryBoys($storeId)
+    public function getStoreDeliveryBoys(Request $request)
     {
 
+        $dboyToIgnore = DB::table("orders")
+            ->where("order_id", $request->order_id)
+            ->first();
+
         $boys = DB::table('delivery_boy')
-            ->where("store_id", $storeId)
+            // ->join("orders", "orders.dboy_id", "=", "delivery_boy.dboy_id")
+            ->where("delivery_boy.store_id", $request->store_id)
+            ->where("delivery_boy.dboy_id", "!=", $dboyToIgnore->dboy_id)
             ->get([
-                "dboy_id",
+                "delivery_boy.dboy_id",
                 "boy_name",
                 "lat",
                 "lng",
@@ -33,7 +39,7 @@ class AssignController extends Controller
             $message = array('status' => '1', 'message' => 'Delivery Boy List', 'data' => $boys);
             return $message;
         } else {
-            $message = array('status' => '0', 'message' => 'No Delivery Boy In Your Store');
+            $message = array('status' => '0', 'message' => 'No Delivery Boy Avaible in your store');
             return $message;
         }
     }

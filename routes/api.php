@@ -270,7 +270,7 @@ Route::group(['prefix' => 'store', 'namespace' => 'Storeapi'], function () {
   Route::post('order_rejected', [StoreorderController::class, 'order_rejected']);
 
   Route::post('nearbydboys', [AssignController::class, 'delivery_boy_list']);
-  Route::get('get-store-dboys/{store}', [AssignController::class, 'getStoreDeliveryBoys']);
+  Route::post('get-store-dboys', [AssignController::class, 'getStoreDeliveryBoys']);
   Route::post('storeconfirm', [AssignController::class, 'storeconfirm']);
 
   Route::post('cart_invoice', [StoreinvoiceController::class, 'cart_invoice']);
