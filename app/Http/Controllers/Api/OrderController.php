@@ -175,22 +175,22 @@ class OrderController extends Controller
             //     ->select('email', 'app')
             //     ->where('user_id', $user_id)
             //     ->first();
-            // $q = DB::table('users')
-            //     ->select('email', 'name', 'device_id')
-            //     ->where('id', $user_id)
-            //     ->first();
+            $q = DB::table('users')
+                ->select('email', 'name', 'device_id')
+                ->where('id', $user_id)
+                ->first();
             // $user_email = $q->email;
-            // $device_id = $q->device_id;
-            // $user_name = $q->name;
+            $device_id = $q->device_id;
+            $user_name = $q->name;
             // $email_status = $email->email;
 
             // if ($email_status == 1) {
             //     $codorderplaced = $this->codorderplacedMail($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name);
             // }
 
-            // ///////send notification to User//////
+            ///////send notification to User//////
             // if ($email->app == 1) {
-            //     $codorderplaced = $this->codorderplacedinapp($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $user_id, $device_id);
+            $codorderplaced = $this->codorderplacedinapp($cart_id, $prod_name, $price2, $delivery_date, $time_slot, null, $user_name, $user_id, $device_id);
             // }
 
             $orderr1 = DB::table('orders')
@@ -210,7 +210,7 @@ class OrderController extends Controller
                 $orderplacedmsgstore = $this->ordersuccessfullstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $store_phone);
                 // $codorderplacedstore = $this->codorderplacedMailstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $store_n, $store_email);
 
-                // $codorderplacedstore = $this->codorderplacedinappstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $store_n, $store_id);
+                $codorderplacedstore = $this->codorderplacedinappstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, null, $user_name, $store_n, $store_id);
             }
             $admin = DB::table('admin')
                 ->first();
@@ -339,7 +339,7 @@ class OrderController extends Controller
 
                 // if ($email->app == 1) {
                 //     ///////send notification to User//////
-                //     $codorderplaced = $this->codorderplacedinapp($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $user_id);
+                $codorderplaced = $this->codorderplacedinapp($cart_id, $prod_name, $price2, $delivery_date, $time_slot, null, $user_name, $user_id);
                 // }
 
                 $orderr1 = DB::table('orders')
@@ -364,7 +364,7 @@ class OrderController extends Controller
                     // $orderplacedmsgstore = $this->ordersuccessfullstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $store_phone);
                     // $codorderplacedstore = $this->codorderplacedMailstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $store_n, $store_email);
 
-                    // $codorderplacedstore = $this->codorderplacedinappstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, $user_email, $user_name, $store_n, $store_id);
+                    $codorderplacedstore = $this->codorderplacedinappstore($cart_id, $prod_name, $price2, $delivery_date, $time_slot, null, $user_name, $store_n, $store_id);
                 }
 
                 $admin = DB::table('admin')
