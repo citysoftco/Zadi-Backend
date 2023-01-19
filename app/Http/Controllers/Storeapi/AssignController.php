@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Storeapi;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\DeliveryBoy;
 use DB;
 use App\Traits\SendMail;
 use App\Traits\SendSms;
@@ -15,6 +16,27 @@ class AssignController extends Controller
     use SendSms;
     use SendInapp;
 
+    public function getStoreDeliveryBoys($storeId)
+    {
+
+        $boys = DB::table('delivery_boy')
+            ->where("store_id", $storeId)
+            ->get([
+                "dboy_id",
+                "boy_name",
+                "lat",
+                "lng",
+                "boy_city",
+            ]);
+
+        if (count($boys) > 0) {
+            $message = array('status' => '1', 'message' => 'Delivery Boy List', 'data' => $boys);
+            return $message;
+        } else {
+            $message = array('status' => '0', 'message' => 'No Delivery Boy In Your Store');
+            return $message;
+        }
+    }
     public function delivery_boy_list(Request $request)
     {
         $store_id = $request->store_id;
@@ -34,6 +56,8 @@ class AssignController extends Controller
             ->where('delivery_boy.status', '1')
             ->orderBy('distance')
             ->get();
+
+
 
         if (count($nearbydboy) > 0) {
             $message = array('status' => '1', 'message' => 'Delivery Boy List', 'data' => $nearbydboy);
@@ -65,17 +89,23 @@ class AssignController extends Controller
             ->first();
 
         $user_phone = $userssss->user_phone;
-        $nearbydboy = DB::table('delivery_boy')
-            ->join('store_delivery_boy', 'delivery_boy.dboy_id', '=', 'store_delivery_boy.ad_dboy_id')
-            ->select("delivery_boy.dboy_id", DB::raw("6371 * acos(cos(radians(" . $gt_orders->lat . "))
-                * cos(radians(delivery_boy.lat))
-                * cos(radians(delivery_boy.lng) - radians(" . $gt_orders->lng . "))
-                + sin(radians(" . $gt_orders->lat . "))
-                * sin(radians(delivery_boy.lat))) AS distance"))
-            ->groupBy("delivery_boy.boy_name", "delivery_boy.dboy_id", "delivery_boy.lat", "delivery_boy.lng", "delivery_boy.boy_city")
-            ->where('store_delivery_boy.store_id', $store_id)
-            ->where('delivery_boy.status', '1')
-            ->orderBy('distance')
+        // $nearbydboy = DB::table('delivery_boy')
+        //     ->join('store_delivery_boy', 'delivery_boy.dboy_id', '=', 'store_delivery_boy.ad_dboy_id')
+        //     ->select("delivery_boy.dboy_id", DB::raw("6371 * acos(cos(radians(" . $gt_orders->lat . "))
+        //         * cos(radians(delivery_boy.lat))
+        //         * cos(radians(delivery_boy.lng) - radians(" . $gt_orders->lng . "))
+        //         + sin(radians(" . $gt_orders->lat . "))
+        //         * sin(radians(delivery_boy.lat))) AS distance"))
+        //     ->groupBy("delivery_boy.boy_name", "delivery_boy.dboy_id", "delivery_boy.lat", "delivery_boy.lng", "delivery_boy.boy_city")
+        //     ->where('store_delivery_boy.store_id', $store_id)
+        //     ->where('delivery_boy.status', '1')
+        //     ->orderBy('distance')
+        //     ->first();
+
+
+        $nearbydboy = DB::table("delivery_boy")
+            ->where("dboy_id", $request->dboy_id)
+            ->where('status', '1')
             ->first();
 
         if ($nearbydboy) {
@@ -124,19 +154,19 @@ class AssignController extends Controller
 
 
             if ($orderconfirm) {
-                // $sms = DB::table('notificationby')
-                //     ->select('sms', 'app')
-                //     ->where('user_id', $orr->user_id)
-                //     ->first();
+                $sms = DB::table('notificationby')
+                    ->select('sms', 'app')
+                    ->where('user_id', $orr->user_id)
+                    ->first();
                 // $sms_status = $sms->sms;
                 // if ($sms_status == 1) {
-                //     $codorderplaced = $this->orderconfirmedsms($cart_id, $user_phone, $orr);
+                // $codorderplaced = $this->orderconfirmedsms($cart_id, $user_phone, $orr);
                 // }
 
-                // if ($sms->app == 1) {
+                if ($sms->app == 1) {
 
-                //     $confirmedinappuser = $this->orderconfirmedinapp($cart_id, $user_phone, $orr);
-                // }
+                    $confirmedinappuser = $this->orderconfirmedinapp($cart_id, $user_phone, $orr);
+                }
 
 
                 $confirmedinappdriver = $this->orderconfirmedinappdriver($getDDevice, $cart_id, $user_phone, $orr, $curr);
