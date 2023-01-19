@@ -20,7 +20,7 @@ class AssignController extends Controller
     {
 
         $dboyToIgnore = DB::table("orders")
-            ->where("order_id", $request->order_id)
+            ->where("cart_id", $request->cart_id)
             ->first();
 
         if ($dboyToIgnore == null)

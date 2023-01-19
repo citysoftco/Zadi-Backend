@@ -97,9 +97,9 @@ class OrderstatussController extends Controller
         $user = User::find($ord->first()->user_id);
 
 
-        $confirmedinappuser = $this->orderconfirmedinapp($cart_id, $user->user_phone, $ord);
+        $confirmedinappuser = $this->orderconfirmedinapp($cart_id, $user->user_phone, $ord->first());
 
-        $confirmedinappdriver = $this->orderconfirmedinappdriver($boy, $cart_id, $user->user_phone, $ord, $curr);
+        $confirmedinappdriver = $this->orderconfirmedinappdriver($boy, $cart_id, $user->user_phone, $ord->first(), $curr);
 
 
         return redirect()->back()->withSuccess(trans('keywords.Assigned to') . ' ' . $boy->boy_name . ' ' . trans('keywords.Successfully'));
