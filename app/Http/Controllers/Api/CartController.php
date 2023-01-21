@@ -601,7 +601,7 @@ class CartController extends Controller
                 ->where('id', $store_id)
                 ->first();
         } else {
-            return array('status' => '0', 'message' => 'No Items in cart');
+            return array('status' => '0', 'message' => trans('keywords.No Items in cart'));
         }
         $dell = $store->del_range;
         // $typessss = DB::table('address')
@@ -1099,10 +1099,10 @@ class CartController extends Controller
             $discountonmrp = round($discountonmrp, 2);
             $data = array('discountonmrp' => $discountonmrp, 'total_price' => $sum1, 'total_items' => $sum->count, 'data' => $cart_items2, 'total_tax' => $taxtotal, 'avg_tax' => $round_pr, 'data' => $cart_items1);
 
-            $message = array('status' => '1', 'message' => 'Product has been removed from cart', 'data' => $data);
+            $message = array('status' => '1', 'message' => trans("keywords.Product has been removed from cart"), 'data' => $data);
             return $message;
         } else {
-            $message = array('status' => '0', 'message' => 'insertion failed');
+            $message = array('status' => '0', 'message' => trans("keywords.insertion failed"));
             return $message;
         }
     }
