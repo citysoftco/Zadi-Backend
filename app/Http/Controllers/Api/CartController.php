@@ -45,7 +45,7 @@ class CartController extends Controller
             $store_id1 = $cart_items->store_id;
 
             if ($store_id != $store_id) {
-                $message = array('status' => '2', 'message' => 'your previous cart items will be cleared when you are going to order from new store.');
+                $message = array('status' => '2', 'message' => trans("your previous cart items will be cleared when you are going to order from new store."));
                 return $message;
             } else {
                 $cr = substr(md5(microtime()), rand(0, 26), 2);
@@ -557,7 +557,7 @@ class CartController extends Controller
                 $discountonmrp = round($discountonmrp, 2);
                 $adata = array('discountonmrp' => $discountonmrp, 'total_price' => $sum1, 'total_mrp' => $mrppp, 'total_items' => $sum->count, 'store_details' => $nearbystore, 'total_tax' => $taxtotal, 'avg_tax' => $round_pr, 'data' => $cart_items1);
 
-                $message = array('status' => '1', 'message' => 'Cart Updated', 'data' => $adata);
+                $message = array('status' => '1', 'message' => trans("Cart Updated"), 'data' => $adata);
                 return $message;
             } else {
                 $message = array('status' => '0', 'message' => 'insertion failed');

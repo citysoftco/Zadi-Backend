@@ -976,7 +976,9 @@ return [
     "to" => "to",
     "only" => "only",
     "available in quantity" => "available in quantity",
-    "Successfully added to cart" => "Successfully added to cart"
+    "Successfully added to cart" => "Successfully added to cart",
+    "your previous cart items will be cleared when you are going to order from new store." => "your previous cart items will be cleared when you are going to order from new store.",
+    "Cart Updated" => "Cart Updated"
 
 
 

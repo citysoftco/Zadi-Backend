@@ -982,7 +982,9 @@ return [
     "to" => "الى",
     "only" => "فقط",
     "available in quantity" => "متوفر في الكمية",
-    "Successfully added to cart" => "تم الإضافة الى السلة بنجاح"
+    "Successfully added to cart" => "تم الإضافة الى السلة بنجاح",
+    "your previous cart items will be cleared when you are going to order from new store." => "سيتم مسح عناصر عربة التسوق السابقة الخاصة بك عندما تقوم بالطلب من متجر جديد.",
+    "Cart Updated" => "تم تحديث السلة"
 
 
 
