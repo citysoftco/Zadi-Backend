@@ -960,7 +960,16 @@ return [
     "Tuesday" => "Tuesday",
     "Wednesday" => "Wednesday",
     "Thursday" => "Thursday",
-    "Friday" => "Friday"
+    "Friday" => "Friday",
+    "Hey" => "Hey",
+    "You Got a New Order for Delivery on" => "You Got a New Order for Delivery on",
+    "you got an order with cart id" => "you got an order with cart id",
+    "of price" => "of price",
+    "It will have to delivered on" => "It will have to delivered on",
+    "between" => "between",
+    "Your Order is Confirmed" => "Your Order is Confirmed",
+    "Your Order is confirmed: Your order id" => "Your Order is confirmed: Your order id",
+    "is confirmed by the store.You can expect your item(s) will be delivered on" => "is confirmed by the store.You can expect your item(s) will be delivered on"
 
 
 

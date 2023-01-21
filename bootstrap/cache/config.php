@@ -7,7 +7,7 @@
     'url' => 'http://localhost',
     'asset_url' => NULL,
     'timezone' => 'asia/kolkata',
-    'locale' => 'en',
+    'locale' => 'ar',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
     'key' => 'base64:pC0PFjKGLyEILozOTjpFRcxIsoPRWVBvme/8OJ5XRBM=',
@@ -714,7 +714,7 @@
       array (
         'js' => 'https://cdn.jsdelivr.net/npm/flatpickr',
         'css' => 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css',
-        'translate' => '',
+        'translate' => 'https://npmcdn.com/flatpickr/dist/l10n/ar.js',
         'locales' => 
         array (
           'pt_BR' => 

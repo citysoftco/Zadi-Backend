@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'ar',
 
     /*
     |--------------------------------------------------------------------------
@@ -174,9 +174,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-		Srmklive\PayPal\Providers\PayPalServiceProvider::class,
-		Unicodeveloper\Paystack\PaystackServiceProvider::class,
-		Maatwebsite\Excel\ExcelServiceProvider::class,
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class,
+        Unicodeveloper\Paystack\PaystackServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -230,8 +230,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-		'Paystack' => Unicodeveloper\Paystack\Facades\Paystack::class,
-		'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Paystack' => Unicodeveloper\Paystack\Facades\Paystack::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

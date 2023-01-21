@@ -66,10 +66,12 @@ trait SendInapp
 
             $dater = Carbon::now();
             $dd = DB::table('user_notification')
-                ->insert(['user_id' => $user_id,
+                ->insert([
+                    'user_id' => $user_id,
                     'noti_title' => $notification_title,
                     'noti_message' => $notification_text,
-                    'created_at' => $dater]);
+                    'created_at' => $dater
+                ]);
 
             $results = json_decode($result);
         }
@@ -82,8 +84,8 @@ trait SendInapp
             ->where('user_phone', $user_phone)
             ->first();
         $user_name = $user->name;
-        $notification_title = "Hey " . $user_name . ", Your Order is Confirmed";
-        $notification_text = "Your Order is confirmed: Your order id #" . $cart_id . " is confirmed by the store.You can expect your item(s) will be delivered on " . $orr->delivery_date . " (" . $orr->time_slot . ").";
+        $notification_title = trans("keywords.Hey") . " " . $user_name . ", " . trans("keywords.Your Order is Confirmed");
+        $notification_text = trans("keywords.Your Order is confirmed: Your order id") . " #" . $cart_id . " " . trans("keywords.is confirmed by the store.You can expect your item(s) will be delivered on") . " " . $orr->delivery_date . " (" . $orr->time_slot . ").";
 
         $date = date('d-m-Y');
 
@@ -137,10 +139,12 @@ trait SendInapp
 
             $dater = Carbon::now();
             $dd = DB::table('user_notification')
-                ->insert(['user_id' => $orr->user_id,
+                ->insert([
+                    'user_id' => $orr->user_id,
                     'noti_title' => $notification_title,
                     'noti_message' => $notification_text,
-                    'created_at' => $dater]);
+                    'created_at' => $dater
+                ]);
 
             $results = json_decode($result);
         }
@@ -197,10 +201,12 @@ trait SendInapp
             curl_close($ch);
             $dater = Carbon::now();
             $dd = DB::table('user_notification')
-                ->insert(['user_id' => $user_id,
+                ->insert([
+                    'user_id' => $user_id,
                     'noti_title' => $notification_title,
                     'noti_message' => $notification_text,
-                    'created_at' => $dater]);
+                    'created_at' => $dater
+                ]);
 
             $results = json_decode($result);
         }
@@ -268,10 +274,12 @@ trait SendInapp
 
             $dater = Carbon::now();
             $dd = DB::table('user_notification')
-                ->insert(['user_id' => $user_id,
+                ->insert([
+                    'user_id' => $user_id,
                     'noti_title' => $notification_title,
                     'noti_message' => $notification_text,
-                    'created_at' => $dater]);
+                    'created_at' => $dater
+                ]);
 
             $results = json_decode($result);
         }
@@ -339,10 +347,12 @@ trait SendInapp
 
             $dater = Carbon::now();
             $dd = DB::table('user_notification')
-                ->insert(['user_id' => $user_id,
+                ->insert([
+                    'user_id' => $user_id,
                     'noti_title' => $notification_title,
                     'noti_message' => $notification_text,
-                    'created_at' => $dater]);
+                    'created_at' => $dater
+                ]);
 
             $results = json_decode($result);
         }
@@ -396,10 +406,12 @@ trait SendInapp
             curl_close($ch);
             $dater = Carbon::now();
             $dd = DB::table('user_notification')
-                ->insert(['user_id' => $user_id,
+                ->insert([
+                    'user_id' => $user_id,
                     'noti_title' => $notification_title,
                     'noti_message' => $notification_text,
-                    'created_at' => $dater]);
+                    'created_at' => $dater
+                ]);
 
             $results = json_decode($result);
         }
@@ -469,14 +481,15 @@ trait SendInapp
             ///////send notification to store//////
             $dater = Carbon::now();
             $dd = DB::table('store_notification')
-                ->insert(['store_id' => $store_id,
+                ->insert([
+                    'store_id' => $store_id,
                     'not_title' => $notification_title,
                     'not_message' => $notification_text,
-                    'created_at' => $dater]);
+                    'created_at' => $dater
+                ]);
 
             $results = json_decode($result);
         }
-
     }
 
     /////Out For Delivery////////////////////
@@ -540,14 +553,15 @@ trait SendInapp
             ///////send notification to store//////
             $dater = Carbon::now();
             $dd = DB::table('store_notification')
-                ->insert(['store_id' => $store_id,
+                ->insert([
+                    'store_id' => $store_id,
                     'not_title' => $notification_title,
                     'not_message' => $notification_text,
-                    'created_at' => $dater]);
+                    'created_at' => $dater
+                ]);
 
             $results = json_decode($result);
         }
-
     }
 
     /////Delivery Completed////////////////////
@@ -615,22 +629,23 @@ trait SendInapp
             ///////send notification to store//////
             $dater = Carbon::now();
             $dd = DB::table('store_notification')
-                ->insert(['store_id' => $store_id,
+                ->insert([
+                    'store_id' => $store_id,
                     'not_title' => $notification_title,
                     'not_message' => $notification_text,
-                    'created_at' => $dater]);
+                    'created_at' => $dater
+                ]);
 
             $results = json_decode($result);
         }
-
     }
 
 
     /////for driver////
     public function orderconfirmedinappdriver($getDDevice, $cart_id, $user_phone, $orr, $curr)
     {
-        $notification_title = "Hey " . $getDDevice->boy_name . ", You Got a New Order for Delivery on " . $orr->delivery_date;
-        $notification_text = "you got an order with cart id #" . $cart_id . " of price " . $curr->currency_sign . " " . $orr->total_price . ". It will have to delivered on " . $orr->delivery_date . " between " . $orr->time_slot . ".";
+        $notification_title = trans("keywords.Hey") . " " . $getDDevice->boy_name . ", " . trans("keywords.You Got a New Order for Delivery on") . $orr->delivery_date;
+        $notification_text = trans("keywords.you got an order with cart id") . " #" . $cart_id . " " . trans("keywords.of price") . " " . $curr->currency_sign . " " . $orr->total_price . ". " . trans("keywords.It will have to delivered on") . $orr->delivery_date . " " . trans("keywords.between") . " " . $orr->time_slot . ".";
 
         $date = date('d-m-Y');
 
@@ -678,12 +693,13 @@ trait SendInapp
 
         $dater = Carbon::now();
         $dd = DB::table('driver_notification')
-            ->insert(['dboy_id' => $getDDevice->dboy_id,
+            ->insert([
+                'dboy_id' => $getDDevice->dboy_id,
                 'not_title' => $notification_title,
                 'not_message' => $notification_text,
-                'created_at' => $dater]);
+                'created_at' => $dater
+            ]);
         $results = json_decode($result);
-
     }
 
 
@@ -766,9 +782,5 @@ trait SendInapp
             unset($device_id); // unset the array value
 
         }
-
-
     }
-
-
 }

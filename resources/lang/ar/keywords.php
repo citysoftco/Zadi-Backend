@@ -967,6 +967,15 @@ return [
     "Wednesday" => "الأربعاء",
     "Thursday" => "الخميس",
     "Friday" => "الجمعة",
+    "Hey" => "مرحبا",
+    "You Got a New Order for Delivery on" => "لديك طلب جديد للتوصيل في",
+    "you got an order with cart id" => "لقد حصلت على طلب بالرقم",
+    "of price" => "بالسعر",
+    "It will have to delivered on" => "سوف يتم التوصيل في",
+    "between" => "بين",
+    "Your Order is Confirmed" => "لقد تم تأكيد طلبك",
+    "Your Order is confirmed: Your order id" => "لقد تم تأكيد طلبك: رقم طلبك",
+    "is confirmed by the store.You can expect your item(s) will be delivered on" => "is confirmed by the store.You can expect your item(s) will be delivered on"
 
 
 
