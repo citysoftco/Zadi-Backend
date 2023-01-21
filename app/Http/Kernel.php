@@ -22,6 +22,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\RemoveZeroFromPhone::class,
+        \App\Http\Middleware\ApiLocalization::class
     ];
 
     /**
