@@ -294,7 +294,7 @@ class AssignorderController extends Controller
                 ->select('sms', 'app')
                 ->where('user_id', $orr->user_id)
                 ->first();
-            $sms_status = $sms->sms;
+            // $sms_status = $sms->sms;
             // if ($sms_status == 1) {
             // $codorderplaced = $this->orderconfirmedsms($cart_id, $user_phone, $orr);
             // }
