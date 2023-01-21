@@ -72,11 +72,11 @@ class CartController extends Controller
 
                 if ($qty > $p->max_ord_qty) {
                     $p_name = $p->product_name . "(" . $p->quantity . $p->unit . ")*" . $qty;
-                    $message = array('status' => '0', 'message' => 'you have to order ' . $p_name . ' quantity between ' . $p->min_ord_qty . ' to ' . $p->max_ord_qty);
+                    $message = array('status' => '0', 'message' => trans("keywords.you have to order") . ' ' . $p_name . ' ' . trans("keywords.quantity between") . ' ' . $p->min_ord_qty . ' ' . trans("keywords.to") . ' ' . $p->max_ord_qty);
                     return $message;
                 }
                 if ($p->quantity < $qty) {
-                    $message = array('status' => '0', 'message' => 'only ' . $p->quantity . ' available in quantity');
+                    $message = array('status' => '0', 'message' => trans("only") . ' ' . $p->quantity . ' ' . trans("available in quantity"));
                     return $message;
                 }
                 $d = Carbon::Now();
@@ -309,7 +309,7 @@ class CartController extends Controller
                     $discountonmrp = round($discountonmrp, 2);
                     $adata = array('discountonmrp' => $discountonmrp, 'total_price' => $sum1, 'total_mrp' => $mrppp, 'total_items' => $sum->count, 'store_details' => $nearbystore, 'total_tax' => $taxtotal, 'avg_tax' => $round_pr, 'data' => $cart_items1);
 
-                    $message = array('status' => '1', 'message' => 'Successfully added to cart', 'data' => $adata);
+                    $message = array('status' => '1', 'message' => trans("Successfully added to cart"), 'data' => $adata);
                     return $message;
                 } else {
                     $message = array('status' => '0', 'message' => 'insertion failed');

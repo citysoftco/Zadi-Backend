@@ -460,8 +460,8 @@ return [
     'Enter your password' => 'Enter your password',
     'Store Owner' => 'Store Owner',
     'Store Phone' => 'Store Phone',
-    'Order is confirmed and Assigned to' => 'Order is confirmed and Assigned to',
-    'Already Assigned to' => 'Already Assigned to',
+    'Order is confirmed and Assigned to' => 'تم تأكيد الطلب وإعطاه ل',
+    'Already Assigned to' => 'بالفعل تم إعطاه ل',
     'Something wents Wrong' => 'Something Wents Wrong',
     'Order Placed Successfully' => 'Order Placed Successfully',
     'Order Cannot Created' => 'Order Cannot Created',
@@ -975,8 +975,14 @@ return [
     "between" => "بين",
     "Your Order is Confirmed" => "لقد تم تأكيد طلبك",
     "Your Order is confirmed: Your order id" => "لقد تم تأكيد طلبك: رقم طلبك",
-    "is confirmed by the store.You can expect your item(s) will be delivered on" => "is confirmed by the store.You can expect your item(s) will be delivered on"
-
+    "is confirmed by the store.You can expect your item(s) will be delivered on" => "تم تأكيده من قبل المتجر. يمكنك توقع تسليم العنصر الخاصة بك في",
+    "no delivery boy is online/available" => "لا يوجد رجل توصيل متصل حاليا",
+    "you have to order" => "عليك أن تطلب",
+    "quantity between" => "كمية بين",
+    "to" => "الى",
+    "only" => "فقط",
+    "available in quantity" => "متوفر في الكمية",
+    "Successfully added to cart" => "تم الإضافة الى السلة بنجاح"
 
 
 

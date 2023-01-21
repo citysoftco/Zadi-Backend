@@ -969,7 +969,14 @@ return [
     "between" => "between",
     "Your Order is Confirmed" => "Your Order is Confirmed",
     "Your Order is confirmed: Your order id" => "Your Order is confirmed: Your order id",
-    "is confirmed by the store.You can expect your item(s) will be delivered on" => "is confirmed by the store.You can expect your item(s) will be delivered on"
+    "is confirmed by the store.You can expect your item(s) will be delivered on" => "is confirmed by the store.You can expect your item(s) will be delivered on",
+    "no delivery boy is online/available" => "no delivery boy is online/available",
+    "you have to order" => "you have to order",
+    "quantity between" => "quantity between",
+    "to" => "to",
+    "only" => "only",
+    "available in quantity" => "available in quantity",
+    "Successfully added to cart" => "Successfully added to cart"
 
 
 
