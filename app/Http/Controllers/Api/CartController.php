@@ -76,7 +76,7 @@ class CartController extends Controller
                     return $message;
                 }
                 if ($p->quantity < $qty) {
-                    $message = array('status' => '0', 'message' => trans("keyowrds.only") . ' ' . $p->quantity . ' ' . trans("keyowrds.available in quantity"));
+                    $message = array('status' => '0', 'message' => trans("keywords.only") . ' ' . $p->quantity . ' ' . trans("keywords.available in quantity"));
                     return $message;
                 }
                 $d = Carbon::Now();
@@ -309,7 +309,7 @@ class CartController extends Controller
                     $discountonmrp = round($discountonmrp, 2);
                     $adata = array('discountonmrp' => $discountonmrp, 'total_price' => $sum1, 'total_mrp' => $mrppp, 'total_items' => $sum->count, 'store_details' => $nearbystore, 'total_tax' => $taxtotal, 'avg_tax' => $round_pr, 'data' => $cart_items1);
 
-                    $message = array('status' => '1', 'message' => trans("keyowrds.Successfully added to cart"), 'data' => $adata);
+                    $message = array('status' => '1', 'message' => trans("keywords.Successfully added to cart"), 'data' => $adata);
                     return $message;
                 } else {
                     $message = array('status' => '0', 'message' => 'insertion failed');
@@ -557,7 +557,7 @@ class CartController extends Controller
                 $discountonmrp = round($discountonmrp, 2);
                 $adata = array('discountonmrp' => $discountonmrp, 'total_price' => $sum1, 'total_mrp' => $mrppp, 'total_items' => $sum->count, 'store_details' => $nearbystore, 'total_tax' => $taxtotal, 'avg_tax' => $round_pr, 'data' => $cart_items1);
 
-                $message = array('status' => '1', 'message' => trans("keyowrds.Cart Updated"), 'data' => $adata);
+                $message = array('status' => '1', 'message' => trans("keywords.Cart Updated"), 'data' => $adata);
                 return $message;
             } else {
                 $message = array('status' => '0', 'message' => 'insertion failed');
