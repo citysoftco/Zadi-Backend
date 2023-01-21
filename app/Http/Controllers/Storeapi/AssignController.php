@@ -174,10 +174,10 @@ class AssignController extends Controller
                 // $codorderplaced = $this->orderconfirmedsms($cart_id, $user_phone, $orr);
                 // }
 
-                if ($sms->app == 1) {
+                // if ($sms->app == 1) {
 
-                    $confirmedinappuser = $this->orderconfirmedinapp($cart_id, $user_phone, $orr);
-                }
+                $confirmedinappuser = $this->orderconfirmedinapp($cart_id, $user_phone, $orr);
+                // }
 
 
                 $confirmedinappdriver = $this->orderconfirmedinappdriver($getDDevice, $cart_id, $user_phone, $orr, $curr);
