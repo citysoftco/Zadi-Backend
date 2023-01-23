@@ -572,13 +572,13 @@ class CartController extends Controller
 
 
         $user_id = $request->user_id;
-        $delivery_date = $request->delivery_date;
+        // $delivery_date = $request->delivery_date;
         $time_slot = $request->time_slot;
 
+
+
         ///// If User Order after the store Closing time transfer order to next day ///
-
         $delivery_date =  OrderService::getNewDeliveryDate($request);
-
 
         ///// end /////
         $ordsssss = DB::table('orders')
@@ -891,7 +891,7 @@ class CartController extends Controller
 
             $message = array('status' => '1', 'message' => trans('keywords.Proceed to payment'), 'data' => $ordersuccessed);
 
-            if ($delivery_date != $request->delivery_date)
+            if ($delivery_date != Carbon::parse($request->delivery_date)->locale("en")->toDateString())
                 $message = array('status' => '3', 'message' => trans("keywords.Your order will be delivered in") . " $delivery_date " . trans("keywords.Because you requested the order late"), 'data' => $ordersuccessed);
 
             return $message;

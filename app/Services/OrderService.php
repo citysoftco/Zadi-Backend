@@ -15,7 +15,7 @@ class OrderService
     public static function getNewDeliveryDate($request)
     {
 
-        $delivery_date = $request->delivery_date;
+        $delivery_date =  Carbon::parse($request->delivery_date)->locale("en");
 
         $storeSchedules = DB::table("store_schedules")
             ->where("store_id", $request->store_id)
@@ -31,8 +31,9 @@ class OrderService
                     $storeSchedules->push($obj);
                 }
             }
-            $storeSchedulesCount = 7;
         }
+        $storeSchedulesCount = $storeSchedules->count();
+
         $storeSchedules = $storeSchedules->sortBy("day_number")->values();
 
         $avaibleDaysCount =   $storeSchedules
@@ -42,30 +43,37 @@ class OrderService
 
 
         if ($avaibleDaysCount < 1)
-            return $delivery_date;
+            return $delivery_date->toDateString();
 
         $current = Carbon::now()->locale("en");
 
-        $currentStoreDay = $storeSchedules->where("day_name", $current->dayName)->first();
-        if ($current->toTimeString() > $currentStoreDay->store_closing_time) {
 
 
-            $delivery_date = Carbon::parse($delivery_date)->locale("en");
+        $selectedStoreDay = $storeSchedules->where("day_name", $delivery_date->dayName)->first();
+
+        if ($current->toTimeString() > $selectedStoreDay->store_closing_time && $current->addDay()->toDateString() == $delivery_date->toDateString()) {
+
             $incrementDays = 1;
-            $index = array_search($currentStoreDay, $storeSchedules->toArray()) + 1;
 
+            $index = 1;
+            foreach ($storeSchedules as $schedule) {
+                if ($schedule->day_number == $selectedStoreDay->day_number)
+                    break;
+
+                $index++;
+            }
             for ($index; $index < $storeSchedulesCount; $index++) {
 
-                if ($storeSchedules[$index]->status != null && $storeSchedules[$index]->status == "on") {
+                if ($storeSchedules[$index]->status == "on") {
                     break;
                 }
 
                 $index = $index % $storeSchedulesCount;
                 $incrementDays += 1;
             }
-            $delivery_date =  $delivery_date->addDays($incrementDays)->toDateString();
+            $delivery_date =  $delivery_date->addDays($incrementDays);
         }
-        return $delivery_date;
+        return $delivery_date->toDateString();
     }
     public static function getPurchasesByDate($storeId, $fromDate, $toDate)
     {
