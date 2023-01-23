@@ -982,7 +982,9 @@ return [
     "No Items in cart" => "No Items in cart",
     "Product has been removed from cart" => "Product has been removed from cart",
     "insertion failed" => "insertion failed",
-
+    "Proceed to payment" => "Proceed to payment",
+    "Your order will be delivered in" => "Your order will be delivered in",
+    "Because you requested the order late" => "Because you requested the order late"
 
 
 

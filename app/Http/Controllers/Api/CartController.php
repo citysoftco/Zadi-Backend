@@ -889,7 +889,11 @@ class CartController extends Controller
 
             $ordersuccessed->discountonmrp = $ordersuccessed->total_products_mrp - $ordersuccessed->price_without_delivery;
 
-            $message = array('status' => '1', 'message' => 'Proceed to payment', 'data' => $ordersuccessed);
+            $message = array('status' => '1', 'message' => trans('keywords.Proceed to payment'), 'data' => $ordersuccessed);
+
+            if ($delivery_date != $request->delivery_date)
+                $message = array('status' => '3', 'message' => trans("keywords.Your order will be delivered in") . " $delivery_date " . trans("keywords.Because you requested the order late"), 'data' => $ordersuccessed);
+
             return $message;
         } else {
             $message = array('status' => '0', 'message' => trans("keywords.insertion failed"));

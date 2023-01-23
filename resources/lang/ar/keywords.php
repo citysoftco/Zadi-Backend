@@ -987,7 +987,11 @@ return [
     "Cart Updated" => "تم تحديث السلة",
     "No Items in cart" => "السلة فارغة",
     "Product has been removed from cart" => "تم حذف العنصر من السلة بنجاح",
-    "insertion failed" => "خطأ في الإضافة !"
+    "insertion failed" => "خطأ في الإضافة !",
+    "Proceed to payment" => "الشروع في الدفع",
+    "Your order will be delivered in" => "سوف يتم تسليم طلبك في",
+    "Because you requested the order late" => "لأنك طلب الطلب متأخراً"
+
 
 
 
