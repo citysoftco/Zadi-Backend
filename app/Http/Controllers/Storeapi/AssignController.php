@@ -182,7 +182,7 @@ class AssignController extends Controller
 
                 $confirmedinappdriver = $this->orderconfirmedinappdriver($getDDevice, $cart_id, $user_phone, $orr, $curr);
 
-                $message = array('status' => '1', 'message' => trans("keywords.order is confirmed and Assigned to") . ' ' . $getDevice->boy_name);
+                $message = array('status' => '1', 'message' => trans("keywords.Order is confirmed and Assigned to") . ' ' . $getDevice->boy_name);
                 return $message;
             } else {
                 $message = array('status' => '0', 'message' => trans("keywords.Already Assigned to") . ' ' . $getDevice->boy_name);

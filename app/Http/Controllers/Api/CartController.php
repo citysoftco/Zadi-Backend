@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\OrderService;
 use DB;
 use Carbon\Carbon;
 use App\Traits\SendMail;
@@ -312,7 +313,7 @@ class CartController extends Controller
                     $message = array('status' => '1', 'message' => trans("keywords.Successfully added to cart"), 'data' => $adata);
                     return $message;
                 } else {
-                    $message = array('status' => '0', 'message' => 'insertion failed');
+                    $message = array('status' => '0', 'message' =>  trans("keywords.insertion failed"));
                     return $message;
                 }
             }
@@ -560,7 +561,7 @@ class CartController extends Controller
                 $message = array('status' => '1', 'message' => trans("keywords.Cart Updated"), 'data' => $adata);
                 return $message;
             } else {
-                $message = array('status' => '0', 'message' => 'insertion failed');
+                $message = array('status' => '0', 'message' => trans("keywords.insertion failed"));
                 return $message;
             }
         }
@@ -568,11 +569,18 @@ class CartController extends Controller
 
     public function make_an_order(Request $request)
     {
-        $current = Carbon::now();
+
+
         $user_id = $request->user_id;
         $delivery_date = $request->delivery_date;
         $time_slot = $request->time_slot;
 
+        ///// If User Order after the store Closing time transfer order to next day ///
+
+        $delivery_date =  OrderService::getNewDeliveryDate($request);
+
+
+        ///// end /////
         $ordsssss = DB::table('orders')
             ->where('payment_method', NULL)
             ->where('user_id', $user_id)
@@ -600,6 +608,8 @@ class CartController extends Controller
             $store = DB::table('store')
                 ->where('id', $store_id)
                 ->first();
+            // if ($current->toTimeString() > $store->store_closing_time)
+            //     return "biggeer";
         } else {
             return array('status' => '0', 'message' => trans('keywords.No Items in cart'));
         }
@@ -882,7 +892,7 @@ class CartController extends Controller
             $message = array('status' => '1', 'message' => 'Proceed to payment', 'data' => $ordersuccessed);
             return $message;
         } else {
-            $message = array('status' => '0', 'message' => 'insertion failed');
+            $message = array('status' => '0', 'message' => trans("keywords.insertion failed"));
             return $message;
         }
     }
@@ -1412,7 +1422,7 @@ class CartController extends Controller
             $message = array('status' => '1', 'message' => 'Added order Products to cart which are available in quantity', 'data' => $adata);
             return $message;
         } else {
-            $message = array('status' => '0', 'message' => 'insertion failed');
+            $message = array('status' => '0', 'message' => trans("keywords.insertion failed"));
             return $message;
         }
     }

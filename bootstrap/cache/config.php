@@ -4,9 +4,9 @@
     'name' => 'Laravel',
     'env' => 'local',
     'debug' => true,
-    'url' => 'http://localhost',
+    'url' => 'http://192.168.8.114:8000',
     'asset_url' => NULL,
-    'timezone' => 'asia/kolkata',
+    'timezone' => 'Africa/Khartoum',
     'locale' => 'ar',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
@@ -217,7 +217,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => '/home/citysoft/Desktop/zaad/zaad-backend/storage/framework/cache/data',
+        'path' => '/home/citysoft/Desktop/projects/zaad/zaad-backend/storage/framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -480,7 +480,7 @@
     ),
     'temporary_files' => 
     array (
-      'local_path' => '/home/citysoft/Desktop/zaad/zaad-backend/storage/framework/laravel-excel',
+      'local_path' => '/home/citysoft/Desktop/projects/zaad/zaad-backend/storage/framework/laravel-excel',
       'remote_disk' => NULL,
       'remote_prefix' => NULL,
       'force_resync_remote' => NULL,
@@ -494,13 +494,13 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => '/home/citysoft/Desktop/zaad/zaad-backend/storage/app',
+        'root' => '/home/citysoft/Desktop/projects/zaad/zaad-backend/storage/app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => '/home/citysoft/Desktop/zaad/zaad-backend/storage/app/public',
-        'url' => 'http://localhost/storage',
+        'root' => '/home/citysoft/Desktop/projects/zaad/zaad-backend/storage/app/public',
+        'url' => 'http://192.168.8.114:8000/storage',
         'visibility' => 'public',
       ),
       's3' => 
@@ -528,7 +528,7 @@
     ),
     'links' => 
     array (
-      '/home/citysoft/Desktop/zaad/zaad-backend/public/storage' => '/home/citysoft/Desktop/zaad/zaad-backend/storage/app/public',
+      '/home/citysoft/Desktop/projects/zaad/zaad-backend/public/storage' => '/home/citysoft/Desktop/projects/zaad/zaad-backend/storage/app/public',
     ),
   ),
   'hashing' => 
@@ -604,7 +604,7 @@
           'format_to_use_for_docs' => 'json',
           'annotations' => 
           array (
-            0 => '/home/citysoft/Desktop/zaad/zaad-backend/app',
+            0 => '/home/citysoft/Desktop/projects/zaad/zaad-backend/app',
           ),
         ),
       ),
@@ -636,8 +636,8 @@
       ),
       'paths' => 
       array (
-        'docs' => '/home/citysoft/Desktop/zaad/zaad-backend/storage/api-docs',
-        'views' => '/home/citysoft/Desktop/zaad/zaad-backend/resources/views/vendor/l5-swagger',
+        'docs' => '/home/citysoft/Desktop/projects/zaad/zaad-backend/storage/api-docs',
+        'views' => '/home/citysoft/Desktop/projects/zaad/zaad-backend/resources/views/vendor/l5-swagger',
         'base' => NULL,
         'swagger_ui_assets_path' => 'vendor/swagger-api/swagger-ui/dist/',
         'excludes' => 
@@ -753,13 +753,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => '/home/citysoft/Desktop/zaad/zaad-backend/storage/logs/laravel.log',
+        'path' => '/home/citysoft/Desktop/projects/zaad/zaad-backend/storage/logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => '/home/citysoft/Desktop/zaad/zaad-backend/storage/logs/laravel.log',
+        'path' => '/home/citysoft/Desktop/projects/zaad/zaad-backend/storage/logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -810,7 +810,7 @@
       ),
       'emergency' => 
       array (
-        'path' => '/home/citysoft/Desktop/zaad/zaad-backend/storage/logs/laravel.log',
+        'path' => '/home/citysoft/Desktop/projects/zaad/zaad-backend/storage/logs/laravel.log',
       ),
     ),
   ),
@@ -867,7 +867,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => '/home/citysoft/Desktop/zaad/zaad-backend/resources/views/vendor/mail',
+        0 => '/home/citysoft/Desktop/projects/zaad/zaad-backend/resources/views/vendor/mail',
       ),
     ),
   ),
@@ -1174,7 +1174,7 @@ You can switch the language used with the tabs at the top right (or from the nav
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => '/home/citysoft/Desktop/zaad/zaad-backend/storage/framework/sessions',
+    'files' => '/home/citysoft/Desktop/projects/zaad/zaad-backend/storage/framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -1194,9 +1194,9 @@ You can switch the language used with the tabs at the top right (or from the nav
   array (
     'paths' => 
     array (
-      0 => '/home/citysoft/Desktop/zaad/zaad-backend/resources/views',
+      0 => '/home/citysoft/Desktop/projects/zaad/zaad-backend/resources/views',
     ),
-    'compiled' => '/home/citysoft/Desktop/zaad/zaad-backend/storage/framework/views',
+    'compiled' => '/home/citysoft/Desktop/projects/zaad/zaad-backend/storage/framework/views',
   ),
   'debugbar' => 
   array (
@@ -1210,7 +1210,7 @@ You can switch the language used with the tabs at the top right (or from the nav
     array (
       'enabled' => true,
       'driver' => 'file',
-      'path' => '/home/citysoft/Desktop/zaad/zaad-backend/storage/debugbar',
+      'path' => '/home/citysoft/Desktop/projects/zaad/zaad-backend/storage/debugbar',
       'connection' => NULL,
       'provider' => '',
       'hostname' => '127.0.0.1',
@@ -1346,9 +1346,9 @@ You can switch the language used with the tabs at the top right (or from the nav
   ),
   'migrations-generator' => 
   array (
-    'migration_template_path' => '/home/citysoft/Desktop/zaad/zaad-backend/vendor/kitloong/laravel-migrations-generator/config/../stubs/migration.generate.stub',
-    'migration_anonymous_template_path' => '/home/citysoft/Desktop/zaad/zaad-backend/vendor/kitloong/laravel-migrations-generator/config/../stubs/migration.generate.anonymous.stub',
-    'migration_target_path' => '/home/citysoft/Desktop/zaad/zaad-backend/database/migrations',
+    'migration_template_path' => '/home/citysoft/Desktop/projects/zaad/zaad-backend/vendor/kitloong/laravel-migrations-generator/config/../stubs/migration.generate.stub',
+    'migration_anonymous_template_path' => '/home/citysoft/Desktop/projects/zaad/zaad-backend/vendor/kitloong/laravel-migrations-generator/config/../stubs/migration.generate.anonymous.stub',
+    'migration_target_path' => '/home/citysoft/Desktop/projects/zaad/zaad-backend/database/migrations',
     'filename_pattern' => 
     array (
       'table' => '[datetime]_create_[name]_table.php',
@@ -1378,7 +1378,7 @@ You can switch the language used with the tabs at the top right (or from the nav
   'livewire' => 
   array (
     'class_namespace' => 'App\\Http\\Livewire',
-    'view_path' => '/home/citysoft/Desktop/zaad/zaad-backend/resources/views/livewire',
+    'view_path' => '/home/citysoft/Desktop/projects/zaad/zaad-backend/resources/views/livewire',
     'layout' => 'layouts.app',
     'asset_url' => NULL,
     'app_url' => NULL,
@@ -1433,7 +1433,7 @@ You can switch the language used with the tabs at the top right (or from the nav
     'include_helpers' => false,
     'helper_files' => 
     array (
-      0 => '/home/citysoft/Desktop/zaad/zaad-backend/vendor/laravel/framework/src/Illuminate/Support/helpers.php',
+      0 => '/home/citysoft/Desktop/projects/zaad/zaad-backend/vendor/laravel/framework/src/Illuminate/Support/helpers.php',
     ),
     'model_locations' => 
     array (

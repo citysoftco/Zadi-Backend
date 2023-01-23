@@ -981,7 +981,8 @@ return [
     "Cart Updated" => "Cart Updated",
     "No Items in cart" => "No Items in cart",
     "Product has been removed from cart" => "Product has been removed from cart",
-    "insertion failed" => "insertion failed"
+    "insertion failed" => "insertion failed",
+
 
 
 
