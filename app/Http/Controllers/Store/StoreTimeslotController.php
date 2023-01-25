@@ -96,6 +96,49 @@ class StoreTimeslotController extends Controller
         return redirect()->back()->withSuccess(trans('keywords.Updated Successfully'));
     }
 
+    public function updateOrdersTime(Request $request)
+    {
+        $title = "Home";
+        // $email = Auth::guard('store')->user()->email;
+        // $store = DB::table('store')
+        //     ->where('email', $email)
+        //     ->first();
+        // $store_id = $store->id;
+        // $open_hrs = $request->open_hrs;
+        // $close_hrs = $request->close_hrs;
+        // $interval = $request->interval;
+
+        // $insert = DB::table('store')
+        //     ->where('id', $store_id)
+        //     ->update([
+        //         'store_opening_time' => $open_hrs,
+        //         'store_closing_time' => $close_hrs,
+        //         'time_interval' => $interval
+        //     ]);
+
+        $data = $request->all();
+
+        $id = Auth::guard("store")->id();
+
+        for ($x = 0; $x <= 6; $x++) {
+            if (!isset($data["order_time_status$x"]) || $data["order_time_status$x"] != "on")
+                $data["order_time_status$x"] = "off";
+
+
+
+            StoreSchedule::updateOrCreate([
+                "day_name" => $data["day_name$x"],
+                "store_id" => $id
+            ], [
+                "day_name" => $data["day_name$x"],
+                "day_number" => $data["day_number$x"],
+                "order_time_status" => $data["order_time_status$x"],
+                "store_orders_opening_time" => $data["store_orders_opening_time$x"],
+                "store_orders_closing_time" => $data["store_orders_closing_time$x"],
+            ]);
+        }
+        return redirect()->back()->withSuccess(trans('keywords.Updated Successfully'));
+    }
     public function updatedel_charge(Request $request)
     {
         $del_charge = 0;

@@ -49,9 +49,12 @@ class OrderService
 
 
 
-        $currentStoreDay = $storeSchedules->where("day_name", $current->dayName)->first();
+        $currentStoreDay = $storeSchedules->where("day_name", $current->dayName)->where("order_time_status", "on")->first();
 
-        if ($current->toTimeString() > $currentStoreDay->store_closing_time && $current->addDay()->toDateString() == $delivery_date->toDateString()) {
+        if ($currentStoreDay == null)
+            return null;
+
+        if ($current->toTimeString() > $currentStoreDay->store_orders_closing_time && $current->addDay()->toDateString() == $delivery_date->toDateString()) {
 
             $incrementDays = 0;
 

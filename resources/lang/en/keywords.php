@@ -315,6 +315,8 @@ return [
     'Store Time Slot' => 'Store Time Slot',
     'Store Opening Time' => 'Store Opening Time',
     'Store Closing Time' => 'Store Closing Time',
+    "Store Orders Opening Time" => "Store Orders Opening Time",
+    "Store Orders Closing Time" => "Store Orders Closing Time",
     'Interval (Minutes)' => 'Interval (Minutes)',
     'Update Store Time Slot' => 'Update Store Time Slot',
     'Order Value' => 'Order Value',
@@ -984,7 +986,8 @@ return [
     "insertion failed" => "insertion failed",
     "Proceed to payment" => "Proceed to payment",
     "Your order will be delivered in" => "Your order will be delivered in",
-    "Because you requested the order late" => "Because you requested the order late"
+    "Because you requested the order late" => "Because you requested the order late",
+
 
 
 

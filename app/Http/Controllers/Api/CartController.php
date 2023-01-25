@@ -579,6 +579,11 @@ class CartController extends Controller
 
         ///// If User Order after the store Closing time transfer order to next day ///
         $delivery_date =  OrderService::getNewDeliveryDate($request);
+        if ($delivery_date == null)
+            return response()->json([
+                "status" => 0,
+                "message" => "day not aviable"
+            ]);
         ///// end /////
         $ordsssss = DB::table('orders')
             ->where('payment_method', NULL)
