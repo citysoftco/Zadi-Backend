@@ -205,7 +205,7 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
                   </style>
-                  <h1>أوقات العمل</h1>
+                  <h1>{{__("keywords.Working Times")}}</h1>
                   <br>
                        <form id="storetimeslotupdate" action="{{route('storetimeslotupdate')}}" method="POST">
 
@@ -216,7 +216,7 @@ input:checked + .slider:before {
                    $currentDay = $StoreSchedules->where("day_name", $day)->first();
                   @endphp
 
-          <div class="col-md-1 d-flex align-items-center">
+          <div class="col-md-2 d-flex align-items-center">
                    <h1>{{__("keywords.$day")}}</h1>
         </div>
         <div class="col-md-2">
@@ -281,7 +281,7 @@ input:checked + .slider:before {
                 <hr>
                                 <br>
 
-                 <h1>أوقات الطلبات</h1>
+                  <h1>{{__("keywords.Ordering Times")}}</h1>
   <br>
                        <form id="storetimeslotupdate" action="{{route('updateOrdersTime')}}" method="POST">
 
@@ -292,7 +292,7 @@ input:checked + .slider:before {
                    $currentDay = $StoreSchedules->where("day_name", $day)->first();
                   @endphp
 
-          <div class="col-md-1 d-flex align-items-center">
+          <div class="col-md-2 d-flex align-items-center">
                    <h1>{{__("keywords.$day")}}</h1>
         </div>
         <div class="col-md-2">

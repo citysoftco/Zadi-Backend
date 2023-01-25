@@ -992,7 +992,9 @@ return [
     "insertion failed" => "خطأ في الإضافة !",
     "Proceed to payment" => "الشروع في الدفع",
     "Your order will be delivered in" => "سوف يتم تسليم طلبك في",
-    "Because you requested the order late" => "لأنك طلبت الطلب متأخراً"
+    "Because you requested the order late" => "لأنك طلبت الطلب متأخراً",
+    "Ordering Times" => "أوقات التوصيل",
+    "Working Times" => "أوقات العمل"
 
 
 
