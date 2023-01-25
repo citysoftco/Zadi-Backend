@@ -988,7 +988,7 @@ return [
     "Your order will be delivered in" => "Your order will be delivered in",
     "Because you requested the order late" => "Because you requested the order late",
     "Ordering Times" => "Ordering Times",
-    "Working Times" => "Ordering Times"
+    "Working Times" => "Working Times"
 
 
 
