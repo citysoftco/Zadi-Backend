@@ -579,7 +579,6 @@ class CartController extends Controller
 
         ///// If User Order after the store Closing time transfer order to next day ///
         $delivery_date =  OrderService::getNewDeliveryDate($request);
-
         ///// end /////
         $ordsssss = DB::table('orders')
             ->where('payment_method', NULL)

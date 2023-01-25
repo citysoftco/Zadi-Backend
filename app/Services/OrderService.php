@@ -49,27 +49,25 @@ class OrderService
 
 
 
-        $selectedStoreDay = $storeSchedules->where("day_name", $delivery_date->dayName)->first();
+        $currentStoreDay = $storeSchedules->where("day_name", $current->dayName)->first();
 
-        if ($current->toTimeString() > $selectedStoreDay->store_closing_time && $current->addDay()->toDateString() == $delivery_date->toDateString()) {
+        if ($current->toTimeString() > $currentStoreDay->store_closing_time && $current->addDay()->toDateString() == $delivery_date->toDateString()) {
 
-            $incrementDays = 1;
+            $incrementDays = 0;
 
-            $index = 1;
-            foreach ($storeSchedules as $schedule) {
-                if ($schedule->day_number == $selectedStoreDay->day_number)
-                    break;
 
-                $index++;
-            }
-            for ($index; $index < $storeSchedulesCount; $index++) {
+            $index = $storeSchedules->search(function ($schedule) use ($currentStoreDay) {
+                return $schedule->day_number == $currentStoreDay->day_number;
+            }) + 1;
+            while ($index < $storeSchedulesCount) {
 
                 if ($storeSchedules[$index]->status == "on") {
                     break;
                 }
-
+                $index++;
                 $index = $index % $storeSchedulesCount;
-                $incrementDays += 1;
+
+                $incrementDays++;
             }
             $delivery_date =  $delivery_date->addDays($incrementDays);
         }
