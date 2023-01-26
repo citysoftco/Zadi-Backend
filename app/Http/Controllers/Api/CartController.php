@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MakeOrderRequest;
 use App\Services\OrderService;
 use DB;
 use Carbon\Carbon;
@@ -567,7 +568,7 @@ class CartController extends Controller
         }
     }
 
-    public function make_an_order(Request $request)
+    public function make_an_order(MakeOrderRequest $request)
     {
 
 
@@ -585,6 +586,8 @@ class CartController extends Controller
                 "message" => "day not aviable"
             ]);
         ///// end /////
+
+
         $ordsssss = DB::table('orders')
             ->where('payment_method', NULL)
             ->where('user_id', $user_id)

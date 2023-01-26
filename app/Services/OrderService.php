@@ -54,27 +54,48 @@ class OrderService
         if ($currentStoreDay == null)
             return null;
 
-        if ($current->toTimeString() > $currentStoreDay->store_orders_closing_time && $current->addDay()->toDateString() == $delivery_date->toDateString()) {
-
-            $incrementDays = 0;
-
-
-            $index = $storeSchedules->search(function ($schedule) use ($currentStoreDay) {
+        if ($current->toTimeString() > $currentStoreDay->store_orders_closing_time && $current->copy()->addDay()->toDateString() == $delivery_date->toDateString()) {
+            $index = ($storeSchedules->search(function ($schedule) use ($currentStoreDay) {
                 return $schedule->day_number == $currentStoreDay->day_number;
-            }) + 1;
+            }) + 2) % $storeSchedulesCount;
             while ($index < $storeSchedulesCount) {
-
+                $delivery_date->addDay();
                 if ($storeSchedules[$index]->status == "on") {
                     break;
                 }
+
                 $index++;
                 $index = $index % $storeSchedulesCount;
-
-                $incrementDays++;
             }
-            $delivery_date =  $delivery_date->addDays($incrementDays);
         }
-        return $delivery_date->toDateString();
+        $aviableDay =  self::getAviableOrderDeliveryDay($delivery_date, $storeSchedules, $request->store_id);
+        return $aviableDay;
+        // return $delivery_date->toDateString();
+    }
+    public static function getAviableOrderDeliveryDay($deliveryDate, $daysList, $storeId)
+    {
+
+        $daysListCount = count($daysList);
+
+        $startDayIndex = $daysList->search(function ($schedule) use ($deliveryDate) {
+            return $schedule->day_name == $deliveryDate->dayName;
+        });
+
+        while ($startDayIndex < $daysListCount) {
+
+            if ($daysList[$startDayIndex]->status == "on") {
+                $ordersCount = DB::table("orders")
+                    ->where("store_id", $storeId)
+                    ->whereDate("delivery_date", $deliveryDate->toDateString())
+                    ->count();
+                if ($ordersCount < 20)
+                    break;
+            }
+            $startDayIndex++;
+            $startDayIndex = $startDayIndex % $daysListCount;
+            $deliveryDate->addDay();
+        }
+        return $deliveryDate->toDateString();
     }
     public static function getPurchasesByDate($storeId, $fromDate, $toDate)
     {
