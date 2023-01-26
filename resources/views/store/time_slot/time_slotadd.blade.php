@@ -363,6 +363,31 @@ input:checked + .slider:before {
                 </div>
                 <!-- END #general -->
                 <hr>
+                 <div id="sms" class="mb-5">
+                 <div class="card col-md-12 col-sm-12">
+               
+                  <form class="forms-sample" action="{{route('ordersLimit')}}" method="post" enctype="multipart/form-data">
+                      {{csrf_field()}}
+                
+                <div class="card-body">
+                     <div class="row">
+                       <div class="col-md-3">
+                        <div class="form-group">
+                          <label>{{ __('keywords.Orders Limit (per day)')}}</label>
+                          <input type="number" name="orders_limit" @if($city) value="{{($city->orders_limit)}}" @endif class="form-control">
+                        </div>
+                        <div class="form-group">
+                          <label>{{ __('keywords.Unlimited Orders')}}</label>
+                          <input type="checkbox" name="unlimited_orders" @if ($city->unlimited_orders == "1") checked @endif>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-center">{{ __('keywords.UPDATE')}}</button>
+                    <div class="clearfix"></div>
+                  </form>
+                </div>
+              </div>
+              <br>
                 <!-- BEGIN #notifications -->
                 <div id="sms" class="mb-5">
                  <div class="card col-md-12 col-sm-12">

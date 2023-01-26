@@ -568,6 +568,7 @@ Route::group(['middleware' => ['verifylicense']], function () {
             Route::get('store/timeslot', [StoreTimeslotController::class, 'timeslot'])->name('storetimeslot');
             Route::post('store/timeslotupdate', [StoreTimeslotController::class, 'timeslotupdate'])->name('storetimeslotupdate');
             Route::post('store/update-orders-time', [StoreTimeslotController::class, 'updateOrdersTime'])->name('updateOrdersTime');
+            Route::post('store/orders-limit', [StoreTimeslotController::class, 'ordersLimit'])->name('ordersLimit');
             Route::post('amountupdate', [StoreTimeslotController::class, 'amountupdate'])->name('amountupdate');
             Route::post('del_charge/update', [StoreTimeslotController::class, 'updatedel_charge'])->name('updatedel_charge');
 

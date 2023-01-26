@@ -993,8 +993,12 @@ return [
     "Proceed to payment" => "الشروع في الدفع",
     "Your order will be delivered in" => "سوف يتم تسليم طلبك في",
     "Because you requested the order late" => "لأنك طلبت الطلب متأخراً",
+    "Because you requested the order late or orders is full" => "لأنك طلبت الطلب متأخراً أو عدد الطلبات ممتلىء في اليوم الذي إخترته",
     "Ordering Times" => "أوقات الطلبات",
-    "Working Times" => "أوقات العمل"
+    "Working Times" => "أوقات العمل",
+    "Orders Limit (per day)" => "عدد الطلبات في اليوم",
+    "Unlimited Orders" => "طلبات غير محدودة"
+
 
 
 

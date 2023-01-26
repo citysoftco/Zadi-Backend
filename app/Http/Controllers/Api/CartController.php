@@ -576,15 +576,13 @@ class CartController extends Controller
         // $delivery_date = $request->delivery_date;
         $time_slot = $request->time_slot;
 
-
-
         ///// If User Order after the store Closing time transfer order to next day ///
-        $delivery_date =  OrderService::getNewDeliveryDate($request);
-        if ($delivery_date == null)
-            return response()->json([
-                "status" => 0,
-                "message" => "day not aviable"
-            ]);
+        $delivery_date =  OrderService::filterDeliveryDate($request);
+        // if ($delivery_date == null)
+        //     return response()->json([
+        //         "status" => 0,
+        //         "message" => "day not aviable"
+        //     ]);
         ///// end /////
 
 
@@ -899,7 +897,7 @@ class CartController extends Controller
             $message = array('status' => '1', 'message' => trans('keywords.Proceed to payment'), 'data' => $ordersuccessed);
 
             if ($delivery_date != Carbon::parse($request->delivery_date)->locale("en")->toDateString())
-                $message = array('status' => '3', 'message' => trans("keywords.Your order will be delivered in") . " $delivery_date " . trans("keywords.Because you requested the order late"), 'data' => $ordersuccessed);
+                $message = array('status' => '3', 'message' => trans("keywords.Your order will be delivered in") . " $delivery_date " . trans("keywords.Because you requested the order late or orders is full"), 'data' => $ordersuccessed);
 
             return $message;
         } else {

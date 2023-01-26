@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Store;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Store;
 use App\Models\StoreSchedule;
 use App\Models\WorkDay;
 use DB;
@@ -51,7 +52,25 @@ class StoreTimeslotController extends Controller
 
         return view('store.time_slot.time_slotadd', compact('title', "city", 'store', 'logo', 'email', 'del_charge', 'minmax', 'incentive', 'currency', 'StoreSchedules', 'daysList'));
     }
+    public function ordersLimit(Request $request)
+    {
+        $data = $request->all();
 
+        if (isset($data["unlimited_orders"]))
+            $data["unlimited_orders"] = true;
+        else
+            $data["unlimited_orders"] = false;
+
+        $storeId = Auth::guard("store")->id();
+
+        $store = DB::table('store')->where("id", $storeId)
+            ->update([
+                "orders_limit" => $data["orders_limit"],
+                "unlimited_orders" => $data["unlimited_orders"]
+            ]);
+
+        return redirect()->back()->withSuccess(trans('keywords.Updated Successfully'));
+    }
     public function timeslotupdate(Request $request)
     {
         $title = "Home";

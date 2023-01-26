@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Store extends Authenticatable
 {
     use HasFactory, Notifiable;
-    protected $guard = "stores";
+    protected $guarded = "id";
 
     protected $table = "store";
 

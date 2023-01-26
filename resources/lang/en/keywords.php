@@ -987,8 +987,11 @@ return [
     "Proceed to payment" => "Proceed to payment",
     "Your order will be delivered in" => "Your order will be delivered in",
     "Because you requested the order late" => "Because you requested the order late",
+    "Because you requested the order late or orders is full" => "Because you requested the order late or orders is full",
     "Ordering Times" => "Ordering Times",
-    "Working Times" => "Working Times"
+    "Working Times" => "Working Times",
+    "Orders Limit (per day)" => "Orders Limit (per day)",
+    "Unlimited Orders" => "Unlimited Orders"
 
 
 
