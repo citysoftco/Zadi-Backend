@@ -47,34 +47,30 @@ class OrderService
             ->where("status", "on")
             ->count();
 
-
-        if ($avaibleDaysCount < 1)
-            return $delivery_date->toDateString();
-
         $current = Carbon::now()->locale("en");
 
         $currentStoreDay = $storeSchedules->where("day_name", $current->dayName)->where("order_time_status", "on")->first();
 
-        if ($currentStoreDay == null)
-            return null;
 
-        if ($current->toTimeString() > $currentStoreDay->store_orders_closing_time && $current->copy()->addDay()->toDateString() == $delivery_date->toDateString()) {
-            $index = ($storeSchedules->search(function ($schedule) use ($currentStoreDay) {
-                return $schedule->day_number == $currentStoreDay->day_number;
-            }) + 2) % 7;
-            while ($index < 7) {
-                $delivery_date->addDay();
-                if ($storeSchedules[$index]->status == "on") {
-                    break;
+        if ($avaibleDaysCount > 1)
+            if ($currentStoreDay != null)
+                if ($current->toTimeString() > $currentStoreDay->store_orders_closing_time && $current->copy()->addDay()->toDateString() == $delivery_date->toDateString()) {
+                    $index = ($storeSchedules->search(function ($schedule) use ($delivery_date) {
+                        return $schedule->day_name == $delivery_date->dayName;
+                    }) + 1) % 7;
+                    while ($index < 7) {
+                        $delivery_date->addDay();
+                        if ($storeSchedules[$index]->status == "on") {
+                            break;
+                        }
+
+                        $index++;
+                        $index = $index % 7;
+                    }
                 }
-
-                $index++;
-                $index = $index % 7;
-            }
-        }
-        // $aviableDay =  self::getAvailableOrderDeliveryDay($storeSchedules, $request->store_id, $delivery_date->copy());
-        // return $aviableDay;
-        return $delivery_date->toDateString();
+        $availableDay =  self::getAvailableOrderDeliveryDay($storeSchedules, $request->store_id, $delivery_date->copy());
+        return $availableDay;
+        // return $delivery_date->toDateString();
     }
     public static function getAvailableOrderDeliveryDay($daysList, $storeId, $deliveryDate = null)
     {
@@ -83,20 +79,25 @@ class OrderService
             return $schedule->day_name == $deliveryDate->dayName;
         });
         $store = Store::find($storeId);
-        while ($startDayIndex < $daysListCount) {
-            if ($daysList[$startDayIndex]->status == "on") {
-                $ordersCount = DB::table("orders")
-                    ->where("store_id", $storeId)
-                    ->whereDate("delivery_date", $deliveryDate->toDateString())
-                    ->count();
-                if ($ordersCount < $store->orders_limit || $store->orders_limit == null  || $store->unlimited_orders == 1) {
-                    break;
+
+        if ($store->unlimited_orders != 1) {
+            while ($startDayIndex < $daysListCount) {
+                if ($daysList[$startDayIndex]->status == "on") {
+                    $ordersCount =  DB::table("orders")
+                        ->where("store_id", $storeId)
+                        ->where("delivery_date", '=', $deliveryDate->toDateString())
+                        ->count();
+                    if ($ordersCount < $store->orders_limit || $store->orders_limit == null) {
+                        break;
+                    }
                 }
+
+
+                $startDayIndex++;
+                $startDayIndex = $startDayIndex % $daysListCount;
+                $deliveryDate->addDay();
             }
-            $startDayIndex++;
-            $startDayIndex = $startDayIndex % $daysListCount;
-            $deliveryDate->addDay();
-        }
+        };
         return $deliveryDate->toDateString();
     }
     public static function getPurchasesByDate($storeId, $fromDate, $toDate)
