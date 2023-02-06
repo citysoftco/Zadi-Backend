@@ -90,8 +90,12 @@ class OrderService
 
                     $ordersCount =  DB::table("orders")
                         ->where("store_id", $storeId)
-                        ->where("order_status", "Confirmed")
                         ->whereDate("delivery_date", $deliveryDate->toDateString())
+                        ->whereNotNull("payment_status")
+                        ->where(function ($q) {
+                            $q->where("order_status", "Pending")
+                                ->orWhere("order_status", "Confirmed");
+                        })
                         ->count("delivery_date");
 
                     if ($store->orders_limit > $ordersCount) {
