@@ -578,6 +578,7 @@ class CartController extends Controller
 
         ///// If User Order after the store Closing time transfer order to next day ///
         $delivery_date =  OrderService::filterDeliveryDate($request);
+
         // if ($delivery_date == null)
         //     return response()->json([
         //         "status" => 0,

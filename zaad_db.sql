@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 25, 2023 at 10:35 AM
+-- Generation Time: Jan 29, 2023 at 09:03 AM
 -- Server version: 5.7.23-23
 -- PHP Version: 7.4.33
 
@@ -355,7 +355,8 @@ INSERT INTO `cart_rewards` (`cart_rewards_id`, `cart_id`, `rewards`, `user_id`) 
 (13, 'LFIL864a', 10, 71),
 (14, 'UWLJ7344', 10, 65),
 (15, 'HKTT21c7', 10, 70),
-(16, 'ISIP2138', 10, 71);
+(16, 'ISIP2138', 10, 71),
+(17, 'YJHG60eb', 10, 71);
 
 -- --------------------------------------------------------
 
@@ -436,8 +437,10 @@ INSERT INTO `cart_status` (`status_id`, `pending`, `confirm`, `out_for_delivery`
 (56, '2023-01-22 15:18:36', NULL, NULL, NULL, NULL, 'DAUH919a'),
 (57, '2023-01-22 15:29:13', NULL, '2023-01-23 19:19:47', '2023-01-23 19:20:00', NULL, 'UWLJ7344'),
 (58, '2023-01-22 18:27:39', NULL, '2023-01-24 09:11:11', '2023-01-24 09:13:58', NULL, 'HKTT21c7'),
-(59, '2023-01-24 07:50:46', NULL, NULL, NULL, NULL, 'YJHG60eb'),
-(60, '2023-01-24 09:17:42', NULL, '2023-01-24 09:18:45', '2023-01-24 09:22:12', NULL, 'ISIP2138');
+(59, '2023-01-24 07:50:46', NULL, '2023-01-28 18:55:34', '2023-01-28 18:55:53', NULL, 'YJHG60eb'),
+(60, '2023-01-24 09:17:42', NULL, '2023-01-24 09:18:45', '2023-01-24 09:22:12', NULL, 'ISIP2138'),
+(61, '2023-01-26 16:40:14', NULL, NULL, NULL, NULL, 'ZSFY18ad'),
+(62, '2023-01-28 18:51:59', NULL, NULL, NULL, NULL, 'RNLJ2906');
 
 -- --------------------------------------------------------
 
@@ -706,7 +709,7 @@ CREATE TABLE `delivery_boy` (
 --
 
 INSERT INTO `delivery_boy` (`dboy_id`, `boy_name`, `boy_phone`, `boy_city`, `password`, `device_id`, `boy_loc`, `lat`, `lng`, `status`, `store_id`, `store_dboy_id`, `added_by`, `id_no`, `id_photo`, `image`, `id_name`, `current_lat`, `current_lng`) VALUES
-(4, 'mohamed moatasem', '0116925162', 'Khartoum bahri', '77897789', 'fwgmAz9BQ5SmQxJaF76L5_:APA91bEbBqBj3b3eAybHX-9j1dMXVBp246bR60kHRyiM-J7C34HUwLpP1iR_olzSwSi0Qe_eoceY5z4u9-uv476y5PkHSnpkc8qeyCsYPZpLYTd1ealv5tcTGUMfW8UCKbUy4neYpfIe', 'Khartoum, السودان', '15.5006544', '32.5598994', 1, 3, 0, 'store', '1', '/images/dboy/12-01-2023/11a08636-f3ad-4d7b-8214-ca7b7c6562b5.jpg', NULL, 'ZAAD Card', '15.6053911', '32.5731329'),
+(4, 'mohamed moatasem', '0116925162', 'Khartoum bahri', '77897789', 'fwgmAz9BQ5SmQxJaF76L5_:APA91bEbBqBj3b3eAybHX-9j1dMXVBp246bR60kHRyiM-J7C34HUwLpP1iR_olzSwSi0Qe_eoceY5z4u9-uv476y5PkHSnpkc8qeyCsYPZpLYTd1ealv5tcTGUMfW8UCKbUy4neYpfIe', 'Khartoum, السودان', '15.5006544', '32.5598994', 1, 3, 0, 'store', '1', '/images/dboy/12-01-2023/11a08636-f3ad-4d7b-8214-ca7b7c6562b5.jpg', NULL, 'ZAAD Card', '15.7142979', '32.6053117'),
 (5, 'منتصر', '0124736128', 'Khartoum bahri', '7789', NULL, 'ودمدني، Sudan', '14.393082', '33.5392081', 1, 3, 0, 'store', '1234', '/images/dboy/21-01-2023/index.jpeg', NULL, 'ZAAD Card', NULL, NULL);
 
 -- --------------------------------------------------------
@@ -793,7 +796,7 @@ CREATE TABLE `driver_incentive` (
 
 INSERT INTO `driver_incentive` (`id`, `dboy_id`, `earned_till_now`, `paid_till_now`, `remaining`) VALUES
 (1, 1, '12012', '444', '11568'),
-(2, 4, '16000', '0', '16000');
+(2, 4, '18000', '0', '18000');
 
 -- --------------------------------------------------------
 
@@ -845,7 +848,8 @@ INSERT INTO `driver_notification` (`not_id`, `not_title`, `image`, `not_message`
 (27, 'مرحبا منتصر, لديك طلب جديد للتوصيل في2023-01-23', NULL, 'لقد حصلت على طلب بالرقم #LFIL864a بالسعر SDG 194300. سوف يتم التوصيل في2023-01-23 بين 03:00 م - 04:00 م.', 5, 0, '2023-01-23 19:22:01'),
 (28, 'مرحبا mohamed moatasem, لديك طلب جديد للتوصيل في2023-01-23', NULL, 'لقد حصلت على طلب بالرقم #LFIL864a بالسعر SDG 194300. سوف يتم التوصيل في2023-01-23 بين 03:00 م - 04:00 م.', 4, 0, '2023-01-23 19:22:18'),
 (29, 'مرحبا mohamed moatasem, لديك طلب جديد للتوصيل في2023-01-25', NULL, 'لقد حصلت على طلب بالرقم #HKTT21c7 بالسعر SDG 593000. سوف يتم التوصيل في2023-01-25 بين 04:00 م - 05:00 م.', 4, 0, '2023-01-24 09:10:36'),
-(30, 'مرحبا mohamed moatasem, لديك طلب جديد للتوصيل في2023-01-25', NULL, 'لقد حصلت على طلب بالرقم #ISIP2138 بالسعر SDG 110960. سوف يتم التوصيل في2023-01-25 بين 02:00 ص - 02:00 ص.', 4, 0, '2023-01-24 09:18:21');
+(30, 'مرحبا mohamed moatasem, لديك طلب جديد للتوصيل في2023-01-25', NULL, 'لقد حصلت على طلب بالرقم #ISIP2138 بالسعر SDG 110960. سوف يتم التوصيل في2023-01-25 بين 02:00 ص - 02:00 ص.', 4, 0, '2023-01-24 09:18:21'),
+(31, 'مرحبا mohamed moatasem, لديك طلب جديد للتوصيل في2023-01-28', NULL, 'لقد حصلت على طلب بالرقم #YJHG60eb بالسعر SDG 41200. سوف يتم التوصيل في2023-01-28 بين 02:00 م - 03:00 م.', 4, 0, '2023-01-28 18:54:45');
 
 -- --------------------------------------------------------
 
@@ -1740,6 +1744,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('38d07c92b819c2d745257dc1273103216f5982795a7d0dcb4880c320abe5ddd5f9030004f9436162', 2, 1, 'token', '[]', 0, '2021-11-15 18:39:18', '2021-11-15 18:39:18', '2022-11-15 18:39:18'),
 ('38f1476676489d1a239834fafaf235a364acfa4e33cfbec12ff37f16cf57450f644385114f337298', 61, 1, 'token', '[]', 0, '2021-12-01 10:42:00', '2021-12-01 10:42:00', '2022-12-01 10:42:00'),
 ('38fc606b6022350562eb4730c75e17a80c4c7911c56cb1ecb2f926ea765b77e5497d9edea221dbc4', 2, 1, 'token', '[]', 0, '2021-12-10 18:06:36', '2021-12-10 18:06:36', '2022-12-10 18:06:36'),
+('3915da562feabf19dd62202d39af3e126833209068d30deea9d2150827ba5717e5950996d9795c53', 72, 1, '63d559db78ec5', '[]', 0, '2023-01-28 19:22:35', '2023-01-28 19:22:35', '2024-01-28 19:22:35'),
 ('39359465d556329e04f3f760d9cc047fef271e7c850cb41faeaa8ea6fd082f5c6ecc45483410a486', 37, 1, 'token', '[]', 0, '2021-11-17 18:19:12', '2021-11-17 18:19:12', '2022-11-17 18:19:12'),
 ('3955f01377ca761412320e919d791a79d67d8c8cefd14d068785654167ca0902fc5e5f0d97fcf250', 2, 1, 'token', '[]', 0, '2021-11-29 18:09:17', '2021-11-29 18:09:17', '2022-11-29 18:09:17'),
 ('39916976d8315a408a95eb8a7239fef23330971b0b94fbc55973be8e2fdb933718b423c6916d96cc', 61, 1, 'token', '[]', 0, '2021-12-03 11:38:15', '2021-12-03 11:38:15', '2022-12-03 11:38:15'),
@@ -1861,9 +1866,9 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('4aaff1645f4df478bfcb03d42f93b866aa7eecde09289dbf2cdae7e449cb96902959e290866f7f5f', 2, 1, 'token', '[]', 0, '2021-11-19 17:43:28', '2021-11-19 17:43:28', '2022-11-19 17:43:28'),
 ('4abeb360138b70b8015449f0581a718dcb74b7a701c8ab1d51148273f08d9b776a5fdb69ba41d5cb', 62, 1, 'token', '[]', 0, '2022-12-25 11:32:38', '2022-12-25 11:32:38', '2023-12-25 11:32:38'),
 ('4ad92cf18321056785703fad52e2e0f9344537da741e98a624f46d6a78424adc3fb9f7e46ad0e510', 66, 1, 'token', '[]', 0, '2023-01-10 14:30:16', '2023-01-10 14:30:16', '2024-01-10 14:30:16'),
-('4b3c1986b329ade9e22b93bd373d2816298f3a55d2832733b87a07f4722a135c4d060e62312b49b0', 50, 1, 'token', '[]', 0, '2021-11-30 18:57:19', '2021-11-30 18:57:19', '2022-11-30 18:57:19'),
-('4b6443251a7454c9e920918a9c063607f9ab8bec579f9e855d91c6affdfae799eee8dbde2f2534a4', 50, 1, 'token', '[]', 0, '2021-11-30 12:07:26', '2021-11-30 12:07:26', '2022-11-30 12:07:26');
+('4b3c1986b329ade9e22b93bd373d2816298f3a55d2832733b87a07f4722a135c4d060e62312b49b0', 50, 1, 'token', '[]', 0, '2021-11-30 18:57:19', '2021-11-30 18:57:19', '2022-11-30 18:57:19');
 INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('4b6443251a7454c9e920918a9c063607f9ab8bec579f9e855d91c6affdfae799eee8dbde2f2534a4', 50, 1, 'token', '[]', 0, '2021-11-30 12:07:26', '2021-11-30 12:07:26', '2022-11-30 12:07:26'),
 ('4b757e5e4d8a1cbc473b59ebff7220a6c18e66cb8966be4cb90ea7b925f52ece551468c4a4cbf318', 50, 1, 'token', '[]', 0, '2021-11-30 11:49:41', '2021-11-30 11:49:41', '2022-11-30 11:49:41'),
 ('4b9ba52e42f12d5b6c7ecaca7590b0a467c1a415eb533552d078eb5597c12c078ba64760916bb902', 61, 1, 'token', '[]', 0, '2021-12-01 10:54:55', '2021-12-01 10:54:55', '2022-12-01 10:54:55'),
 ('4bae940fb6a421f857b3632e62fe3df0cee1ee6843e95504ee7da8c5a7a1e1c5b1e802a49646bf6e', 2, 1, 'token', '[]', 0, '2021-12-07 18:29:15', '2021-12-07 18:29:15', '2022-12-07 18:29:15'),
@@ -2142,9 +2147,9 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('6e573616d9f7a27ce45bd3edb034e657ecd307056557e5f44b2d68fac05a86701f2c7b5b61439215', 2, 1, 'token', '[]', 0, '2021-12-13 12:30:54', '2021-12-13 12:30:54', '2022-12-13 12:30:54'),
 ('6e7f9d8d5f27b2b20f356699f181635abaaa633b110fb5073d1398fb609b66b8c77c3cd8cfac9b7c', 37, 1, 'token', '[]', 0, '2021-11-18 10:46:29', '2021-11-18 10:46:29', '2022-11-18 10:46:29'),
 ('6ee08eaaba78064edff81af22c51a191b8ee182771b43854a3541bcb2ef879bf566cc241f90de963', 50, 1, 'token', '[]', 0, '2021-11-29 17:21:23', '2021-11-29 17:21:23', '2022-11-29 17:21:23'),
-('6eed282cbf8cda3a8a9a6f7e3807e75eec74efb23e92969e791af695a0bcb1cbc7de1b5c8f25a3e9', 106, 1, 'token', '[]', 0, '2021-12-10 11:08:37', '2021-12-10 11:08:37', '2022-12-10 11:08:37'),
-('6f44ea37537ea84ca6aa3af15c6620f5e05c72eb602f9ed921bae6ead21dd606f33f0abf01ac8e86', 80, 1, 'token', '[]', 0, '2021-12-18 09:59:34', '2021-12-18 09:59:34', '2022-12-18 09:59:34');
+('6eed282cbf8cda3a8a9a6f7e3807e75eec74efb23e92969e791af695a0bcb1cbc7de1b5c8f25a3e9', 106, 1, 'token', '[]', 0, '2021-12-10 11:08:37', '2021-12-10 11:08:37', '2022-12-10 11:08:37');
 INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('6f44ea37537ea84ca6aa3af15c6620f5e05c72eb602f9ed921bae6ead21dd606f33f0abf01ac8e86', 80, 1, 'token', '[]', 0, '2021-12-18 09:59:34', '2021-12-18 09:59:34', '2022-12-18 09:59:34'),
 ('6f502a6375ea4a37c65e3563fa78b4a4823ce1551cad53d6952b5ff57f249db93199616c500a96bb', 62, 1, 'token', '[]', 0, '2022-12-28 18:33:33', '2022-12-28 18:33:33', '2023-12-28 18:33:33'),
 ('6f7e1f8dc13e66432156d21b8588979fd6806907e3821cb4bf8885714737352f7a5fad71a0554a50', 37, 1, 'token', '[]', 0, '2021-11-17 17:39:26', '2021-11-17 17:39:26', '2022-11-17 17:39:26'),
 ('6f81da4eeb41b1a0a445a73e0c7a2168c0a676b152aa5c59d34c3371b7bf4d4c2012c315b8103727', 37, 1, 'token', '[]', 0, '2021-11-29 11:18:32', '2021-11-29 11:18:32', '2022-11-29 11:18:32'),
@@ -2403,6 +2408,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('8ffae451c16dc9ca7e1ef28ee7bc978007af1cb00b54f7963f0be1eb1755311668bc33c85b3e2bc4', 2, 1, 'token', '[]', 0, '2021-11-26 16:27:35', '2021-11-26 16:27:35', '2022-11-26 16:27:35'),
 ('902b5c19f27db0d5f5fa4f0a0b098297ad6670d11c274f91832cb249926f5b9e98c734e0d3b95836', 50, 1, 'token', '[]', 0, '2021-12-01 14:41:32', '2021-12-01 14:41:32', '2022-12-01 14:41:32'),
 ('90461e69d187554f3ec15cc212b44afcfa283bc6a985bab985011c0b3883fff01d2cf439d9bdc158', 80, 1, 'token', '[]', 0, '2021-12-09 09:59:08', '2021-12-09 09:59:08', '2022-12-09 09:59:08'),
+('9047de8163305e5bdfae53e9efcaedbe71f88b1e7ca134863f07418b9b631ffa34e74f14668dd9c0', 72, 1, '63d2610e087a5', '[]', 0, '2023-01-26 13:16:30', '2023-01-26 13:16:30', '2024-01-26 13:16:30'),
 ('90659eb480e7610ff3aaf9f1944b73b9f4fafe0be2fd8381b46eb1c70b703a03f952e09cfe480aa9', 37, 1, 'token', '[]', 0, '2021-11-17 18:17:24', '2021-11-17 18:17:24', '2022-11-17 18:17:24'),
 ('9086045acfcdafd3a8f7866646a547b3b5c40bba2c8c1f13b96f2dd5860d004b9e815714666c4641', 50, 1, 'token', '[]', 0, '2021-11-24 16:03:43', '2021-11-24 16:03:43', '2022-11-24 16:03:43'),
 ('90aa2aee4f00baceb6f761d2680c2fbf4b4a11af3bc2a22949cb880bc45b546af5f249a3ccc465e3', 2, 1, 'token', '[]', 0, '2021-11-16 14:26:11', '2021-11-16 14:26:11', '2022-11-16 14:26:11'),
@@ -2422,10 +2428,10 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('9287ba36cf77165448730279a3d568b33991e0541d63f163b5924a2a356b9900b33f132311b99529', 2, 1, 'token', '[]', 0, '2021-12-04 11:10:44', '2021-12-04 11:10:44', '2022-12-04 11:10:44'),
 ('92938164ec0b0d268137eda4d32ce3d9153646ae492d525ffe4471a2c37421c07cc9bda6641627c5', 2, 1, 'token', '[]', 0, '2021-12-07 18:13:00', '2021-12-07 18:13:00', '2022-12-07 18:13:00'),
 ('9296cb7d771dc0a6c4cf3bc0426469c7271c0ea0aa79354aa67deb77160ffb63f26b28061a112be1', 50, 1, 'token', '[]', 0, '2021-11-30 11:59:08', '2021-11-30 11:59:08', '2022-11-30 11:59:08'),
-('92bc9e1d59d68d9c8bcef9e2c7fa1f2ba2219dd68d1c5fc2393b53205593e868e9646b7252851b34', 61, 1, 'token', '[]', 0, '2021-12-01 11:27:42', '2021-12-01 11:27:42', '2022-12-01 11:27:42'),
-('92c3bb7d6f6fe396ab90c7085907702edb2b4b5102b85e59074937c646f09541b06582b81a6063c3', 2, 1, 'token', '[]', 0, '2021-12-04 17:37:48', '2021-12-04 17:37:48', '2022-12-04 17:37:48'),
-('92df686bedd1b02ba111c1f64169c2d269b7a0b1cecd5a13ee56e2e781cf13a153ca001b9b537792', 50, 1, 'token', '[]', 0, '2021-11-30 18:57:01', '2021-11-30 18:57:01', '2022-11-30 18:57:01');
+('92bc9e1d59d68d9c8bcef9e2c7fa1f2ba2219dd68d1c5fc2393b53205593e868e9646b7252851b34', 61, 1, 'token', '[]', 0, '2021-12-01 11:27:42', '2021-12-01 11:27:42', '2022-12-01 11:27:42');
 INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('92c3bb7d6f6fe396ab90c7085907702edb2b4b5102b85e59074937c646f09541b06582b81a6063c3', 2, 1, 'token', '[]', 0, '2021-12-04 17:37:48', '2021-12-04 17:37:48', '2022-12-04 17:37:48'),
+('92df686bedd1b02ba111c1f64169c2d269b7a0b1cecd5a13ee56e2e781cf13a153ca001b9b537792', 50, 1, 'token', '[]', 0, '2021-11-30 18:57:01', '2021-11-30 18:57:01', '2022-11-30 18:57:01'),
 ('934219197bb4bd77cda11ee59e5d49076e25d9899e5691dab0f1ba77182e068f53e0c82bdd566631', 65, 1, 'token', '[]', 0, '2023-01-05 17:16:35', '2023-01-05 17:16:35', '2024-01-05 17:16:35'),
 ('937d598e32a221d29356c6cb6e423c48685bde6c8d674474022e28494438e9b852d14fefa6abd9d5', 80, 1, 'token', '[]', 0, '2021-12-21 17:33:31', '2021-12-21 17:33:31', '2022-12-21 17:33:31'),
 ('93ab75effe5479cc926f5351250ac94172ff4b0a6e00d19def6c487c6c2baed17bd923b1c5741a5e', 37, 1, 'token', '[]', 0, '2021-11-17 18:17:28', '2021-11-17 18:17:28', '2022-11-17 18:17:28'),
@@ -2702,10 +2708,10 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('b89c2c06ad253bfad3999fead5ea1cc998610a2fca57880a0af4dde61af519e3fdf73b4163567381', 51, 1, 'token', '[]', 0, '2021-11-30 18:07:32', '2021-11-30 18:07:32', '2022-11-30 18:07:32'),
 ('b912fe39b77b53b02c824e5c09300b6f36597f73c958e14d2a0ef2d2696da2682aae59f074ef37ac', 2, 1, 'token', '[]', 0, '2021-11-13 11:33:11', '2021-11-13 11:33:11', '2022-11-13 11:33:11'),
 ('b94283691d1cb0837d7a4168212a029cb9dab9764b712fc68a1db140de93388ea4746d0d56a60d93', 89, 1, 'token', '[]', 0, '2021-12-08 13:15:07', '2021-12-08 13:15:07', '2022-12-08 13:15:07'),
-('b9435da436045c496ae9a5c2185071a5104d1d023de008c3fb80fff91d3b1285fd1964aeecda79f3', 2, 1, 'token', '[]', 0, '2021-11-29 16:27:01', '2021-11-29 16:27:01', '2022-11-29 16:27:01'),
-('b9834da5df74701526e1c44e5e01292a3b90563f1cc31bbb0a2bb9d83a0b0ffcd1279a4a74d886c4', 50, 1, 'token', '[]', 0, '2021-11-30 11:41:33', '2021-11-30 11:41:33', '2022-11-30 11:41:33'),
-('b99601ffe1b0d342a48c6d3b453ae92886963e6c10b36db007ebe35f0334334bbe1452866278be62', 37, 1, 'token', '[]', 0, '2021-11-17 18:32:10', '2021-11-17 18:32:10', '2022-11-17 18:32:10');
+('b9435da436045c496ae9a5c2185071a5104d1d023de008c3fb80fff91d3b1285fd1964aeecda79f3', 2, 1, 'token', '[]', 0, '2021-11-29 16:27:01', '2021-11-29 16:27:01', '2022-11-29 16:27:01');
 INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('b9834da5df74701526e1c44e5e01292a3b90563f1cc31bbb0a2bb9d83a0b0ffcd1279a4a74d886c4', 50, 1, 'token', '[]', 0, '2021-11-30 11:41:33', '2021-11-30 11:41:33', '2022-11-30 11:41:33'),
+('b99601ffe1b0d342a48c6d3b453ae92886963e6c10b36db007ebe35f0334334bbe1452866278be62', 37, 1, 'token', '[]', 0, '2021-11-17 18:32:10', '2021-11-17 18:32:10', '2022-11-17 18:32:10'),
 ('b9a0394c525ff5879712801a9b531ba028b73186153ae2622fe7a42a88aecf714cf37d30306c2849', 108, 1, 'token', '[]', 0, '2021-12-10 11:41:47', '2021-12-10 11:41:47', '2022-12-10 11:41:47'),
 ('b9e18cbdf7957e9796e87287a353ce43eb6db02b0ddbf921966c1e4e43e5f7144edd23af611fe3ce', 2, 1, 'token', '[]', 0, '2021-12-04 18:44:19', '2021-12-04 18:44:19', '2022-12-04 18:44:19'),
 ('ba1ffe45c8f4c91bc376f98005a11fd74f5271f374bf2455b659af1a935677fc995adebc0a2a419f', 2, 1, 'token', '[]', 0, '2021-12-02 16:05:36', '2021-12-02 16:05:36', '2022-12-02 16:05:36'),
@@ -2934,6 +2940,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('d6e99dbf17a0396420a08cd44e20e5837c11d2681834df8cf2a73050f30329a3d60ea5e51224be55', 50, 1, 'token', '[]', 0, '2021-11-29 11:18:21', '2021-11-29 11:18:21', '2022-11-29 11:18:21'),
 ('d70318865799a9bb23e2fa29fe89e8c5299977982f4e1eccd5caedf5e1e2bf6a75317f77e99556d1', 93, 1, 'token', '[]', 0, '2021-12-08 13:26:12', '2021-12-08 13:26:12', '2022-12-08 13:26:12'),
 ('d70b58473a6b0f5c8523e6aa31479a9f32c557ecf0b946da0fb11d1c7ce4c7498503a784e206942e', 61, 1, 'token', '[]', 0, '2021-12-01 11:29:48', '2021-12-01 11:29:48', '2022-12-01 11:29:48'),
+('d79215ad08ad081ccb15e0b5061ec400aca0f17e80f063844fd160a3ce585347ae87f1f94adae463', 65, 1, '63d5527e7914f', '[]', 0, '2023-01-28 18:51:10', '2023-01-28 18:51:10', '2024-01-28 18:51:10'),
 ('d7ade3d7b5194e2ee057618a671fa526e8fdea7d4ef2185d8dc681fe8704e3ea545d0b88955b2e95', 48, 1, 'token', '[]', 0, '2021-11-19 17:59:32', '2021-11-19 17:59:32', '2022-11-19 17:59:32'),
 ('d7ef86eaed9ebb0ef24970e28710a253c89a2ca5ff4cf0875528e976f16a5d4765dd36a9a3668c20', 50, 1, 'token', '[]', 0, '2021-11-30 11:58:34', '2021-11-30 11:58:34', '2022-11-30 11:58:34'),
 ('d806ccf34176a77273ff6c486e59b747de1ebebc190cb01f7ee54762ad794c5204756c5828cbcac5', 2, 1, 'token', '[]', 0, '2021-12-10 10:00:56', '2021-12-10 10:00:56', '2022-12-10 10:00:56'),
@@ -2981,11 +2988,11 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('de76de30509d99489b721751cd86672d88b2f0ee3e988c7854252d21f2fe1b284283f5c452c8dee5', 2, 1, 'token', '[]', 0, '2021-12-03 18:24:42', '2021-12-03 18:24:42', '2022-12-03 18:24:42'),
 ('de832cb373f73dc90fec577a70ac020691d07aadea3e180628ebbfeea431107c7c1a60b9227962a7', 37, 1, 'token', '[]', 0, '2021-11-18 12:30:05', '2021-11-18 12:30:05', '2022-11-18 12:30:05'),
 ('de8e4153dbd5ffbf17c55debf2faad67984b8104e669e9f0341505654cc0982b7dbaec09b42043b2', 2, 1, 'token', '[]', 0, '2021-12-08 09:57:08', '2021-12-08 09:57:08', '2022-12-08 09:57:08'),
-('de939a2df9ae1abe7a6ce7b23a46ae41f8562aac69eb00bf44e4ef1471d02393219436e1ba6fdd9e', 2, 1, 'token', '[]', 0, '2021-12-07 19:30:52', '2021-12-07 19:30:52', '2022-12-07 19:30:52'),
+('de939a2df9ae1abe7a6ce7b23a46ae41f8562aac69eb00bf44e4ef1471d02393219436e1ba6fdd9e', 2, 1, 'token', '[]', 0, '2021-12-07 19:30:52', '2021-12-07 19:30:52', '2022-12-07 19:30:52');
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
 ('de988e4e96ff58d11b2cda77cab0681bf5bcec56d40bbcddfee47a9173ed3323ebc2090c325ba01d', 80, 1, 'token', '[]', 0, '2021-12-04 19:09:34', '2021-12-04 19:09:34', '2022-12-04 19:09:34'),
 ('deb627dc667d20b1e4fc5233666d5081af67f17145c5d2b5e93a96a78cd399f21306850c4567bd3a', 2, 1, 'token', '[]', 0, '2021-12-09 18:58:00', '2021-12-09 18:58:00', '2022-12-09 18:58:00'),
-('debe58d7b3e4abf55ac5e682ad7c077c996704a43ecf368dda76bddab0d8f92a9d5f935892286ad8', 37, 1, 'token', '[]', 0, '2021-11-17 18:30:08', '2021-11-17 18:30:08', '2022-11-17 18:30:08');
-INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('debe58d7b3e4abf55ac5e682ad7c077c996704a43ecf368dda76bddab0d8f92a9d5f935892286ad8', 37, 1, 'token', '[]', 0, '2021-11-17 18:30:08', '2021-11-17 18:30:08', '2022-11-17 18:30:08'),
 ('decd493215b483fd0f7af5484310538ab587157534b2480f8f00f6c5a9f3e1ec4ced7c1894d247fa', 48, 1, 'token', '[]', 0, '2021-11-29 18:03:01', '2021-11-29 18:03:01', '2022-11-29 18:03:01'),
 ('deed6704c7a779ef891ce8d2a981e9e401134a7f6b697e8583f47f7fbd4a128b4d51e81ffb3f772a', 37, 1, 'token', '[]', 0, '2021-11-18 09:45:43', '2021-11-18 09:45:43', '2022-11-18 09:45:43'),
 ('df0555eb9cde1a999f80e379baf9d7c63429b3d2ab90ca01d458078ad165f3c0a5452b16376057ea', 50, 1, 'token', '[]', 0, '2021-12-13 17:58:55', '2021-12-13 17:58:55', '2022-12-13 17:58:55'),
@@ -3005,6 +3012,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('e0a62a28dab199206da9b82dc16e22b4db84f8f7a9710dd5e41582af5dfc878e00c6b5b2a4169790', 62, 1, 'token', '[]', 0, '2022-12-25 11:33:15', '2022-12-25 11:33:15', '2023-12-25 11:33:15'),
 ('e0d13211598daec5ded9bed234023485ea69824b5873aab32cc5f99de71ec1a75d39fceaf12d8fc5', 48, 1, 'token', '[]', 0, '2021-11-30 16:59:36', '2021-11-30 16:59:36', '2022-11-30 16:59:36'),
 ('e0d82a01e2c0704318abed659cbd3b8862dbc4b03d6842d1e9f0b9b5a80e80b7c575e73e24c2d3a3', 37, 1, 'token', '[]', 0, '2021-11-18 10:45:11', '2021-11-18 10:45:11', '2022-11-18 10:45:11'),
+('e0de40c996cc68781d64f6f3c0c4b2e1e8c30620ce476e5437059ae8c522c4b0484c7df90ec5be0f', 65, 1, '63d61921865b6', '[]', 0, '2023-01-29 08:58:41', '2023-01-29 08:58:41', '2024-01-29 08:58:41'),
 ('e0ee21f801a679065d6f430aa0a4bc835f0fdd1e7a3b82a490e7f1f8dbd3166604f1906bd4c1264a', 62, 1, 'token', '[]', 0, '2022-12-24 00:57:38', '2022-12-24 00:57:38', '2023-12-24 00:57:38'),
 ('e10b568b0083f3226bce1b554ebbca3ec1a989b9498a1883aa8bdddb5407436d0a509a34cdd61992', 2, 1, 'token', '[]', 0, '2021-12-13 15:20:19', '2021-12-13 15:20:19', '2022-12-13 15:20:19'),
 ('e10ddc4567318bdac5efafd45933e4275e1bc80c1955d7b3bc58beb8726c2640ab70e383b94025d3', 50, 1, 'token', '[]', 0, '2021-11-26 15:26:49', '2021-11-26 15:26:49', '2022-11-26 15:26:49'),
@@ -3402,8 +3410,11 @@ INSERT INTO `orders` (`order_id`, `user_id`, `store_id`, `address_id`, `cart_id`
 (80, 65, 3, 1, 'UWLJ7344', 9360, 9360, 20000, 'wallet', 9360, 0, 17, 1360, '2023-01-22', '2023-01-23', 0, '12:00 م - 01:00 م', 4, 'Completed', '/images/users/23-01-2023/image.png', NULL, 0, 0, 'success', 0, 2000, NULL),
 (81, 70, 3, 1, 'HKTT21c7', 593000, 593000, 677500, 'COD', 0, 593000, 17, 68000, '2023-01-22', '2023-01-24', 0, '04:00 م - 05:00 م', 4, 'Completed', '/images/users/24-01-2023/image.png', NULL, 0, 0, 'COD', 0, 2000, NULL),
 (84, 68, 3, 1, 'ZVRU7794', 4680, 4680, 10000, NULL, 0, 4680, 17, 680, '2023-01-23', '2023-01-28', 0, '08:00 ص - 09:00 ص', 0, 'Pending', NULL, NULL, 0, 0, NULL, 0, NULL, NULL),
-(85, 71, 3, 1, 'YJHG60eb', 41200, 41200, 58000, 'COD', 0, 41200, 68, 4649.56, '2023-01-24', '2023-01-28', 0, '02:00 م - 03:00 م', 0, 'Pending', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
-(86, 71, 3, 1, 'ISIP2138', 110960, 110960, 114000, 'COD', 0, 110960, 17, 14960, '2023-01-24', '2023-01-24', 0, '02:00 ص - 02:00 ص', 4, 'Completed', '/images/users/24-01-2023/image.png', NULL, 0, 0, 'COD', 0, 2000, NULL);
+(85, 71, 3, 1, 'YJHG60eb', 41200, 41200, 58000, 'COD', 0, 41200, 68, 4649.56, '2023-01-24', '2023-01-28', 0, '02:00 م - 03:00 م', 4, 'Completed', '/images/users/28-01-2023/image.png', NULL, 0, 0, 'COD', 0, 2000, NULL),
+(86, 71, 3, 1, 'ISIP2138', 110960, 110960, 114000, 'COD', 0, 110960, 17, 14960, '2023-01-24', '2023-01-24', 0, '02:00 ص - 02:00 ص', 4, 'Completed', '/images/users/24-01-2023/image.png', NULL, 0, 0, 'COD', 0, 2000, NULL),
+(88, 72, 3, 1, 'ZSFY18ad', 12322, 12322, 16033, 'COD', 0, 12322, 34, 1647.69, '2023-01-26', '2023-01-27', 0, '07:00 ص - 08:00 ص', 0, 'Pending', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL),
+(89, 72, 3, 1, 'TOKU36a5', 950, 950, 1000, NULL, 0, 950, 0, 0, '2023-01-26', '2023-01-28', 0, '07:00 ص - 08:00 ص', 0, 'Pending', NULL, NULL, 0, 0, NULL, 0, NULL, NULL),
+(120, 65, 3, 1, 'RNLJ2906', 389.61, 389.61, 0.03, 'COD', 0, 389.61, 17, 56.61, '2023-01-28', '2023-01-30', 0, '11:00 ص - 12:00 م', 0, 'Pending', NULL, NULL, 0, 0, 'COD', 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -4282,15 +4293,17 @@ CREATE TABLE `store` (
   `inactive_reason` longtext COLLATE utf8mb4_unicode_ci,
   `id_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `id_photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `id_photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `orders_limit` int(11) DEFAULT NULL,
+  `unlimited_orders` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `store`
 --
 
-INSERT INTO `store` (`id`, `store_name`, `employee_name`, `phone_number`, `store_photo`, `city`, `city_id`, `admin_share`, `device_id`, `email`, `password`, `del_range`, `lat`, `lng`, `address`, `admin_approval`, `orders`, `store_status`, `store_opening_time`, `store_closing_time`, `time_interval`, `inactive_reason`, `id_type`, `id_number`, `id_photo`) VALUES
-(3, 'mohammed', 'mohammed', '0116925162', '/images/store/09-01-2023/xZuBvRigpXScfra0pMEbW8mHXjbEeN1PMA7pRZTs.jpg', 'Khartoum bahri', 2, 0, 'ey1I73PvS_y3AzvSCcp-eD:APA91bHS5bWINNzO9sKG2nj67h1AT3R8SbaUvB1mMBxQYPwhGBjZmr101cSjskXPqi23oxkvvsFq6PNzFN5t5Vwb3X8y_4ysUM3ahtpH1NQ0wVhQqvzrjbK9tDvpD0z56xIcEI5GRwtq', 'almoatasem89@gmail.com', '$2a$12$MVUPSuDS66PXlqX4rOLN4uHNMKwyNLychIhmhtugihmGbbbBsOxJC', 150, '15.6647809', '32.5556575', 'الخرطوم بحري مخطط نبتة مربع ١ منزل رقم ٥٧٨', 1, 100, 1, '09:00', '16:00', 0, NULL, 'ZAAD Card', '3', '/images/store/09-01-2023/DJJ19jlXoAEqHYW-1024x731.jpg');
+INSERT INTO `store` (`id`, `store_name`, `employee_name`, `phone_number`, `store_photo`, `city`, `city_id`, `admin_share`, `device_id`, `email`, `password`, `del_range`, `lat`, `lng`, `address`, `admin_approval`, `orders`, `store_status`, `store_opening_time`, `store_closing_time`, `time_interval`, `inactive_reason`, `id_type`, `id_number`, `id_photo`, `orders_limit`, `unlimited_orders`) VALUES
+(3, 'mohammed', 'mohammed', '0116925162', '/images/store/09-01-2023/xZuBvRigpXScfra0pMEbW8mHXjbEeN1PMA7pRZTs.jpg', 'Khartoum bahri', 2, 0, 'cgqt7OsdTbW79WDrgSDvtG:APA91bHUmKzE_z87xG_-uZ4OZCnuswbLUGY4RfsLDY9aYvVOfXyoelmFmMwoqovMB0XbT_6uujC7UgEr_WeXyBiUncD1XFU9mqPhITrdQYXHuYdE55XBnF43x9hJEJTFNvpBvwkxcrxA', 'almoatasem89@gmail.com', '$2a$12$MVUPSuDS66PXlqX4rOLN4uHNMKwyNLychIhmhtugihmGbbbBsOxJC', 150, '15.6647809', '32.5556575', 'الخرطوم بحري مخطط نبتة مربع ١ منزل رقم ٥٧٨', 1, 100, 1, '09:00', '16:00', 0, NULL, 'ZAAD Card', '3', '/images/store/09-01-2023/DJJ19jlXoAEqHYW-1024x731.jpg', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -4572,7 +4585,11 @@ INSERT INTO `store_notification` (`not_id`, `not_title`, `image`, `not_message`,
 (58, 'Hey mohammed, Order id #HKTT21c7 has been Delivered.', NULL, 'Delivery Completed: Order id #HKTT21c7 contains of رز كبسه(10kg)*15,فاصوليا الفراشة(102kg)*15,عدس الفراشه(902kg)*100,سكر 10كيلو كنانه(133kg)*100,طحنية الوافي 1كيلو(98kg)*10 of price SDG 593000 has been delivered.', 3, 0, '2023-01-24 09:13:58'),
 (59, 'Hey mohammed, You Got a New Order', NULL, 'You got an order cart id #ISIP2138 contains of لبن مجفف كابو(96gm)*8,تونة مغربية(45gm)*10 of price rs 110960. It will have to delivered on 2023-01-25 between 02:00 ص - 02:00 ص.', 3, 0, '2023-01-24 09:17:42'),
 (60, 'Hey mohammed, Order id #ISIP2138 is Out For Delivery.', NULL, 'Out For Delivery: Order id #ISIP2138 contains of لبن مجفف كابو(96gm)*8,تونة مغربية(45gm)*10 of price SDG 110960 is Out For Delivery.', 3, 0, '2023-01-24 09:18:45'),
-(61, 'Hey mohammed, Order id #ISIP2138 has been Delivered.', NULL, 'Delivery Completed: Order id #ISIP2138 contains of لبن مجفف كابو(96gm)*8,تونة مغربية(45gm)*10 of price SDG 110960 has been delivered.', 3, 0, '2023-01-24 09:22:12');
+(61, 'Hey mohammed, Order id #ISIP2138 has been Delivered.', NULL, 'Delivery Completed: Order id #ISIP2138 contains of لبن مجفف كابو(96gm)*8,تونة مغربية(45gm)*10 of price SDG 110960 has been delivered.', 3, 0, '2023-01-24 09:22:12'),
+(62, 'Hey mohammed, You Got a New Order', NULL, 'You got an order cart id #ZSFY18ad contains of دقيق أي شي(100Kg)*1,زيت زيتون جلخي(100Ml)*1,سكر صافي(102gm)*1,gold flour(82Kg)*1 of price rs 12322. It will have to delivered on 2023-01-27 between 07:00 ص - 08:00 ص.', 3, 0, '2023-01-26 16:40:14'),
+(63, 'Hey mohammed, You Got a New Order', NULL, 'You got an order cart id #RNLJ2906 contains of لبن كابو(42gm)*1 of price rs 389.61. It will have to delivered on 2023-01-30 between 11:00 ص - 12:00 م.', 3, 0, '2023-01-28 18:51:59'),
+(64, 'Hey mohammed, Order id #YJHG60eb is Out For Delivery.', NULL, 'Out For Delivery: Order id #YJHG60eb contains of كادبوري فلوت(18gm)*2,raffaello(100gm)*4,سمن اصيل(12kg)*2,زيت عافيه(88Ltrs)*2,gold flour(88Kg)*6,دقيق دخن(86Kg)*5 of price SDG 41200 is Out For Delivery.', 3, 0, '2023-01-28 18:55:34'),
+(65, 'Hey mohammed, Order id #YJHG60eb has been Delivered.', NULL, 'Delivery Completed: Order id #YJHG60eb contains of كادبوري فلوت(18gm)*2,raffaello(100gm)*4,سمن اصيل(12kg)*2,زيت عافيه(88Ltrs)*2,gold flour(88Kg)*6,دقيق دخن(86Kg)*5 of price SDG 41200 has been delivered.', 3, 0, '2023-01-28 18:55:53');
 
 -- --------------------------------------------------------
 
@@ -4774,10 +4791,6 @@ INSERT INTO `store_orders` (`store_order_id`, `product_name`, `varient_image`, `
 (693, 'سكر 10كيلو كنانه', '/images/product/30-11-2022/images-(27).jpeg', 143, 'kg', 43, 5, 23400, 25000, 'YCMF90ae', '2023-01-16 13:18:40', 1, 3, 'سكر 10كيلو كنانه', 17, 20000, 3400, 'VAT', 'Regular'),
 (702, 'دقيق دخن', '/images/product/14-01-2023/download-(42).jfif', 95, 'Kg', 88, 1, 700, 800, 'TWWQ466a', '2023-01-17 22:30:36', 1, 3, 'دقيق دخن', 0, 700, 0, 'GST', 'Regular'),
 (703, 'باكنج باودر', '/images/product/02-12-2022/download-(2).jfif', 6, 'gm', 59, 1, 500, 600, 'TWWQ466a', '2023-01-17 22:30:36', 1, 3, 'باكنج باودر', 0, 500, 0, 'GST', 'Regular'),
-(704, 'دقيق أي شي', '/images/product/12-01-2023/index.jpeg', 100, 'Kg', 99, 1, 32, 33, 'incart', '2023-01-18 15:04:53', 72, 3, 'ترجمة', 0, 32, 0, 'GST', NULL),
-(705, 'زيت زيتون جلخي', '/images/product/14-01-2023/download-(10).jpeg', 100, 'Ml', 97, 1, 9000, 10000, 'incart', '2023-01-18 15:23:21', 72, 3, 'زيت زيتون', 17, 7692.31, 1307.69, 'VAT', 'Regular'),
-(714, 'سكر صافي', '/images/product/14-01-2023/download-(7).jpeg', 102, 'gm', 94, 1, 2340, 5000, 'incart', '2023-01-19 13:42:09', 72, 3, 'سكر صافي', 17, 2000, 340, 'VAT', 'Regular'),
-(716, 'gold flour', '/images/product/14-01-2023/download.jfif', 98, 'Kg', 89, 2, 1900, 2000, 'incart', '2023-01-19 13:43:18', 72, 3, 'gold flour', 0, 1900, 0, 'GST', 'Regular'),
 (718, 'زيت زيتون جلخي', '/images/product/14-01-2023/download-(10).jpeg', 100, 'Ml', 97, 2, 18000, 20000, 'ZUHV60a4', '2023-01-19 15:16:03', 1, 3, 'زيت زيتون', 17, 14940, 3060, 'VAT', 'Regular'),
 (719, 'لبن كابو', '/images/product/12-01-2023/index.jpeg', 50, 'gm', 98, 1, 389.61, 0.03, 'ZUHV60a4', '2023-01-19 15:16:03', 1, 3, 'test', 17, 333, 56.61, 'GST', NULL),
 (723, 'لبن كابو', '/images/product/12-01-2023/index.jpeg', 49, 'gm', 98, 1, 389.61, 0.03, 'KLXT3296', '2023-01-19 15:18:08', 1, 3, 'test', 17, 333, 56.61, 'GST', NULL),
@@ -4813,7 +4826,14 @@ INSERT INTO `store_orders` (`store_order_id`, `product_name`, `varient_image`, `
 (816, 'gold flour', '/images/product/14-01-2023/download.jfif', 88, 'Kg', 89, 6, 5700, 6000, 'YJHG60eb', '2023-01-24 07:50:09', 1, 3, 'gold flour', 0, 5700, 0, 'GST', 'Regular'),
 (817, 'دقيق دخن', '/images/product/14-01-2023/download-(42).jfif', 86, 'Kg', 88, 5, 3500, 4000, 'YJHG60eb', '2023-01-24 07:50:09', 1, 3, 'دقيق دخن', 0, 3500, 0, 'GST', 'Regular'),
 (820, 'لبن مجفف كابو', '/images/product/30-11-2022/تنزيل-(5).jpeg', 96, 'gm', 40, 8, 102960, 104000, 'ISIP2138', '2023-01-24 09:17:27', 1, 3, 'لبن كابو', 17, 88000, 14960, 'GST', 'Regular'),
-(821, 'تونة مغربية', '/images/product/30-11-2022/th-(28).jfif', 45, 'gm', 53, 10, 8000, 10000, 'ISIP2138', '2023-01-24 09:17:27', 1, 3, 'تونة مغربية', 0, 8000, 0, 'VAT', 'Regular');
+(821, 'تونة مغربية', '/images/product/30-11-2022/th-(28).jfif', 45, 'gm', 53, 10, 8000, 10000, 'ISIP2138', '2023-01-24 09:17:27', 1, 3, 'تونة مغربية', 0, 8000, 0, 'VAT', 'Regular'),
+(827, 'دقيق أي شي', '/images/product/12-01-2023/index.jpeg', 100, 'Kg', 99, 1, 32, 33, 'ZSFY18ad', '2023-01-26 16:40:02', 1, 3, 'ترجمة', 0, 32, 0, 'GST', NULL),
+(828, 'زيت زيتون جلخي', '/images/product/14-01-2023/download-(10).jpeg', 100, 'Ml', 97, 1, 9000, 10000, 'ZSFY18ad', '2023-01-26 16:40:02', 1, 3, 'زيت زيتون', 17, 7692.31, 1307.69, 'VAT', 'Regular'),
+(829, 'سكر صافي', '/images/product/14-01-2023/download-(7).jpeg', 102, 'gm', 94, 1, 2340, 5000, 'ZSFY18ad', '2023-01-26 16:40:02', 1, 3, 'سكر صافي', 17, 2000, 340, 'VAT', 'Regular'),
+(830, 'gold flour', '/images/product/14-01-2023/download.jfif', 82, 'Kg', 89, 1, 950, 1000, 'ZSFY18ad', '2023-01-26 16:40:02', 1, 3, 'gold flour', 0, 950, 0, 'GST', 'Regular'),
+(831, 'gold flour', '/images/product/14-01-2023/download.jfif', 81, 'Kg', 89, 1, 950, 1000, 'incart', '2023-01-26 16:42:48', 72, 3, 'gold flour', 0, 950, 0, 'GST', 'Regular'),
+(832, 'gold flour', '/images/product/14-01-2023/download.jfif', 81, 'Kg', 89, 1, 950, 1000, 'TOKU36a5', '2023-01-26 16:45:39', 1, 3, 'gold flour', 0, 950, 0, 'GST', 'Regular'),
+(864, 'لبن كابو', '/images/product/12-01-2023/index.jpeg', 42, 'gm', 98, 1, 389.61, 0.03, 'RNLJ2906', '2023-01-28 18:51:48', 1, 3, 'test', 17, 333, 56.61, 'GST', NULL);
 
 -- --------------------------------------------------------
 
@@ -4918,8 +4938,8 @@ INSERT INTO `store_products` (`p_id`, `varient_id`, `quantity`, `store_id`, `mrp
 (95, 85, 987, 3, 7000, 6000, 1, 100),
 (96, 86, 102, 3, 2500, 2000, 1, 100),
 (98, 88, 81, 3, 800, 700, 1, 100),
-(99, 89, 82, 3, 1000, 950, 1, 100),
-(100, 97, 88, 3, 10000, 9000, 1, 100),
+(99, 89, 81, 3, 1000, 950, 1, 100),
+(100, 97, 87, 3, 10000, 9000, 1, 100),
 (101, 91, 4, 3, 5000, 4500, 1, 100),
 (102, 95, 52, 3, 1200, 1000, 1, 100),
 (103, 92, 58, 3, 2000, 1500, 1, 100),
@@ -4928,9 +4948,9 @@ INSERT INTO `store_products` (`p_id`, `varient_id`, `quantity`, `store_id`, `mrp
 (106, 91, 4, 3, 5000, 4500, 1, 100),
 (107, 93, 16, 3, 10000, 6000, 1, 100),
 (108, 96, 86, 3, 5000, 4000, 1, 100),
-(109, 94, 83, 3, 5000, 2000, 1, 100),
-(110, 98, 42, 3, 0.03, 333, 1, 100),
-(111, 99, 95, 3, 33, 32, 1, 100);
+(109, 94, 82, 3, 5000, 2000, 1, 100),
+(110, 98, 41, 3, 0.03, 333, 1, 100),
+(111, 99, 94, 3, 33, 32, 1, 100);
 
 -- --------------------------------------------------------
 
@@ -4959,13 +4979,13 @@ CREATE TABLE `store_schedules` (
 --
 
 INSERT INTO `store_schedules` (`id`, `day_name`, `day_number`, `status`, `order_time_status`, `store_opening_time`, `store_closing_time`, `store_orders_opening_time`, `store_orders_closing_time`, `interval_time`, `store_id`, `updated_at`, `created_at`) VALUES
-(59, 'Monday', 1, 'off', 'on', '07:00:00', '15:00:00', '07:00:00', '10:00:00', NULL, 3, '2023-01-25 12:27:33', '2023-01-23 10:56:35'),
-(66, 'Tuesday', 2, 'off', 'on', '07:00:00', '15:00:00', '07:00:00', '10:00:00', NULL, 3, '2023-01-25 12:27:33', '2023-01-23 10:59:23'),
-(67, 'Wednesday', 3, 'on', 'on', '07:00:00', '15:00:00', '07:00:00', '12:00:00', NULL, 3, '2023-01-25 12:27:33', '2023-01-23 10:59:23'),
-(68, 'Thursday', 4, 'off', 'on', '07:00:00', '15:00:00', '07:00:00', '10:00:00', NULL, 3, '2023-01-25 12:27:33', '2023-01-23 10:59:23'),
-(69, 'Friday', 5, 'off', 'on', '07:00:00', '15:00:00', '07:00:00', '10:00:00', NULL, 3, '2023-01-25 12:27:33', '2023-01-23 10:59:23'),
-(70, 'Saturday', 6, 'on', 'on', '07:00:00', '15:00:00', '07:00:00', '10:00:00', NULL, 3, '2023-01-25 12:27:33', '2023-01-23 10:59:23'),
-(71, 'Sunday', 7, 'on', 'on', '07:00:00', '15:00:00', '07:00:00', '10:00:00', NULL, 3, '2023-01-25 12:27:33', '2023-01-23 11:05:26');
+(59, 'Monday', 1, 'on', 'on', '07:00:00', '15:00:00', '07:00:00', '10:00:00', NULL, 3, '2023-01-28 13:05:53', '2023-01-23 10:56:35'),
+(66, 'Tuesday', 2, 'on', 'on', '07:00:00', '15:00:00', '07:00:00', '10:00:00', NULL, 3, '2023-01-28 13:05:53', '2023-01-23 10:59:23'),
+(67, 'Wednesday', 3, 'on', 'on', '07:00:00', '15:00:00', '07:00:00', '12:00:00', NULL, 3, '2023-01-28 13:05:53', '2023-01-23 10:59:23'),
+(68, 'Thursday', 4, 'on', 'on', '07:00:00', '15:00:00', '07:00:00', '10:00:00', NULL, 3, '2023-01-28 13:05:53', '2023-01-23 10:59:23'),
+(69, 'Friday', 5, 'off', 'on', '07:00:00', '15:00:00', '07:00:00', '10:00:00', NULL, 3, '2023-01-28 13:05:53', '2023-01-23 10:59:23'),
+(70, 'Saturday', 6, 'on', 'on', '07:00:00', '15:00:00', '07:00:00', '10:00:00', NULL, 3, '2023-01-28 13:05:53', '2023-01-23 10:59:23'),
+(71, 'Sunday', 7, 'on', 'on', '07:00:00', '15:00:00', '07:00:00', '10:00:00', NULL, 3, '2023-01-28 13:05:53', '2023-01-23 11:05:26');
 
 -- --------------------------------------------------------
 
@@ -5143,7 +5163,7 @@ CREATE TABLE `tbl_web_setting` (
 --
 
 INSERT INTO `tbl_web_setting` (`set_id`, `icon`, `name`, `favicon`, `number_limit`, `last_loc`, `footer_text`, `live_chat`) VALUES
-(1, '/images/app_logo/app_icon/09-01-2023/159640d6-5677-4912-9978-dc209666b309.jpg', 'ZAAD', '/images/app_logo/favicon/09-01-2023/159640d6-5677-4912-9978-dc209666b309.jpg', 10, 1, '© 2022, made with  by ZAAD', 1);
+(1, '/images/app_logo/app_icon/09-01-2023/159640d6-5677-4912-9978-dc209666b309.jpg', 'ZAAD', '/images/app_logo/favicon/09-01-2023/159640d6-5677-4912-9978-dc209666b309.jpg', 9, 1, '© 2022, made with  by ZAAD', 1);
 
 -- --------------------------------------------------------
 
@@ -5387,7 +5407,12 @@ INSERT INTO `user_notification` (`noti_id`, `user_id`, `noti_title`, `image`, `n
 (91, 71, 'Hey مبارك الخليفة الحسين, Your Order is Placed', NULL, 'Order Successfully Placed: Your order id #ISIP2138 contains of لبن مجفف كابو(96gm)*8,تونة مغربية(45gm)*10 of price rs 110960 is placed Successfully.You can expect your item(s) will be delivered on 2023-01-25 between 02:00 ص - 02:00 ص.', 0, '2023-01-24 09:17:42'),
 (92, 71, 'مرحبا مبارك الخليفة الحسين, لقد تم تأكيد طلبك', NULL, 'لقد تم تأكيد طلبك: رقم طلبك #ISIP2138 تم تأكيده من قبل المتجر. يمكنك توقع تسليم العنصر الخاصة بك في 2023-01-25 (02:00 ص - 02:00 ص).', 0, '2023-01-24 09:18:21'),
 (93, 71, 'Hey مبارك الخليفة الحسين, Your Order is Out For Delivery', NULL, 'Out For Delivery: Your order id #ISIP2138 contains of لبن مجفف كابو(96gm)*8,تونة مغربية(45gm)*10 of price SDG 110960 is Out For Delivery.Get ready with SDG 110960 cash.', 0, '2023-01-24 09:18:45'),
-(94, 71, 'Hey مبارك الخليفة الحسين, Your Order has been Delivered', NULL, 'Delivery Completed: Your order id #ISIP2138 contains of لبن مجفف كابو(96gm)*8,تونة مغربية(45gm)*10 of price SDG 110960 is Delivered Successfully.', 0, '2023-01-24 09:22:12');
+(94, 71, 'Hey مبارك الخليفة الحسين, Your Order has been Delivered', NULL, 'Delivery Completed: Your order id #ISIP2138 contains of لبن مجفف كابو(96gm)*8,تونة مغربية(45gm)*10 of price SDG 110960 is Delivered Successfully.', 0, '2023-01-24 09:22:12'),
+(95, 72, 'Hey عبدالحليم غازي, Your Order is Placed', NULL, 'Order Successfully Placed: Your order id #ZSFY18ad contains of دقيق أي شي(100Kg)*1,زيت زيتون جلخي(100Ml)*1,سكر صافي(102gm)*1,gold flour(82Kg)*1 of price rs 12322 is placed Successfully.You can expect your item(s) will be delivered on 2023-01-27 between 07:00 ص - 08:00 ص.', 0, '2023-01-26 16:40:13'),
+(96, 65, 'Hey عادل عباس سعيد, Your Order is Placed', NULL, 'Order Successfully Placed: Your order id #RNLJ2906 contains of لبن كابو(42gm)*1 of price rs 389.61 is placed Successfully.You can expect your item(s) will be delivered on 2023-01-30 between 11:00 ص - 12:00 م.', 0, '2023-01-28 18:51:59'),
+(97, 71, 'مرحبا مبارك الخليفة الحسين, لقد تم تأكيد طلبك', NULL, 'لقد تم تأكيد طلبك: رقم طلبك #YJHG60eb تم تأكيده من قبل المتجر. يمكنك توقع تسليم العنصر الخاصة بك في 2023-01-28 (02:00 م - 03:00 م).', 0, '2023-01-28 18:54:45'),
+(98, 71, 'Hey مبارك الخليفة الحسين, Your Order is Out For Delivery', NULL, 'Out For Delivery: Your order id #YJHG60eb contains of كادبوري فلوت(18gm)*2,raffaello(100gm)*4,سمن اصيل(12kg)*2,زيت عافيه(88Ltrs)*2,gold flour(88Kg)*6,دقيق دخن(86Kg)*5 of price SDG 41200 is Out For Delivery.Get ready with SDG 41200 cash.', 0, '2023-01-28 18:55:33'),
+(99, 71, 'Hey مبارك الخليفة الحسين, Your Order has been Delivered', NULL, 'Delivery Completed: Your order id #YJHG60eb contains of كادبوري فلوت(18gm)*2,raffaello(100gm)*4,سمن اصيل(12kg)*2,زيت عافيه(88Ltrs)*2,gold flour(88Kg)*6,دقيق دخن(86Kg)*5 of price SDG 41200 is Delivered Successfully.', 0, '2023-01-28 18:55:53');
 
 -- --------------------------------------------------------
 
@@ -6227,13 +6252,13 @@ ALTER TABLE `cart_payments`
 -- AUTO_INCREMENT for table `cart_rewards`
 --
 ALTER TABLE `cart_rewards`
-  MODIFY `cart_rewards_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `cart_rewards_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `cart_status`
 --
 ALTER TABLE `cart_status`
-  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -6317,7 +6342,7 @@ ALTER TABLE `driver_incentive`
 -- AUTO_INCREMENT for table `driver_notification`
 --
 ALTER TABLE `driver_notification`
-  MODIFY `not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -6455,7 +6480,7 @@ ALTER TABLE `oauth_personal_access_clients`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- AUTO_INCREMENT for table `order_by_photo`
@@ -6641,13 +6666,13 @@ ALTER TABLE `store_earning`
 -- AUTO_INCREMENT for table `store_notification`
 --
 ALTER TABLE `store_notification`
-  MODIFY `not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `store_orders`
 --
 ALTER TABLE `store_orders`
-  MODIFY `store_order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=822;
+  MODIFY `store_order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=865;
 
 --
 -- AUTO_INCREMENT for table `store_products`
@@ -6731,7 +6756,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_notification`
 --
 ALTER TABLE `user_notification`
-  MODIFY `noti_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `noti_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT for table `user_support`

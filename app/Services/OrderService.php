@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Store;
 use Auth;
 use Carbon\Carbon;
+use DateInterval;
 use DB;
 use PhpParser\Node\Stmt\Break_;
 use stdClass;
@@ -80,25 +81,31 @@ class OrderService
         });
         $store = Store::find($storeId);
 
+        if ($store->orders_limit < 1 || $store->orders_limit == null)
+            return $deliveryDate->copy()->toDateString();
+
         if ($store->unlimited_orders != 1) {
             while ($startDayIndex < $daysListCount) {
                 if ($daysList[$startDayIndex]->status == "on") {
+
                     $ordersCount =  DB::table("orders")
                         ->where("store_id", $storeId)
-                        ->where("delivery_date", '=', $deliveryDate->toDateString())
-                        ->count();
-                    if ($ordersCount < $store->orders_limit || $store->orders_limit == null) {
+                        ->where("order_status", "Confirmed")
+                        ->whereDate("delivery_date", $deliveryDate->toDateString())
+                        ->count("delivery_date");
+
+                    if ($store->orders_limit > $ordersCount) {
                         break;
                     }
                 }
-
 
                 $startDayIndex++;
                 $startDayIndex = $startDayIndex % $daysListCount;
                 $deliveryDate->addDay();
             }
-        };
-        return $deliveryDate->toDateString();
+        }
+
+        return $deliveryDate->copy()->toDateString();
     }
     public static function getPurchasesByDate($storeId, $fromDate, $toDate)
     {

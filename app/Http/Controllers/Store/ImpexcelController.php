@@ -54,7 +54,7 @@ class ImpExcelController extends Controller
             $count++;
             if ($count == 1) {
                 continue;
-            }//keep this if condition if you want to remove the first row
+            } //keep this if condition if you want to remove the first row
             for ($i = 0, $j = count($csv_line); $i < $j; $i++) {
 
                 $insert_csv0 = array();
@@ -93,14 +93,14 @@ class ImpExcelController extends Controller
             $count++;
             if ($count == 1) {
                 continue;
-            }//keep this if condition if you want to remove the first row
+            } //keep this if condition if you want to remove the first row
             for ($i = 0, $j = count($csv_line); $i < $j; $i++) {
 
                 $insert_csv0 = array();
                 $insert_csv0['id'] = $csv_line[0];
-                $insert_csv0['stock'] = $csv_line[1];
+                $insert_csv0['quantity'] = $csv_line[1];
 
-                $inserted = DB::table('store_products')->where('p_id', $insert_csv0['id'])->where('store_id', $store_id)->update(['stock' => $insert_csv0['stock']]);
+                $inserted = DB::table('store_products')->where('p_id', $insert_csv0['id'])->where('store_id', $store_id)->update(['quantity' => $insert_csv0['quantity']]);
             }
             $i++;
         }
@@ -131,7 +131,7 @@ class ImpExcelController extends Controller
             $count++;
             if ($count == 1) {
                 continue;
-            }//keep this if condition if you want to remove the first row
+            } //keep this if condition if you want to remove the first row
             for ($i = 0, $j = count($csv_line); $i < $j; $i++) {
 
                 $insert_csv0 = array();
