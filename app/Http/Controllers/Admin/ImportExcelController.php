@@ -7,10 +7,12 @@ use Illuminate\Http\Request;
 use App\YourExport;
 use App\Imports\ImportProducts;
 use App\Http\Controllers\Controller;
+use App\Imports\ProductsImport;
 use DB;
 use Session;
 use Hash;
 use Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ImportExcelController extends Controller
 {
@@ -130,6 +132,7 @@ class ImportExcelController extends Controller
 
     public function import(Request $request)
     {
+
         $this->validate(
             $request,
             [
@@ -167,6 +170,8 @@ class ImportExcelController extends Controller
                 'cat_id' => $insert_csv0['cat_id'],
                 'product_name' => $insert_csv0['product_name'],
                 'product_image' => 'images/products/' . $insert_csv0['product_image'],
+                "added_by" => 3
+
 
             );
 
@@ -177,9 +182,17 @@ class ImportExcelController extends Controller
                 'unit' => $insert_csv1['unit'],
                 'base_mrp' => $insert_csv1['base_mrp'],
                 'base_price' => $insert_csv1['base_price'],
-                'description' => $insert_csv1['description']
+                'description' => $insert_csv1['description'],
             );
-            $inserted1 = DB::table('product_varient')->insertGetId($data1);
+            $productVarient = DB::table('product_varient')->insertGetId($data1);
+            $storeProduct = DB::table('store_products')->insertGetId([
+                "p_id" => $inserted,
+                "varient_id" => $productVarient,
+                "quantity" => $insert_csv1['initial_quantity'],
+                "store_id" => 3,
+                "mrp" => $insert_csv1['base_mrp'],
+                "price" => $insert_csv1['base_price']
+            ]);
 
 
             $tags = explode(",", $csv_line[9]);
@@ -195,7 +208,9 @@ class ImportExcelController extends Controller
         fclose($fp) or die("can't close file");
         return back()->with('success', trans('keywords.Products imported successfully'));
         return $data;
-        // var_dump($inserted1);
+        // var_dump($productVarient);
+
+        // return Excel::import(new ProductsImport, $request->file("select_file"));
     }
 
     public function import_varients(Request $request)
