@@ -49,7 +49,7 @@ class ImportExcelController extends Controller
             $count++;
             if ($count == 1) {
                 continue;
-            }//keep this if condition if you want to remove the first row
+            } //keep this if condition if you want to remove the first row
             for ($i = 0, $j = count($csv_line); $i < $j; $i++) {
 
                 $insert_csv0 = array();
@@ -88,13 +88,12 @@ class ImportExcelController extends Controller
             $count++;
             if ($count == 1) {
                 continue;
-            }//keep this if condition if you want to remove the first row
+            } //keep this if condition if you want to remove the first row
             for ($i = 0, $j = count($csv_line); $i < $j; $i++) {
 
                 $insert_csv0 = array();
                 $insert_csv0['society_name'] = ucfirst($csv_line[0]);
                 $insert_csv1['city_id'] = $csv_line[1];
-
             }
             $i++;
             $data = array(
@@ -146,7 +145,7 @@ class ImportExcelController extends Controller
             $count++;
             if ($count == 1) {
                 continue;
-            }//keep this if condition if you want to remove the first row
+            } //keep this if condition if you want to remove the first row
             for ($i = 0, $j = count($csv_line); $i < $j; $i++) {
 
                 $insert_csv0 = array();
@@ -156,13 +155,12 @@ class ImportExcelController extends Controller
 
 
                 $insert_csv1 = array();
-                $insert_csv1['quantity'] = $csv_line[3];
+                $insert_csv1['initial_quantity'] = $csv_line[3];
                 $insert_csv1['unit'] = $csv_line[4];
                 $insert_csv1['base_mrp'] = $csv_line[5];
                 $insert_csv1['base_price'] = $csv_line[6];
                 $insert_csv1['description'] = $csv_line[7];
                 $insert_csv1['ean'] = $csv_line[8];
-
             }
             $i++;
             $data = array(
@@ -175,7 +173,7 @@ class ImportExcelController extends Controller
             $inserted = DB::table('product')->insertGetId($data);
             $data1 = array(
                 'product_id' => $inserted,
-                'quantity' => $insert_csv1['quantity'],
+                'initial_quantity' => $insert_csv1['initial_quantity'],
                 'unit' => $insert_csv1['unit'],
                 'base_mrp' => $insert_csv1['base_mrp'],
                 'base_price' => $insert_csv1['base_price'],
@@ -217,7 +215,7 @@ class ImportExcelController extends Controller
             $count++;
             if ($count == 1) {
                 continue;
-            }//keep this if condition if you want to remove the first row
+            } //keep this if condition if you want to remove the first row
             for ($i = 0, $j = count($csv_line); $i < $j; $i++) {
                 $insert_csv1 = array();
                 $insert_csv1['product_id'] = $csv_line[0];
@@ -227,7 +225,6 @@ class ImportExcelController extends Controller
                 $insert_csv1['base_price'] = $csv_line[4];
                 $insert_csv1['description'] = $csv_line[5];
                 $insert_csv1['ean'] = $csv_line[6];
-
             }
             $i++;
 
@@ -240,8 +237,6 @@ class ImportExcelController extends Controller
                 'description' => $insert_csv1['description'],
             );
             $inserted1 = DB::table('product_varient')->insertGetId($data1);
-
-
         }
         fclose($fp) or die("can't close file");
         return back()->with('success', trans('keywords.Products Varient successfully'));

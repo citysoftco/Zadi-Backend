@@ -11,7 +11,7 @@ use DB;
 use Session;
 use Hash;
 use Auth;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 class ImpExcelController extends Controller
 {
