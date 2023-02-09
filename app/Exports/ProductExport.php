@@ -22,7 +22,7 @@ class ProductExport implements FromCollection, WithHeadings
 
         return [
             "category_id",
-            "product_id",
+            "product_number",
             "product_name",
             "product_image",
             "base_price",
@@ -44,7 +44,7 @@ class ProductExport implements FromCollection, WithHeadings
             ->where("store_products.store_id", $this->data["store_id"])
             ->get([
                 "cat_id",
-                "product.product_id",
+                "product_number",
                 "product_name",
                 "product_image",
                 "base_price",
