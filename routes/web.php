@@ -338,6 +338,8 @@ Route::group(['middleware' => ['verifylicense']], function () {
             Route::get('bulk/upload', [ImportExcelController::class, 'bulkup'])->name('bulkup');
             Route::post('bulk/upload', [ImportExcelController::class, 'import'])->name('bulk_upload');
             Route::post('bulk/v_upload', [ImportExcelController::class, 'import_varients'])->name('bulk_v_upload');
+            Route::get('bulk/export/products/{store}', [ImportExcelController::class, 'exportAllProducts'])->name('bulk_export_all_products');
+            Route::post('bulk/import/products', [ImportExcelController::class, 'importAllProducts'])->name('bulk_import_all_products');
 
             Route::get('orders/today/all/', [SalesreportController::class, 'sales_today'])->name('sales_today');
             Route::post('orders/day-wise/', [SalesreportController::class, 'orders'])->name('datewise_orders');

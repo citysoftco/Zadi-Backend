@@ -45,7 +45,8 @@
 @endif
 </div>
 <div class="col-12">
-<form method="post" class="validate" autocomplete="off" action="{{ route('bulk_upload') }}" enctype="multipart/form-data">
+{{-- <form method="post" class="validate" autocomplete="off" action="{{ route('bulk_upload') }}" enctype="multipart/form-data"> --}}
+    <form method="post" class="validate" autocomplete="off" action="{{ route('bulk_import_all_products') }}" enctype="multipart/form-data">
     <div class="row">
         <div class="col-md-6">
          <div class="col-md-12">
@@ -61,7 +62,8 @@
                       <li>{{ __('keywords.fill the cat id(Which is available in Category list) od subcategory(which has a parent category) in category_id column of csv file')}}.</li>
                       <li>{{ __('keywords.Insert tags in tags column separated by comma')}}.</li>
                       <li>{{ __('keywords.Please upload the images on images/products path inside your main project directory')}}.</li>
-                      <li><a style="color:blue" href="{{ asset('public/csv_sample/products.csv') }}" download="products.csv">{{ __('keywords.Download Sample File')}}</a></li>
+                      <li><a style="color:blue" href="{{ route("bulk_export_all_products",3) }}" download="products.csv">{{ __('keywords.Download Sample File')}}</a></li>
+                      {{-- <li><a style="color:blue" href="{{ asset('public/csv_sample/products.csv') }}" download="products.csv">{{ __('keywords.Download Sample File')}}</a></li> --}}
                    </ol>
                 </div>
             </div>

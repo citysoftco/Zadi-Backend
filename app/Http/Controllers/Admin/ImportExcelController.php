@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ProductExport;
 use App\Traits\ImageStoragePicker;
 use Illuminate\Http\Request;
 use App\YourExport;
@@ -132,7 +133,6 @@ class ImportExcelController extends Controller
 
     public function import(Request $request)
     {
-
         $this->validate(
             $request,
             [
@@ -142,6 +142,7 @@ class ImportExcelController extends Controller
                 'select_file.required' => 'choose a csv file.'
             ]
         );
+
         $count = 0;
         $fp = fopen($_FILES['select_file']['tmp_name'], 'r') or die("can't open file");
         while ($csv_line = fgetcsv($fp, 1024)) {
@@ -210,9 +211,27 @@ class ImportExcelController extends Controller
         return $data;
         // var_dump($productVarient);
 
-        // return Excel::import(new ProductsImport, $request->file("select_file"));
-    }
 
+    }
+    public function importAllProducts(Request $request)
+    {
+        $this->validate(
+            $request,
+            [
+                'select_file' => 'required'
+            ],
+            [
+                'select_file.required' => 'choose a csv file.'
+            ]
+        );
+
+        Excel::import(new ProductsImport(["store_id" => 3]), $request->file("select_file"));
+        return back()->with('success', trans('keywords.Products imported successfully'));
+    }
+    public function exportAllProducts($store)
+    {
+        return Excel::download(new ProductExport(["store_id" => $store]), "products.csv");
+    }
     public function import_varients(Request $request)
     {
         $this->validate(
