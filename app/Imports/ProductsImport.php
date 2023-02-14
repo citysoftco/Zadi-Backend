@@ -29,6 +29,8 @@ class ProductsImport implements ToCollection, WithHeadingRow
                 "product_number" => $row["product_number"],
                 "product_name" => $row["product_name"],
                 "product_image" => $row["product_image"],
+                "added_by" => $this->data["store_id"]
+
             ]);
             $productId = DB::table("product")->where("product_number", $row["product_number"])->first()->product_id;
             DB::table("product_varient")->updateOrInsert(["product_id" => $productId], [
