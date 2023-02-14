@@ -23,7 +23,9 @@ class ProductsImport implements ToCollection, WithHeadingRow
     {
 
         foreach ($collection as $index => $row) {
-            // if ($index > 0)
+            $baseMrp = str_replace(",", "", $this->formatNullValue((string)$row["base_mrp"], 0));
+            $basePrice = str_replace(",", "", $this->formatNullValue((string)$row["base_price"], 0));
+
             DB::table("product")->updateOrInsert(["product_number" => $row["product_number"]], [
                 "cat_id" => $this->formatNullValue($row["category_id"], 0),
                 "product_number" => $row["product_number"],
@@ -37,8 +39,8 @@ class ProductsImport implements ToCollection, WithHeadingRow
                 "initial_quantity" => $this->formatNullValue($row["quantity"], 0),
                 "weight" => $this->formatNullValue($row["weight"], 0),
                 "varient_image" => $row["product_image"],
-                "base_mrp" => $this->formatNullValue($row["base_mrp"], 0),
-                "base_price" => $this->formatNullValue($row["base_price"], 0),
+                "base_mrp" => $baseMrp,
+                "base_price" => $basePrice,
                 "description" =>  $this->formatNullValue($row["description"], ""),
                 "barcode" =>  $this->formatNullValue($row["barcode"], null),
                 "unit" =>  $this->formatNullValue($row["unit"], ""),
@@ -51,8 +53,8 @@ class ProductsImport implements ToCollection, WithHeadingRow
 
             DB::table("store_products")->updateOrInsert(["varient_id" => $varientId], [
                 "quantity" => $this->formatNullValue($row["quantity"], 0),
-                "mrp" => $this->formatNullValue($row["base_mrp"], 0),
-                "price" => $this->formatNullValue($row["base_price"], 0),
+                "mrp" => $baseMrp,
+                "price" => $basePrice,
                 "min_ord_qty" =>  $this->formatNullValue($row["min_ord_qty"], 1),
                 "max_ord_qty" =>  $this->formatNullValue($row["max_ord_qty"], 100),
                 "store_id" => $this->data["store_id"]

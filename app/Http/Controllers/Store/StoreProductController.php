@@ -8,6 +8,7 @@ use DB;
 use Session;
 use Auth;
 use Illuminate\Support\Facades\Storage;
+use Stripe\Product;
 
 class StoreProductController extends Controller
 {
@@ -43,7 +44,8 @@ class StoreProductController extends Controller
         if ($this->storage_space != "same_server") {
             $url_aws = rtrim(Storage::disk($this->storage_space)->url('/'), "/");
         } else {
-            $url_aws = url('/') . '/';
+            $url_aws =  url('/') . '/';
+            // $url_aws = asset("images");
         }
         return view('store.store_product.list', compact('title', "store", "logo", "product", "url_aws"));
     }
@@ -132,7 +134,8 @@ class StoreProductController extends Controller
         if ($request->hasFile('product_image')) {
             $product_image = $request->product_image;
             $fileName = $product_image->getClientOriginalName();
-            $fileName = str_replace(" ", "-", $fileName);
+            // $fileName = str_replace(" ", "-", $fileName);
+            $fileName = time() . "." . $product_image->getClientOriginalExtension();
 
             if ($this->storage_space != "same_server") {
                 $product_image_name = $product_image->getClientOriginalName();
@@ -154,6 +157,7 @@ class StoreProductController extends Controller
                 'product_image' => $filePath,
                 'added_by' => $store->id,
                 'type' => $type,
+                "product_number" => time(),
                 'approved' => 0
             ]);
 
@@ -177,7 +181,7 @@ class StoreProductController extends Controller
                     'base_price' => $price,
                     'base_mrp' => $mrp,
                     'description' => $description,
-                    'approved' => 0,
+                    'approved' => 1,
                     'added_by' => $store->id
 
                 ]);
@@ -193,8 +197,9 @@ class StoreProductController extends Controller
             if ($images != NULL) {
                 foreach ($images as $image) {
 
-                    $fileName = $image->getClientOriginalName();
-                    $fileName = str_replace(" ", "-", $fileName);
+                    // $fileName = $image->getClientOriginalName();
+                    // $fileName = str_replace(" ", "-", $fileName);
+                    $fileName = time() . "." . $image->getClientOriginalExtension();
 
 
                     if ($this->storage_space != "same_server") {
@@ -287,7 +292,8 @@ class StoreProductController extends Controller
             );
             $product_image = $request->product_image;
             $fileName = $product_image->getClientOriginalName();
-            $fileName = str_replace(" ", "-", $fileName);
+            // $fileName = str_replace(" ", "-", $fileName);
+            $fileName = time() . "." . $product_image->getClientOriginalExtension();
 
 
             if ($this->storage_space != "same_server") {
@@ -351,8 +357,10 @@ class StoreProductController extends Controller
 
             foreach ($images as $image) {
 
-                $fileName = $image->getClientOriginalName();
-                $fileName = str_replace(" ", "-", $fileName);
+                // $fileName = $image->getClientOriginalName();
+                // $fileName = str_replace(" ", "-", $fileName);
+                $fileName = time() . "." . $image->getClientOriginalExtension();
+
 
                 if ($this->storage_space != "same_server") {
                     $product_image_name = $image->getClientOriginalName();
