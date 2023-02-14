@@ -338,8 +338,6 @@ Route::group(['middleware' => ['verifylicense']], function () {
             Route::get('bulk/upload', [ImportExcelController::class, 'bulkup'])->name('bulkup');
             Route::post('bulk/upload', [ImportExcelController::class, 'import'])->name('bulk_upload');
             Route::post('bulk/v_upload', [ImportExcelController::class, 'import_varients'])->name('bulk_v_upload');
-            Route::get('bulk/export/products/{store}', [ImportExcelController::class, 'exportAllProducts'])->name('bulk_export_all_products');
-            Route::post('bulk/import/products', [ImportExcelController::class, 'importAllProducts'])->name('bulk_import_all_products');
 
             Route::get('orders/today/all/', [SalesreportController::class, 'sales_today'])->name('sales_today');
             Route::post('orders/day-wise/', [SalesreportController::class, 'orders'])->name('datewise_orders');
@@ -499,6 +497,8 @@ Route::group(['middleware' => ['verifylicense']], function () {
 
         Route::group(['middleware' => 'auth:store'], function () {
 
+
+
             //Reward v2
             Route::get('reward', [RewardController::class, 'reward2'])->name('reward2');
             Route::put('reward/update', [RewardController::class, 'rewardupdate2'])->name('rewardupdate2');
@@ -528,6 +528,8 @@ Route::group(['middleware' => ['verifylicense']], function () {
             Route::get('bulk/upload', [ImpexcelController::class, 'bulkup'])->name('bulkuprice');
             Route::post('bulk_upload/price', [ImpexcelController::class, 'import'])->name('bulk_uploadprice');
             Route::post('bulk_upload/stock', [ImpexcelController::class, 'importstock'])->name('bulk_uploadstock');
+            Route::get('bulk/export/products', [ImpexcelController::class, 'exportAllProducts'])->name('bulk_export_all_products');
+            Route::post('bulk/import/products', [ImpexcelController::class, 'importAllProducts'])->name('bulk_import_all_products');
 
 
             Route::get('itemlist/requirement/today', [StRequiredController::class, 'reqfortoday'])->name('reqfortoday');

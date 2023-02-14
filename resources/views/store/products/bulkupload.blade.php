@@ -52,7 +52,52 @@
   @endif
 @endif
 </div>
-<div class="col-12">
+     <div class="col-md-12">
+         <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                   <h5>{{ __('keywords.Instructions')}}</h5>
+                </div>
+                <div class="card-body">
+                   <ol class="pl-3">
+                      <li>{{ __('keywords.Only CSV file are allowed')}}.</li>
+                      <li>{{ __('keywords.First row need to keep blank or use for column name only')}}.</li>
+                      <li>{{ __('keywords.All fields are must needed in csv file')}}.</li>
+                      {{-- <li>{{ __('keywords.fill the id(Which is available in Update Stock section or Update Price/Mrp Section or Update order Quantity section) in product_id column of csv file')}}.</li> --}}
+<li><a style="color:blue" href="{{ route("bulk_export_all_products") }}" download="products.csv">{{ __('keywords.Download Sample File')}}</a></li>                   </ol>
+                </div>
+            </div>
+        </div>  
+    <form method="post" class="validate" autocomplete="off" action="{{ route('bulk_import_all_products') }}"  action="#" enctype="multipart/form-data">
+        
+            <div class="card">
+                {{ csrf_field() }}
+                <div class="card-header bg-primary text-white">
+                   <h5>{{ __('keywords.Bulk Update Products')}}</h5>
+                </div>
+                <div class="card-body">
+
+                    <div class="col">
+                            
+                            <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="customFile" name="select_file" data-allowed-file-extensions="csv" required/>
+                            <label class="custom-file-label" for="customFile">{{__('keywords.Choose_File')}}</label>
+                          </div>
+                                                        
+                        </div>
+                 
+                        <div class="col-md-12">
+                            <br>
+                          <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-xs">{{ __('keywords.Bulk Update')}}</button>
+                          </div>
+                        </div>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+{{-- <div class="col-12">
 <form method="post" class="validate" autocomplete="off" action="{{route('bulk_uploadprice')}}" enctype="multipart/form-data">
     <div class="row">
         <div class="col-md-6">
@@ -193,7 +238,7 @@
             </div>
             
         </form>
-    </div>
+    </div> --}}
 </div>
 </div>
 

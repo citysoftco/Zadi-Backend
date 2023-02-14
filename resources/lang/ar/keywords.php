@@ -997,7 +997,9 @@ return [
     "Ordering Times" => "أوقات الطلبات",
     "Working Times" => "أوقات العمل",
     "Orders Limit (per day)" => "عدد الطلبات في اليوم",
-    "Unlimited Orders" => "طلبات غير محدودة"
+    "Unlimited Orders" => "طلبات غير محدودة",
+    "Bulk Update Products" => "Bulk Update Products",
+    "Bulk Update" => "Bulk Update"
 
 
 

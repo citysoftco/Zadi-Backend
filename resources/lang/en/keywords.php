@@ -991,7 +991,9 @@ return [
     "Ordering Times" => "Ordering Times",
     "Working Times" => "Working Times",
     "Orders Limit (per day)" => "Orders Limit (per day)",
-    "Unlimited Orders" => "Unlimited Orders"
+    "Unlimited Orders" => "Unlimited Orders",
+    "Bulk Update Products" => "Bulk Update Products",
+    "Bulk Update" => "Bulk Update"
 
 
 

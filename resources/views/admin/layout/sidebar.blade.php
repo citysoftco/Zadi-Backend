@@ -145,11 +145,11 @@
                                  <span class="menu-text">{{ __('keywords.Trending Search') }}</span>
                              </a>
                          </div>
-                         <div class="menu-item {{ request()->is('bulk_upload/*') ? 'active' : '' }}">
+                         {{-- <div class="menu-item {{ request()->is('bulk_upload/*') ? 'active' : '' }}">
                              <a href="{{ route('bulkup') }}" class="menu-link">
                                  <span class="menu-text">{{ __('keywords.Bulk Upload') }}</span>
                              </a>
-                         </div>
+                         </div> --}}
 
                      </div>
                  </div>

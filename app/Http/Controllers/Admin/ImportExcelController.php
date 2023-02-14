@@ -213,25 +213,7 @@ class ImportExcelController extends Controller
 
 
     }
-    public function importAllProducts(Request $request)
-    {
-        $this->validate(
-            $request,
-            [
-                'select_file' => 'required'
-            ],
-            [
-                'select_file.required' => 'choose a csv file.'
-            ]
-        );
 
-        Excel::import(new ProductsImport(["store_id" => 3]), $request->file("select_file"));
-        return back()->with('success', trans('keywords.Products imported successfully'));
-    }
-    public function exportAllProducts($store)
-    {
-        return Excel::download(new ProductExport(["store_id" => $store]), "products.csv");
-    }
     public function import_varients(Request $request)
     {
         $this->validate(

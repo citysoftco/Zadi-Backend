@@ -2,11 +2,13 @@
 
 namespace app\Http\Controllers\Store;
 
+use App\Exports\ProductExport;
 use App\Traits\ImageStoragePicker;
 use Illuminate\Http\Request;
 use App\YourExport;
 use App\Imports\ImportProducts;
 use App\Http\Controllers\Controller;
+use App\Imports\ProductsImport;
 use DB;
 use Session;
 use Hash;
@@ -16,6 +18,26 @@ use Maatwebsite\Excel\Facades\Excel;
 class ImpExcelController extends Controller
 {
     use ImageStoragePicker;
+
+    public function importAllProducts(Request $request)
+    {
+        $this->validate(
+            $request,
+            [
+                'select_file' => 'required'
+            ],
+            [
+                'select_file.required' => 'choose a csv file.'
+            ]
+        );
+
+        Excel::import(new ProductsImport(["store_id" => Auth::guard("store")->id()]), $request->file("select_file"));
+        return back()->with('success', trans('keywords.Products imported successfully'));
+    }
+    public function exportAllProducts()
+    {
+        return Excel::download(new ProductExport(["store_id" => Auth::guard("store")->id()]), "products.csv");
+    }
 
     public function bulkup(Request $request)
     {
