@@ -251,7 +251,7 @@ class StoreProductController extends Controller
             $url_aws = url('/') . '/';
         }
 
-        return view('store.store_product.edit', compact("email", "store", "logo", "title", "product", "tags", "url_aws"));
+        return view('store.store_product.edit', compact("email", "store", "logo", "title", "product", "tags", "url_aws", "images"));
     }
 
     public function UpdateProduct(Request $request)
@@ -315,7 +315,7 @@ class StoreProductController extends Controller
             ->update([
                 'product_name' => $product_name,
                 'product_image' => $filePath,
-                'type' => $type
+                // 'type' => $type
             ]);
 
 

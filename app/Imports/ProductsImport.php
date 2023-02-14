@@ -5,11 +5,14 @@ namespace App\Imports;
 use DB;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use PhpOffice\PhpSpreadsheet\Cell\StringValueBinder;
 
-class ProductsImport implements ToCollection, WithHeadingRow
+class ProductsImport  implements ToCollection, WithHeadingRow
 {
     /**
      * @param Collection $collection
@@ -19,18 +22,20 @@ class ProductsImport implements ToCollection, WithHeadingRow
     {
         $this->data = $data;
     }
+
     public function collection(Collection $collection)
     {
 
         foreach ($collection as $index => $row) {
-            $baseMrp = str_replace(",", "", $this->formatNullValue((string)$row["base_mrp"], 0));
-            $basePrice = str_replace(",", "", $this->formatNullValue((string)$row["base_price"], 0));
+            $baseMrp = str_replace([",", "٫"], "", $this->formatNullValue($row["base_mrp"], 0));
+            $basePrice = str_replace([",", "٫"], "", $this->formatNullValue($row["base_price"], 0));
+
 
             DB::table("product")->updateOrInsert(["product_number" => $row["product_number"]], [
                 "cat_id" => $this->formatNullValue($row["category_id"], 0),
                 "product_number" => $row["product_number"],
                 "product_name" => $row["product_name"],
-                "product_image" => $row["product_image"],
+                // "product_image" => $row["product_image"],
                 "added_by" => $this->data["store_id"]
 
             ]);

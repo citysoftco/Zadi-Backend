@@ -57,7 +57,8 @@
                         </div>
                         </div>
                     </div>
-                    <img src="{{$url_aws.$product->product_image}}" alt="image" name="old_image" style="width:100px;height:100px; border-radius:50%">
+             <img src="{{url($product->product_image)}}" alt="image" name="old_image" style="width:100px;height:100px; border-radius:50%">
+                    {{-- <img src="{{$url_aws.$product->product_image}}" alt="image" name="old_image" style="width:100px;height:100px; border-radius:50%"> --}}
                      <div class="row">
                       <div class="col-md-6">
                         <div class="form">
@@ -73,7 +74,8 @@
                          <div class="col-md-12">
                          @foreach($images as $im)
                               
-                               <img src="{{$url_aws.$im->image}}" alt="image" style="float:left;width:50px;height:50px; border-radius:50%;border:2px solid black">
+                               {{-- <img src="{{$url_aws.$im->image}}" alt="image" style="float:left;width:50px;height:50px; border-radius:50%;border:2px solid black"> --}}
+                               <img src="{{url($im->image)}}" alt="image" style="float:left;width:50px;height:50px; border-radius:50%;border:2px solid black">
                             
                           @endforeach
                         </div>
@@ -86,7 +88,7 @@
                         </div>
                       </div><br>
                     <button type="submit" class="btn btn-primary pull-center">{{ __('keywords.Submit')}}</button>
-                     <a href="{{route('productlist')}}" class="btn">{{ __('keywords.Close')}}</a>
+                     <a href="{{route('storeproductlist')}}" class="btn">{{ __('keywords.Close')}}</a>
                     <div class="clearfix"></div>
                   </form>
                 </div>

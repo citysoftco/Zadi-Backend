@@ -77,6 +77,9 @@
                 <a href="{{route('storevarient',$products->product_id)}}" rel="tooltip" class="btn btn-primary">
                     <i class="fa fa-cubes"></i>
                 </a>
+                  <a href="{{route('storeEditProduct',$products->product_id)}}" rel="tooltip" class="btn btn-warning">
+                    <i class="fa fa-pen"></i>
+                </a>
              
             </td>
         </tr>
