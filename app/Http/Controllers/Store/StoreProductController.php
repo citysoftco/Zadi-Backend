@@ -152,6 +152,12 @@ class StoreProductController extends Controller
             } else {
                 $filePath = 'N/A';
             }
+            $productNumber = DB::table("product")->orderBy("product_id", "desc")->first();
+
+            if ($productNumber != null && $productNumber->product_number != null)
+                $productNumber = $productNumber->product_number + 1;
+            else
+                $productNumber = 1;
 
             $insertproduct = DB::table('product')
                 ->insertGetId([
@@ -160,7 +166,7 @@ class StoreProductController extends Controller
                     'product_image' => $filePath,
                     'added_by' => $store->id,
                     'type' => $type,
-                    "product_number" => time(),
+                    "product_number" => $productNumber,
                     'approved' => 1
                 ]);
 
@@ -189,7 +195,7 @@ class StoreProductController extends Controller
 
                 ]);
 
-            $storeProductId = DB::table('store_product')
+            $storeProductId = DB::table('store_products')
                 ->insertGetId([
                     'p_id' => $insertproduct,
                     "varient_id" => $varientId,

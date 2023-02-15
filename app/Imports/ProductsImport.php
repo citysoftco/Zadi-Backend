@@ -46,7 +46,7 @@ class ProductsImport  implements ToCollection, WithHeadingRow
             DB::table("product_varient")->updateOrInsert(["product_id" => $productId], [
                 "initial_quantity" => $this->formatNullValue($row["quantity"], 0),
                 "weight" => $this->formatNullValue($row["weight"], 0),
-                "varient_image" => $row["product_image"],
+                // "varient_image" => $row["product_image"],
                 "base_mrp" => $baseMrp,
                 "base_price" => $basePrice,
                 "description" =>  $this->formatNullValue($row["description"], ""),
