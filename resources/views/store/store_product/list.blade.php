@@ -77,9 +77,16 @@
                 <a href="{{route('storevarient',$products->product_id)}}" rel="tooltip" class="btn btn-primary">
                     <i class="fa fa-cubes"></i>
                 </a>
-                  <a href="{{route('storeEditProduct',$products->product_id)}}" rel="tooltip" class="btn btn-warning">
+                <a href="{{route('storeEditProduct',$products->product_id)}}" rel="tooltip" class="btn btn-warning">
                     <i class="fa fa-pen"></i>
                 </a>
+                <form onsubmit="return confirm('are sure you want to delete this product?')" class="d-inline" action="{{route('storeDeleteProduct',$products->product_id)}}" method="POST">
+                  @method("delete")
+                  @csrf
+                 <button rel="tooltip" class="btn btn-danger">
+                    <i class="fa fa-trash"></i>
+                 </button>
+                </form>
              
             </td>
         </tr>

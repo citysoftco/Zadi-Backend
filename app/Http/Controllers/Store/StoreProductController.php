@@ -279,153 +279,161 @@ class StoreProductController extends Controller
 
     public function UpdateProduct(Request $request)
     {
-        $product_id = $request->product_id;
-        $product_name = $request->product_name;
-        $date = date('d-m-Y');
-        $product_image = $request->product_image;
-        $tags = explode(",", $request->tags);
-        $images = $request->images;
+        DB::transaction(function () use ($request) {
+            $product_id = $request->product_id;
+            $product_name = $request->product_name;
+            $date = date('d-m-Y');
+            $product_image = $request->product_image;
+            $tags = explode(",", $request->tags);
+            $images = $request->images;
 
-        $this->validate(
-            $request,
-            [
-
-                'product_name' => 'required',
-            ],
-            [
-                'product_name.required' => 'Enter product name.',
-            ]
-        );
-
-        $getProduct = DB::table('product')
-            ->where('product_id', $product_id)
-            ->first();
-
-        $image = $getProduct->product_image;
-
-        if ($request->hasFile('product_image')) {
             $this->validate(
                 $request,
                 [
-                    'product_image' => 'required|mimes:jpeg,png,jpg|max:1000',
+
+                    'product_name' => 'required',
                 ],
                 [
-                    'product_image.required' => 'Choose Product image.',
+                    'product_name.required' => 'Enter product name.',
                 ]
             );
-            $product_image = $request->product_image;
-            $fileName = $product_image->getClientOriginalName();
-            // $fileName = str_replace(" ", "-", $fileName);
-            $fileName = time() . "." . $product_image->getClientOriginalExtension();
 
-
-            if ($this->storage_space != "same_server") {
-                $product_image_name = $product_image->getClientOriginalName();
-                $product_image = $request->file('product_image');
-                $filePath = '/product/' . $product_image_name;
-                Storage::disk($this->storage_space)->put($filePath, fopen($request->file('product_image'), 'r+'), 'public');
-            } else {
-
-                $product_image->move('images/product/' . $date . '/', $fileName);
-                $filePath = '/images/product/' . $date . '/' . $fileName;
-            }
-        } else {
-            $filePath = $image;
-        }
-
-        $insertproduct = DB::table('product')
-            ->where('product_id', $product_id)
-            ->update([
-                'product_name' => $product_name,
-                'product_image' => $filePath,
-                // 'type' => $type
-            ]);
-
-
-        $delete_main_image = DB::table('product_images')
-            ->where('product_id', $product_id)
-            ->where('type', 1)
-            ->delete();
-
-        $main_image = DB::table('product_images')
-            ->insert([
-                'product_id' => $product_id,
-                'image' => $filePath,
-                'type' => 1
-
-            ]);
-
-
-        if ($request->tags != NULL) {
-            $deleteold = DB::table('tags')
+            $getProduct = DB::table('product')
                 ->where('product_id', $product_id)
-                ->delete();
+                ->first();
 
-            foreach ($tags as $tag) {
-                $tag1 = ucfirst($tag);
-                $enternew = DB::table('tags')
-                    ->insert([
-                        'product_id' => $product_id,
-                        'tag' => $tag1
-                    ]);
-            }
-        }
+            $image = $getProduct->product_image;
 
-        $enternewim = NULL;
-        if ($request->images != NULL) {
-            $deleteold = DB::table('product_images')
-                ->where('product_id', $product_id)
-                ->where('type', '!=', 1)
-                ->delete();
-
-            foreach ($images as $image) {
-
-                // $fileName = $image->getClientOriginalName();
+            if ($request->hasFile('product_image')) {
+                $this->validate(
+                    $request,
+                    [
+                        'product_image' => 'required|mimes:jpeg,png,jpg|max:1000',
+                    ],
+                    [
+                        'product_image.required' => 'Choose Product image.',
+                    ]
+                );
+                $product_image = $request->product_image;
+                $fileName = $product_image->getClientOriginalName();
                 // $fileName = str_replace(" ", "-", $fileName);
-                $fileName = time() . "." . $image->getClientOriginalExtension();
+                $fileName = time() . "." . $product_image->getClientOriginalExtension();
 
 
                 if ($this->storage_space != "same_server") {
-                    $product_image_name = $image->getClientOriginalName();
+                    $product_image_name = $product_image->getClientOriginalName();
                     $product_image = $request->file('product_image');
-                    $filePath1 = '/product/' . $product_image_name;
-                    Storage::disk($this->storage_space)->put($filePath1, fopen($image, 'r+'), 'public');
+                    $filePath = '/product/' . $product_image_name;
+                    Storage::disk($this->storage_space)->put($filePath, fopen($request->file('product_image'), 'r+'), 'public');
                 } else {
 
-                    $image->move('images/product/' . $date . '/', $fileName);
-                    $filePath1 = '/images/product/' . $date . '/' . $fileName;
+                    $product_image->move('images/product/' . $date . '/', $fileName);
+                    $filePath = '/images/product/' . $date . '/' . $fileName;
                 }
-
-                $enternewim = DB::table('product_images')
-                    ->insert([
-                        'product_id' => $product_id,
-                        'image' => $filePath1
-                    ]);
+            } else {
+                $filePath = $image;
             }
-        }
 
-        if ($insertproduct || $enternew != NULL || $enternewim != NULL) {
-            return redirect()->back()->withSuccess(trans('keywords.Updated Successfully'));
-        } else {
-            return redirect()->back()->withErrors(trans('keywords.Something Wents Wrong'));
-        }
+            $insertproduct = DB::table('product')
+                ->where('product_id', $product_id)
+                ->update([
+                    'product_name' => $product_name,
+                    'product_image' => $filePath,
+                    // 'type' => $type
+                ]);
+
+
+            $delete_main_image = DB::table('product_images')
+                ->where('product_id', $product_id)
+                ->where('type', 1)
+                ->delete();
+
+            $main_image = DB::table('product_images')
+                ->insert([
+                    'product_id' => $product_id,
+                    'image' => $filePath,
+                    'type' => 1
+
+                ]);
+
+
+            if ($request->tags != NULL) {
+                $deleteold = DB::table('tags')
+                    ->where('product_id', $product_id)
+                    ->delete();
+
+                foreach ($tags as $tag) {
+                    $tag1 = ucfirst($tag);
+                    $enternew = DB::table('tags')
+                        ->insert([
+                            'product_id' => $product_id,
+                            'tag' => $tag1
+                        ]);
+                }
+            }
+
+            $enternewim = NULL;
+            if ($request->images != NULL) {
+                $deleteold = DB::table('product_images')
+                    ->where('product_id', $product_id)
+                    ->where('type', '!=', 1)
+                    ->delete();
+
+                foreach ($images as $image) {
+
+                    // $fileName = $image->getClientOriginalName();
+                    // $fileName = str_replace(" ", "-", $fileName);
+                    $fileName = time() . "." . $image->getClientOriginalExtension();
+
+
+                    if ($this->storage_space != "same_server") {
+                        $product_image_name = $image->getClientOriginalName();
+                        $product_image = $request->file('product_image');
+                        $filePath1 = '/product/' . $product_image_name;
+                        Storage::disk($this->storage_space)->put($filePath1, fopen($image, 'r+'), 'public');
+                    } else {
+
+                        $image->move('images/product/' . $date . '/', $fileName);
+                        $filePath1 = '/images/product/' . $date . '/' . $fileName;
+                    }
+
+                    $enternewim = DB::table('product_images')
+                        ->insert([
+                            'product_id' => $product_id,
+                            'image' => $filePath1
+                        ]);
+                }
+            }
+            // if ($insertproduct || $enternew != NULL || $enternewim != NULL) {
+            //     return redirect()->back()->withSuccess(trans('keywords.Updated Successfully'));
+            // } else {
+            //     return redirect()->back()->withErrors(trans('keywords.Something Wents Wrong'));
+            // }
+        });
+        return redirect()->back()->withSuccess(trans('keywords.Updated Successfully'));
     }
 
     public function DeleteProduct(Request $request)
     {
-        $product_id = $request->product_id;
+        DB::transaction(function () use ($request) {
+            $product_id = $request->product_id;
 
-        $delete = DB::table('product')->where('product_id', $request->product_id)->delete();
-        if ($delete) {
+            $delete = DB::table('product')->where('product_id', $request->product_id)->delete();
+            // if ($delete) {
             $delete = DB::table('product_varient')->where('product_id', $request->product_id)->delete();
-
+            $delete = DB::table('store_products')->where('p_id', $request->product_id)->delete();
             $deleteold = DB::table('tags')
                 ->where('product_id', $product_id)
                 ->delete();
+            $delete = DB::table('product_images')
+                ->where('product_id', $product_id)
+                ->delete();
 
-            return redirect()->back()->withSuccess(trans('keywords.Deleted Successfully'));
-        } else {
-            return redirect()->back()->withErrors(trans('keywords.Something Wents Wrong'));
-        }
+            //     return redirect()->back()->withSuccess(trans('keywords.Deleted Successfully'));
+            // } else {
+            //     return redirect()->back()->withErrors(trans('keywords.Something Wents Wrong'));
+            // }
+        });
+        return redirect()->back()->withSuccess(trans('keywords.Deleted Successfully'));
     }
 }

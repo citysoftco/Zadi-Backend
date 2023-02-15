@@ -581,7 +581,7 @@ Route::group(['middleware' => ['verifylicense']], function () {
             Route::post('st/product/add/new', [StoreProductController::class, 'AddNewProduct'])->name('storeAddNewProduct');
             Route::get('st/product/edit/{product_id}', [StoreProductController::class, 'EditProduct'])->name('storeEditProduct');
             Route::post('st/product/update/{product_id}', [StoreProductController::class, 'UpdateProduct'])->name('storeUpdateProduct');
-            Route::get('st/product/delete/{product_id}', [StoreProductController::class, 'DeleteProduct'])->name('storeDeleteProduct');
+            Route::delete('st/product/delete/{product_id}', [StoreProductController::class, 'DeleteProduct'])->name('storeDeleteProduct');
 
             Route::get('special/varient/{id}', [StoreVarientController::class, 'varient'])->name('storevarient');
             Route::get('special/varient/add/{id}', [StoreVarientController::class, 'Addproduct'])->name('storeadd-varient');
