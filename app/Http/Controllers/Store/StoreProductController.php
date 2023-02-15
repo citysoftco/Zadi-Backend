@@ -261,8 +261,12 @@ class StoreProductController extends Controller
         $logo = DB::table('tbl_web_setting')
             ->first();
         $product = DB::table('product')
-            ->where('product_id', $product_id)
+            ->join("product_varient", "product_varient.product_id", "=", "product.product_id")
+            ->where('product.product_id', $product_id)
             ->first();
+
+        $category = DB::table("categories")->where('level', '!=', 0)->get();
+
         $tags = DB::table('tags')
             ->get();
         $images = DB::table('product_images')
@@ -274,7 +278,7 @@ class StoreProductController extends Controller
             $url_aws = url('/') . '/';
         }
 
-        return view('store.store_product.edit', compact("email", "store", "logo", "title", "product", "tags", "url_aws", "images"));
+        return view('store.store_product.edit', compact("email", "store", "logo", "title", "product", "tags", "url_aws", "images", "category"));
     }
 
     public function UpdateProduct(Request $request)
@@ -299,7 +303,8 @@ class StoreProductController extends Controller
             );
 
             $getProduct = DB::table('product')
-                ->where('product_id', $product_id)
+                ->join("product_varient", "product_varient.product_id", "=", "product.product_id")
+                ->where('product.product_id', $product_id)
                 ->first();
 
             $image = $getProduct->product_image;
@@ -339,7 +344,27 @@ class StoreProductController extends Controller
                 ->update([
                     'product_name' => $product_name,
                     'product_image' => $filePath,
+                    "cat_id" => $request->cat_id
                     // 'type' => $type
+                ]);
+            $insertProductVarient = DB::table('product_varient')
+                ->where('product_id', $product_id)
+                ->update([
+                    'varient_image' => 'N/A',
+                    "initial_quantity" => $request->quantity,
+                    "weight" => $request->weight,
+                    "unit" => $request->unit,
+                    "base_mrp" => $request->base_mrp,
+                    "base_price" => $request->base_price,
+                    "description" => $request->description,
+                    "barcode" => $request->barcode,
+                ]);
+            $insertStoreProduct = DB::table('store_products')
+                ->where('p_id', $product_id)
+                ->update([
+                    "quantity" => $request->quantity,
+                    "mrp" => $request->base_mrp,
+                    "price" => $request->base_price,
                 ]);
 
 
