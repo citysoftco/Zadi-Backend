@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use Session;
 use Auth;
+use Exception;
 use Illuminate\Support\Facades\Storage;
 use Stripe\Product;
 
@@ -84,84 +85,86 @@ class StoreProductController extends Controller
 
     public function AddNewProduct(Request $request)
     {
-        $email = Auth::guard('store')->user()->email;
-        $store = DB::table('store')
-            ->where('email', $email)
-            ->first();
 
-        $category_id = $request->cat_id;
-        $product_name = $request->product_name;
-        $initial_quantity = $request->initial_quantity;
-        $weight = $request->weight;
-        $unit = $request->unit;
-        $price = $request->price;
-        $description = $request->description;
-        $date = date('d-m-Y');
-        $mrp = $request->mrp;
-        $barcode = $request->barcode;
-        $images = $request->images;
-        $type = $request->type;
-        $this->validate(
-            $request,
-            [
-                'cat_id' => 'required',
-                'product_name' => 'required',
-                'product_image' => 'required|mimes:jpeg,png,jpg|max:1000',
-                'initial_quantity' => 'required',
-                'unit' => 'required',
-                'price' => 'required',
-                'mrp' => 'required',
-                'tags' => 'required',
-                'weight' => "required"
+        DB::transaction(function () use ($request) {
+            $email = Auth::guard('store')->user()->email;
+            $store = DB::table('store')
+                ->where('email', $email)
+                ->first();
 
-            ],
-            [
-                'cat_id.required' => 'Select category',
-                'product_name.required' => 'Enter product name.',
-                'product_image.required' => 'Choose product image.',
-                'initial_quantity.required' => 'Enter quantity.',
-                'weight.required' => 'Enter weight.',
-                'unit.required' => 'Choose unit.',
-                'price.required' => 'Enter price.',
-                'mrp.required' => 'Enter MRP.',
-                'tags.required' => 'Enter Tags',
+            $category_id = $request->cat_id;
+            $product_name = $request->product_name;
+            $initial_quantity = $request->initial_quantity;
+            $weight = $request->weight;
+            $unit = $request->unit;
+            $price = $request->price;
+            $description = $request->description;
+            $date = date('d-m-Y');
+            $mrp = $request->mrp;
+            $barcode = $request->barcode;
+            $images = $request->images;
+            $type = $request->type;
+            $this->validate(
+                $request,
+                [
+                    'cat_id' => 'required',
+                    'product_name' => 'required',
+                    'product_image' => 'required|mimes:jpeg,png,jpg|max:1000',
+                    'initial_quantity' => 'required',
+                    'unit' => 'required',
+                    'price' => 'required',
+                    'mrp' => 'required',
+                    'tags' => 'required',
+                    'weight' => "required"
 
-            ]
-        );
+                ],
+                [
+                    'cat_id.required' => 'Select category',
+                    'product_name.required' => 'Enter product name.',
+                    'product_image.required' => 'Choose product image.',
+                    'initial_quantity.required' => 'Enter quantity.',
+                    'weight.required' => 'Enter weight.',
+                    'unit.required' => 'Choose unit.',
+                    'price.required' => 'Enter price.',
+                    'mrp.required' => 'Enter MRP.',
+                    'tags.required' => 'Enter Tags',
 
-        $tags = explode(",", $request->tags);
+                ]
+            );
 
-        if ($request->hasFile('product_image')) {
-            $product_image = $request->product_image;
-            $fileName = $product_image->getClientOriginalName();
-            // $fileName = str_replace(" ", "-", $fileName);
-            $fileName = time() . "." . $product_image->getClientOriginalExtension();
+            $tags = explode(",", $request->tags);
 
-            if ($this->storage_space != "same_server") {
-                $product_image_name = $product_image->getClientOriginalName();
-                $product_image = $request->file('product_image');
-                $filePath = '/product/' . $product_image_name;
-                Storage::disk($this->storage_space)->put($filePath, fopen($request->file('product_image'), 'r+'), 'public');
+            if ($request->hasFile('product_image')) {
+                $product_image = $request->product_image;
+                $fileName = $product_image->getClientOriginalName();
+                // $fileName = str_replace(" ", "-", $fileName);
+                $fileName = time() . "." . $product_image->getClientOriginalExtension();
+
+                if ($this->storage_space != "same_server") {
+                    $product_image_name = $product_image->getClientOriginalName();
+                    $product_image = $request->file('product_image');
+                    $filePath = '/product/' . $product_image_name;
+                    Storage::disk($this->storage_space)->put($filePath, fopen($request->file('product_image'), 'r+'), 'public');
+                } else {
+                    $product_image->move('images/product/' . $date . '/', $fileName);
+                    $filePath = '/images/product/' . $date . '/' . $fileName;
+                }
             } else {
-                $product_image->move('images/product/' . $date . '/', $fileName);
-                $filePath = '/images/product/' . $date . '/' . $fileName;
+                $filePath = 'N/A';
             }
-        } else {
-            $filePath = 'N/A';
-        }
 
-        $insertproduct = DB::table('product')
-            ->insertGetId([
-                'cat_id' => $category_id,
-                'product_name' => $product_name,
-                'product_image' => $filePath,
-                'added_by' => $store->id,
-                'type' => $type,
-                "product_number" => time(),
-                'approved' => 0
-            ]);
+            $insertproduct = DB::table('product')
+                ->insertGetId([
+                    'cat_id' => $category_id,
+                    'product_name' => $product_name,
+                    'product_image' => $filePath,
+                    'added_by' => $store->id,
+                    'type' => $type,
+                    "product_number" => time(),
+                    'approved' => 1
+                ]);
 
-        if ($insertproduct) {
+            // if ($insertproduct) {
             $main_image = DB::table('product_images')
                 ->insert([
                     'product_id' => $insertproduct,
@@ -170,7 +173,7 @@ class StoreProductController extends Controller
 
                 ]);
 
-            $id = DB::table('product_varient')
+            $varientId = DB::table('product_varient')
                 ->insertGetId([
                     'product_id' => $insertproduct,
                     'initial_quantity' => $initial_quantity,
@@ -183,6 +186,19 @@ class StoreProductController extends Controller
                     'description' => $description,
                     'approved' => 1,
                     'added_by' => $store->id
+
+                ]);
+
+            $storeProductId = DB::table('store_product')
+                ->insertGetId([
+                    'p_id' => $insertproduct,
+                    "varient_id" => $varientId,
+                    'quantity' => $initial_quantity,
+                    'min_ord_qty' => 1,
+                    'max_ord_qty' => 100,
+                    'price' => $price,
+                    'mrp' => $mrp,
+                    'store_id' => $store->id
 
                 ]);
 
@@ -221,10 +237,11 @@ class StoreProductController extends Controller
                         ]);
                 }
             }
-            return redirect()->back()->withSuccess(trans('keywords.Added Successfully'));
-        } else {
-            return redirect()->back()->withErrors(trans('keywords.Something Wents Wrong'));
-        }
+        });
+        return redirect()->back()->withSuccess(trans('keywords.Added Successfully'));
+        // } else {
+        //     return redirect()->back()->withErrors(trans('keywords.Something Wents Wrong'));
+        // }
     }
 
     public function EditProduct(Request $request)

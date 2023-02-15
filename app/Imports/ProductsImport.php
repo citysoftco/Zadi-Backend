@@ -27,8 +27,11 @@ class ProductsImport  implements ToCollection, WithHeadingRow
     {
 
         foreach ($collection as $index => $row) {
-            $baseMrp = str_replace([",", "٫"], "", $this->formatNullValue($row["base_mrp"], 0));
-            $basePrice = str_replace([",", "٫"], "", $this->formatNullValue($row["base_price"], 0));
+            $baseMrp = str_replace([",", "."], "", $this->formatNullValue($row["base_mrp"], 0));
+            $basePrice = str_replace([",", "."], "", $this->formatNullValue($row["base_price"], 0));
+
+            // $baseMrp = $this->formatNullValue($row["base_mrp"], 0);
+            // $basePrice = $this->formatNullValue($row["base_price"], 0);
 
 
             DB::table("product")->updateOrInsert(["product_number" => $row["product_number"]], [
