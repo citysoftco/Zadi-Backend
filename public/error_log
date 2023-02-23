@@ -1,0 +1,5 @@
+[14-Jan-2023 12:36:06 asia/kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 4096 bytes) in /home3/zaad/public_html/app/Http/Controllers/Api/TimeslotController.php on line 118
+[14-Jan-2023 12:37:09 asia/kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 4096 bytes) in /home3/zaad/public_html/app/Http/Controllers/Api/TimeslotController.php on line 118
+[14-Jan-2023 14:48:29 asia/kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 4096 bytes) in /home3/zaad/public_html/app/Http/Controllers/Api/TimeslotController.php on line 118
+[14-Jan-2023 14:48:52 asia/kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 4096 bytes) in /home3/zaad/public_html/app/Http/Controllers/Api/TimeslotController.php on line 118
+[14-Jan-2023 14:49:36 asia/kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 4096 bytes) in /home3/zaad/public_html/app/Http/Controllers/Api/TimeslotController.php on line 118
