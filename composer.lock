@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e31bd850b8a39b65550ce058f7bc2e48",
+    "content-hash": "cf25cd2405c295ac8a2ccb62898961e6",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1613,16 +1613,16 @@
         },
         {
             "name": "grimzy/laravel-mysql-spatial",
-            "version": "4.0.0",
+            "version": "5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/grimzy/laravel-mysql-spatial.git",
-                "reference": "f70a82e528c579b63f6fa16cebe069a668cb3e6b"
+                "reference": "b89ed02ee4f9113a9fa952ae5f0e78bb5e82aa2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/grimzy/laravel-mysql-spatial/zipball/f70a82e528c579b63f6fa16cebe069a668cb3e6b",
-                "reference": "f70a82e528c579b63f6fa16cebe069a668cb3e6b",
+                "url": "https://api.github.com/repos/grimzy/laravel-mysql-spatial/zipball/b89ed02ee4f9113a9fa952ae5f0e78bb5e82aa2a",
+                "reference": "b89ed02ee4f9113a9fa952ae5f0e78bb5e82aa2a",
                 "shasum": ""
             },
             "require": {
@@ -1643,7 +1643,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.0.x-dev"
+                    "dev-master": "5.0.x-dev"
                 },
                 "laravel": {
                     "providers": [
@@ -1669,9 +1669,9 @@
             "description": "MySQL spatial data types extension for Laravel.",
             "support": {
                 "issues": "https://github.com/grimzy/laravel-mysql-spatial/issues",
-                "source": "https://github.com/grimzy/laravel-mysql-spatial/tree/4.0.0"
+                "source": "https://github.com/grimzy/laravel-mysql-spatial/tree/5.0.0"
             },
-            "time": "2020-09-21T02:26:48+00:00"
+            "time": "2020-10-17T07:28:10+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
