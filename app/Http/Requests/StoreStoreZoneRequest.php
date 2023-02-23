@@ -13,7 +13,7 @@ class StoreStoreZoneRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class StoreStoreZoneRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "name" => "required",
+            "coordinates" => "required",
+            "status" => "required"
         ];
     }
 }

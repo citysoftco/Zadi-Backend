@@ -999,9 +999,13 @@ return [
     "Orders Limit (per day)" => "عدد الطلبات في اليوم",
     "Unlimited Orders" => "طلبات غير محدودة",
     "Bulk Update Products" => "Bulk Update Products",
-    "Bulk Update" => "Bulk Update"
-
-
+    "Bulk Update" => "Bulk Update",
+    "Zones List" => "قائمة المناطق",
+    "Zones Management" => "إدارة المناطق",
+    "Zone Name" => "إسم المنطقة",
+    "Add Zone" => "إضافة منطقة",
+    "Edit Zone" => "تعديل المنطقة",
+    "Set Zone" => "تحديد المنطقة"
 
 
 

@@ -281,6 +281,29 @@
                  </div>
              </div>
 
+
+             <div class="menu-header">{{  __('keywords.Zones Management') }}
+             </div>
+             <div
+                 class="menu-item has-sub {{ request()->is('store/store-zones/create') ? 'active' : '' }} {{ request()->is('store/store-zones') ? 'active' : '' }}">
+                 <a href="#" class="menu-link">
+                     <span class="menu-icon">
+                         <i class="fas fa-university"></i>
+                     </span>
+                     <span class="menu-text">{{ __('keywords.Zones Management') }}</span>
+                     <span class="menu-caret"><b class="caret"></b></span>
+                 </a>
+                 <div class="menu-submenu">
+                     <div class="menu-item {{ request()->is('store/store-zones') ? 'active' : '' }}">
+                         <a href="{{ route('store-zones.index') }}" class="menu-link">
+                             <span class="menu-text">{{ __('keywords.Zones List') }}</span>
+                         </a>
+                     </div>
+
+                 </div>
+             </div>
+
+
              <div class="menu-header">{{ __('keywords.Notifications') }}</div>
              <div
                  class="menu-item has-sub {{ request()->is('store/driver/Notification') ? 'active' : '' }}

@@ -99,6 +99,7 @@ use App\Http\Controllers\CityAdmin\CityAdDBoyController;
 use App\Http\Controllers\CityAdmin\CityAdStoreController;
 use App\Http\Controllers\Store\BankAccountController;
 use App\Http\Controllers\Store\ReportController;
+use App\Http\Controllers\Store\StoreZoneController;
 use Illuminate\Http\Request;
 
 Route::get('/clear-all', function () {
@@ -482,7 +483,7 @@ Route::group(['middleware' => ['verifylicense']], function () {
     Route::resource("stores.bank-payments", BankPaymentController::class)->middleware("auth:store");
 
 
-    Route::namespace("Store")->prefix('store')->group(function () {
+    Route::prefix('store')->group(function () {
 
 
 
@@ -497,6 +498,7 @@ Route::group(['middleware' => ['verifylicense']], function () {
 
         Route::group(['middleware' => 'auth:store'], function () {
 
+            Route::resource("store-zones", StoreZoneController::class);
 
 
             //Reward v2

@@ -20,7 +20,7 @@
      with https://www.npmjs.com/package/@googlemaps/js-api-loader.
     -->
 <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsE5KDJqjPpbTHsQFqSjnJHclQuCBw8c4&callback=initMap&v=weekly"
+    src="https://maps.googleapis.com/maps/api/js?key={{config('settings.map_api_key')}}&callback=initMap&v=weekly"
     defer></script>
 <script>
     // Initialize and add the map

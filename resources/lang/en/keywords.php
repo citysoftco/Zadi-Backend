@@ -993,7 +993,13 @@ return [
     "Orders Limit (per day)" => "Orders Limit (per day)",
     "Unlimited Orders" => "Unlimited Orders",
     "Bulk Update Products" => "Bulk Update Products",
-    "Bulk Update" => "Bulk Update"
+    "Bulk Update" => "Bulk Update",
+    "Zones List" => "Zones list",
+    "Zones Management" => "Zones Management",
+    "Zone Name" => "Zone Name",
+    "Add Zone" => "Add Zone",
+    "Edit Zone" => "Edit Zone",
+    "Set Zone" => "Set Zone"
 
 
 
