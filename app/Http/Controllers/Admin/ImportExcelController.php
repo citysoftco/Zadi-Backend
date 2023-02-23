@@ -159,7 +159,7 @@ class ImportExcelController extends Controller
 
 
                 $insert_csv1 = array();
-                $insert_csv1['varient_quantity'] = $csv_line[3];
+                $insert_csv1['initial_quantity'] = $csv_line[3];
                 $insert_csv1['unit'] = $csv_line[4];
                 $insert_csv1['base_mrp'] = $csv_line[5];
                 $insert_csv1['base_price'] = $csv_line[6];
@@ -179,7 +179,7 @@ class ImportExcelController extends Controller
             $inserted = DB::table('product')->insertGetId($data);
             $data1 = array(
                 'product_id' => $inserted,
-                'varient_quantity' => $insert_csv1['varient_quantity'],
+                'initial_quantity' => $insert_csv1['initial_quantity'],
                 'unit' => $insert_csv1['unit'],
                 'base_mrp' => $insert_csv1['base_mrp'],
                 'base_price' => $insert_csv1['base_price'],
@@ -189,7 +189,7 @@ class ImportExcelController extends Controller
             $storeProduct = DB::table('store_products')->insertGetId([
                 "p_id" => $inserted,
                 "varient_id" => $productVarient,
-                "quantity" => $insert_csv1['varient_quantity'],
+                "quantity" => $insert_csv1['initial_quantity'],
                 "store_id" => 3,
                 "mrp" => $insert_csv1['base_mrp'],
                 "price" => $insert_csv1['base_price']

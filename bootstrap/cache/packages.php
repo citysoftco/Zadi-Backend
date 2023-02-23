@@ -42,6 +42,13 @@
       0 => 'Fruitcake\\Cors\\CorsServiceProvider',
     ),
   ),
+  'grimzy/laravel-mysql-spatial' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Grimzy\\LaravelMysqlSpatial\\SpatialServiceProvider',
+    ),
+  ),
   'kitloong/laravel-migrations-generator' => 
   array (
     'providers' => 

@@ -149,7 +149,7 @@ class VarientController extends Controller
         $mrp = $request->mrp;
         $price = $request->price;
         $unit = $request->unit;
-        $varient_quantity = $request->varient_quantity;
+        $initial_quantity = $request->initial_quantity;
         $description = $request->description;
         $date = date('d-m-Y');
         $created_at = date('d-m-Y h:i a');
@@ -167,7 +167,7 @@ class VarientController extends Controller
 
         $varient_update = DB::table('product_varient')
             ->where('varient_id', $product_id)
-            ->update(['base_mrp' => $mrp, 'base_price' => $price, 'varient_image' => $varient_image, 'unit' => $unit, 'varient_quantity' => $varient_quantity, 'description' => $description, 'barcode' => $barcode]);
+            ->update(['base_mrp' => $mrp, 'base_price' => $price, 'varient_image' => $varient_image, 'unit' => $unit, 'initial_quantity' => $initial_quantity, 'description' => $description, 'barcode' => $barcode]);
 
         if ($varient_update) {
 
