@@ -288,7 +288,7 @@
                  class="menu-item has-sub {{ request()->is('store/store-zones/create') ? 'active' : '' }} {{ request()->is('store/store-zones') ? 'active' : '' }}">
                  <a href="#" class="menu-link">
                      <span class="menu-icon">
-                         <i class="fas fa-university"></i>
+                    <i class="fas fa-map-marker-alt"></i>
                      </span>
                      <span class="menu-text">{{ __('keywords.Zones Management') }}</span>
                      <span class="menu-caret"><b class="caret"></b></span>
