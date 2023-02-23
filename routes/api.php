@@ -49,6 +49,7 @@ use App\Http\Controllers\Driverapi\DriverorderController;
 use App\Http\Controllers\Driverapi\DriverstatusController;
 use App\Http\Controllers\Driverapi\DriversupportController;
 use App\Models\BankPayment;
+use App\Models\StoreZone;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +74,7 @@ Route::namespace("Api")->prefix('')->group(function () {
   Route::get("stores/{store}/bank-accounts", [BankAccountController::class, "index"]);
   Route::post("bank-payment", [BankPaymentController::class, "store"]);
   Route::get("users/{user}/bank-payments/{paymentFor}", [UserController::class, "getUserBankPayments"]);
+  Route::post("check-location-in-zone", [UserController::class, "checkLocationInZone"]);
 
 
   Route::post('login', [UserController::class, 'login']);

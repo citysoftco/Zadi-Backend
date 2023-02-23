@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Traits\ImageStoragePicker;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CheckLocationInZoneRequest;
 use App\Http\Requests\ForgetPasswordRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ResendOtpRequest;
 use App\Http\Requests\UserRegister;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\VerifyOtpRequest;
+use App\Models\StoreZone;
 use Illuminate\Support\Facades\Http;
 use DB;
 use Carbon\Carbon;
@@ -21,6 +23,7 @@ use App\Services\HelperService;
 use App\Services\UserService;
 use JWTAuth;
 use Auth;
+use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Hash;
 use Illuminate\Support\Facades\DB as FacadesDB;
 use Illuminate\Support\Facades\Validator;
@@ -43,7 +46,18 @@ class UserController extends Controller
     {
         return Auth::guard();
     }
+    public function checkLocationInZone(CheckLocationInZoneRequest $request)
+    {
+        $point = new Point($request->lat, $request->lng);
+        $inZone = StoreZone::where("status", true)
+            ->where("store_id", $request->store_id)
+            ->contains('coordinates', $point)
+            ->first();
+        if ($inZone)
+            return response()->json(["message" => "In Zone"], 200);
 
+        return response()->json(["message" => 'Out Of Zone'], 403);
+    }
     public function getUserBankPayments($userId, $paymentFor)
     {
 
