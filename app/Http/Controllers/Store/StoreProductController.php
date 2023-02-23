@@ -94,7 +94,7 @@ class StoreProductController extends Controller
 
             $category_id = $request->cat_id;
             $product_name = $request->product_name;
-            $initial_quantity = $request->initial_quantity;
+            $varient_quantity = $request->varient_quantity;
             $weight = $request->weight;
             $unit = $request->unit;
             $price = $request->price;
@@ -110,7 +110,7 @@ class StoreProductController extends Controller
                     'cat_id' => 'required',
                     'product_name' => 'required',
                     'product_image' => 'required|mimes:jpeg,png,jpg|max:1000',
-                    'initial_quantity' => 'required',
+                    'varient_quantity' => 'required',
                     'unit' => 'required',
                     'price' => 'required',
                     'mrp' => 'required',
@@ -122,7 +122,7 @@ class StoreProductController extends Controller
                     'cat_id.required' => 'Select category',
                     'product_name.required' => 'Enter product name.',
                     'product_image.required' => 'Choose product image.',
-                    'initial_quantity.required' => 'Enter quantity.',
+                    'varient_quantity.required' => 'Enter quantity.',
                     'weight.required' => 'Enter weight.',
                     'unit.required' => 'Choose unit.',
                     'price.required' => 'Enter price.',
@@ -182,7 +182,7 @@ class StoreProductController extends Controller
             $varientId = DB::table('product_varient')
                 ->insertGetId([
                     'product_id' => $insertproduct,
-                    'initial_quantity' => $initial_quantity,
+                    'varient_quantity' => $varient_quantity,
                     'weight' => $weight,
                     'varient_image' => 'N/A',
                     'unit' => $unit,
@@ -199,7 +199,7 @@ class StoreProductController extends Controller
                 ->insertGetId([
                     'p_id' => $insertproduct,
                     "varient_id" => $varientId,
-                    'quantity' => $initial_quantity,
+                    'quantity' => $varient_quantity,
                     'min_ord_qty' => 1,
                     'max_ord_qty' => 100,
                     'price' => $price,
@@ -351,7 +351,7 @@ class StoreProductController extends Controller
                 ->where('product_id', $product_id)
                 ->update([
                     'varient_image' => 'N/A',
-                    "initial_quantity" => $request->quantity,
+                    "varient_quantity" => $request->quantity,
                     "weight" => $request->weight,
                     "unit" => $request->unit,
                     "base_mrp" => $request->base_mrp,

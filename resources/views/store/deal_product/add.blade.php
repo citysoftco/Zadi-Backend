@@ -48,7 +48,7 @@
                                         </option>
                                         @foreach ($deal as $deals)
                                             <option value="{{ $deals->varient_id }}">{{ $deals->product_name }}
-                                                ({{ $deals->initial_quantity }}{{ $deals->unit }})</option>
+                                                ({{ $deals->varient_quantity }}{{ $deals->unit }})</option>
                                         @endforeach
 
                                     </select>

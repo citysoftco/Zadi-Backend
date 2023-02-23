@@ -58,7 +58,7 @@
                                     @foreach ($product as $products)
                                         <tr>
                                             <td class="text-center">{{ $i }}</td>
-                                            <td style="float: right">{{ $products->initial_quantity }}</td>
+                                            <td style="float: right">{{ $products->varient_quantity }}</td>
                                             <td> {{ $products->unit }}</td>
                                             <td> {{ $products->description }}</td>
                                             <td class="td-actions text-right">

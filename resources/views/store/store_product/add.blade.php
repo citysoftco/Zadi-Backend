@@ -113,8 +113,8 @@
                                 <div class="form-group">
                                     {{-- <label class="bmd-label-floating">{{ __('keywords.Quantity') }}</label> --}}
                                     <label class="bmd-label-floating">{{ __('keywords.Quantity') }}</label>
-                                    <input type="number" name="initial_quantity" class="form-control"
-                                        value="{{ old('initial_quantity') }}" required>
+                                    <input type="number" name="varient_quantity" class="form-control"
+                                        value="{{ old('varient_quantity') }}" required>
                                 </div>
                             </div>
                             <div class="col-md-6">

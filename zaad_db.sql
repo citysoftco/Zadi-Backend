@@ -3873,7 +3873,7 @@ CREATE TABLE `product_rating` (
 CREATE TABLE `product_varient` (
   `varient_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `initial_quantity` int(11) NOT NULL,
+  `varient_quantity` int(11) NOT NULL,
   `weight` int(11) NOT NULL,
   `unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `base_mrp` float DEFAULT NULL,
@@ -3889,7 +3889,7 @@ CREATE TABLE `product_varient` (
 -- Dumping data for table `product_varient`
 --
 
-INSERT INTO `product_varient` (`varient_id`, `product_id`, `initial_quantity`, `weight`, `unit`, `base_mrp`, `base_price`, `description`, `varient_image`, `barcode`, `approved`, `added_by`) VALUES
+INSERT INTO `product_varient` (`varient_id`, `product_id`, `varient_quantity`, `weight`, `unit`, `base_mrp`, `base_price`, `description`, `varient_image`, `barcode`, `approved`, `added_by`) VALUES
 (1, 1, 0, 0, '٢٠٠', 0.03, 4000, 'نيدو حليب مجفف مدعم ٢.٢٥كغم', 'N/A', '٥٣٤٥٣', 1, 0),
 (2, 2, 0, 0, '٧٥٠', 1.11, 2000, 'نوتيلا كريمة البندق مع الكاكاو قابلة للدهن ٧٥٠غرام', 'N/A', '٣٥٣٤', 1, 0),
 (3, 3, 0, 0, '١٠ كيلو جرام', 0.02, 3000, 'الأسرة سكر ناعم ١٠كغم', 'N/A', '٣٥٣٤', 1, 0),

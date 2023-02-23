@@ -54,7 +54,7 @@ class StproductController extends Controller
                 $apps = array($app);
                 $app = DB::table('product_varient')
                     ->Leftjoin('deal_product', 'product_varient.varient_id', '=', 'deal_product.varient_id')
-                    ->select('product_varient.ean', 'product_varient.added_by', 'product_varient.varient_id', 'product_varient.description', 'product_varient.base_price as price', 'product_varient.base_mrp as mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.initial_quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
+                    ->select('product_varient.ean', 'product_varient.added_by', 'product_varient.varient_id', 'product_varient.description', 'product_varient.base_price as price', 'product_varient.base_mrp as mrp', 'product_varient.varient_image', 'product_varient.unit', 'product_varient.varient_quantity', 'deal_product.deal_price', 'deal_product.valid_from', 'deal_product.valid_to')
                     ->where('product_varient.added_by', $store_id)
                     ->whereIn('product_varient.product_id', $apps)
                     ->get();
