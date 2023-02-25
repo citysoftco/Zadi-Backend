@@ -21,7 +21,7 @@ class CheckStoreStatus
         if ($request->store_id) {
             $store = Store::find($request->store_id);
             if ($store->store_status != 1)
-                abort(403, "store is not active");
+                abort(403, __("keywords.store is not active"));
         }
         return $next($request);
     }

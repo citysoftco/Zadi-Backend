@@ -1005,7 +1005,8 @@ return [
     "Zone Name" => "إسم المنطقة",
     "Add Zone" => "إضافة منطقة",
     "Edit Zone" => "تعديل المنطقة",
-    "Set Zone" => "تحديد المنطقة"
+    "Set Zone" => "تحديد المنطقة",
+    "store is not active" => "هذا المتجر غير مفعل"
 
 
 

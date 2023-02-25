@@ -999,7 +999,8 @@ return [
     "Zone Name" => "Zone Name",
     "Add Zone" => "Add Zone",
     "Edit Zone" => "Edit Zone",
-    "Set Zone" => "Set Zone"
+    "Set Zone" => "Set Zone",
+    "store is not active" => "store is not active"
 
 
 
