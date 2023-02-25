@@ -1000,7 +1000,10 @@ return [
     "Add Zone" => "Add Zone",
     "Edit Zone" => "Edit Zone",
     "Set Zone" => "Set Zone",
-    "store is not active" => "store is not active"
+    "store is not active" => "store is not active",
+    "Subscription Plans" => "Subscription Plans",
+    "Add Subscription Plan" => "Add Subscription Plan",
+    "Edit Subscription Plan" => "Edit Subscription Plan"
 
 
 

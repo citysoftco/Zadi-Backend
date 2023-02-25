@@ -70,7 +70,7 @@ class StoreZoneController extends Controller
         $data["store_id"] = Auth::guard("store")->id();
         $zone =   StoreZone::create($data);
 
-        return back()->withSuccess(trans('keywords.Added Successfully'));
+        return redirect()->route("store-zones.index")->withSuccess(trans('keywords.Added Successfully'));
     }
 
     /**

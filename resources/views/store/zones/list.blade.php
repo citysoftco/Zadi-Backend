@@ -80,7 +80,7 @@
                                             <td class="td-actions text-right">
                                                 <div class="d-flex flex-column gap-1 align-items-start">
                                                     <a href="{{ route('store-zones.edit', [$zone->id]) }}"
-                                                        rel="tooltip" class="btn btn-warning">
+                                                        rel="tooltip" class="btn btn-success">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                     <form

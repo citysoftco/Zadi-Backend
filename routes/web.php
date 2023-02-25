@@ -55,7 +55,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Store\BankPaymentController;
 use App\Http\Controllers\Admin\TaxreportController;
 use App\Http\Controllers\Admin\CityAdminController;
-
+use App\Http\Controllers\Admin\SubscriptionPlanController;
 //Store Controllers
 use App\Http\Controllers\Store\AssignHomecateController;
 use App\Http\Controllers\Store\AssignorderController;
@@ -133,7 +133,7 @@ Route::group(['middleware' => ['verifylicense']], function () {
         return app(\App\Http\Controllers\Installer\InstallController::class)->databaseVerifyPost();
     });
 
-    Route::namespace("Admin")->prefix('')->group(function () {
+    Route::namespace("")->prefix('')->group(function () {
         Route::view('/powergrid', 'powergrid-demo');
         Route::get('/', [LoginController::class, 'adminLogin'])->name('adminLogin');
         Route::get('/login', [LoginController::class, 'adminLogin'])->name('login');
@@ -147,6 +147,14 @@ Route::group(['middleware' => ['verifylicense']], function () {
 
 
         Route::group(['middleware' => 'auth:admin'], function () {
+
+            //// Subscription plans ////
+
+            Route::resource("subscription-plans", SubscriptionPlanController::class);
+
+
+            ///////////////////////
+
             Route::get('report/tax', [TaxreportController::class, 'taxreport'])->name('taxreport');
             Route::post('report/taxdatewise', [TaxreportController::class, 'taxdatewise'])->name('taxdatewise');
             Route::get('logout', [LoginController::class, 'logout'])->name('logout');

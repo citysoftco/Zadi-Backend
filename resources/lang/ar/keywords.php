@@ -1006,7 +1006,10 @@ return [
     "Add Zone" => "إضافة منطقة",
     "Edit Zone" => "تعديل المنطقة",
     "Set Zone" => "تحديد المنطقة",
-    "store is not active" => "هذا المتجر غير مفعل"
+    "store is not active" => "هذا المتجر غير مفعل",
+    "Subscription Plans" => "خطط الإشتراك",
+    "Add Subscription Plan" => "إضافة خطة جديدة",
+    "Edit Subscription Plan" => "تعديل خطة الإشتراك"
 
 
 

@@ -38,6 +38,12 @@
                          <span class="menu-text">{{ __('keywords.Membership Plans') }}</span>
                      </a>
                  </div>
+                 <div class="menu-item {{ request()->is('subscription-plans/*') ? 'active' : '' }}">
+                     <a href="{{ route('subscription-plans.index') }}" class="menu-link">
+                         <span class="menu-icon"><i class="fa fa-tag"></i></span>
+                         <span class="menu-text">{{ __('keywords.Subscription Plans') }}</span>
+                     </a>
+                 </div>
                  <div class="menu-header">{{ __('keywords.Team Management') }}</div>
                  <div
                      class="menu-item has-sub {{ request()->is('roles') ? 'active' : '' }} {{ request()->is('subadmin/*') ? 'active' : '' }}">
