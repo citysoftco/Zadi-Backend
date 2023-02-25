@@ -28,7 +28,7 @@ class UpdateSubscriptionPlanRequest extends FormRequest
             "price" => "required|numeric",
             "days" => "required|integer",
             "image" => "image",
-            "description" => "string"
+            "description" => "nullable"
         ];
     }
 }
