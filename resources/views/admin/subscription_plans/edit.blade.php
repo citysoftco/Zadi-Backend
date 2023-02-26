@@ -44,7 +44,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">{{ __('keywords.Plan Name')}}</label>
-                          <input type="text" name="name" class="form-control" value="{{$subscriptionPlan->id}}">
+                          <input type="text" name="name" class="form-control" value="{{$subscriptionPlan->name}}">
                         </div>
                       </div>
                          <div class="col-md-6">
