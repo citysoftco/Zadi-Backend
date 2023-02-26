@@ -1002,6 +1002,7 @@ return [
     "Set Zone" => "Set Zone",
     "store is not active" => "store is not active",
     "Subscription Plans" => "Subscription Plans",
+    "Subscription Plan" => "Subscription Plan",
     "Add Subscription Plan" => "Add Subscription Plan",
     "Edit Subscription Plan" => "Edit Subscription Plan"
 

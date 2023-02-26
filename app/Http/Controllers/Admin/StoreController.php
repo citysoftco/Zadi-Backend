@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Traits\ImageStoragePicker;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Store;
+use App\Models\SubscriptionPlan;
 use DB;
 use Session;
 use Auth;
@@ -37,8 +39,8 @@ class StoreController extends Controller
 
     public function store(Request $request)
     {
-        
-        
+
+
         $title = "Home";
         $admin_email = Auth::guard('admin')->user()->email;
         $admin = DB::table('admin')
@@ -61,15 +63,16 @@ class StoreController extends Controller
         $id = DB::table('id_types')
             ->get();
         $url_aws = $this->getImageStorage();
-        return view('admin.store.storeadd', compact('title', 'city', 'admin', 'logo', 'map', 'mapset', 'mapbox', 'id', 'url_aws'));
+        $subscriptionPlans = SubscriptionPlan::get();
+        return view('admin.store.storeadd', compact('title', 'city', 'admin', 'logo', 'map', 'mapset', 'mapbox', 'id', 'url_aws', "subscriptionPlans"));
     }
 
     public function storeadd(Request $request)
     {
-        
+
         $title = "Home";
-        $lat = null ;
-        $lng = null ;
+        $lat = null;
+        $lng = null;
         $store_name = $request->store_name;
         $emp_name = $request->emp_name;
         $number = $request->number;
@@ -112,13 +115,13 @@ class StoreController extends Controller
                 'number' => 'required',
                 'range' => 'required',
                 'address' => 'required',
-                'start_time' => 'required',
-                'end_time' => 'required',
-                'interval' => 'required',
+                // 'start_time' => 'required',
+                // 'end_time' => 'required',
+                // 'interval' => 'required',
                 'email' => 'required',
                 'password' => 'required',
                 'image' => 'required|mimes:jpeg,png,jpg|max:1000',
-                'orders' => 'required',
+                // 'orders' => 'required',
                 'id_name' => 'required',
                 'id_numb' => 'required',
                 'id_img' => 'required|mimes:jpeg,png,jpg|max:1000',
@@ -164,13 +167,12 @@ class StoreController extends Controller
 
         if ($mapset->mapbox == 0 && $mapset->google_map == 1) {
             $response = json_decode(file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($address1) . "&key=" . $checkmap->map_api_key));
-            if(count($response->results) > 0){
+            if (count($response->results) > 0) {
                 $lat = $response->results[0]->geometry->location->lat;
                 $lng = $response->results[0]->geometry->location->lng;
             }
-            
         } else {
-            
+
             $lat = $request->lat;
             $lng = $request->lng;
         }
@@ -247,12 +249,14 @@ class StoreController extends Controller
 
             foreach ($society as $s) {
                 $ser_area = DB::table('service_area')
-                    ->insert(['store_id' => $insert,
+                    ->insert([
+                        'store_id' => $insert,
                         'society_name' => $s->society_name,
                         'society_id' => $s->society_id,
                         'delivery_charge' => 0,
                         'added_by' => 0,
-                        'city_id' => $city_id]);
+                        'city_id' => $city_id
+                    ]);
             }
 
             return redirect()->back()->withSuccess(trans('keywords.Added Successfully'));
@@ -311,7 +315,11 @@ class StoreController extends Controller
         $range = $request->range;
         $orders_per_slot = $request->orders;
         $email = $request->email;
-        $password = Hash::make($request->password);
+
+        $password = Store::where("id", $store_id)->firstOrNew()->password;
+        if ($request->password)
+            $password = Hash::make($request->password);
+
         $address = $request->address;
         $addres = str_replace(" ", "+", $address);
         $address1 = str_replace("-", "+", $addres);
@@ -327,12 +335,12 @@ class StoreController extends Controller
                 'number' => 'required',
                 'range' => 'required',
                 'address' => 'required',
-                'start_time' => 'required',
-                'end_time' => 'required',
-                'interval' => 'required',
+                // 'start_time' => 'required',
+                // 'end_time' => 'required',
+                // 'interval' => 'required',
                 'email' => 'required',
-                'password' => 'required',
-                'orders' => 'required',
+                // 'password' => 'required',
+                // 'orders' => 'required',
                 'id_name' => 'required',
                 'id_numb' => 'required'
             ],
@@ -389,7 +397,7 @@ class StoreController extends Controller
             $lat = $request->lat;
             $lng = $request->lng;
         }
-        if(is_null($lat)||is_null($lng)){
+        if (is_null($lat) || is_null($lng)) {
             return redirect()->back()->withErrors(trans('keywords.MapCoords are Null'));
         }
 
@@ -498,7 +506,6 @@ class StoreController extends Controller
             DB::table('store_orders')->where('store_id', $store_id)->delete();
             DB::table('store_notification')->where('store_id', $store_id)->delete();
             return redirect()->back()->withSuccess(trans('keywords.Deleted Successfully'));
-
         } else {
             return redirect()->back()->withErrors(trans('keywords.Something Wents Wrong'));
         }

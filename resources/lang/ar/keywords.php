@@ -1009,7 +1009,9 @@ return [
     "store is not active" => "هذا المتجر غير مفعل",
     "Subscription Plans" => "خطط الإشتراك",
     "Add Subscription Plan" => "إضافة خطة جديدة",
-    "Edit Subscription Plan" => "تعديل خطة الإشتراك"
+    "Edit Subscription Plan" => "تعديل خطة الإشتراك",
+    "Subscription Plans" => "خطة الإشتراك",
+
 
 
 

@@ -197,17 +197,27 @@
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">{{ __('keywords.Admin Share')}} (%)</label>
+                           <label class="bmd-label-floating">{{ __('keywords.Admin Share')}} (%)</label>
                           <input type="number" name="share" class="form-control" value="{{old('share')}}">
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-4"> 
+                        <div class="form-group">
+                          <label class="bmd-label-floating">{{ __('keywords.Subscription Plan')}}</label>
+                         <select class="form-control" name="subscription_plan" id="">
+                          @foreach ($subscriptionPlans as $subscriptionPlan )
+               <option value="{{$subscriptionPlan->id}}">{{$subscriptionPlan->name}}</option>
+                          @endforeach
+                         </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4"> 
                         <div class="form-group">
                           <label class="bmd-label-floating">{{ __('keywords.Email')}}</label>
                           <input type="text" name="email" class="form-control"  value="{{old('email')}}">
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">{{ __('keywords.Password')}}</label>
                           <input type="text" name="password" class="form-control" value="{{old('password')}}">
@@ -287,7 +297,7 @@
                       </div>
                       @endif
 
-                       <div class="row">
+                       {{-- <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
                           <label>{{ __('keywords.Orders')}}</label><br>
@@ -316,7 +326,7 @@
                         </div>
                       </div>
 
-                    </div></div><br>
+                    </div></div><br> --}}
                     <button type="submit" class="btn btn-primary pull-center">{{ __('keywords.Submit')}}</button>
                      <a href="{{route('storeclist')}}" class="btn">{{ __('keywords.Close')}}</a>
                     <div class="clearfix"></div>

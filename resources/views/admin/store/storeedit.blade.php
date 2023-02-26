@@ -199,13 +199,13 @@
                     
                     <div class="row">
                       
-                       <div class="col-md-4">
+                       {{-- <div class="col-md-4">
                         <div class="form-group">
                           <label>{{ __('keywords.Orders')}}</label><br>
                           <input type="number" name="orders" class="form-control" placeholder="Order Per Time Slot"  value="{{$store->orders}}">
                           <input type="hidden" name="share" class="form-control" value="0">
                         </div>
-                      </div>
+                      </div> --}}
                       <div class="col-md-4">
                         <div class="form-group">
                           <label>{{ __('keywords.Email')}}</label>
@@ -215,11 +215,11 @@
                       <div class="col-md-4">
                         <div class="form-group">
                           <label>{{ __('keywords.Password')}}</label>
-                          <input type="text" name="password" value="{{$store->password}}" class="form-control">
+                          <input type="text" name="password" value="" class="form-control">
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
+                    {{-- </div>
+                    <div class="row"> --}}
                         <div class="col-md-4">
                         <div class="form">
                            <label class="bmd-label-floating"> {{ __('keywords.Select ID')}}</label>
@@ -244,25 +244,25 @@
                             <label class="custom-file-label" for="customFile">{{__('keywords.Choose_File')}}</label>
                           </div>
                       </div>
-                    </div><br>
-                     <div class="row">
-                        <div class="col-md-6">
+                    {{-- </div><br>
+                     <div class="row"> --}}
+                        <div class="col-md-4">
                         <div class="form">
                            <label> {{ __('keywords.Store City')}} ({{ __('keywords.Unchangeable')}})</label>
                             <input type="text" class="form-control" value="{{$store->city}}" readonly>
                          
                         </div>
                       </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                         <div class="form-group">
                           <label>{{ __('keywords.Delivery Range')}} (KM)</label><br>
                           <input type="number" name="range" class="form-control" value="{{$store->del_range}}">
                         </div>
                       </div>
                       
-                    </div><br>
+                    {{-- </div><br> --}}
                        @if($mapset->mapbox == 0 && $mapset->google_map == 1)
-                         <div class="row">                    
+                 {{-- <div class="row">                     --}}
                             <div class="col-md-12">
                            <div class="form-group">
                             <label for="autocomplete"> {{ __('keywords.Store Address')}} </label>
@@ -286,7 +286,7 @@
                       </div>
                       @endif
                       
-                       <div><b>{{ __('keywords.Time Slot')}}</b><br><br>
+                       {{-- <div><b>{{ __('keywords.Time Slot')}}</b><br><br>
                       <div class="row"><br>
                       <div class="col-md-4">
                         <div class="form-group">
@@ -307,7 +307,7 @@
                         </div>
                       </div>
 
-                    </div></div><br>
+                    </div></div><br> --}}
                     <button type="submit" class="btn btn-primary pull-center">{{ __('keywords.Submit')}}</button>
                      <a href="{{route('storeclist')}}" class="btn">{{ __('keywords.Close')}}</a>
                     <div class="clearfix"></div>
