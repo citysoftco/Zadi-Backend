@@ -9,5 +9,10 @@ class SubscriptionPlan extends Model
 {
     use HasFactory;
 
-    protected $guarded = [""];
+    protected $guarded = ["id"];
+
+    public function subscriptions()
+    {
+        return $this->hasMany(StoreSubscription::class, "plan_id");
+    }
 }

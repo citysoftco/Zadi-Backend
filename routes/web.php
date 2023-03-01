@@ -150,6 +150,8 @@ Route::group(['middleware' => ['verifylicense']], function () {
 
             //// Subscription plans ////
 
+            Route::get("store-subscription-renewal/{store}", [StoreController::class, "subscriptionRenewal"])->name("store-subscription-renewal");
+            Route::post("store-subscription-renewal", [StoreController::class, "subscriptionRenewalSubmit"])->name("store-subscription-renewal-submit");
             Route::resource("subscription-plans", SubscriptionPlanController::class);
 
 

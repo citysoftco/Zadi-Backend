@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Traits\ImageStoragePicker;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreStoreSubscriptionRequest;
 use App\Models\Store;
+use App\Models\StoreSubscription;
 use App\Models\SubscriptionPlan;
 use DB;
 use Session;
 use Auth;
+use Carbon\Carbon;
 use Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -40,7 +43,6 @@ class StoreController extends Controller
     public function store(Request $request)
     {
 
-
         $title = "Home";
         $admin_email = Auth::guard('admin')->user()->email;
         $admin = DB::table('admin')
@@ -66,46 +68,50 @@ class StoreController extends Controller
         $subscriptionPlans = SubscriptionPlan::get();
         return view('admin.store.storeadd', compact('title', 'city', 'admin', 'logo', 'map', 'mapset', 'mapbox', 'id', 'url_aws', "subscriptionPlans"));
     }
+    public function subscriptionRenewal($storeId)
+    {
+        $title = "Home";
+        $admin_email = Auth::guard('admin')->user()->email;
+        $admin = DB::table('admin')
+            ->leftJoin('roles', 'admin.role_id', '=', 'roles.role_id')
+            ->where('admin.email', $admin_email)
+            ->first();
+        $logo = DB::table('tbl_web_setting')
+            ->where('set_id', '1')
+            ->first();
 
+        $city = DB::table('city')
+            ->get();
+        $map1 = DB::table('map_api')
+            ->first();
+        $map = $map1->map_api_key;
+        $mapset = DB::table('map_settings')
+            ->first();
+        $mapbox = DB::table('mapbox')
+            ->first();
+        $id = DB::table('id_types')
+            ->get();
+        $url_aws = $this->getImageStorage();
+        $subscriptionPlans = SubscriptionPlan::get();
+        $storeSubscription = StoreSubscription::with(["plan"])->where("store_id", $storeId)->latest()->firstOrNew();
+        return view('admin.store.subscription_renewal', compact('title', 'city', 'admin', 'logo', 'map', 'mapset', 'mapbox', 'id', 'url_aws', "storeSubscription", "subscriptionPlans", "storeId"));
+    }
+    public function subscriptionRenewalSubmit(StoreStoreSubscriptionRequest $request)
+    {
+        $data = $request->validated();
+        $subscriptionPlan = SubscriptionPlan::find($data["plan_id"]);
+        if ($data["plan_id"] < 1 || $data["plan_id"] == null)
+            $data["expired_at"] = null;
+        else
+            $data["expired_at"] = now()->addDays($subscriptionPlan->days);
+
+        $storeSubscription = StoreSubscription::updateOrCreate(["store_id" => $data["store_id"]], $data);
+
+        return redirect()->route("storeclist")->withSuccess(trans('keywords.Added Successfully'));
+    }
     public function storeadd(Request $request)
     {
 
-        $title = "Home";
-        $lat = null;
-        $lng = null;
-        $store_name = $request->store_name;
-        $emp_name = $request->emp_name;
-        $number = $request->number;
-        $city = $request->city;
-        if ($city != NULL || $city != 0) {
-            $citydet = DB::table('city')
-                ->where('city_name', $city)
-                ->first();
-            $city_id = $citydet->city_id;
-        } else {
-            return redirect()->back()->withErrors('Please select any city');
-        }
-
-        $email = $request->email;
-        $id_name = $request->id_name;
-        $id_img = $request->id_img;
-        $id_numb = $request->id_numb;
-        $range = $request->range;
-        $password = Hash::make($request->password);
-        $orders_per_slot = $request->orders;
-        $address = $request->address;
-        $share = $request->share;
-        $discount = str_replace("%", '', $share);
-        $addres = str_replace(" ", "+", $address);
-        $address1 = str_replace("-", "+", $addres);
-        $start_time = $request->start_time;
-        $end_time = $request->end_time;
-        $interval = $request->interval;
-        $date = date('d-m-Y');
-        $checkmap = DB::table('map_api')
-            ->first();
-        $mapset = DB::table('map_settings')
-            ->first();
 
         $this->validate(
             $request,
@@ -118,6 +124,7 @@ class StoreController extends Controller
                 // 'start_time' => 'required',
                 // 'end_time' => 'required',
                 // 'interval' => 'required',
+                "share" => "required_without:subscription_plan",
                 'email' => 'required',
                 'password' => 'required',
                 'image' => 'required|mimes:jpeg,png,jpg|max:1000',
@@ -145,104 +152,142 @@ class StoreController extends Controller
 
             ]
         );
-        $chkstorphon = DB::table('store')
-            ->where('phone_number', $number)
-            ->first();
-        $chkstoremail = DB::table('store')
-            ->where('email', $email)
-            ->first();
-        $this->getImageStorage();
-
-        if ($chkstorphon && $chkstoremail) {
-            return redirect()->back()->withErrors(trans('keywords.This Phone Number and Email Are Already Registered With Another Store'));
-        }
-
-        if ($chkstorphon) {
-            return redirect()->back()->withErrors(trans('keywords.This Phone Number is Already Registered With Another Store'));
-        }
-
-        if ($chkstoremail) {
-            return redirect()->back()->withErrors(trans('keywords.This Email is Already Registered With Another Store'));
-        }
-
-        if ($mapset->mapbox == 0 && $mapset->google_map == 1) {
-            $response = json_decode(file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($address1) . "&key=" . $checkmap->map_api_key));
-            if (count($response->results) > 0) {
-                $lat = $response->results[0]->geometry->location->lat;
-                $lng = $response->results[0]->geometry->location->lng;
-            }
-        } else {
-
-            $lat = $request->lat;
-            $lng = $request->lng;
-        }
-
-        // if(is_null($lat)||is_null($lng)){
-        //     return redirect()->back()->withErrors(trans('keywords.MapCoords are Null'));
-        // }
-
-        if ($request->hasFile('image')) {
-            $image = $request->image;
-            $fileName = $image->getClientOriginalName();
-            $fileName = str_replace(" ", "-", $fileName);
-
-            if ($this->storage_space != "same_server") {
-                $image_name = $image->getClientOriginalName();
-                $image = $request->file('image');
-                $filePath = '/store/' . $image_name;
-                Storage::disk($this->storage_space)->put($filePath, fopen($request->file('image'), 'r+'), 'public');
+        DB::transaction(function () use ($request) {
+            $title = "Home";
+            $lat = null;
+            $lng = null;
+            $store_name = $request->store_name;
+            $emp_name = $request->emp_name;
+            $number = $request->number;
+            $city = $request->city;
+            if ($city != NULL || $city != 0) {
+                $citydet = DB::table('city')
+                    ->where('city_name', $city)
+                    ->first();
+                $city_id = $citydet->city_id;
             } else {
-                $image->move('images/store/' . $date . '/', $fileName);
-                $filePath = '/images/store/' . $date . '/' . $fileName;
+                return redirect()->back()->withErrors('Please select any city');
             }
-        } else {
-            $filePath = 'N/A';
-        }
 
-        if ($request->hasFile('id_img')) {
+            $email = $request->email;
+            $id_name = $request->id_name;
             $id_img = $request->id_img;
-            $fileName11 = $id_img->getClientOriginalName();
-            $fileName11 = str_replace(" ", "-", $fileName11);
+            $id_numb = $request->id_numb;
+            $range = $request->range;
+            $password = Hash::make($request->password);
+            $orders_per_slot = $request->orders;
+            $address = $request->address;
+            $share = $request->share;
+            $discount = str_replace("%", '', $share);
+            $addres = str_replace(" ", "+", $address);
+            $address1 = str_replace("-", "+", $addres);
+            $start_time = $request->start_time;
+            $end_time = $request->end_time;
+            $interval = $request->interval;
+            $date = date('d-m-Y');
+            $checkmap = DB::table('map_api')
+                ->first();
+            $mapset = DB::table('map_settings')
+                ->first();
 
-            if ($this->storage_space != "same_server") {
-                $image_name = $id_img->getClientOriginalName();
-                $id_img = $request->file('id_img');
-                $filePath11 = '/store/' . $image_name;
-                Storage::disk($this->storage_space)->put($filePath11, fopen($request->file('id_img'), 'r+'), 'public');
-            } else {
-                $id_img->move('images/store/' . $date . '/', $fileName);
-                $filePath11 = '/images/store/' . $date . '/' . $fileName;
+            $chkstorphon = DB::table('store')
+                ->where('phone_number', $number)
+                ->first();
+            $chkstoremail = DB::table('store')
+                ->where('email', $email)
+                ->first();
+            $this->getImageStorage();
+
+            if ($chkstorphon && $chkstoremail) {
+                return redirect()->back()->withErrors(trans('keywords.This Phone Number and Email Are Already Registered With Another Store'));
             }
-        } else {
-            $filePath11 = 'N/A';
-        }
 
-        $insert = DB::table('store')
-            ->insertgetid([
-                'store_name' => $store_name,
-                'employee_name' => $emp_name,
-                'phone_number' => $number,
-                'city' => $city,
-                'city_id' => $city_id,
-                'email' => $email,
-                'del_range' => $range,
-                'password' => $password,
-                'address' => $address,
-                'store_opening_time' => $start_time,
-                'store_closing_time' => $end_time,
-                'time_interval' => $interval,
-                'lat' => $lat,
-                'lng' => $lng,
-                'admin_share' => $share,
-                'store_photo' => $filePath,
-                'orders' => $orders_per_slot,
-                'id_type' => $id_name,
-                'id_number' => $id_numb,
-                'id_photo' => $filePath11,
+            if ($chkstorphon) {
+                return redirect()->back()->withErrors(trans('keywords.This Phone Number is Already Registered With Another Store'));
+            }
 
-            ]);
+            if ($chkstoremail) {
+                return redirect()->back()->withErrors(trans('keywords.This Email is Already Registered With Another Store'));
+            }
 
-        if ($insert) {
+            if ($mapset->mapbox == 0 && $mapset->google_map == 1) {
+                $response = json_decode(file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($address1) . "&key=" . $checkmap->map_api_key));
+                if (count($response->results) > 0) {
+                    $lat = $response->results[0]->geometry->location->lat;
+                    $lng = $response->results[0]->geometry->location->lng;
+                }
+            } else {
+
+                $lat = $request->lat;
+                $lng = $request->lng;
+            }
+
+            // if(is_null($lat)||is_null($lng)){
+            //     return redirect()->back()->withErrors(trans('keywords.MapCoords are Null'));
+            // }
+
+            if ($request->hasFile('image')) {
+                $image = $request->image;
+                $fileName = $image->getClientOriginalName();
+                $fileName = str_replace(" ", "-", $fileName);
+
+                if ($this->storage_space != "same_server") {
+                    $image_name = $image->getClientOriginalName();
+                    $image = $request->file('image');
+                    $filePath = '/store/' . $image_name;
+                    Storage::disk($this->storage_space)->put($filePath, fopen($request->file('image'), 'r+'), 'public');
+                } else {
+                    $image->move('images/store/' . $date . '/', $fileName);
+                    $filePath = '/images/store/' . $date . '/' . $fileName;
+                }
+            } else {
+                $filePath = 'N/A';
+            }
+
+            if ($request->hasFile('id_img')) {
+                $id_img = $request->id_img;
+                $fileName11 = $id_img->getClientOriginalName();
+                $fileName11 = str_replace(" ", "-", $fileName11);
+
+                if ($this->storage_space != "same_server") {
+                    $image_name = $id_img->getClientOriginalName();
+                    $id_img = $request->file('id_img');
+                    $filePath11 = '/store/' . $image_name;
+                    Storage::disk($this->storage_space)->put($filePath11, fopen($request->file('id_img'), 'r+'), 'public');
+                } else {
+                    $id_img->move('images/store/' . $date . '/', $fileName);
+                    $filePath11 = '/images/store/' . $date . '/' . $fileName;
+                }
+            } else {
+                $filePath11 = 'N/A';
+            }
+
+            $insert = DB::table('store')
+                ->insertgetid([
+                    'store_name' => $store_name,
+                    'employee_name' => $emp_name,
+                    'phone_number' => $number,
+                    'city' => $city,
+                    'city_id' => $city_id,
+                    'email' => $email,
+                    'del_range' => $range,
+                    'password' => $password,
+                    'address' => $address,
+                    'store_opening_time' => $start_time,
+                    'store_closing_time' => $end_time,
+                    'time_interval' => $interval,
+                    'lat' => $lat,
+                    'lng' => $lng,
+                    'admin_share' => $share,
+                    'store_photo' => $filePath,
+                    'orders' => $orders_per_slot,
+                    'id_type' => $id_name,
+                    'id_number' => $id_numb,
+                    'id_photo' => $filePath11,
+
+                ]);
+
+            // if ($insert) {
             $society = DB::table('society')
                 ->where('city_id', $city_id)
                 ->get();
@@ -258,11 +303,21 @@ class StoreController extends Controller
                         'city_id' => $city_id
                     ]);
             }
+            if ($request->subscription_plan) {
+                $subscriptionPlan = SubscriptionPlan::find($request->subscription_plan);
+                $data["store_id"] = $insert;
+                $data["plan_id"] = $request->subscription_plan;
+                $data["expired_at"] = now()->addDays($subscriptionPlan->days);
+                $storeSubscription =  StoreSubscription::create($data);
+            }
 
-            return redirect()->back()->withSuccess(trans('keywords.Added Successfully'));
-        } else {
-            return redirect()->back()->withErrors(trans('keywords.Something Wents Wrong'));
-        }
+
+            //     return redirect()->back()->withSuccess(trans('keywords.Added Successfully'));
+            // } else {
+            //     return redirect()->back()->withErrors(trans('keywords.Something Wents Wrong'));
+            // }
+        });
+        return redirect()->back()->withSuccess(trans('keywords.Added Successfully'));
     }
 
     public function storedit(Request $request)

@@ -89,6 +89,9 @@
                     <a target="_blank" rel="noopener noreferrer" href="{{route('secret-store-login', $cities->id)}}" style=" background-color:black" button type="button" class="btn btn-success">
                        <i class="fa fa-user-secret"></i>
                     </a>
+                    <a rel="noopener noreferrer" href="{{route('store-subscription-renewal', $cities->id)}}" style=""  type="button" class="btn btn-success">
+                        <i class="fas fa-credit-card"></i>
+                    </a>
                 </td>
             </tr>      
            @php $i++; @endphp

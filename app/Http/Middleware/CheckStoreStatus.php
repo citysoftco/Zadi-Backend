@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Store;
+use App\Models\StoreSubscription;
 use Cache;
 use Closure;
 use Illuminate\Http\Request;
@@ -20,8 +21,11 @@ class CheckStoreStatus
     {
         if ($request->store_id) {
             $store = Store::find($request->store_id);
-            if ($store->store_status != 1)
-                abort(403, __("keywords.store is not active"));
+            $storeSubscription = StoreSubscription::where("store_id", $request->store_id)->firstOrNew();
+            if ($store->admin_share == null ||  $store->admin_share < 1) {
+                if ($store->store_status != 1 || $storeSubscription->expired_at < now())
+                    abort(403, __("keywords.store is not active"));
+            }
         }
         return $next($request);
     }

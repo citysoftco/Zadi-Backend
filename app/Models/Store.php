@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Store extends Authenticatable
 {
     use HasFactory, Notifiable;
-    protected $guarded = "id";
+    protected $guarded = ["id"];
 
     protected $table = "store";
 
@@ -21,5 +21,10 @@ class Store extends Authenticatable
     public function bankPayments()
     {
         return $this->hasMany(BankPayment::class, "store_id");
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(StoreSubscription::class, "plan_id");
     }
 }
