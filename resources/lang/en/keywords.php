@@ -1004,7 +1004,10 @@ return [
     "Subscription Plans" => "Subscription Plans",
     "Subscription Plan" => "Subscription Plan",
     "Add Subscription Plan" => "Add Subscription Plan",
-    "Edit Subscription Plan" => "Edit Subscription Plan"
+    "Edit Subscription Plan" => "Edit Subscription Plan",
+    "Image Name" => "Image Name",
+    "Add Image" => "Add Image"
+
 
 
 

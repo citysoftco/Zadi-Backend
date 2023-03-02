@@ -1,5 +1,7 @@
 <?php
 
+
+use App\Http\Controllers\Admin\ImageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
 
@@ -153,6 +155,7 @@ Route::group(['middleware' => ['verifylicense']], function () {
             Route::get("store-subscription-renewal/{store}", [StoreController::class, "subscriptionRenewal"])->name("store-subscription-renewal");
             Route::post("store-subscription-renewal", [StoreController::class, "subscriptionRenewalSubmit"])->name("store-subscription-renewal-submit");
             Route::resource("subscription-plans", SubscriptionPlanController::class);
+            Route::resource("admin-images", ImageController::class);
 
 
             ///////////////////////

@@ -164,10 +164,10 @@
                         <div class="form-group">
                           <label class="bmd-label-floating">{{ __('keywords.Subscription Plan')}}</label>
                          <select class="form-control" name="plan_id" id="">
+                            <option  value="0">غير مشترك</option>
                           @foreach ($subscriptionPlans as $subscriptionPlan )
                             <option @if($subscriptionPlan->id == $storeSubscription->plan_id) selected @endif value="{{$subscriptionPlan->id}}">{{$subscriptionPlan->name}} = {{number_format($subscriptionPlan->price)}}</option>
                           @endforeach
-                           <option  value="0">غير مشترك</option>
 
                          </select>
                         </div>

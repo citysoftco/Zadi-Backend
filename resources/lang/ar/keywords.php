@@ -1011,6 +1011,9 @@ return [
     "Add Subscription Plan" => "إضافة خطة جديدة",
     "Edit Subscription Plan" => "تعديل خطة الإشتراك",
     "Subscription Plans" => "خطة الإشتراك",
+    "Image Name" => "إسم الصورة",
+    "Add Image" => "إضافة صورة"
+
 
 
 
