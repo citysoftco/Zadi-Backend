@@ -1012,7 +1012,10 @@ return [
     "Edit Subscription Plan" => "تعديل خطة الإشتراك",
     "Subscription Plans" => "خطة الإشتراك",
     "Image Name" => "إسم الصورة",
-    "Add Image" => "إضافة صورة"
+    "Add Image" => "إضافة صورة",
+    "Available Images" => "الصور المتوفرة",
+    "select photo" => "إختيار صورة",
+    "image name" => "إسم الصورة"
 
 
 

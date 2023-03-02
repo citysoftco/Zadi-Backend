@@ -15,6 +15,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
         "league/flysystem-aws-s3-v3": "1.0.29",
+        "livewire/livewire": "^2.12",
         "maatwebsite/excel": "^3.1",
         "power-components/livewire-powergrid": "^1.4",
         "razorpay/razorpay": "^2.7",

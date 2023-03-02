@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Store;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Image;
 use DB;
 use Session;
 use Auth;
@@ -79,7 +80,6 @@ class StoreProductController extends Controller
             ->where('level', '!=', 0)
             ->WhereNotIn('cat_id', $aa)
             ->get();
-
         return view('store.store_product.add', compact("category", "email", "logo", "store", "title"));
     }
 

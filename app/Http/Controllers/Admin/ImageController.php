@@ -30,7 +30,7 @@ class ImageController extends Controller
             ->first();
 
 
-        $images  = Image::latest()->paginate(5);
+        $images  = Image::latest()->paginate(10);
 
         return view('admin.images.index', compact('title', "admin", "logo", "images"));
     }
