@@ -152,12 +152,9 @@
 
                         <div class="row"> --}}
                             <div class="col-md-6">
-                                     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectPhotoModal">
-  {{__("keywords.select photo")}}
-</button>         
+                               <livewire:system-images/>
                             </div>
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <label class="bmd-label-floating">{{ __('keywords.Main') }} {{ __('keywords.Product') }}
                                     {{ __('keywords.Image') }}
                                     <b>({{ __('keywords.It Should Be Less Then 1000 KB') }})</b></label>
@@ -167,7 +164,7 @@
                                     <label class="custom-file-label"
                                         for="customFile">{{ __('keywords.Choose_File') }}</label>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">{{ __('keywords.Tags') }}</label>
@@ -212,37 +209,7 @@
 
 
 
-                   {{-- Modals --}}
-
-
-            <div class="modal fade" id="selectPhotoModal" tabindex="-1" role="dialog"
-                aria-labelledby="selectPhotoModal" aria-hidden="true">
-                <div class="container">
-
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="selectPhotoModal">{{ __('keywords.Available Images') }}</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                             <div class="modal-body">
-                               <livewire:system-images/>
-
-                                </div>
-    <div class="modal-footer">
-        <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">{{ __('keywords.Close') }}</button>
-    </div>
-    </div>
-
-    <!-- end content-->
-    </div>
-    </div>
-    <!--  end card  -->
-
-    </div>
-
+                 
     @endsection
 
 

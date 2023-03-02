@@ -11,7 +11,14 @@ class SystemImages extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $name;
+    public $imageId;
+    public $selectedImage;
 
+    public function getImage($imageId)
+    {
+        $this->imageId = $imageId;
+        $this->selectedImage = Image::find($imageId);
+    }
     public function render()
     {
 

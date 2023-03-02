@@ -70,7 +70,7 @@
             <td>{{$products->product_name}}</td>
             <td>{{$products->product_id}}</td>
             <td> {{$products->title}}</td>
-            <td><img src="{{url($products->product_image)}}"" alt="image"  style="width:50px;height:50px; border-radius:50%"/></td>
+            <td><img src="{{asset($products->product_image)}}" alt="image"  style="width:50px;height:50px; border-radius:50%"/></td>
             {{-- <td><img src="{{$url_aws.$products->product_image}}"" alt="image"  style="width:50px;height:50px; border-radius:50%"/></td> --}}
             <td class="td-actions text-right">
                

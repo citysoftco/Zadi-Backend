@@ -109,7 +109,7 @@ class StoreProductController extends Controller
                 [
                     'cat_id' => 'required',
                     'product_name' => 'required',
-                    'product_image' => 'required|mimes:jpeg,png,jpg|max:1000',
+                    // 'product_image' => 'required|mimes:jpeg,png,jpg|max:1000',
                     'initial_quantity' => 'required',
                     'unit' => 'required',
                     'price' => 'required',
@@ -159,12 +159,16 @@ class StoreProductController extends Controller
             else
                 $productNumber = 1;
 
+
+            $imageId = $request->image_id ? $request->image_id : null;
+
             $insertproduct = DB::table('product')
                 ->insertGetId([
                     'cat_id' => $category_id,
                     'product_name' => $product_name,
-                    'product_image' => $filePath,
+                    // 'product_image' => $filePath,
                     'added_by' => $store->id,
+                    "image_id" => $imageId,
                     'type' => $type,
                     "product_number" => $productNumber,
                     'approved' => 1
